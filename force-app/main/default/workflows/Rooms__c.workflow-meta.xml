@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alert_for_Room_Out_of_Order</fullName>
+        <ccEmails>neeta.kumari@mirketa.com</ccEmails>
+        <description>Alert for Room Out of Order</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>elixir_integratedpackage@mirketa.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Census/Out_Of_Order_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>Alert_for_Urgent_Actions</fullName>
+        <ccEmails>neeta.kumari@mirketa.com</ccEmails>
+        <description>Alert for Urgent Actions</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>anusha_elixirintegrated@mirketa.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Census/Urgent_Actions_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>Out_of_Service_notification</fullName>
+        <ccEmails>neeta.kumari@mirketa.com</ccEmails>
+        <description>Out of Service notification</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>elixir_integratedpackage@mirketa.com</recipient>
+            <type>user</type>
+        </recipients>
+        
+        <senderType>CurrentUser</senderType>
+        <template>Census/Out_of_service_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>Room_need_cleaning</fullName>
+        <ccEmails>neeta.kumari@mirketa.com</ccEmails>
+        <description>Room need cleaning</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>anusha_elixirintegrated@mirketa.com</recipient>
+            <type>user</type>
+        </recipients>
+       
+        <senderType>CurrentUser</senderType>
+        <template>Census/Room_Needs_Cleaning</template>
+    </alerts>
+    <rules>
+        <fullName>Room Needs Cleaning</fullName>
+        <actions>
+            <name>Room_need_cleaning</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Rooms__c.Room_Need_Cleaning__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Room Out Of Service</fullName>
+        <actions>
+            <name>Out_of_Service_notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Rooms__c.Out_Of_Service__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Room out of order</fullName>
+        <actions>
+            <name>Alert_for_Room_Out_of_Order</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Rooms__c.Out_Of_Order__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Ugrent Actions</fullName>
+        <actions>
+            <name>Alert_for_Urgent_Actions</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Rooms__c.Urgent_Actions__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>
