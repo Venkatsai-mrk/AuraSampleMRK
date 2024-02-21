@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Setup_rooms_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( Set_up_Houses__c ==false, 
+ ISBLANK(TEXT( room_to_create__c )) , 
+NOT( ISBLANK(TEXT( room_to_create__c )) ))</errorConditionFormula>
+    <errorMessage>Please fill the field &apos;No. of rooms to be created&apos; if the field &apos;Set up houses&apos; is unchecked</errorMessage>
+</ValidationRule>

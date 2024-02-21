@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Route__c</fullName>
+    <description>This field is used to specify the method or route of administration of the substance. Indicate how the substance is typically administered, such as &quot;oral,&quot; &quot;inhalation,&quot; &quot;injection,&quot; or any other applicable method.</description>
+    <externalId>false</externalId>
+    <label>Route/Method</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,12 @@
+.THIS .signature_modal.slds-modal__container{
+    width:50%!important;
+}
+
+.THIS .sign-img {
+    min-width: 250px;
+    min-height: 200px;
+}
+
+.THIS .info {
+    padding-left: 15px;
+}

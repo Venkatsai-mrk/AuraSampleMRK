@@ -1,0 +1,60 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller = "captureSignatureUpdate">
+    <aura:attribute name="isActive" type="Boolean"/>
+    <aura:attribute name="saveSignatureVal" type="String" />
+    <aura:attribute name="recordVal" type="String" />
+    <aura:attribute name="showSignPad" type="Boolean" />
+    <aura:attribute name = "OTPVal" type = "String"/>   
+    <ltng:require afterScriptsLoaded="{!c.doInit}"/>
+    <aura:attribute name="displayedSection" type="string" default=""/>
+    
+    <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+        <div class="slds-modal__container level">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Signature Pad for e-signing forms</h2>                            
+            </header>
+            
+            
+            <div class="slds-modal__content con slds-p-around_medium " id="modal-content-id-1" >
+                
+                
+                <div aura:id="secondsection" class="{!if(v.displayedSection == 'section2','slds-hide','slds-show')}">
+                    
+                    <div class="divCSS">
+                        <canvas aura:id="new_canvas" class="digi-sign divCSS_1"></canvas>
+                    </div>
+                    <div class="digi-sign1">
+                        <p>By signing this document with an electronic signature, I agree that such signature will be as valid as handwritten signatures to the extent allowed by local law.</p>
+                    </div>
+                </div>
+                
+                <div aura:id="firstsection" class="{!if(v.displayedSection == 'section1','slds-hide','slds-show')}">
+                    
+                    <div class="slds-grid slds-gutters" aura:id="field1">
+                        <div class="slds-col slds-size_4-of-12 slds-m-bottom_small">
+                            <lightning:input name="Enter PIN" label="Enter PIN" type="String" maxlength="6" value = "{!v.OTPVal}"  autocomplete="off"/>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12 slds-m-bottom_small divCSS_2">
+                            <button class="slds-button slds-button_brand" onclick="{!c.validateOTP}" >Validate</button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="divCSS_3"></div>
+            </div>
+            <footer class="slds-modal__footer">
+                <div class="button" align ="right">
+                    <aura:if isTrue="{!v.showSignPad}">
+                        <button class="slds-button slds-button_brand" onclick="{!c.erase}">Clear</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.save}">Save</button>
+                    </aura:if>
+                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>  
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+</aura:component>

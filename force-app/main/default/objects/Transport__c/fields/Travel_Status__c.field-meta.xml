@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Travel_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Transport Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Confirmed Travel Arrangements</fullName>
+                <default>false</default>
+                <label>Confirmed Travel Arrangements</label>
+            </value>
+            <value>
+                <fullName>Missed Travel Arrangement</fullName>
+                <default>false</default>
+                <label>Missed Travel Arrangement</label>
+            </value>
+            <value>
+                <fullName>Re-booked Travel Arrangement</fullName>
+                <default>false</default>
+                <label>Re-booked Travel Arrangement</label>
+            </value>
+            <value>
+                <fullName>Confirmed Pickup</fullName>
+                <default>false</default>
+                <label>Confirmed Pickup</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Planned</fullName>
+                <default>false</default>
+                <label>Planned</label>
+            </value>
+            <value>
+                <fullName>In-progress</fullName>
+                <default>false</default>
+                <label>In-progress</label>
+            </value>
+            <value>
+                <fullName>Abandoned</fullName>
+                <default>false</default>
+                <label>Abandoned</label>
+            </value>
+            <value>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <label>Cancelled</label>
+            </value>
+            <value>
+                <fullName>Entered in Error</fullName>
+                <default>false</default>
+                <label>Entered in Error</label>
+            </value>
+            <value>
+                <fullName>Made Travel Arrangement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Made Travel Arrangement</label>
+            </value>
+            <value>
+                <fullName>New Itinerary</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>New Itinerary</label>
+            </value>
+            <value>
+                <fullName>Travel Booked</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Travel Booked</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

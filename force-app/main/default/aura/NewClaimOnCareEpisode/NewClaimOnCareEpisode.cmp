@@ -1,0 +1,44 @@
+<aura:component controller="CMS1500ClaimFormApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="careBillingProvider" type="Object" default=""/>
+    <aura:attribute name="careServiceProvider" type="Object" default=""/>
+    <aura:attribute name="careRenderingProvider" type="Object" default=""/>
+    <aura:attribute name = "heading" type = "String" default="CMS-1500 Form"/>
+    <aura:attribute name = "patientId" type = "String" default=""/>
+    <aura:attribute name = "preAuthNum" type = "String" default=""/>
+    <aura:attribute name = "vobId" type = "String" default=""/>
+    <aura:attribute name = "isCMS1500" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isSingleVOB" type = "Boolean" default = "False"/>
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <aura:attribute name="selectedVOBList" type="list" />
+    <aura:attribute name="VobList" type="list" />
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="payerList" type="list" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="parentCSS slds-is-relative">
+        <div class="childCSS">
+            <br></br>
+            <div class="slds-align_absolute-center">
+                <lightning:button variant="brand" label="New Claim" title="New Claim" onclick="{!c.handleNew}"/>
+            </div>
+            <br></br>
+            <aura:if isTrue="{!v.isCMS1500}">
+                <aura:if isTrue="{!v.isSingleVOB}">
+                    <c:Elixir_SelectPayer isOpen="{!v.isOpen}" VobList="{!v.VobList}" payerList="{!v.payerList}"
+                                          careBillingProviderCMS = "{!v.careBillingProvider}" preAuthNumCMS ="{!v.preAuthNum}"
+                                          careServiceProviderCMS = "{!v.careServiceProvider}" careIdCMS ="{!v.recordId}"
+                                          careRenderingProviderCMS = "{!v.careRenderingProvider}"
+                                          selectedVOBList="{!v.selectedVOBList}" headerLabel="Primary"  recordTypeId = "{!v.recordTypeId}" 
+                                          heading = "{!v.heading}" recordId = "{!v.patientId}"/>
+                    <aura:set attribute="else">
+                        <c:CMS1500ClaimForm isActive="{!v.isCMS1500}" selectedVOBList="{!v.selectedVOBList}" 
+                                            careBillingProviderCMS = "{!v.careBillingProvider}" preAuthNumCMS ="{!v.preAuthNum}"
+                                            careServiceProviderCMS = "{!v.careServiceProvider}" careIdCMS ="{!v.recordId}"
+                                            careRenderingProviderCMS = "{!v.careRenderingProvider}"
+                                            heading = "{!v.heading}" patId = "{!v.patientId}" />
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lot_Line_Items__c</fullName>
+    <description>Represents the lot line item associated with the order line item.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Lot Line Items</label>
+    <referenceTo>Lot_Line_Items__c</referenceTo>
+    <relationshipLabel>Order Line Item</relationshipLabel>
+    <relationshipName>Order_Line_Item</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

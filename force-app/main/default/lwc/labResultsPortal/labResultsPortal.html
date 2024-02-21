@@ -1,0 +1,54 @@
+<template>
+    <div class="header">
+        Lab Results
+    </div>
+    <div>
+        <template if:true={futureItemArray}>
+            <lightning-datatable key-field="Id"
+             data={futureItemArray} columns={columns} 
+             hide-checkbox-column="true" 
+             onrowaction={fetchrecord}>
+            </lightning-datatable>
+        </template>
+    </div>
+<div class="slds-m-top_x-large slds-m-left_medium">
+    <div class="pagination">
+    <div class="first">
+        <lightning-button label="|<"
+            disabled={isPrev} onclick={handleFirst}
+                                variant="brand"
+                                name="first"></lightning-button>
+    </div> 
+    <div class="slds-p-right_xx-small">
+             
+        <lightning-button label="<"
+        disabled={isPrev} onclick={handlePrev}
+                            variant="brand"
+                            name="prev"></lightning-button>  
+    </div>
+    <span class="slds-badge slds-badge_lightest">
+                {recordEnd} of {totalRecords}
+    </span>
+    <div class="slds-p-left_xx-small">
+        <lightning-button label=">"
+        disabled={isNext} onclick={handleNext}
+                            variant="brand"
+                            icon-position="right"
+                            name="next"></lightning-button>
+    </div>
+    <div class="last">
+        <lightning-button label=">|"
+            disabled={isNext} onclick={handleLast}
+                                variant="brand"
+                                icon-position="right"
+                                name="last"></lightning-button>
+    </div>
+    </div>
+</div>
+  
+    <template if:true = {displayFiles}>
+    <!--Lwc component for Files-->
+    <c-file-preview-and-downloads  rec = {singleRowId} onclose={modalCloseHandler}>
+    </c-file-preview-and-downloads>
+    </template>
+</template>

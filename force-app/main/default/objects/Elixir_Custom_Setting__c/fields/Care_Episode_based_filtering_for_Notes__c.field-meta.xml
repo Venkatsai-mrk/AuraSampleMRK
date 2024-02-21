@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Care_Episode_based_filtering_for_Notes__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Care Episode based filtering for Notes</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

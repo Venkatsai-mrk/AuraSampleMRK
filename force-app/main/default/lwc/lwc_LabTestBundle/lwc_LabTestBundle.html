@@ -1,0 +1,268 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <!-- Header Start -->
+                <header class="slds-modal__header bcol">
+                    <lightning-button-icon class="slds-modal__close closeButton" title="Close"
+                        icon-name="utility:close" icon-class="slds-button_icon-inverse" onclick={handleDialogClose}>
+                    </lightning-button-icon>
+                    <h2 class="slds-text-heading_medium slds-hyphenate header-string heading">
+                        New Lab Test Bundle
+                    </h2>
+                </header>
+
+            <div class="slds-scrollable_y" >
+                <div class = "slds-modal__content ">
+                    <!-- Name -->
+                    <div class="slds-grid slds-gutters div1 row">
+
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input 
+                            type="text" 
+                            label="Lab Test Bundle Name" 
+                            max-length="80"
+                            required="true"
+                            value={labTestBundleName}
+                            onchange={handleInputChangeName}>
+                        </lightning-input>
+                    </div>
+                    <!-- Description -->
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-textarea 
+                            type="text-rich" 
+                            label="Description" 
+                            max-length="500"
+                            value={labTestBundleDescription}
+                            onchange={handleInputChangeDescription}>
+                        </lightning-textarea>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Diagnosis Code Header -->
+                <div class="bcol">
+                    <div class="slds-grid slds-gutters row">
+                        <div class="slds-col slds-size_7-of-12">
+                    <h3 class="slds-text-heading_medium slds-hyphenate header-string">
+                        Associate Diagnosis Code
+                     </h3>
+                     </div>
+                     <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                       <h1  class = "header-string">Add Row &nbsp;
+                         <lightning-button-icon 
+                                                icon-name="utility:add" 
+                                                size="large" 
+                                                alternative-text="Add"
+                                                title="Add"
+                                                variant="bare"
+                                                onclick = {handleShowModalOfDiagnosis}>
+                                            </lightning-button-icon>           
+                       </h1> 
+                     </div>
+                    </div>
+                </div>
+                <!-- Diagnosis Code Table -->
+                <div class="slds-modal__content">
+                    <div class="div1">
+                        <div class="slds-grid slds-gutters slds-m-top_small slds-m-bottom_small diagnosis_modal slds-is-relative">
+                            <table class="add-modi-table">
+                                <thead class="diagnosis_head">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <!-- <th>Diagnosis ID</th> -->
+                                        <th>Diagnosis Name</th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table for Add Diagnosis Codes -->
+                                    <template for:each={selectedDiagnosisCodes} for:item="R" for:index="index">
+                                        <tr key={R.index}>
+                                            <th>
+                                                {R.index}
+                                            </th>
+                                            <th>
+                                                {R.diagnosisCodeName}
+                                            </th>
+                                            <th>
+                                                <lightning-button-icon 
+                                                    icon-name="utility:delete" 
+                                                    size="medium" 
+                                                    alternative-text="Delete"
+                                                    title="Delete" 
+                                                    onclick = {rowDeleteDiagnosisCode} 
+                                                    value = {R.index}>
+                                                </lightning-button-icon>
+                                            </th>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+                <!-- Procedure Code Header -->
+                <div class="bcol">
+                    <div class="slds-grid slds-gutters row">
+                        <div class="slds-col slds-size_7-of-12">
+                    <h3 class="slds-text-heading_medium slds-hyphenate header-string">
+                        Associate Procedure Code
+                    </h3>
+                    </div> 
+                    <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                        <h1  class = "header-string">Add Row &nbsp;
+                        <lightning-button-icon 
+                                                icon-name="utility:add" 
+                                                size="large" 
+                                                alternative-text="Add"
+                                                title="Add" 
+                                                variant="bare"
+                                                onclick = {handleShowModalOfProcedure}>
+                        </lightning-button-icon>
+                        </h1>
+                    </div>
+
+                    </div>
+                </div>
+                <!-- Procedure Code Table -->
+                <div class="slds-modal__content">
+                    <div class="div1">
+                        <div class="slds-grid slds-gutters slds-m-top_small slds-m-bottom_small diagnosis_modal slds-is-relative">
+                            <table class="add-modi-table">
+                                <thead class="diagnosis_head">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <!-- <th>Procedure ID</th> -->
+                                        <th>Procedure Name</th>
+                                        <th>
+                                            
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table for Add Lab Test -->
+                                    <template for:each={selectedProcedureCodes} for:item="R" for:index="index">
+                                        <tr key={R.index}>
+                                            <th>
+                                                {R.index}
+                                            </th>
+                                            <th>
+                                                {R.procedureCodeName}
+                                            </th>
+                                            <th>
+                                                <lightning-button-icon 
+                                                    icon-name="utility:delete" 
+                                                    size="medium" 
+                                                    alternative-text="Delete"
+                                                    title="Delete" 
+                                                    onclick = {rowDeleteProcedureCode} 
+                                                    value = {R.index}>
+                                                </lightning-button-icon> 
+                                            </th>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Test Header -->
+                <div class="bcol">
+                    <div class="slds-grid slds-gutters row">
+                        <div class="slds-col slds-size_7-of-12">
+                    <h3 class="slds-text-heading_medium slds-hyphenate header-string">
+                        Add Lab Tests
+                     </h3>
+                     </div>
+                     <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                       <h1  class = "header-string">Add Row &nbsp;
+                         <lightning-button-icon 
+                                                icon-name="utility:add" 
+                                                size="large" 
+                                                alternative-text="Add"
+                                                title="Add"
+                                                variant="bare"
+                                                onclick = {handleShowModalOfTests}>
+                                            </lightning-button-icon>           
+                       </h1> 
+                     </div>
+                    </div>
+                </div>
+                <!-- Test Table -->
+                <div class="slds-modal__content">
+                    <div class="div1">
+                        <div class="slds-grid slds-gutters slds-m-top_small slds-m-bottom_small diagnosis_modal slds-is-relative">
+                            <table class="add-modi-table">
+                                <thead class="diagnosis_head">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Test ID</th>
+                                        <th>Test Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table for Add Lab Test -->
+                                    <template for:each={selectedTests} for:item="R" for:index="index">
+                                        <tr key={R.index}>
+                                            <th>
+                                                {R.index}
+                                            </th>
+                                            <th>
+                                                {R.testId}
+                                            </th>
+                                            <th>
+                                                {R.testName}
+                                            </th>
+                                            <th>
+                                                <lightning-button-icon 
+                                                    icon-name="utility:delete" 
+                                                    size="medium" 
+                                                    alternative-text="Delete"
+                                                    title="Delete" 
+                                                    onclick = {rowDeleteLabTest} 
+                                                    value = {R.index}>
+                                                </lightning-button-icon>
+                                            </th>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <c-add-more-diagnosis-code oncodesadded={handleDiagnosisCodesAdded}> </c-add-more-diagnosis-code>
+            <c-add-more-procedure-code oncodesadded = {handleProcedureCodesAdded}> </c-add-more-procedure-code>
+            <c-add-more-tests ontestsadded={handelTestsAdded}> </c-add-more-tests>
+
+
+            
+            <footer class="slds-modal__footer">
+                <lightning-layout horizontal-align={horizontalAlign}>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <lightning-button variant="Neutral" label="Cancel" title="Cancle"
+                        onclick={handleDialogClose} class="slds-m-left_x-small">
+                    </lightning-button>
+                            <lightning-button variant="brand" label="Save" title="Save" onclick={saveRecord}
+                            class="slds-m-left_x-small">
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </footer>
+            </div>
+        </section>
+    </template>
+</template>

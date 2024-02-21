@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Note__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Type of Note</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Problem</fullName>
+                <default>false</default>
+                <label>Problem</label>
+            </value>
+            <value>
+                <fullName>Procedure</fullName>
+                <default>false</default>
+                <label>Procedure</label>
+            </value>
+            <value>
+                <fullName>Diagnosis</fullName>
+                <default>false</default>
+                <label>Diagnosis</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,47 @@
+.THIS .add-problem_modal lightning-dual-listbox{
+ 	padding-left: 3%;
+}
+.THIS .add-problem_modal .duallist-search_box{
+    width: 40%;
+    margin-left: 8%;
+    margin-bottom: 0px;
+}
+.THIS .add-problem_modal .duallist-search_box label{
+    display:none;
+}
+.THIS.slds-backdrop.slds-backdrop_open {
+    background: rgba(0, 0, 0, 0.0);
+}
+.THIS.ag-template .add-problem_modal {
+    width: 100%;
+    margin: 0;
+}
+.THIS .add_problem-temp .slds-listbox li {
+    width: 100%;
+}
+.THIS  .slds-modal__content.fixedHeight {
+    min-height: calc(65% + 0px);
+    height : calc(65% + 0px);
+}
+.THIS .backgroundBlurr {
+ background-color: #000;
+}
+.THIS .first-inner-dl {
+    height: 20px;
+    width: 2px;
+    float: left;
+    margin-left: 75px;
+    background-color: #4bc076;
+}
+.THIS.accordian_header .first-inner-dl:last-child {
+    display: none;
+}
+@media(max-width: 576px) {
+    .THIS .slds-modal__container {
+        width: 86%!important;
+    }
+    .THIS .add-problem_modal lightning-dual-listbox {
+        padding-left: 0%;
+        margin-left: 0%;
+    }
+}

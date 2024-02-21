@@ -1,0 +1,50 @@
+.THIS.slds-modal_small .slds-modal__container {
+    width: 80%;
+    max-width: 85%;
+    min-width: 80%;
+}
+.THIS .attach_claim-head{
+    background-color: #493266;
+    color: #fff;
+}
+.THIS .vobTable th{
+     background-color: #5b9bd5;
+     color: #fff;
+    font-weight: 600;
+}
+.THIS .vobTable td{
+     background-color: #eaeff7;
+     
+}
+.THIS .vobTable tr:hover td{
+     background-color: #d2deef;
+     
+}
+.THIS .btn {
+   border-radius: 5px;
+   border: none;
+   color: white;
+   background-color: #493266;
+   box-shadow: 1px 1px 5px 0px #666675;
+}
+.THIS ul.slds-listbox.slds-listbox_vertical.slds-dropdown.slds-dropdown_fluid.slds-lookup__menu {
+    padding: 0px;
+    margin: 0px;
+}
+.THIS ul.slds-listbox.slds-listbox_vertical.slds-dropdown.slds-dropdown_fluid.slds-lookup__menu li{
+    
+    margin: 0px;
+}
+.THIS .slds-table_header-fixed_container.slds-scrollable_x {
+    height: 150px!important;
+    background-color: transparent;
+}
+.THIS .removeheightClass{
+    height: auto;
+}
+.THIS .NoDataClass{
+    top: 50px;
+    left: 0;
+    width: 100%;
+    
+}

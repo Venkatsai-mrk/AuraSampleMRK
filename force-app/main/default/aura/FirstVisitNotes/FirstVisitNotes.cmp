@@ -1,0 +1,235 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="FirstVisitNotesController">
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <aura:handler value="{!this}" name="init" action="{!c.myAction}"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="ROSData" type="Object"/>
+    <aura:attribute name="ROSDisplayData" type="string"/>
+    <aura:attribute name="accountId" type="String" default=""/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="myVal" type="String" default=""/>
+    <aura:attribute name="medications" type="List" />
+    <aura:attribute name="medicationsToSave" type="List" /> 
+    <aura:attribute name="diagnosis" type="List" />
+    <aura:attribute name="diagnosisToSave" type="List" /> 
+    <aura:attribute name="procedure" type="List" />
+    <aura:attribute name="procedureToSave" type="List" /> 
+    
+    <aura:attribute name="labOrders" type="List" />
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="selectedValues" type="List"/>
+    <aura:attribute name="mapOfGoals" type="Object"/>
+    <aura:attribute name="labOrdersToSave" type="List" /> 
+    <aura:attribute name="diagToSave" type="List" /> 
+    <aura:attribute name="parentProblemTable" type="List" /> 
+    <aura:attribute name="problemsForPatient" type="List" /> 
+    <aura:attribute name="templateObservations" type="List" /> 
+    <aura:attribute name="problemsForPatientCopy" type="List" /> 
+    <aura:attribute name="problemsToSave" type="List" /> 
+    <aura:attribute name="isOpen" type="Boolean" default="true"/> 
+    <aura:attribute name="createPlan" type="Boolean" default="false"/> 
+    <aura:attribute name="cmpName" type="String" />
+    <aura:attribute name="HpiInput" type="String" />
+    <aura:attribute name="HPI" type="Boolean" />
+    <aura:attribute name="ROS" type="Boolean" />
+    <aura:attribute name="CM" type="Boolean"/>
+    <aura:attribute name="cmInput" type="String"/>
+    <aura:attribute name="currentMedi" type="List"/>
+    <aura:attribute name="newc" type="String"/>
+    
+    <aura:attribute name="isLab" type="Boolean" default="false"/>
+    <aura:attribute name="additionalNotes" type="String" />
+    <aura:attribute name="description" type="String" />
+    <aura:attribute name="frequency" type="String" />
+    <aura:attribute name="testName" type="String" />
+    <aura:attribute name="labName" type="String" />
+    <aura:attribute name="statByPhone" type="Boolean" default="false"/>
+    <aura:attribute name="statByFax" type="Boolean" default="false"/>
+    <aura:attribute name="isMeasurement" type="Boolean" />
+    <aura:attribute name="measurements" type="List"/>
+    <aura:attribute name="isDietary" type="Boolean" />
+    <aura:attribute name="dietaryHistory" type="Object[]"/>
+    <aura:attribute name="isWeightHistory" type="Boolean" />
+    <aura:attribute name="weightHistory" type="List"/>
+    <aura:attribute name="newVitalSign" type="Medical_Examination__c" default="{ 
+                                                                                            'sobjectType': 'Medical_Examination__c',                                                                         
+                                                                                            'height': '' ,
+                                                                                            'weight': '',
+                                                                                            'bpSys': '',
+                                                                                            'bpDias': '',    
+                                                                                            'temp' : '',
+                                                                                            'pulse' : '',
+                                                                                            'oxySat' : '' ,
+                                                                                            }" /> 
+    
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    <aura:attribute name="isVital" type="Boolean" />
+    <aura:attribute name="Vital" type="Boolean" default=""/>
+    <aura:attribute name="isChiefComplaints" type="Boolean" default="false"/>
+    <aura:attribute name="EhrConditions" type="Dataset1__c[]"/> 
+    <aura:attribute name="isPrescriptions" type="Boolean" default="false"/>
+    <aura:attribute name="PrescriptionsList" type="Prescription_Order__c[]" /> 
+    <aura:attribute name="PrescriptionsToSave" type="Prescription_Order__c[]"/> 
+    
+    <aura:attribute name="isSocial" type="Boolean" />
+    <aura:attribute name="isFamily" type="Boolean" />
+    <aura:attribute name="noteType" type="String"/> 
+    <aura:attribute name="newSocial" type="String" />
+    <aura:attribute name="newFamily" type="String" />
+    
+    <aura:attribute name="ishealthDiagnosis" type="Boolean" />
+    <aura:attribute name="newhealthDiagnosis" type="String" />
+    <aura:attribute name="nameSpace" type="String" />
+    <aura:attribute name="noteLabel" type="String" default="Notes"/>
+    <aura:attribute name="MedicalHistory" type="object[]" />
+    <aura:attribute name="typeOfNote" type="String"/>
+    <aura:attribute name="column" type="Object"/>
+    
+    <aura:handler name="SearchBarToNotes" event="c:SearchBarToNotes" action="{!c.handleComponentEvent}"/>
+    <aura:if isTrue="{!v.isOpen}">
+        <lightning:card title="">
+            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+            <div class="slds-grid">
+                <div class="slds-col slds-size_4-of-4">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_4-of-4">
+                            <!--<div class="patient_note"><b>{!v.noteType}</b></div>-->
+                            <aura:if isTrue="{!v.typeOfNote != 'Medication'}">
+                                <div class="patient_note"><b>{!v.typeOfNote}</b></div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_3-of-6">&nbsp;</div>
+                        <div class="slds-col slds-size_2-of-6">
+                            <c:SearchBar recId="{!v.accountId}" typeOfNote="{!v.typeOfNote}"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid parentCSS">
+                        <div id="lastFocusParent" class="{! if(not(and(and(and(and(and(empty(v.medications),empty(v.labOrders)),not(v.Vital)),not(v.isMeasurement)),not(v.isDietary)),not(v.isWeightHistory))),'slds-col slds-size_7-of-12','slds-size_6-of-6')}">
+                            <aura:if isTrue="{!v.typeOfNote == 'Medication'}">
+                            <lightning:inputRichText formats="['font', 'size', 'bold', 'italic', 'underline', 'strike',
+                                                              'list', 'indent', 'align', 'link', 'image', 'clean', 'table',
+                                                              'header', 'color', 'background']" aura:id="lastfocus" value="{!v.column.procedureNote}" placeholder="Add notes..."> <lightning:insertImageButton/>
+                                                              </lightning:inputRichText>
+                            <aura:set attribute="else">
+                            <lightning:inputRichText formats="['font', 'size', 'bold', 'italic', 'underline', 'strike',
+                            'list', 'indent', 'align', 'link', 'image', 'clean', 'table',
+                            'header', 'color', 'background']" aura:id="lastfocus" value="{!v.myVal}" placeholder="Add notes..." onblur="{!c.abc}"> <lightning:insertImageButton/>
+                            </lightning:inputRichText>
+                        </aura:set>
+                        </aura:if>
+                        </div>
+                        <div class="{! if(not(and(and(and(and(and(empty(v.medications),empty(v.labOrders)),not(v.Vital)),not(v.isMeasurement)),not(v.isDietary)),not(v.isWeightHistory))),'slds-col slds-size_5-of-12','slds-size_6-of-6')}">
+                            <div class="changemargin1">
+                            <aura:if isTrue="{! not(and(and(and(and(and(empty(v.medications),empty(v.labOrders)),not(v.Vital)),not(v.isMeasurement)),not(v.isDietary)),not(v.isWeightHistory)))}">
+                                
+                                <div class="slds-grid slds-gutters changeleftmargin" >
+                                    <lightning:button class= "buttonpadding" label="Add" title="Add to Notes" onclick="{! c.addNotes }"/>
+                                    <lightning:icon iconName="utility:delete" class="slds-is-absolute leftmargin" size="medium" title="Remove" onclick="{!c.removeAll}"/>
+                                </div>          
+                                
+                                <br/>
+                            </aura:if>
+                            <aura:if isTrue="{!!empty(v.medications)}">
+                                <aura:iteration items="{!v.medications}" var="medication" indexvar="idx">    
+                                    <div class="box">
+                                    <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                                <lightning:input label="Name" type="text" value="{!medication.FieldName}"/> &nbsp;
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-12">
+                                                
+                                        </div>
+                                    </div>
+                                           
+                                        <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                            <lightning:input label="Description" type="text" value="{!medication.Description}"/> &nbsp; 
+                                        </div>
+                                             <div class="slds-col slds-size_1-of-12">
+                                               
+                                        </div>
+                                    </div>
+                                    </div>
+                                </aura:iteration>
+                            </aura:if>
+                            <!-- for diagnosis-->
+                            <aura:if isTrue="{!!empty(v.diagnosis)}">
+                                <aura:iteration items="{!v.diagnosis}" var="diagnosis" indexvar="idx">    
+                                    <div class="box">
+                                    <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                                <lightning:input label="Name" type="text" value="{!diagnosis.FieldName}"/> &nbsp;
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-12">
+                                             <!--   <lightning:icon iconName="utility:clear" class="{!idx + '$MED'}" title="Remove note" onclick="{!c.removeNote}"/>
+                                        -->
+                                        </div>
+                                    </div>
+                                           
+                                        <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                            <lightning:input label="Description" type="text" value="{!diagnosis.Description}"/> &nbsp; 
+                                        </div>
+                                             <div class="slds-col slds-size_1-of-12">
+                                               
+                                        </div>
+                                    </div>
+                                    </div>
+                                </aura:iteration>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!!empty(v.procedure)}">
+                                <aura:iteration items="{!v.procedure}" var="procedure" indexvar="idx">    
+                                    <div class="box">
+                                    <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                                <lightning:input label="Name" type="text" value="{!procedure.FieldName}"/> &nbsp;
+                                        </div>
+                                       <div class="slds-col slds-size_1-of-12">
+                                                
+                                        </div>
+                                    </div>
+                                           
+                                        <div class="slds-grid slds-gutters" >
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12">
+                                            <lightning:input label="Description" type="text" value="{!procedure.Description}"/> &nbsp; 
+                                        </div>
+                                             <div class="slds-col slds-size_1-of-12">
+                                               
+                                        </div>
+                                    </div>
+                                    </div>
+                                </aura:iteration>
+                            </aura:if>
+                            </div>
+                        </div>	
+                    </div>
+                </div>
+            </div> 
+        </lightning:card>
+    </aura:if>
+</aura:component>

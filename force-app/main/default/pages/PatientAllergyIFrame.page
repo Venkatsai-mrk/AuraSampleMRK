@@ -1,0 +1,4 @@
+<apex:page controller="PatientAllergyScreen" applyHTMLTag="true" applyBodyTag="true" readOnly="true">
+    
+    <iframe height="800px" id="Add Allergy" title ="Add Allergy" name="Add Allergy" src="{!src}" width="100%" ></iframe>
+</apex:page>

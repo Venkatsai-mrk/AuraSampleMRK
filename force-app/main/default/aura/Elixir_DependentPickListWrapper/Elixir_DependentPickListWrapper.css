@@ -1,0 +1,13 @@
+.THIS .noLabelGeneric .slds-form-element__label {
+    max-width: 0px !important;
+    max-height: 0px !important;
+    padding: 0px;
+}
+
+.THIS .noLabelGeneric input {
+    margin-left: 0px;
+}
+
+.THIS .noLabelGeneric .slds-form-element__control {
+    padding-left: 0px !important;
+}

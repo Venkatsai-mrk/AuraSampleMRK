@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Flag__c</fullName>
+    <description>It is used to display a Red/Green flag in the lab order result. Normal values (within the range) will have a green flag,
+ while abnormal values (outside the range) will have a red flag.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  NOT(ISBLANK (VALUE((Result_Value__c)))),
+  IF(
+    AND(
+      VALUE(Result_Value__c) &gt;= Min_Value__c,
+      VALUE(Result_Value__c) &lt;= Max_Value__c
+    ),
+    IMAGE(&quot;/resource/ElixirSuite__GreenFlag&quot;, &quot;Green Flag&quot;, 35, 35),
+    IMAGE(&quot;/resource/ElixirSuite__RedFlag&quot;, &quot;Red Flag&quot;, 35, 35)
+  ),
+  &apos;No Flag&apos;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

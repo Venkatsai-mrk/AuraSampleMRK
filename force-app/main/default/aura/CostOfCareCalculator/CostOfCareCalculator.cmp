@@ -1,0 +1,422 @@
+<aura:component controller="COCHelper" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="acctDetails" type="String"/>
+    <aura:attribute name="ConPrice" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="insuranceDetails" type="List" />
+    <aura:attribute name="isProceduresSelected" type="Boolean" default="false"/>
+    <aura:attribute name="isProceduresAvailable" type="boolean" default="FALSE"/>
+    <aura:attribute name="hasCalculationCompleted" type="boolean" default="FALSE"/>
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="OrgWideNameSpace" type="String"/>
+    <aura:attribute name="procedureTotal" type="Integer"/>
+    <aura:attribute name="PatientResposibility" type="Integer"/>
+    <aura:attribute name="InsuranceResposibility" type="Integer"/>
+    <aura:attribute name="PatientResposibilityRoundedOff" type="Integer"/>  
+    <aura:attribute name="InsuranceResposibilityRoundedOff" type="Integer"/>  
+    <aura:attribute name="mapOfProcedures" type="Object"/>
+    <aura:attribute name="selectedValues" type="List"/>  
+    <aura:attribute name="inUseStatus" type="Boolean" default="false"/>
+    <aura:attribute name="allProceduresSelectedToOperate" type="List"/>
+    <aura:attribute name="reset" type="Boolean" default="false"/>
+    <aura:attribute name="options" type="List" default=" "/>
+    
+    <aura:attribute name="fieldName" type="String" default="Name"/> 
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/> 
+    <aura:attribute name="Label" type="String"/>
+    <aura:attribute name="searchRecords" type="List"/>
+    <aura:attribute name="EmpList" type="Boolean" default="false"/>
+    <aura:attribute name="required" type="Boolean" default="false"/>
+    <aura:attribute name="iconName" type="String" default="custom:custom47"/>  
+    <aura:attribute name="LoadingText" type="Boolean" default="false"/>
+    <aura:attribute name="onPatient" type="Boolean" default="false"/>
+    <aura:attribute name="coPayValue" type="Decimal" />
+    <aura:attribute name="options1" type="List" default="[
+                                                         {'label': 'Use Co-pay for Calculations', 'value': 'Use Co-pay for Calculations'},
+                                                         
+                                                         ]"/>
+    
+    <aura:attribute name="benefitDescription" type="Map"/>
+    <aura:attribute name="benefitlevel" type="Map"/>
+    <aura:attribute name="benefitDescriptionValue" type="String"/>
+    <aura:attribute name="benefitLevelValue" type="String"/>}
+    <aura:attribute name="insuranceType" type="List" default="[{'key':'In Network','value':'In Network'},{'key':'Out Of Network','value':'Out Of Network'}]"/>
+    <aura:attribute name="insuranceTypeValue" type="String"/>
+    <aura:attribute name="coIns" type="Decimal" default='0'/>
+    <aura:attribute name="deduc" type="Decimal" default='0'/>
+    <aura:attribute name="oopMax" type="Decimal" default='0'/>
+    <aura:attribute name="coPayAmt" type="Decimal" default='0'/>
+    
+    <aura:attribute name="value" type="List" default="Use Co-pay for Calculations"/>
+    <aura:attribute name="useCopay" type="Boolean" default="false"/>
+    <aura:registerEvent name="RefreshEstimatesListView" type="c:RefreshEstimatesListView"/>
+    
+    <div class=""></div>
+    <aura:if isTrue="{!v.isOpen}">
+        <div class="changeHeight" aura:id="text" onscroll="{!c.scrollBottom}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open changeBack">
+                <div class="slds-modal__container hideDiv">
+                    
+                    <header class="slds-modal__header changeFont">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>COST OF CARE CALCULATOR</b></h2>
+                        
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium changePad" id="modal-content-id-1">
+                        <aura:if isTrue="{!v.spinner}">
+                            <div aura:id="spinnerId" class="slds-spinner_container">
+                                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                    <span class="slds-assistive-text">Loading...</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <div class="widthForAll">
+                            
+                            <div class="slds-modal__content slds-p-around--x-small slds-size_1-of-1 slds-is-relative customParentModal" aura:id="modalbody" id="modalbody">
+                                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                                <div class="calpage">
+                                  
+                                    <div class="slds-grid slds-gutters ">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <h3 class="slds-section__title HeadInfo">
+                                                <div class="slds-grid slds-gutters changeWidth">
+                                                    
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <span class="slds-truncate" title="PATIENT INFORMATION">VOB INFORMATION</span>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12 slds-text-align_right" >
+                                                        <lightning:input type="checkbox" label="In-Use" checked="{!v.insuranceDetails.ElixirSuite__In_Use__c}" onchange="{!c.isCOCinUsed}"/>
+                                                    </div>
+                                                </div>
+                                              </h3>
+                                            <div class="patient_heading">
+                                                <div class="slds-section slds-is-open" aura:id="task2">
+                                                     <div class="slds-section__content" id="TaskList2" >
+                                                        <div class="" id="TaskList2">
+                                                            <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                                
+                                                                <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                                    <span class="slds-form-element__label slds-no-flex">Patient Name </span>
+                                                                    <div class="e-employer">
+                                                                        <lightning:input placeholder="Type.." aura:id="userinput" name="searchText" autocomplete="off" onchange="{!c.searchField}" value="{!v.selectRecordName}" disabled="{!v.onPatient}"/>
+                                                                        <aura:if isTrue="{!empty(v.selectRecordId)}">
+                                                                            <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right iconheight slds-is-absolute">
+                                                                                <lightning:icon class="slds-icon slds-icon_small slds-icon-text-default" iconName="utility:search" size="x-small" alternativeText="icon" />
+                                                                            </span> 
+                                                                            <aura:set attribute="else">
+                                                                                <aura:if isTrue="{!v.reset}">
+                                                                                    <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon iconheight slds-is-absolute" onclick="{!c.resetData}">
+                                                                                        <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default slds-is-closed" iconName="utility:clear" size="x-small" alternativeText="icon" />
+                                                                                        <span class="slds-assistive-text">Clear</span></button>
+                                                                                </aura:if>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!v.EmpList}">
+                                                                            <div class="slds-grid">
+                                                                                <div class="slds-col slds-size--12-of-12 slds-p-left_small ">
+                                                                                    <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 fluid_selection_dropdown" role="listbox">
+                                                                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                                                            <aura:iteration items="{!v.searchRecords}" var="serecord" indexVar="hdtv">
+                                                                                                <li role="presentation" class="slds-listbox__item">
+                                                                                                    <div id="{!serecord.Id}" data-name="{!serecord.Name}" onclick="{!c.setSelectedRecord}" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                                                                        <span class="slds-media__figure">
+                                                                                                            <span class="slds-icon_container slds-icon-standard-account slds-is-absolute">
+                                                                                                                <lightning:icon iconName="{!v.iconName}" class="slds-icon slds-icon slds-icon_small slds-icon-text-default" size="x-small"/>
+                                                                                                            </span>
+                                                                                                        </span>
+                                                                                                        <span class="slds-media__body">
+                                                                                                            <span class="slds-listbox__option-text_entity">{!serecord.Name}</span>
+                                                                                                            <!-- <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!v.objectName} • {!serecord.Name}</span>-->
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </aura:iteration>
+                                                                                            <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
+                                                                                                Selection is not found - please select "Other"
+                                                                                            </aura:if>
+                                                                                            <aura:if isTrue="{!v.LoadingText}">
+                                                                                                Loading...
+                                                                                            </aura:if>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </aura:if>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                                    <lightning:input type="text" name="" label="DOB" value="{!v.acctDetails.ElixirSuite__Account__r.ElixirSuite__Patient_s_Birth_Date__c}" placeholder="N/A"  disabled= "true"/>
+                                                                    
+                                                                </div>
+                                                                <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                                    <lightning:input type="text" name="" label="Gender" value="{!v.acctDetails.ElixirSuite__Account__r.ElixirSuite__Gender__c}" placeholder="N/A" disabled= "true"/>
+                                                                    
+                                                                </div>
+                                                               
+                                                            </div>
+                                                            <div class="slds-grid slds-gutters defaultBackground">
+                                                                
+                                                                
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters ">
+                                                    <div class="slds-col slds-size_12-of-12 slds-p-bottom_x-small">
+                                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered table_low_layer">
+                                                            <thead>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Insurance Type">Insurance Type</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Insurance Name">Insurance Name</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Copay">Copay</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Co-Insurance">Co-Insurance (%)</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Remaining Deductible">Remaining Deductible</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="OOP Max">OOP Max</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                
+                                                                <aura:iteration items="{!v.insuranceDetails}" var="insuranceRec">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td data-label="Insurance Type" scope="row">
+                                                                            <div class="slds-truncate" title="Insurance Type">
+                                                                                {!insuranceRec.ElixirSuite__Insurance_Type__c}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td data-label="Insurance Name">
+                                                                            <div class="slds-truncate" title="Insurance Name">{!insuranceRec.ElixirSuite__Payer_Name__c}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <aura:if isTrue="{!insuranceRec.ElixirSuite__Insurance_Type__c == 'Primary'}">
+                                                                                
+                                                                                <lightning:checkboxGroup aura:id="mygroup"
+                                                                                                         name=""
+                                                                                                         label=""
+                                                                                                         options="{! v.options1 }"
+                                                                                                         value="{! v.value }"
+                                                                                                         onchange="{! c.handleChange }"/>
+                                                                                
+                                                                                <lightning:input aura:id="copay" 
+                                                                                                 type="number" 
+                                                                                                 formatter="currency" 
+                                                                                                 value="{!v.coPayValue}" 
+                                                                                                 disabled="{!v.useCopay}"/>
+                                                                                
+                                                                                <aura:set attribute="else">
+                                                                                    <lightning:input aura:id="copay1" 
+                                                                                                     type="number" 
+                                                                                                     formatter="currency" 
+                                                                                                     value="{!insuranceRec.ElixirSuite__In_Net_Co_Payment__c}" 
+                                                                                                     disabled="true"/>
+                                                                                </aura:set>
+                                                                            </aura:if>
+                                                                            
+                                                                        </td>
+                                                                        <td data-label="Co-Insurance">
+                                                                            <div class="slds-truncate" title="Co-Insurance">{!insuranceRec.ElixirSuite__Deduc_inNtwk_Clientperc__c}</div>
+                                                                        </td>
+                                                                        <td data-label="Remianing Deductible">
+                                                                            <ui:outputCurrency  value="{!insuranceRec.ElixirSuite__Deductible_Individual_Out_Plan_Network__c}"/>
+                                                                        </td>
+                                                                        <td data-label="OOP Max">
+                                                                            <ui:outputCurrency  value="{!insuranceRec.ElixirSuite__out_of_network_outOfPocket_total__c}"/>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                </aura:iteration>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="slds-m-top_large">
+                                    <div class="slds-grid slds-gutters slds-m-top_large">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <lightning:button class="slds-button slds-button_neutral" onclick="{!c.openProcedures}">Add Procedure</lightning:button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.isProceduresAvailable}">
+                                    <div  class="changeHeight" aura:id="text">
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss">
+                                            <div class="slds-modal__container AddNewProblem">                                            
+                                                <header class="slds-modal__header headercls changeFontSize">
+                                                    <lightning:buttonIcon iconName="utility:close" onclick='{!c.hideProcedures}' alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">PROCEDURES</h2>
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_medium AddNewProblemBody" id="modal-content-id-1">
+                                                    <lightning:dualListbox name="languages"                                                          
+                                                                           sourceLabel="Select Procedures"
+                                                                           selectedLabel="Selected"                                                          
+                                                                           options="{!v.options}"
+                                                                           onchange="{!c.handleChangeMultiSelectProcedures }"/>
+                                                </div>
+                                                <footer class="slds-modal__footer buttonRound">
+                                                    <lightning:button variant="destructive" name='Cancel' label='Cancel' onclick='{!c.hideProcedures}'/>
+                                                    <lightning:button variant="brand" name='{!rowIndex}' label='Apply' onclick='{!c.handleConfirmDialogAddProcedure}'/>
+                                                </footer>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </div>
+                                    
+                                </aura:if>
+                                <aura:if isTrue="{!v.isProceduresSelected}">
+                                    <div class="slds-grid slds-gutters slds-m-top_large">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered reportTableCustom slds-is-absolute">
+                                                <thead>
+                                                    
+                                                    <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Opportunity Name">CPT - CODE</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Account Name">Procedure</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Close Date">Unit</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Stage">Contracted Rate</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Confidence">Total Contracted Price</div>
+                                                        </th>
+                                                        
+                                                        
+                                                    </tr>
+                                                    
+                                                </thead>
+                                                <tbody>
+                                                    <aura:iteration items="{!v.allProceduresSelectedToOperate}" var="item" indexVar ="idx">
+                                                        <tr class="slds-hint-parent">
+                                                            <td data-label="Opportunity Name" scope="row">
+                                                                <div class="slds-truncate" title="CPT-CODES">
+                                                                    {!item.ElixirSuite__CPT_HCPCS_Code__c}
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Account Name">
+                                                                <div class="slds-truncate">{!item.Name}</div>
+                                                            </td>
+                                                            <td data-label="Close Date">
+                                                                <lightning:input type="text" name="{!idx}" value="{!item.Unit}" onchange="{!c.updateTotalContractedPrice}"/>
+                                                            </td>
+                                                            <td data-label="Prospecting">
+                                                                <div class="slds-truncate" >
+                                                                    <ui:outputCurrency aura:id="curr" value="{!item.cPrice}"/>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="Confidence">
+                                                                <div class="slds-truncate" title="20%">
+                                                                    <ui:outputCurrency aura:id="curr" value="{!item.totalContractedPrice}"/> 
+                                                                </div>
+                                                            </td>
+                                                            <lightning:buttonIcon iconName="utility:delete" name="{!idx}" variant="bare" onclick="{!c.handleRemoveRecords}" alternativeText="delete" title="delete" />
+                                                            
+                                                            
+                                                        </tr>
+                                                    </aura:iteration>
+                                                    <tr>
+                                                        <td colspan="3"></td>
+                                                        <td><b>Total</b></td>
+                                                        <td><b><ui:outputCurrency aura:id="curr" value="{!v.procedureTotal}"/></b></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-m-top_large">
+                                        <div class="slds-grid slds-gutters slds-m-top_large">
+                                            <div class="slds-col slds-size_12-of-12">
+                                                <lightning:button class="slds-button slds-button_neutral" onclick="{!c.calculateResponsibility}">Calculate</lightning:button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.hasCalculationCompleted}">
+                                    <!-- <div class="slds-grid slds-gutters slds-m-top_large footerArea">
+            <div class="slds-col slds-size_6-of-12">
+    <b>Approx Insurance Responsibility : $ {!v.InsuranceResposibility}</b>                
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <b>Approx Patient Responsibility : $ {!v.PatientResposibility}</b>
+            </div>
+        </div>-->
+                                    <div class="slds-grid slds-gutters slds-m-top_large ">
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <div class="footerArea">
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        <h3>COST OF CARE CALCULATIONS</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_7-of-12 changeMargin">
+                                                        <b>Patient Responsibility : </b>
+                                                    </div>
+                                                    <div class="slds-col slds-size_5-of-12 changeMargin">
+                                                        <b>
+                                                            <ui:outputCurrency aura:id="curr" value="{!v.PatientResposibilityRoundedOff}"/> </b>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_7-of-12 changeMargin">
+                                                        <b>Insurance Responsibility : </b>                
+                                                    </div>
+                                                    <div class="slds-col slds-size_5-of-12 changeMargin">
+                                                        <b><ui:outputCurrency aura:id="curr" value="{!v.InsuranceResposibilityRoundedOff}"/> </b>  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer buttonRound">
+                        <div class="slds-grid slds-gutters changeText">       
+                            <div class="slds-col slds-size_12-of-12">  
+                                <lightning:button variant="brand" label="Save" title="Save" onclick="{! c.save }" />
+                                <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                            </div>
+                            
+                        </div>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </aura:if>
+    
+</aura:component>

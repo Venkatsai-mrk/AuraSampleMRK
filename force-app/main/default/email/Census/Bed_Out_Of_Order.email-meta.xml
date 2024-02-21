@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Bed Out Of Order</name>
+    <style>none</style>
+    <subject>Bed Out Of Order Alert for {!Bed__c.Name}</subject>
+    <textOnly>Hi Team ,
+
+This Bed No. {!Bed__c.Name} Needs Maintenance.
+
+Please find the details of the maintenance needs below: {!Bed__c.Enter_details_of_the_maintenance_needs__c}
+
+Thanks
+
+Admin</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

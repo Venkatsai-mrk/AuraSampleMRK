@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_Editable</fullName>
+    <active>true</active>
+    <description>This field can only be specified at the time of creation of a treatment center.</description>
+    <errorConditionFormula>OR(
+AND(NOT(ISBLANK (TEXT( Add_houses__c ))),
+PRIORVALUE( Add_houses__c ) != TEXT( Add_houses__c )),
+
+AND(NOT(ISBLANK(TEXT( room_to_create__c ))),
+PRIORVALUE(  room_to_create__c  ) !=TEXT ( room_to_create__c )))</errorConditionFormula>
+    <errorMessage>The value for set up houses, number of houses or rooms to be created can only be specified at one time. If you want to add or delete houses and rooms, please do so manually from the related lists below.</errorMessage>
+</ValidationRule>

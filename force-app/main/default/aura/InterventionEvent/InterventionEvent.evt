@@ -1,0 +1,4 @@
+<aura:event type="Component" description="Intervention template" >
+    <aura:attribute name="Intervention" type="Object"/>
+    
+</aura:event>

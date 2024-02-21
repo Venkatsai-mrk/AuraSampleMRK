@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Beds</fullName>
+    <columns>Bed_No__c</columns>
+    <columns>NAME</columns>
+    <columns>Room_Name__c</columns>
+    <columns>Room__c</columns>
+    <columns>House_Name__c</columns>
+    <columns>Treatment_Center_Name__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Beds</label>
+</ListView>

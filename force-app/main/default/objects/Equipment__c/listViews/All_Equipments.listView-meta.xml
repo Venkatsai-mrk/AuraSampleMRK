@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Equipments</fullName>
+    <columns>NAME</columns>
+    <columns>Equipment_Quantity__c</columns>
+    <columns>Location__c</columns>
+    <columns>No_of_Available_Equipment__c</columns>
+    <columns>OWNER.ALIAS</columns>
+    <filterScope>Mine</filterScope>
+    <label>All Equipments</label>
+</ListView>

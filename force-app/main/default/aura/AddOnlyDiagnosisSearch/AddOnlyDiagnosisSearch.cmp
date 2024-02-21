@@ -1,0 +1,60 @@
+<aura:component controller="AddOnlyDiagnosisController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="selectedRecord" type="Object" default="" description="selected Record Details" />
+    <aura:attribute name="message"   type="String" default="" />
+    <aura:attribute name="modalVisibility" type="string" default="slds-hide" />
+    <aura:attribute name="showModal" type="Boolean" default="false" />
+    <aura:attribute name="searchString"   type="string" default="" description="String to search"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>
+    <aura:attribute name="ICDSearchParam" type="String"/>
+    <aura:attribute name="selectedRecordId"   type="string" />
+    <aura:attribute name="selectedRecordName"   type="string" />
+    <aura:attribute name="value" type="String" default="" description="To pre-populate a value" />
+    <aura:attribute name="checkValue" type="Boolean"/>
+    <aura:attribute name="MapOfIdAndSObj" type="Object"/>
+    <aura:attribute name="index" type="String"/>
+    <aura:registerEvent name="diagnosisEvent" type="c:diagnosisEvent" />
+    <aura:attribute name="placeholder" type="String"/>
+    <aura:attribute name="patientID" type="String"/>
+    <div>
+        <div class="slds-combobox_container">
+            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aura:id="resultsDiv" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right payCss" role="none">
+                    <div aura:id="lookup-pill" class="{! 'slds-pill-container ' + if(v.selectedRecord == '','slds-hide','') }">
+                        <!-- Selected Value Pill -->
+                        <lightning:pill class="fullWidth" label="{!v.selectedRecord.label}" name="{!v.selectedRecord.value}" onremove="{! c.removeItem }">
+                         
+                            <!-- <aura:set attribute="media">
+                                <lightning:icon iconName="{!v.iconName}" size="x-small" alternativeText="icon"/>
+                            </aura:set>-->
+                        </lightning:pill>
+                    </div>
+                    <div aura:id="lookupField" class="{! if(v.selectedRecord == '','slds-show','slds-hide') }">
+                        <!-- Icon, Search Bar, Search Icon -->
+                       <!-- <lightning:icon class="slds-combobox__input-entity-icon" iconName="{!v.iconName}" size="large" alternativeText="icon"/>-->
+                        <!-- from input removed event - onkeyup="{!c.searchRecords}" as per bulk handling requirement. Logic moved to onclick-->
+                        <lightning:input aura:id="inputLookup" class="inputBox small-placeholder-text" placeholder="{!v.placeholder}" onblur="{!c.blurEvent}" onclick="{!c.showRecords}" value="{!v.searchString}" disabled= "{!v.AllFlag}"  autoComplete="off" variant="label-hidden" id="combobox-id-1"/>
+                     
+                        <lightning:icon class="slds-input__icon" iconName="utility:search" size="x-small" alternativeText="search"/>
+                        <lightning:spinner class="slds-hide" aura:id="Spinner" alternativeText="Loading" size="small" variant="brand"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.showModal}">
+        <div class="{!v.modalVisibility}">
+            <c:searchICDCodesModalNotes showModal="{!v.showModal}"
+                                   onicdsadded="{!c.handleModalSave}"
+                                   label="ICD-CM Code"
+                                   objectName="ElixirSuite__ICD_Codes__c" 
+                                   fieldName="Name"
+                                   selectedRecordId="{!v.selectedRecordId}"
+                                   selectedRecordName = "{!v.selectedRecordName}"
+                                   ICDSearchParam = "{!v.ICDSearchParam}"
+                                   diagnosisVersionChange = "{!v.diagnosisVersionChange}"
+                                   problemName = "{!v.problemName}"
+                                   accountId="{!v.patientID}">
+            </c:searchICDCodesModalNotes>
+        </div>
+    </aura:if>
+</aura:component>

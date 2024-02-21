@@ -1,0 +1,69 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="returnVal" type="boolean" default="false"/>
+    <aura:attribute name="DisAmt" type="decimal"/>
+    <aura:attribute name="DisType" type="String" default="Amount"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/> 
+    <aura:registerEvent name="discountEvent" type="c:discountEvent"/>
+    <aura:attribute name="maxAmountforDiscount" type="integer" default="0"/>
+    <aura:attribute name="maxPercentageforDiscount" type="integer" default="0"/>
+    <aura:if isTrue="{!v.isModalOpen}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open bgmodal">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{!c.closePopUp}">
+                    &#10005; <span class="slds-assistive-text">Cancel and close</span>
+                </button> 
+                <!-- Modal/Popup Box Header Starts here-->
+                <div class="slds-modal__header headerCSS changeBack">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Add Discount</b></h2>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium parentCSS" id="modal-content-id-1">
+                    <table aria-multiselectable="true" class="slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div title="Name"><b> Discount Type</b></div>
+                            </th>
+                            <td>
+                                <div class="slds-col slds-size_5-of-12">
+                                    <lightning:select value="{!v.DisType}" onchange="{!c.disTypeChange}">
+                                        <option value="Amount" label="Amount"/>
+                                        <option value="Percentage" label="Percentage"/>  
+                                    </lightning:select>
+                                </div>
+                            </td>
+                        </tr> 
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <aura:if isTrue="{!(v.DisType == 'Amount')}">
+                                        <div title="Total amount"><b>Amount ($)</b></div>
+                                    <aura:set attribute="else">
+                                        <div title="Total amount"><b>Percentage (%)</b></div>   
+                                    </aura:set>
+                                </aura:if>
+                            </th>
+                            <td class="" scope="col">
+                                <div class="slds-col slds-size_5-of-12 remove_label"> 
+                                    <aura:if isTrue="{!(v.DisType == 'Amount')}">
+                                        <lightning:input aura:id="input" type="number"  formatter="currency" step="0.01" value="{!v.DisAmt}" min="0" max="{!v.maxAmountforDiscount}" messageWhenRangeOverflow="{!'Amount cant be greater than '+ v.maxAmountforDiscount}"/>
+                                        <aura:set attribute="else">
+                                         <lightning:input aura:id="input" type="number"  formatter="percent-fixed" step="0.01" value="{!v.DisAmt}" min="0" max="{!v.maxPercentageforDiscount}" messageWhenRangeOverflow="{!'Percentage cant be greater than '+ v.maxPercentageforDiscount}"/>   
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="slds-modal__footer changeBackColor">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.closePopUp}">Cancel</button>
+                    <button class="slds-button slds-button_brand" aria-label="Save" onclick="{!c.AddDiscount}">Add</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+    
+</aura:component>

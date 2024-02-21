@@ -1,0 +1,66 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #f3f2f2;
+    border: none;
+}
+.THIS .c-point {
+    cursor: pointer;
+    margin-top: 10px;
+    width: calc(100% - 38px);
+    padding-right: 5px !important;
+}
+.THIS .elx-des {
+    margin-top: 15px;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 992px) {
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .elx-des {
+        margin-top: 30px;
+    }
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .elx-des {
+        margin-top: 30px;
+    }
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesIntervention .slds-size_10-of-12{
+        width: 100%;
+    }
+}

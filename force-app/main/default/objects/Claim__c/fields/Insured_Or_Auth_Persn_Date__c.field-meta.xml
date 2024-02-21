@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insured_Or_Auth_Persn_Date__c</fullName>
+    <description>Date on which the authorized representative or the insured individual signed the relevant documents</description>
+    <externalId>false</externalId>
+    <label>Insured Or Auth Persn - Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

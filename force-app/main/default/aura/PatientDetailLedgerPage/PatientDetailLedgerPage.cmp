@@ -1,0 +1,170 @@
+<aura:component controller="PatientDetailLedger" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="paymentSched" type="Boolean"/>
+    <aura:attribute name="patStatement" type="Boolean"/>
+    <aura:attribute name="COCalculator" type="Boolean"/> 
+    <aura:attribute name="firstCall" type="Boolean"/>
+    <aura:attribute name="secondCall" type="Boolean"/>
+    <aura:attribute name="claimView" type="Boolean"/>
+    <aura:attribute name="vobInfo" type="VOB__c"/>  
+    <aura:attribute name="vobResultInfo" type="Object"/>
+    <aura:attribute name="patientData" type="Object"/>
+    <aura:attribute name="totalInsuranceResp" type="Decimal" default="0.0"/>
+    <aura:attribute name="payPosting" type="Boolean"/>
+    <aura:attribute name="collectPayment" type="Boolean"/>
+    <aura:attribute name="isResult" type="Boolean" default="false"/>
+    <aura:attribute name="srcId" type="String"/>
+    
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Claims', 'value': 'Claims'},
+                                                        {'label': 'Procedures', 'value': 'Procedures'},
+                                                        {'label': 'Show Payment History', 'value': 'Show Payment History'},
+                                                        {'label': 'Cost of Care Calculation Estimates', 'value': 'Cost of Care Calculation Estimate'},
+                                                        {'label': 'Show Payment Schedule', 'value': 'Show Payment Schedule'}
+                                                        ]"/>
+    <aura:attribute name="optVal" type="String" default="Claims"/>
+    <aura:attribute name="payHistory" type="Boolean"/>
+    <aura:attribute name="cocEstimates" type="Boolean"/>
+    <aura:attribute name="paySchedule" type="Boolean"/>
+    <aura:attribute name="procedureView" type="Boolean"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+<aura:attribute name="licenseAvailable" type="boolean" default="false"/>
+    
+    <!--Akanksha-->
+    <aura:attribute name="insuranceOptions" type="List" default="[]"/>
+    <aura:attribute name="autoAccdpayerNameOptions" type="List" default="[]"/>
+    <aura:attribute name="policyNumberOptions" type="List" default="[]"/>
+    <aura:attribute name="idPairMap" type="Object"/>
+    
+    <aura:attribute name="selectedValue" type="string" />
+    <aura:attribute name="selectedValue1" type="string" />
+    <aura:attribute name="selectedValue2" type="string" />
+    <aura:attribute name="insuranceLabelName" type="String" default="Insurance Details"/>
+    
+    <aura:handler name="init" value="{!this}" action="{! c.init }"/>
+    <aura:handler name="IntegCmpEvent" event="c:VobIntegrationEvent" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!v.Billing}">
+        <aura:if isTrue="{!v.firstCall}">    
+            <lightning:card>
+                <div class="slds-p-left_medium slds-p-right_medium">
+                    <div class="slds-gutters slds-grid main-grid">
+                        <div class="slds-col slds-size_3-of-12 ">
+                            <c:PatientCard patId="{!v.patientId}" licenseAvailable="{!v.licenseAvailable}"></c:PatientCard> 
+                            
+                            <c:FinancialDetails_for_ehr patientId="{!v.patientId}"></c:FinancialDetails_for_ehr> 
+                            
+                            <aura:if isTrue="{!v.secondCall}">
+                                <c:InsuranceCard patientId="{!v.patientId}" ></c:InsuranceCard>
+                            </aura:if>
+                        </div>
+                        <div class="slds-col slds-size_9-of-12 ledgerCls">
+                            <div class="demo-only slds-grid patient-ac-1" >
+                                
+                                <div class=" slds-grid slds-grid_vertical slds-nowrap" >
+                                    <div class="slds-form slds-form_stacked slds-grow ">
+                                        <div class="slds-gutters slds-grid pay_btn-grid">
+                                            <div class="slds-col slds-size_3-of-12 slds-text-align--center">
+                                                <!--lightning:icon size="medium" iconName="utility:money" alternativeText="" title="" class="changepadding"/-->
+                                                <button class="butClass2" onclick="{! c.handleClickCollectPayment }">
+                                                    Collect Payment
+                                                </button>
+                                                <!--lightning:button  label="Make a Payment" title="Make a Payment" onclick="{! c.handleClickPaymentPosting }"/-->
+                                                
+                                            </div>
+                                            <!-- Commented by Sagili sivasai-->
+                                           <!-- <div class="slds-col slds-size_3-of-12 slds-text-aligncenter">
+                                                <lightning:icon size="medium" iconName="utility:money" alternativeText="" title="" class="changepadding">
+                                               <button class="butClass2" onclick="{! c.handleClickPaymentPosting }">
+                                                    Make a Payment
+                                                </button>
+                                                <lightning:button  label="Make a Payment" title="Make a Payment" onclick="{! c.handleClickPaymentPosting }"/>
+                                                
+                                            </div>-->
+                                             
+                                             <aura:if isTrue="{!not(empty(v.vobResultInfo))}">
+                                            <div class="slds-col slds-size_3-of-12 slds-text-align--center marLeft">
+                                                    <!--lightning:icon size="medium" iconName="utility:ad_set" alternativeText="" title="" class="changepadding"/-->
+                                                    <button class="butClass1" onclick="{! c.handleClickCoC }">
+                                                        Cost Of Care Calculator
+                                                    </button>
+                                                    <!--lightning:button label="Cost Of Care Calculator" title="Cost Of Care Calculator" onclick="{! c.handleClickCoC }"/-->
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div class="slds-col slds-size_3-of-12 slds-text-align--center marLeft">
+                                                        <!--lightning:icon size="medium" iconName="utility:ad_set" alternativeText="" title="" class="changepadding"/-->
+                                                        <button class="butClass1" onclick="{! c.ShowToast }">
+                                                            Cost Of Care Calculator
+                                                        </button>
+                                                        <!--lightning:button label="Cost Of Care Calculator" title="Cost Of Care Calculator" onclick="{! c.ShowToast }"/-->
+                                                    </div>
+                                                    
+                                                </aura:set>
+                                            </aura:if>
+                                            <div class="slds-col slds-size_4-of-12 slds-text-align--center patStatement">
+                                                <!--lightning:icon size="medium" iconName="utility:display_text" alternativeText="" title="" class="changepadding"/-->
+                                                <button class="butClass" onclick="{! c.handleClickPatStatement }">
+                                                    Patient  Statement
+                                                </button>
+                                                <!--lightning:button  label="Patient Statement" title="Patient  Statement" onclick="{! c.handleClickPatStatement }"/-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="claim-btn">
+                                <div class="custom-radio">
+                                    <lightning:radioGroup name="radioButtonGroup"
+                                                          options="{! v.options }"
+                                                          value="{! v.optVal }"
+                                                          type="radio"
+                                                          onchange="{! c.handleChange }"/>
+                                </div>
+                            </span>
+                            <div class="demo-only slds-grid patient-ac-2">
+                                <aura:if isTrue="{!v.claimView}">
+                                    <c:ClaimListView patId="{!v.patientId}" />
+                                </aura:if>    
+                                <aura:if isTrue="{!v.procedureView}">
+                                    <c:ProcedureListView patId="{!v.patientId}" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.payHistory}">
+                                    <c:PaymentHistory patId="{!v.patientId}"/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.cocEstimates}">
+                                    <c:EstimateListView patId="{!v.patientId}"> </c:EstimateListView>
+                                </aura:if> 
+                                <aura:if isTrue="{!v.paySchedule}">
+                                    <c:PaymentScheduleListView patId="{!v.patientId}"> </c:PaymentScheduleListView>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.paymentSched}">
+                        <c:PaymentSchedule isOpen="{!v.paymentSched}"  recordId="{!v.patientId}"></c:PaymentSchedule>
+                    </aura:if>
+                    <aura:if isTrue="{!v.patStatement}">
+                        <c:ParentStatement isOpen = "{!v.patStatement}" recordId = "{!v.patientId}"></c:ParentStatement>
+                    </aura:if>
+                    <aura:if isTrue="{!v.COCalculator}">
+                        <c:CostOfCareCalculatorforEHR isOpen = "{!v.COCalculator}" recordId = "{!v.patientId}"></c:CostOfCareCalculatorforEHR>
+                    </aura:if>
+                    <aura:if isTrue="{!v.payPosting}">
+                        <c:BillingNewPayment isModalOpen ="{!v.payPosting}" recordId = "{!v.patientId}" isPaymentTab = "false" ></c:BillingNewPayment>
+                    </aura:if>
+                    <aura:if isTrue="{!v.collectPayment}">
+                        <c:MakeAPayment isModalOpen ="{!v.collectPayment}" recordId = "{!v.patientId}" isPaymentTab = "false" ></c:MakeAPayment>
+                    </aura:if>
+                </div>
+            </lightning:card>
+        </aura:if>
+        <aura:if isTrue="{!v.isResult}">
+            
+            <c:VOBIntegration recordId="{!v.srcId}"></c:VOBIntegration>
+        </aura:if>
+    </aura:if>
+</aura:component>

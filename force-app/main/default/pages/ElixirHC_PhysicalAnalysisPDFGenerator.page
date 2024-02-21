@@ -1,0 +1,181 @@
+<apex:page renderAs="pdf" controller="ElixirHC_PhysicalAnalysisHelper">
+<apex:form >
+    <apex:param name="orderId" value="{!$CurrentPage.parameters.orderId}"/>   
+<html>
+    <head>
+       
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet"/>  
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            @media(max-width: 576px) { 
+                .main-table {
+                    width: 100% !important;
+                }
+            }  
+        </style>
+    </head>
+    <body>
+        <table class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: 'Open Sans', sans-serif;  width: 794px; margin: 10px auto; background-color: #fff;">
+            <thead>
+                <tr>
+                    <th style="box-shadow: 0px 0px 3px 0px #ebe9ea;">
+                    	<table  border="0" cellspacing="0" cellpadding="0" style="background-color: #455660;width: 794px">
+                    		<tbody>
+                                
+                           <tr>
+                            <th style="background-color: #fff; padding: 0px 25px 0;">
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 20px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0px 25px 0px 0px; width: 230px;"><apex:image url="{!$Resource.InfiniteRecoveryLogo}" width="180"/></td>
+                                            <td style="width: 450px; ">
+                                            	<table  border="0" cellspacing="0" cellpadding="0" style="text-align: center;">
+                                                    <tbody>
+                                                        <tr><td><p style="text-align: left ; margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">6404 Ridge Oak Rd,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Austin, TX 78749,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">United States,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Phone: +1 844-206-9063</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0; font-size: 12px; font-weight: 400; color: #222;">Website: infiniterecovery.com</p></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </th>
+                        </tr>
+                                
+                    			<tr>
+	                    			<td>
+	                    				<table  border="0" cellspacing="0" cellpadding="0" style="width: 530px; text-align: left;">
+				                    		<thead>
+				                    			<tr>
+				                    				<th>
+				                    					<h2 style="margin: 0; font-weight: 400; font-size: 28px; color: #8ec63f;padding: 5px 15px;display: block;">UA - PHYSICAL ANALYSIS REPORT</h2>
+				                    				</th>
+				                    			</tr>
+				                    		</thead>
+				                    	</table>
+	                    			</td>
+	                    			<td style="">
+	                    				<table  border="0" cellspacing="0" cellpadding="0" style="width: 200px; text-align: left;">
+				                    		<tbody>
+				                    			<tr>
+				                    				<td style="border-left: 3px solid #5c6e6e;padding-left: 10px;">
+				                    					<p style="color: #dff9ba; font-size: 14px; font-weight: 400; margin: 0px 0;">Date : {!dataOnVF.dateOutput}</p>
+				                    				</td>
+				                    			</tr>
+				                    		</tbody>
+				                    	</table>
+	                    			</td>
+                    			</tr>
+                    		</tbody>
+                    	</table>
+                    </th>
+                </tr>
+            </thead>
+        	<tbody>
+        		<tr>
+        			<td style="padding: 18px 0 0;">
+        				<table border="0" cellspacing="0" cellpadding="0" style="width: 730px; text-align: left;">
+        					<thead>
+        						<tr>
+	        						<td style="background-color: #f8f8f8; padding: 10px 15px 0;width:700px;">
+	        							<table border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left;">
+	        								<thead>
+	        									<thead>
+	        										<tr>
+		        										<th colspan="9">
+		        											<h3 style="margin: 5px 0 19px 0; font-size: 20px; line-height: 18px; color: #2a84e6; font-style: italic; font-weight: 300; ">{!dataOnVF.wrapperExtData.Specimen_Status__c}</h3>
+		        										</th>
+	        										</tr>
+	        									</thead>
+	        								</thead>
+	        							</table>
+	        						</td>
+        						</tr>
+        						<tr>
+	        						<td style="background-color: #f8f8f8; padding: 10px 15px 0; border-top: 10px solid #fff;width:700px;">
+	        							<table border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left;">
+	        								<thead>
+	        									
+	        										<tr>
+		        										<th colspan="3">
+		        											<h3 style="margin: 0 0 14px 0; font-size: 16px; line-height: 16px;">OBSERVATIONS</h3>
+		        										</th>
+	        										</tr>
+	        									</thead>
+	        									<tbody>
+	        										<tr>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Colour
+	        											</td>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Appearnces
+	        											</td>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Notes
+	        											</td>
+	        										</tr>
+	        										<tr>
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px; border-right: 1px solid #f1f2f3;">{!dataOnVF.wrapperExtData.Colour__c}
+	        											</td>
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px;">{!dataOnVF.wrapperExtData.Appearance__c}
+	        											</td>
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px;">{!dataOnVF.wrapperExtData.Notes__c}
+	        											</td>
+	        										</tr>
+	        									</tbody>
+	        								
+	        							</table>
+	        						</td>
+        						</tr>
+        						<tr>
+	        						<td style="background-color: #f8f8f8; padding: 10px 15px 0; border-top: 10px solid #fff; width:700px;">
+	        							<table border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left;">
+	        								<thead>
+	        								
+	        										<tr>
+		        										<th colspan="3">
+		        											<h3 style="margin: 0 0 14px 0; font-size: 16px; line-height: 16px;">RESULTS</h3>
+		        										</th>
+	        										</tr>
+	        									</thead>
+	        									<tbody>
+	        										<tr>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Status
+	        											</td>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Comments
+	        											</td>
+	        											
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Examined by
+	        											</td>
+	        											<td style="background-color: #fff; padding: 10px; font-size: 13px; font-weight: 600; border-right: 1px solid #f1f2f3;">Examination Date/Time
+	        											</td>
+	        										</tr>
+	        										<tr>
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px; border-right: 1px solid #f1f2f3;">{!dataOnVF.wrapperExtData.Status__c}
+	        											</td>
+                                                        <td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px;">{!dataOnVF.wrapperExtData.Comments__c}
+	        											</td>
+	        											
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px; border-right: 1px solid #f1f2f3;">{!dataOnVF.examinedBy}
+	        											</td>
+	        											<td style="font-size: 11px; color: #1c1c1c;  padding: 10px 10px 15px;">{!dataOnVF.examinedDateTimeInString}
+	        											</td>
+	        										</tr>
+	        									</tbody>
+	        								
+	        							</table>
+	        						</td>
+        						</tr>
+        					</thead>
+        				</table>
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+    </body>
+</html> 
+</apex:form>
+</apex:page>

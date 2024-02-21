@@ -1,0 +1,12 @@
+<template>
+    <div class="slds-grid slds-gutters">
+         <div class="slds-col slds-size_10-of-12">
+        <lightning-icon icon-name="utility:chevronleft" alternative-text="Go" title="Go To" variant="base" onclick={navToPage}></lightning-icon>
+        <lightning-button label="Return To List View" variant="base" onclick={navToPage}></lightning-button>
+         </div>
+         <div class="slds-col slds-size_5-of-12">
+        <lightning-button class="requestupdate" disabled={buttonDisabled} label="Request Refill"  variant="brand" onclick={requestRefillHandler}></lightning-button>
+        <!--button class="requestupdate slds-button" disabled={buttonDisabled}  onclick={requestRefillHandler}>Request Refill</button-->
+    </div>
+    </div>
+</template>

@@ -1,0 +1,134 @@
+<!-- 
+Updated By - Anmol Saxena
+Updated Date - 12-May-2023
+Description - Session notes and attendance on events detail page
+Apex Class - attendanceController
+-->
+<aura:component controller="attendanceController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:handler name="init" action="{!c.doAction}" value="{!this}"/>
+    <aura:attribute name="eventData" type="String"/>
+    <aura:attribute name="coFaciliatorData" type="String"/>
+    <aura:attribute name="locationName" type="String"/>
+    <aura:attribute name="groupNote" type="String"/>
+    <aura:attribute name="actualGroupNote" type="String"/>
+    <aura:attribute name="count" type="Integer"/>
+    <aura:attribute name="attended" type="Integer"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    <aura:attribute name="Signature" type="Boolean" default="false"/>
+
+    <aura:attribute name="recordsAvailable" type="boolean" default="false"/>
+    <aura:attribute name="accValues" type="List" />
+    <aura:attribute name="accIdToAttended" type="List" />
+    <aura:attribute name="collpaseText" type="String" default="Notes"/>
+    <aura:attribute name="groupCollpaseText" type="String" default="Group Note"/>
+    <aura:attribute name="isButtonActive" type="Boolean" default="true" />
+    <aura:attribute name="grpNoteChange" type="Boolean" default="false"/>
+    <aura:attribute name="numberOfChanges" type="Integer" default="0"/>
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    <aura:handler name="change" value="{!v.groupNote}" action="{!c.handleGroupNoteChange}"/>
+    
+    
+    <aura:if isTrue="{!v.Ehr}">
+        <aura:if isTrue="{!v.recordsAvailable}">
+        <div class="parentCSS slds-is-relative">
+             <!-- HEADER -->
+            <div class="group-header slds-float_right">
+                <lightning:button variant="brand"  label="Sign session notes" onclick="{!c.handleSignature}"/>
+                <aura:if isTrue="{!v.Signature}">
+                    <c:SessionNotesSignature eventId = "{!v.recordId}"
+                                            buttonClicked = "{!v.Signature}" > </c:SessionNotesSignature>
+                </aura:if>
+            </div>
+            <div class="childCSS">
+
+                <h2 class="titlegrp" >Group Notes</h2>
+                <lightning:inputRichText label="GROUP NOTES" value="{!v.groupNote}"
+                                         onblur="{!c.handleNoteBlur}" onfocus="{!c.handleNoteFocus}" aura:id="grpNote" />
+                    
+
+                <!-- 2nd section begins-->
+                
+                <div class="slds-grid slds-gutters group_attendents  round-input">
+                    <div class="slds-col slds-size_2-of-12 slds-text-align--left">
+                        <h2 class="title act" >Patients</h2>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <h2 class="title" >
+                            <lightning:icon iconName="utility:user" size="x-small"/>
+                            ({!v.attended}) Attended</h2>
+                    </div>
+                    <div class="slds-col slds-size_7-of-12">
+                        <h2 class="title " >
+                            <lightning:icon iconName="utility:user" size="x-small"/>
+                            ({!v.count}) Missed</h2>
+                    </div>
+                </div>
+                
+                
+                    <aura:iteration items="{!v.accValues}"  var="accKey" indexVar="key"> 
+                        <ul class="pateint_list">
+                            <li>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-12 slds-text-align--left slds-p-top_large">
+                                        <div class="slds-p-left_medium">                                        
+                                            <ui:inputCheckbox name="{!accKey.accountId}" label="" change="{!c.handleAttendChange}" value="{!accKey.attended}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-p-top_medium">
+                                        <aura:if isTrue="{!not(empty(accKey.accProfilePic))}">                       
+                                            <img alt="Patient Image" src="{!'/sfc/servlet.shepherd/version/download/'+ accKey.accProfilePic}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                            <aura:set attribute="else">
+                                                <img src="{!$Resource.DefaultImage}"/>                                
+                                            </aura:set>
+                                        </aura:if>
+                                        <a onclick="{!c.redirectToAccount}" data-account-id="{!accKey.accountId}">
+                                        <ui:outputText value="{!accKey.accName}" />
+                                        </a>
+                                        
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_9-of-12 slds-p-top_large">
+                                        <lightning:accordion allowMultipleSectionsOpen="true">
+                                            <lightning:accordionSection name="{!accKey.accountId}" class="buttonclass" label="{!v.collpaseText}"><br/>
+                                                <!--lightning:textarea label="ADD INDIVIDUAL PARTICIPATION NOTES" name="{!accKey.accountId}"
+                                                                    value="{!accKey.individualNoteValue}" onchange="{!c.handleNoteChange}" /-->
+                                                <lightning:inputRichText label="{!accKey.accountId}" value="{!accKey.individualNoteValue}"
+                                            onblur="{!c.handleNoteChange}"   onfocus="{!c.handleNoteChange}" aura:id="indNote" />
+                                            </lightning:accordionSection>
+                                        </lightning:accordion>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </aura:iteration>
+                    
+                    
+                <br/>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <div class="group-footer slds-size_1-of-1 slds-is-absolute">
+            <!--ui:button class="slds-button slds-buttonbrand" label="Save" press="{!c.handleNewSave}"/-->
+            <lightning:button variant="brand"  label="Cancel" onclick="{!c.handleCancel}" disabled= "{!v.isButtonActive}"/>
+            <lightning:button variant="brand"  label="Save" onclick="{!c.handleNewSave}" disabled= "{!v.isButtonActive}"/>
+        </div>
+            
+            <aura:set attribute="else">
+                        <div class="tb1" aura:id="groupcheck">
+                    No group selected for this event
+                </div>
+                    </aura:set>
+                </aura:if>
+                <aura:set attribute="else">
+                <div class="tb1" aura:id="licensecheck">
+                    <p>This functionality is part of EHR. Please get in touch with Mirketa if you are interested in EHR.</p>
+                </div>
+            </aura:set>
+        
+    </aura:if>
+</aura:component>

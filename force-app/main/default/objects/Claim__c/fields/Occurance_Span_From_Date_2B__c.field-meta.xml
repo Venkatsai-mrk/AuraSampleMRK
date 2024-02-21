@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occurance_Span_From_Date_2B__c</fullName>
+    <description>Used to indicate the starting date of an occurrence span associated with Occurance Span Code 2B</description>
+    <externalId>false</externalId>
+    <label>Occurance Span From Date 2B</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

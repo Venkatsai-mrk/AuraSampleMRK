@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="newCareApexController">
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="patientID" type="string"/>
+    <aura:attribute name="heading" type = "String"/>
+    <aura:attribute name="showPrompt" type="Boolean"/> 
+    <aura:attribute name="customLocationStatus" type="Boolean"/> 
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name="fields" type="String[]" default="['ElixirSuite__Pre_Authorization_Number__c','ElixirSuite__Days__c','ElixirSuite__Visit_Start__c','ElixirSuite__Visit_End__c','ElixirSuite__Care_Episode_Location__c','ElixirSuite__Priority__c','ElixirSuite__Location_Address__c','ElixirSuite__Status__c','ElixirSuite__Reason__c']" />
+   
+    <div class="c-container">
+     <div class="header" align="center">
+          <h1>New Care Episode</h1>
+     </div>  
+     <div class="body">
+        <h2>Information</h2> 
+        <lightning:recordForm aura:id="myRecordForm" 
+                             objectApiName="ElixirSuite__Visits__c" 
+                             columns="2" 
+                             mode="create"                           
+                             onsubmit="{!c.handleSubmit}" 
+                             oncancel="{!c.handleCancel}"
+                             fields="{!v.fields}" 
+                         />
+        
+      </div>       
+     </div>    
+</aura:component>

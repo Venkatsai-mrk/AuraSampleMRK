@@ -1,0 +1,127 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_FormApexController" >
+    
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="toUpdateNotesToProblemRecordsOnForm" type="List"/>
+    <aura:attribute name="allCreateNotes" type="List"/>
+    <aura:attribute name="currentCreatedNote" type="String" />  
+    <aura:attribute name="isNotesListVisible" type="Boolean" default="true"/>
+    <aura:attribute name="isNotesSectionVisible" type="Boolean" />
+  
+    <aura:attribute name="parentJSON" type="Object"/>
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="existingProblems" type="Object"/>
+    <aura:attribute name="showDefaultProcedureNotification" type="Boolean" default="false"/>
+    <aura:attribute name="allergyData" type="String" />
+     <aura:attribute name="selectedValues" type="String"/>
+    <aura:attribute name="currentUser" type="object"/>
+     <aura:attribute name="inputDateSelectedValues" type="String"/>
+    <aura:attribute name="dataForEdit" type="Object" />
+    <aura:attribute name="vitalSignsData" type="Object" />
+    <aura:attribute name="openAddAllergy" type="Boolean" default="false"/>
+    <aura:attribute name="openSpecificDiagnosesFiltered" type="Boolean" default="false"/>
+    <aura:attribute name="openGlucoseLog" type="Boolean" default="false"/>
+    <aura:attribute name="openListOfProblems" type="Boolean" default="false"/>
+   
+    <aura:attribute name="medicationData" type="String" />
+    <aura:attribute name="glucoseData" type="Object" />
+    <aura:attribute name="problemDiagnosesData" type="Object" />
+    <aura:attribute name="patientID" type="String"/>  
+    <aura:attribute name="pathWay" type="string"/>  
+    <aura:attribute name="toDeleteRecordsOnForm" type="list"/>
+    <aura:attribute name="toUpdateRecordsOnForm" type="list"/>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+   
+  
+    
+     <aura:attribute name="isNotesSectionVisibleHere" type="Boolean" default="false"/>
+     
+    <aura:attribute name="recordId" type="String"/>
+     <aura:attribute name="openUpdateMedication" type="Boolean" default="false"/>
+  
+ 
+   
+    <aura:attribute name="FormId" type="string" default=""/>
+    <aura:handler name="AllergyData" event="c:AllergyData" action="{!c.handleAllergyData}"/>
+     <aura:handler name="FormMedicationData" event="c:FormMedicationData" action="{!c.handleMedicationDataEvent}"/> 
+    <aura:attribute name="today" type="Date" default=""/>
+    <aura:attribute name="todayString" type="String" default=""/>
+  
+    <aura:attribute name="openVitalSign" type="Boolean" default="false"/>
+     <aura:handler name="VitalSignsData" event="c:VitalSignsData" action="{!c.handleVitalSignsDataDataEvent}"/>
+  
+    <aura:handler name="GlucoseData" event="c:GlucoseData" action="{!c.handleGlucoseDataEvent}"/>
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+   <aura:attribute name="MobilityList" type="object[]"/>
+    <aura:attribute name="dynamicClass" type="String" default=""/>
+    <aura:handler name="problemDiagnosesData" event="c:problemDiagnosesData" action="{!c.handleproblemDaignosesDataEvent}"/>
+    <aura:attribute name="multiCheckboxClass" type="String" default=""/>
+    <aura:attribute name="columnWiseData" type="List"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>    
+    <aura:attribute name="showDetail" type="object"/>
+     <aura:attribute name="zf" type="object"/>
+    <aura:attribute name="accName" type="object" />
+
+ 
+    <aura:attribute name="currentIndex" type="Integer" /> 
+    <aura:attribute name="inputFirstCss" type="String" /> 
+    <aura:attribute name="inputSecondCss" type="String" />
+    <aura:attribute name="inputFirstCheckboxClass" type="String" /> 
+    <aura:attribute name="inputSecondCheckboxClass" type="String" />
+    <aura:attribute name="inputDateClass" type="String" />
+    <aura:attribute name="inputTimeClass" type="String" />
+  
+    <aura:attribute name="inputSelectedValues" type="String"/>
+    <aura:attribute name="physicalTherapist" type="List"/>
+    <aura:attribute name="inputTextAreaSelectedValues" type="String"/>
+  
+    <aura:attribute name="inputDateTimeselectedValues" type="String"/>
+    <aura:attribute name="inputTimeSelectedValues" type="String"/>
+    <aura:attribute name="fixedmultiPicklistValues" type="List" />
+    <aura:attribute name="BmiCalculated" type="Integer" /> 
+    <aura:attribute name="heightPicklist" type="String[]" />
+    <aura:attribute name="problemList" type="object[]"/> 
+    <aura:attribute name="YesNoList" type="String[]" />
+   
+    <aura:attribute name="FeedbackList" type="object[]"/> 
+    <aura:attribute name="historyList" type="object[]"/>   
+  
+    <aura:attribute name="Nursing_Assessment_List" type="object[]"/>
+    <aura:attribute name="NoteList" type="object[]"/> 
+    <aura:attribute name="StatusList" type="object[]"/> 
+    <aura:attribute name="DischargeValues" type="object[]"/> 
+     <aura:attribute name="PulseRate_List" type="object[]"/>     
+     <aura:attribute name="Sweating_List" type="object[]"/> 
+     <aura:attribute name="Restlessness_List" type="object[]"/> 
+    <aura:attribute name="PupilSize_List" type="object[]"/> 
+     <aura:attribute name="BoneOrJoint_List" type="object[]"/>
+     <aura:attribute name="RunnyNoseOrTearing_List" type="object[]"/> 
+    <aura:attribute name="GIUpset_List" type="object[]"/> 
+     <aura:attribute name="Yawning_List" type="object[]"/> 
+    <aura:attribute name="Facial_List" type="object[]"/> 
+    <aura:attribute name="Patient_awareness_List" type="object[]"/> 
+    <aura:attribute name="TremorOutstretched_List" type="object[]"/> 
+     <aura:attribute name="AnxietyOrIrritability_List" type="object[]"/> 
+    <aura:attribute name="GoosefleshSkin_List" type="object[]"/> 
+    <aura:attribute name="matrixCssList" type="List"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="runScroll" type="Boolean" default="true"/>
+   
+     <aura:attribute name="currentlyUploadedDocumetIDs" type="list"/> 
+    
+</aura:component>

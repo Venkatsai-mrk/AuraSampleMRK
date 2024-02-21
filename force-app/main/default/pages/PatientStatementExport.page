@@ -1,0 +1,206 @@
+<apex:page controller="StatementAsExportHelper" renderAs="pdf">
+    <apex:form >
+        <apex:param name="orderId" value="{!$CurrentPage.parameters.orderId}"/>
+        <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 680px; margin: 0 auto; background-color: #fafafa;">
+            <thead>
+                <!--<tr>
+<th style="background-color: #fff; padding: 0px 0px 0;">
+<table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 0px;">
+<tbody>
+<tr>
+<td style="padding: 0px 25px 0px 20px; width: 200px;"><apex:image url="{!$Resource.ElixirLogo}" width="180"/></td>
+</tr>
+</tbody>
+</table>
+</th>
+</tr> -->      
+<tr><td colspan="2"></td></tr>
+<tr>
+   <td colspan="2">
+      <div></div>
+       <img src="{!imagePdf}" width="130px"  style="object-fit: cover;margin: 10px auto auto 10px"/>
+   </td>
+</tr> 
+                <tr>
+                      <!--<td style="">
+                      <apex:image value="{!IF(isBlank(pdfData.PDF_Header_Logo__c), ' ' ,$Resource[pdfData.PDF_Header_Logo__c] )}"  width="180" style="margin: 20px 0 0 15px;" />     
+                    </td> -->  
+                     <td style="padding:0px 3px;">
+                        
+                        <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px;  margin: 5px 0; width: 335px;">
+                            
+                            <tbody>
+                                <tr>
+                                <td style="height:32px;"></td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td style="background-color: #f1f2f3;padding: 0px 15px;">
+                                        
+                                        <h4 style="margin: 0 0; font-size: 20px;"></h4>
+                                        
+                                        <p style="margin: 3px 0; font-size: 16px;"><b>Patient Name :</b> {!name} <span> </span></p>
+                                        
+                                      <!--  <p style="margin: 3px 0; font-size: 14px;"><b>Guarantor Name :</b>  {!name}<span> </span></p>-->
+                                        
+                                        <p style="margin: 3px 0; font-size: 14px;"><b>MRN Number :</b>  {!mrnNum}<span> </span></p>
+                                        
+                                        <p style="margin: 3px 0; font-size: 14px;"><b>Bill Date :</b>  &nbsp;
+                                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                <apex:param value="{!billDate}" />
+                                            </apex:outputText>
+                                            <span> </span></p>
+                                        
+                                    </td>   
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            
+                        </table>
+                        
+                    </td>
+                    <td style="">
+                        <table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; margin: 0 15px 0 0; width: 100%; text-align: right;">
+                            <thead>
+                                
+                                <tr>
+                                    <td style="">
+                                        
+                                        <h2 style="font-size: 22px; font-weight: 600; margin: 0 15px 0 0;">BILL</h2>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 10px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_1__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_2__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_3__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Phone_Number__c}</p>
+                                    </td>
+                                </tr>
+                                
+                            </thead> 
+                        </table>  
+                    </td>
+                
+                   
+                </tr>
+                
+            </thead>
+            
+            <tbody>
+                <table border="0" cellspacing="0" cellpadding="0" style="margin:20px auto;" >
+                    <tbody>
+                        <apex:repeat value="{!map_paymentTrans}" var="item" id="theRepeat">
+                            <table style="width:100%;">
+                                <tbody>
+                                    <tr><th colspan="4" style="background-color: #493266;font-size: 14px; font-weight: 150; margin: 5px 0 5px 15px; color: #fff;">  <!-- background-color: #039eda;-->
+                                        <h4 style="color: #fff;margin:5px 15px;display: block;">{!procNames[item]} &nbsp; {!procServiceDate[item]} </h4>
+                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Patient Outstanding : $ {!procRemaining[item]} 
+                                            <apex:outputText rendered="{!IF(typeOfPayment[item] == 'Insurance Payment' ,true,false)}">
+                                                <td style="background-color: #493266;color: #fff;padding: 2px 15px;font-size: 14px;font-weight: bold;">Adjustments : $ {!procAdjustment[item]} </td></apex:outputText></h4></th></tr>
+                                    
+                                    <apex:repeat value="{!map_paymentTrans[item]}" var="subitem" id="theRepeat">
+                                        <table style="width:100%;background-color:#f1f2f3;margin:6px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Transaction Date:</td>
+                                                    <td style="padding: 2px 15px;"> 
+                                                        <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}">
+                                                            <apex:param value="{!subitem.ElixirSuite__Payment_DateTime__c}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Provider:</td>
+                                                    <td style="padding: 2px 15px;">{!subitem.ElixirSuite__Master_Transaction__r.Provider__r.Name} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Charges (Billed Amount):</td>
+                                                    <td style="padding: 2px 15px;">$ {!subitem.ElixirSuite__Master_Transaction__r.Actual_Price__c}  </td>
+                                                    
+                                                </tr>
+                                                <apex:outputText rendered="{!IF(subitem.ElixirSuite__Payment_Received_By__c == 'Patient' ,true,false)}">
+                                                    <tr> 
+                                                        <td style="padding: 2px 15px;">Patient Payments:</td>
+                                                        <!-- <td style="padding: 2px 15px;">$ {!subitem.ElixirSuite__Amount_Paid__c}</td> chnaged by sivasai for limiting the decimal values to 2 -->
+                                                        <td style="padding: 2px 15px;">$ {!ROUND(subitem.ElixirSuite__Amount_Paid__c,2)}</td>
+                                                    </tr>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{!IF(subitem.ElixirSuite__Payment_Received_By__c == 'Insurance' ,true,false)}">
+                                                    <tr>
+                                                        <td style="padding: 2px 15px;">Insurance Payments:</td>
+                                                        <td style="padding: 2px 15px;">$ {!subitem.ElixirSuite__Amount_Paid__c}</td>
+                                                    </tr>
+                                                </apex:outputText>
+                                            </tbody>
+                                        </table>
+                                    </apex:repeat><br/>
+                                </tbody>
+                            </table>
+                        </apex:repeat>
+                        
+                     <apex:repeat value="{!paymentsNewList}" var="subitem" id="masterTrans">
+                            <table style="width:100%;">
+                                <tbody>
+                                    <tr><th colspan="4" style="background-color: #493266;font-size: 14px; font-weight: 150; margin: 5px 0 5px 15px; color: #fff;">  <!-- background-color: #039eda;-->
+                                        <h4 style="color: #fff;margin:5px 15px;display: block;">{!subitem.ElixirSuite__Procedure_Name__c} &nbsp;
+                                            <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}">
+                                                <apex:param value="{!subitem.Procedure__r.From_Date_of_Service__c}" />
+                                            </apex:outputText>
+                                        </h4>
+                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Patient Outstanding : $ {!subitem.PatientOutstanding__c} 
+                                        </h4></th></tr>
+                                    
+                                    
+                                        <table style="width:100%;background-color:#f1f2f3;margin:6px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Provider:</td>
+                                                    <td style="padding: 2px 15px;">{!subitem.Provider__r.Name} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Charges (Billed Amount):</td>
+                                                    <td style="padding: 2px 15px;">$ {!subitem.Actual_Price__c}  </td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table><br/>
+                                </tbody>
+                            </table>
+                        </apex:repeat>
+                        
+                    </tbody>
+                </table>
+                <tr>
+                    <td style="padding: 2px 15px; width:200px;">
+                        <!-- Total Amount Paid: &nbsp; ${!totalRecAmt} commented by sivasai -->
+                        Total Amount Paid: &nbsp; ${!ROUND(totalRecAmt,2)}
+                    </td>
+                </tr>
+                 <tr>
+                    <td style="padding: 2px 15px; width:200px;">
+                        <!-- Total Outstanding: &nbsp; ${!newCharges} commented by sivasai -->
+                        Total Outstanding: &nbsp; ${!ROUND(newCharges,2)}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </apex:form>
+</apex:page>

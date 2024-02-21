@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_under_care__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field Indicates whether the patient is currently under the care of a healthcare provider.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Is patient still under your care for this condition?</inlineHelpText>
+    <label>Patient under care?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

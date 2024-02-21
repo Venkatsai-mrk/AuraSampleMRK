@@ -1,0 +1,17 @@
+.delete-button-class .slds-button__icon.slds-button__icon_left svg {
+    margin: auto;
+}
+.setMaxHeight {
+    width: calc(100% - 46px);
+    max-height: 243px;
+    overflow-y: auto;
+    margin-left: 23px;
+    margin-top: 10px;
+}
+.htC{
+    height: 300px;
+}
+.warning_modal .slds-modal__container {
+    width: 50% !important;
+    max-width: 50% !important;
+}

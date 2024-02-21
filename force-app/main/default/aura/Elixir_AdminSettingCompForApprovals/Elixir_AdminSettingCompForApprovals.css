@@ -1,0 +1,46 @@
+.THIS .parentCSS{
+    padding: 0;
+}
+.THIS.slds-card {
+    height: 100%;
+    border: navajowhite;
+    background: transparent;
+    box-shadow: none;
+}
+.THIS .parentCSS_Header{
+    text-align: center;
+    background-color: #fff;
+    overflow-y: scroll;
+    top: 89px;
+    padding: 40px 0 15px;
+    bottom: 0;
+    left: 0px;
+    z-index: 1;
+    width: 250px;
+}
+.THIS .parentCSS_1{
+    padding: 7px 12px;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+}
+.THIS .parentCSS_1:hover {
+    background-color: rgb(243, 243, 243);
+}
+/**====Use this if you want to highlight selected things====**/
+.THIS .parentCSS_1.act {
+    background: #eaf1f5;
+    box-shadow: #2e739c 4px 0 0 inset;
+}
+
+.THIS .parent_content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+}
+.THIS .slds-card__header.slds-grid {
+	display: none;
+}
+.THIS .slds-card__body {
+    margin-top: 0;
+}

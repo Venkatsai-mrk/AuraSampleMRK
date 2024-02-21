@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>noRaceSelected</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Decline_to_Specify_Race__c,
+OR(
+ NOT(ISBLANK( Race_1__c )) ,
+ NOT(ISBLANK( Race_2__c )) ,
+ NOT(ISBLANK( Race_3__c )) ,
+ NOT(ISBLANK( Race_4__c )) 
+)
+)</errorConditionFormula>
+    <errorMessage>If race is specified, you cannot mark the patient race as decline to specify</errorMessage>
+</ValidationRule>

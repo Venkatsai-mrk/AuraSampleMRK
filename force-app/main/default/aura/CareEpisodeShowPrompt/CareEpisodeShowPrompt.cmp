@@ -1,0 +1,35 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                                              access="global" >
+    
+	<aura:attribute name="showPrompt" type="Boolean" default="false"/> 
+    <aura:attribute name="isOpen" type="Boolean" default="false"/> 
+    <aura:attribute name="openModal" type="Boolean" default="false"/>
+    <aura:attribute name="patientId" type="string"/>
+    <aura:attribute name ="heading" type = "String"/>
+    <aura:attribute name="newCareEpisode" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.showPrompt}"> 
+        <div class="auto_height" >
+			<section class="slds-modal slds-fade-in-open slds-modal_small">
+			    <div class="slds-modal__container" >			    	
+				    <header class="slds-modal__header">
+				        <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" size="large" variant="bare" alternativeText="Close" onclick="{! c.closePrompt}"/>
+				        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Care Episode</h2>
+				     </header>
+				     
+				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" align="center">
+				        <p>No Active Care Episode Present! Please Create a New Care Episode to Proceed</p>
+                      </div>
+				  
+				    <footer class="slds-modal__footer" >
+                       <div align="center">
+                        <lightning:button variant="brand" label="New Care Episode" title="New Care Episode" onclick="{!c.openNewCarePlanModal}" />
+				        <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{!c.closePrompt}" />   				    
+                       </div>
+				    </footer>                   
+			    </div>
+			</section>	             
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>       
+</aura:component>

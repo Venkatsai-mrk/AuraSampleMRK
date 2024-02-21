@@ -1,0 +1,353 @@
+<aura:component controller="CollectPaymentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="allCol1" type="List"/>
+    <aura:attribute name="allIns1" type="List"/>
+    <aura:attribute name="allPriv1" type="List"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="disableCreditTable" type="boolean" default="false"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="Allprocedures" type="list" default=""/>
+     <aura:attribute name="InsuranceData" type="list" default=""/>
+     <aura:attribute name="PrivateData" type="list" default=""/>
+     <aura:attribute name="selectedRows" type="list" default=""/>
+    <aura:attribute name="procedureSearchParams" type="String" default=""/> 
+    <aura:attribute name="isSearchDisabled" type="boolean" default="false"/>
+    <aura:attribute name="selectedRowsOfProc" type="list" default=""/>
+    <aura:attribute name="procedureType" type="String" default="All Procedures"/> 
+    <aura:attribute name="checkbox" type="boolean" default="false"/>
+    <aura:attribute name="selectAllClaims" type="boolean" default="false"/>
+    <aura:attribute name="claimsList" type="list" default="[]"/>
+     <aura:attribute name="NoOfClaimsSelected" type="Integer" default="0"/>
+     <aura:attribute name="PayTransId" type="List" default=""/>
+    <lightning:navigation aura:id="navService"/>
+     <aura:registerEvent name="procedurehandlerEvent" type="c:procedurehandlerEvent" />
+    <aura:attribute name="selectedProcedureRows" type="list" default=""/>
+    
+    <aura:attribute name="maxAmountforDiscount" type="integer" default="0"/>	
+    <aura:attribute name="maxPercentageforDiscount" type="integer" default="0"/>
+    <aura:attribute name="isDiscountModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="currentActiveID" type="String" default=""/>	
+    <aura:handler name="discountEvent" event="c:discountEvent" action="{!c.handleDiscountCmpEvent}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    <b class="slds-text-heading_small">Patient Procedures :</b><br></br>
+        <div class = "subheading">
+            Select which procedures you would like to apply this payment to from the list below
+        </div>
+    
+    
+    
+    <div class="slds-grid slds-gutters tableclass">
+        <div class="slds-col slds-size_3-of-12">
+             <div class="slds-col slds-size_10-of-12 checkboxspace remove_label">
+                <lightning:select aura:id="select1" name="select1" onchange="{!c.getProcedureType}" value="{!v.procedureType}">
+                <option value="All Procedures">All Procedures</option>
+                <option value="Insurance Procedures">Insurance Procedures</option>
+                <option value="Private Procedures">Private Procedures</option>
+                <option value="By Claims">By Claims</option>
+                </lightning:select>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-size_3-of-12">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                    <span class="slds-form-element__static slds-form-element__label">DOS From : </span>
+                </div>
+                <div class="slds-col slds-size_7-of-12 remove_label">
+                    <lightning:input type="date" value="{!v.procedureSearchParams.From}" onchange="{!c.onDOSChange}"/>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-size_3-of-12">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                    <span class="slds-form-element__static slds-form-element__label">DOS To : </span>
+                </div>
+                <div class="slds-col slds-size_7-of-12 remove_label">
+                    <lightning:input type="date" value="{!v.procedureSearchParams.To}" onchange="{!c.onDOSChange}"/>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-size_3-of-12 slds-text-align_right">
+             <lightning:button variant="brand" label="Search"  title="Search" disabled="{!v.isSearchDisabled}" onclick="{! c.searchprocedure }"/>
+         	 <lightning:button variant="neutral" label="Clear Filters"  title="Clear Filters" disabled = ""   onclick="{!c.doInit}"/>       
+        </div>
+
+    </div>
+     <div class = "tableclass">
+         <aura:if isTrue="{!v.procedureType == 'All Procedures'}">
+         <ui:scrollerWrapper class="scrollerSize">
+              <aura:if isTrue="{!v.checkbox}">
+                  <lightning:datatable
+                                  keyField="id"
+                                  data="{!v.Allprocedures}"
+                                  columns="{!v.allCol1}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="true"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  <aura:set attribute="else">
+                      <lightning:datatable
+                                  keyField="id"
+                                  data="{!v.Allprocedures}"
+                                  columns="{!v.columns}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="false"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  </aura:set>
+             </aura:if>
+             
+             
+         </ui:scrollerWrapper>
+         </aura:if>
+         
+         <aura:if isTrue="{!v.procedureType == 'Insurance Procedures'}">
+         <ui:scrollerWrapper class="scrollerSize">
+             <aura:if isTrue="{!v.checkbox}">
+                 <lightning:datatable
+                                  keyField="id"
+                                  data="{! v.InsuranceData}"
+                                  columns="{! v.allIns1}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="true"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  <aura:set attribute="else">
+                      <lightning:datatable
+                                  keyField="id"
+                                  data="{! v.InsuranceData}"
+                                  columns="{! v.columns1}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="false"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  </aura:set>
+             </aura:if>
+             
+             
+         </ui:scrollerWrapper>
+         </aura:if>
+         
+         <aura:if isTrue="{!v.procedureType == 'Private Procedures'}">
+         <ui:scrollerWrapper class="scrollerSize">
+             <aura:if isTrue="{!v.checkbox}">
+                 <lightning:datatable
+                                  keyField="id"
+                                  data="{! v.PrivateData}"
+                                  columns="{! v.allPriv1}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="true"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  <aura:set attribute="else">
+                      <lightning:datatable
+                                  keyField="id"
+                                  data="{! v.PrivateData}"
+                                  columns="{! v.columns2}"
+                                  onrowselection="{!c.handleAllprocedures}"
+                                  hideCheckboxColumn="false"
+                                  class="byProcTableCss"
+                                  minColumnWidth="175"
+                                  sortedBy="{!v.sortBy}"
+                                  sortedDirection="{!v.sortDirection}"
+                                  onsort="{!c.handleSort}"
+                                  selectedRows="{!v.selectedRowsOfProc }" 
+                                  onrowaction="{! c.handleRowActionP }"
+                                  /> 
+                  </aura:set>
+             </aura:if>
+             
+         </ui:scrollerWrapper>
+         </aura:if>
+         
+         <aura:if isTrue="{!v.procedureType == 'By Claims'}">
+         	<div class=" slds-scrollable changescroll" > 
+                <table aria-multiselectable="true" class="payment-table slds-table slds-table_header-fixed slds-table_bordered slds-table_edit">
+                    <thead>
+                        <th scope="col">
+                            <lightning:input type="checkbox" onchange="{!c.getSelectAllClaims}"
+                                             checked="{!v.selectAllClaims}" disabled="{!v.checkbox}"
+                                             />
+                        </th>
+                        <th scope="col">
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Claim</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>No. Of Open Procedures</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Billed Amount</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Primary Paid</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Secondary Paid</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Patient Responsibility</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Patient Paid</span>
+                        </th>
+                        <th scope="col" class="slds-cell-wrap">
+                            <span>Patient Outstanding</span>
+                        </th>
+                        
+                    </thead>
+                    <aura:iteration items="{!v.claimsList}" var="cl" >
+                        <tr>
+                            <td>
+                                <lightning:input type="checkbox"
+                                                 checked="{! cl.Selected }" onchange="{!c.handleOnClaimSelection}" name="{!cl.ClaimId}" disabled="{!v.checkbox}"
+                                                 />
+                            </td>
+                            <td>
+                                <lightning:input type="checkbox-button" name="input1" checked="{!cl.ShowProc}"/>
+                            </td>
+                            <td>
+                                <aura:if isTrue="{!cl.ClaimId != ''}"><a href="{! '/' + cl.ClaimId}">{!cl.ClaimName}</a></aura:if>
+                                <aura:if isTrue="{!cl.ClaimId == ''}">{!cl.ClaimName}</aura:if>
+                            </td>
+                            <td>{!cl.OpenProc}</td>
+                            
+                            <td><lightning:formattedNumber value="{!cl.totalBilledAmount}" style="currency" currencyCode="USD" /></td>
+                            <td><lightning:formattedNumber value="{!cl.totalInsurancePaidAmount}" style="currency" currencyCode="USD" /></td>
+                            <td><lightning:formattedNumber value="{!cl.totalSecondaryInsurancePaidAmount}" style="currency" currencyCode="USD" /></td>
+                            <td><lightning:formattedNumber value="{!cl.totalPatientResponsibility}" style="currency" currencyCode="USD" /></td>
+                            <td><lightning:formattedNumber value="{!cl.totalPatientPaidAmount}" style="currency" currencyCode="USD" /></td>
+                            <td><lightning:formattedNumber value="{!cl.PatientResp}" style="currency" currencyCode="USD" /></td>
+                            
+                        </tr>
+                        <aura:if isTrue="{!cl.ShowProc}">
+                            <thead>
+                                <th></th>
+                                <th scope="col">
+                                    <lightning:input type="checkbox"
+                                                     checked="{! cl.Selected }" onchange="{!c.handleOnClaimSelection}" disabled="{!v.disableCheckbox}"
+                                                     name="{!cl.ClaimId}"/>
+                                </th>
+                                <!-- Below 7 cols has been added by Anusha - start -->
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Procedure Name</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>DOS</span>
+                                </th>
+<th scope="col" class="slds-cell-wrap">
+                                    <span>Status</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Billed Amount</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Primary Paid</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Secondary Paid</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Patient Responsibility</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Patient Paid</span>
+                                </th>
+                                <th scope="col" class="slds-cell-wrap">
+                                    <span>Patient Outstanding</span>
+                                </th>
+                            </thead>
+                            <aura:iteration items="{!cl.procWrap}" var="proc">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <lightning:input type="checkbox" disabled="{!v.checkbox}"
+                                                         checked="{!proc.Selected }" onchange="{!c.handleOnProcSelection}" name="{!proc.ProcId}" value="{!cl.ClaimId}"/>
+                                    </td>
+                                    <td>
+                                        <aura:if isTrue="{!proc.ElixirSuite__Procedure__c != ''}"><a href="{! '/' + proc.ElixirSuite__Procedure__c}">{!proc.ElixirSuite__Procedure_Name__c}</a></aura:if>
+                                		<aura:if isTrue="{!proc.ElixirSuite__Procedure__c == ''}">{!proc.ElixirSuite__Procedure_Name__c}</aura:if>
+
+                                    </td>
+                                    
+                                    <td>
+                                        <lightning:formattedDateTime value="{!proc.ElixirSuite__Date_Of_Service__c}" year="numeric" day="2-digit" month="long"/>
+                                    </td>
+<td>
+                                        <lightning:formattedText value="{!proc.ElixirSuite__Procedure__r.ElixirSuite__Status__c}"/>
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__Actual_Price__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__Insurance_Paid__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__Secondary_Insurance_Paid__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__Patient_Responsibility__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__Total_Actual_Patient_Paid_Amount__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                    <td>
+                                        <lightning:formattedNumber value="{!proc.ElixirSuite__PatientOutstanding__c}" style="currency" currencyCode="USD" />
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </aura:if>
+                    </aura:iteration>
+                </table>
+             </div>
+         </aura:if>
+         <aura:if isTrue="{!v.isDiscountModalOpen}">
+            <c:discountPopUpModal isModalOpen ="{!v.isDiscountModalOpen}" maxPercentageforDiscount="{!v.maxPercentageforDiscount}" maxAmountforDiscount="{!v.maxAmountforDiscount}"></c:discountPopUpModal>
+        </aura:if>
+         
+    </div>
+                              
+
+
+    
+</aura:component>

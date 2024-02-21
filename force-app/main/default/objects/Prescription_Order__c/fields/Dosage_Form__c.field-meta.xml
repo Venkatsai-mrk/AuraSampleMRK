@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dosage_Form__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Dosage Form</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>capsule</fullName>
+                <default>false</default>
+                <label>capsule</label>
+            </value>
+            <value>
+                <fullName>Dosage Form</fullName>
+                <default>false</default>
+                <label>Dosage Form</label>
+            </value>
+            <value>
+                <fullName>film</fullName>
+                <default>false</default>
+                <label>film</label>
+            </value>
+            <value>
+                <fullName>lab</fullName>
+                <default>false</default>
+                <label>lab</label>
+            </value>
+            <value>
+                <fullName>liguid</fullName>
+                <default>false</default>
+                <label>liguid</label>
+            </value>
+            <value>
+                <fullName>liquid</fullName>
+                <default>false</default>
+                <label>Liquid</label>
+            </value>
+            <value>
+                <fullName>Packet</fullName>
+                <default>false</default>
+                <label>Packet</label>
+            </value>
+            <value>
+                <fullName>Patch</fullName>
+                <default>false</default>
+                <label>Patch</label>
+            </value>
+            <value>
+                <fullName>patch weekly</fullName>
+                <default>false</default>
+                <label>patch weekly</label>
+            </value>
+            <value>
+                <fullName>solution</fullName>
+                <default>false</default>
+                <label>solution</label>
+            </value>
+            <value>
+                <fullName>Solution aunt-injector</fullName>
+                <default>false</default>
+                <label>Solution aunt-injector</label>
+            </value>
+            <value>
+                <fullName>suspension</fullName>
+                <default>false</default>
+                <label>suspension</label>
+            </value>
+            <value>
+                <fullName>suspension rec</fullName>
+                <default>false</default>
+                <label>suspension rec</label>
+            </value>
+            <value>
+                <fullName>tablet</fullName>
+                <default>false</default>
+                <label>tablet</label>
+            </value>
+            <value>
+                <fullName>tablet chewable</fullName>
+                <default>false</default>
+                <label>tablet chewable</label>
+            </value>
+            <value>
+                <fullName>tablet delayed release</fullName>
+                <default>false</default>
+                <label>tablet delayed release</label>
+            </value>
+            <value>
+                <fullName>tablet dispersible</fullName>
+                <default>false</default>
+                <label>tablet dispersible</label>
+            </value>
+            <value>
+                <fullName>tablet extended release 12h</fullName>
+                <default>false</default>
+                <label>tablet extended release 12h</label>
+            </value>
+            <value>
+                <fullName>tablet sublingual</fullName>
+                <default>false</default>
+                <label>tablet sublingual</label>
+            </value>
+            <value>
+                <fullName>tablet therapy</fullName>
+                <default>false</default>
+                <label>tablet therapy</label>
+            </value>
+            <value>
+                <fullName>Tablet Therapy Pack</fullName>
+                <default>false</default>
+                <label>Tablet Therapy Pack</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

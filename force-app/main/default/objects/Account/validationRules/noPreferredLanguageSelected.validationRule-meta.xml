@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>noPreferredLanguageSelected</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Decline_to_Specify_Preferred_Language__c,
+OR(
+NOT(ISBLANK( Preferred_Language_1__c )) ,
+NOT(ISBLANK( Preferred_Language_2__c )) ,
+NOT(ISBLANK( Preferred_Language_3__c )) ,
+NOT(ISBLANK( Preferred_Language_4__c ))
+)
+)</errorConditionFormula>
+    <errorMessage>If Preferred Language is specified, you cannot mark the patient Preferred Language as decline to specify</errorMessage>
+</ValidationRule>

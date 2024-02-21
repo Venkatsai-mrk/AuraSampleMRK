@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Original_Ref_No__c</fullName>
+    <description>Used to store original submission, a replacement (resubmission) of a previous claim, or a void/cancelation of a prior claim.</description>
+    <externalId>false</externalId>
+    <label>Original Ref. No.</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

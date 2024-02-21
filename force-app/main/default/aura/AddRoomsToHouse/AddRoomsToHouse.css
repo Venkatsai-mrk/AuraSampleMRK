@@ -1,0 +1,18 @@
+.THIS .add_room-Popup .slds-form {
+    height: 215px;
+    position: relative;
+    z-index: 0;
+}
+.THIS .add_room-Popup .slds-modal__footer {
+    width: calc(100% + 30px);
+    top : calc(100% - 40px);
+}
+.THIS .customclass
+{
+    align:center;
+    padding-right:14px;
+    padding-left:14px;
+}
+.THIS .padding{
+    padding:1px;
+}

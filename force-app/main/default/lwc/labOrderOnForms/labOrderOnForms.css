@@ -1,0 +1,5 @@
+.setMaxHeight {
+    width: 100%; 
+    max-height: 243px;
+    overflow-y: auto;
+}

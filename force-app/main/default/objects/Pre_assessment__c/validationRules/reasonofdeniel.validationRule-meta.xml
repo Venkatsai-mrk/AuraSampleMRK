@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>reasonofdeniel</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISCHANGED(Stage__c), ISPICKVAL(Stage__c, &apos;Assessment Denied&apos;) , ISBLANK(TEXT(Reason_for_deniel__c))  )</errorConditionFormula>
+    <errorMessage>Please Fill &quot;Reason for Deniel&quot;</errorMessage>
+</ValidationRule>

@@ -1,0 +1,47 @@
+.THIS button.slds-button.slds-button_reset.slds-accordion__summary-action {
+    background-color: #493266;
+    border-radius: 0;
+    color: #fff;
+}
+.THIS .new_icon, .THIS .new_del {
+    border: none;
+    margin: 0 3px;
+}
+.THIS .new_icon svg {
+    fill : #493266 !important;
+    padding:0px;
+    margin:0 0 0px 0;
+    height: 20px;
+    width: 20px;
+}
+.THIS .new_del svg {
+    fill : #ff0000 !important;
+    padding:0px;
+    margin:0 0 0px 0px;
+    height: 20px;
+    width: 20px;
+}
+.THIS .eraline_table thead th{
+    background-color: #f1f2f3;
+}
+.THIS .eraline_table .slds-form-element__label {
+    display: none;
+}
+.THIS .date-time .slds-form-element__row .slds-form-element {
+    width: 50%;
+}
+.THIS .eraline_table td:nth-child(3) .slds-button {
+    height: 18px;
+    line-height: 0px;
+    width: 18px;
+    margin: 0 5px;
+    border: none;
+}
+.THIS .slds-pill-container {
+    width: 100% !important;
+    margin-left: 0 !important;
+}
+/* changes */
+.THIS .changeceneter{
+    text-align:center;
+}

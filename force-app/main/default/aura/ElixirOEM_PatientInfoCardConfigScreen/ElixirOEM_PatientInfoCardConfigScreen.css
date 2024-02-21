@@ -1,0 +1,14 @@
+.THIS section.slds-modal.slds-fade-in-open {
+    width: 60%;
+    margin: 0 auto;
+}
+.THIS .define-heading lightning-icon.slds-icon-standard-approval.slds-icon_container {
+    float: left;
+}
+.THIS .fixedHeight {
+    min-height:auto;
+    max-height:400px;
+}
+.THIS .fixedHeight .slds-combobox_container {
+   /* margin-bottom: 138px;*/
+}

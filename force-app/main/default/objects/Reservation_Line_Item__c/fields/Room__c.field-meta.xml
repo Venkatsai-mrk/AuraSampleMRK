@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Room__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to store the Room for line item</description>
+    <externalId>false</externalId>
+    <label>Room</label>
+    <referenceTo>Location__c</referenceTo>
+    <relationshipLabel>Reservation Line Items (Room)</relationshipLabel>
+    <relationshipName>Reservation_Line_Items2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

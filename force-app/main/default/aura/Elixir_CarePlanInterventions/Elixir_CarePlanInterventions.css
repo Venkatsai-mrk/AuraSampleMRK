@@ -1,0 +1,73 @@
+.THIS .c-point {
+    cursor: pointer;
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 70px;
+    margin-bottom: 15px;
+}
+.THIS .right-side_bar button.btncss {
+    font-size: 12px;
+    color: #333;
+    min-height: 14px;
+    height: 14px;
+    line-height: 0;
+    padding: 0;
+    margin-bottom: 0;
+    background: transparent;
+}
+.THIS .right-side_bar .slds-input {
+    width: 100px;
+    padding: 0 0px 0 18px;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0;
+    top: 4px;
+    fill: #ccc;
+}
+.THIS .right-side_bar .slds-form-element__label {
+    display: none;
+}
+.THIS .intervention-head {
+    margin-left: 45px;
+}
+.THIS .intervention-head h3 {
+    color: #466bac!important;
+    font-size: 16px;
+    line-height: 15px;
+    margin-bottom: 7px;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink svg.slds-icon.slds-icon-text-default {
+    fill: #466bac;
+}
+.THIS .remove-label .slds-form-element__label {
+    display: none;
+}
+.THIS.care-plan_header {
+    width: calc(100% - 50px);
+    float: right;
+    padding: 0 0 0px;
+}
+.THIS.care-plan_header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000  !important;
+}
+.THIS .spaceEdit {
+    padding-left: 10px;
+}
+@media (max-width: 576px) {
+    .THIS .slds-page-header.c-point {
+        padding-right: 0 !important;
+        width: 100%;
+    }
+    .THIS .slds-float--right.right-side_bar.right-side_bar1 {
+        margin: 8px 0;
+    }
+}

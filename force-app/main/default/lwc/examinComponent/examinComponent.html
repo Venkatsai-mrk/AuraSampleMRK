@@ -1,0 +1,34 @@
+<template>
+    <div>
+        <h1 class="textalg">Vital Sign</h1>
+        <div class="container">
+            <table class="customClass">
+                <thead>
+                    <tr>
+                        <th class="thClass">Name <span class="spClass">Value</span></th>
+                                            </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                            <td>
+                                <div class="input-wrapper">
+                                   <lightning-record-edit-form object-api-name={objectApiName}>
+                                    <template for:each={listViewConfigs} for:item="i">
+                                        <lightning-input-field key={i} field-name={i}
+                                      onchange={handleInputChange}  class="input-field">
+                                        </lightning-input-field>
+                                    </template>
+                                </lightning-record-edit-form>
+                                </div>
+                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+
+            <div class="button-container">
+                <lightning-button label="Cancel" onclick={handleCancelClick} class="marginclass"></lightning-button>
+                <lightning-button label="Add" onclick={handleSaveClick} variant="brand"></lightning-button>
+            </div>
+        </div>
+    </div>
+</template>

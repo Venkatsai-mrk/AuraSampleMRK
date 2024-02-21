@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ElixirSuite_Claim_ERA</fullName>
+    <active>true</active>
+    <label>Claim ERA</label>
+    <picklistValues>
+        <picklist>Elixir_Next_Action__c</picklist>
+        <values>
+            <fullName>Bill to Secondary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bill to Tertiary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discuss with Patient</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discuss with Payor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical Coding Assistance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rebill</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Clinician Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nursing Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Session Notes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>clinical_Notes_type__c</picklist>
+        <values>
+            <fullName>Collateral Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Detox Daily Note</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family Session Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Notes %28AMA interventions%2C statements patients make%2C etc%2E%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual Session Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed Family Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed Individual Notes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PHP Weely Note</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residential Daily Note</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer Notes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

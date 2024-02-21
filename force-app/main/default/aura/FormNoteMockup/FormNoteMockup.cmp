@@ -1,0 +1,130 @@
+<aura:component controller = "EventNotesViewHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name ="noteId" type = "String"/> 
+    <aura:attribute name ="patientName" type = "String"/>
+    <aura:attribute name ="StartDateTime" type = "String"/> 
+      <aura:attribute name ="patientID" type = "String"/>
+      <aura:attribute name ="attended" type = "String" default=""/>
+    <aura:attribute name ="coFaciliator" type = "String"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name ="allGroupNames" type = "String"/> 
+    <aura:attribute name ="allPatientName" type = "String"/> 
+    <aura:attribute name ="AssignedToName" type = "String"/> 
+    <aura:attribute name ="eventCreatedByName" type = "String"/> 
+    <aura:attribute name ="eventRec" type = "Event"/>
+       <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name ="noteRec" type = "Notes__c"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isDisabled" type="boolean" default="false"/>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small form_notes-mockup">
+        <div class="slds-modal__container parentMockup">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{! c.handleClick }">
+                &#10005;
+                <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.eventRec.Subject} - {!v.StartDateTime}</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-form">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Owner : </label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" disabled = "true" id="owner" placeholder="Owner" class="slds-input" value="{!v.eventCreatedByName}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Start Date/Time :</label>
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="datetime" name="input1" disabled = "true" value = "{!v.eventRec.StartDateTime}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Facilitator : </label>
+                                <div class="slds-form-element__control">
+                                    <lightning:input  value = "{!v.AssignedToName}" disabled = "true" name="input1"  /> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">End Date/Time : </label>
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="datetime" value = "{!v.eventRec.EndDateTime}"  disabled = "true" name="input1"  /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Co-Facilitator :</label>
+                                <div class="slds-form-element__control">
+                                    <lightning:input  value = "{!v.coFaciliator}" disabled = "true" name="input1"  /> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Patients Invited :</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="Patients Invited"  disabled = "true" placeholder="Patients Invited" class="slds-input" value="{!v.allPatientName}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">Groups Invited :</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="group-invited" disabled = "true" placeholder="N/A" class="slds-input" value="{!v.allGroupNames}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <label class="slds-form-element__label" for="horizontal-input-id-01">{!v.patientName}</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="patient-name" disabled = "true" placeholder="" class="slds-input" value="{!v.attended}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="underline" />
+                <div class="slds-form-element g-notes">
+                    <label class="slds-form-element__label label-head" for="textarea-id-01">Individual Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input id="individual-notes" disabled = "{!v.isDisabled}" class="slds-textarea" value="{!v.noteRec.ElixirSuite__Note__c}"/>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-m-top_small g-notes">
+                    <label class="slds-form-element__label label-head" for="textarea-id-01">Group Notes</label>
+                    <div class="slds-form-element__control">
+                        <lightning:input id="group-notes" placeholder="Group Notes" disabled = "{!v.isDisabled}" class="slds-textarea" value="{!v.noteRec.ElixirSuite__Group_Notes__c}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{! c.handleClick }" >Cancel</button>
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" disabled = "{!v.isDisabled}"   onclick="{! c.handleSave }" >Save</button>
+            </div>
+            <aura:if isTrue="{!! v.loaded }">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:if>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</aura:component>

@@ -1,0 +1,29 @@
+<aura:component controller="Elixir_PrescriptionsApprovalHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="index" type="Integer"/>
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="ApprovalFor" type="String" default=""/>
+    <aura:attribute name="isInit" type="Boolean" default="true"/>
+    <aura:attribute name="tabs" type="List"/>
+    <aura:attribute name="selTabId" type="Integer"/>
+  
+     <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+                        <aura:if isTrue="{!! v.loaded }">
+                            <lightning:spinner alternativeText="Loading" variant="brand" size="large"/>
+                        </aura:if>
+         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Define Approvers for {!v.ApprovalFor}s</b></h2><br/>
+         				
+                        <lightning:tabset  variant="scoped" selectedTabId="{!v.selTabId}" onselect="{! c.handleSelect }" >                            
+                            <aura:iteration items="{!v.tabs}" var="tab" indexVar="index">                              
+                                <lightning:tab label="{!tab.label }" id="{!tab.tabIndex}" onactive="{!c.onTabChange}" >                                 
+                                    <aura:if isTrue="{!tab.isOpen}">                                       
+                                        <c:Elixir_PrescriptionsApprovalLevels index="{!tab.tabIndex}" ApprovalFor="{!v.ApprovalFor}" loaded="{!v.loaded}"/> 
+                                    </aura:if>
+                                </lightning:tab>
+                            </aura:iteration>
+                        </lightning:tabset>
+                        
+                    </div>
+        </aura:component>

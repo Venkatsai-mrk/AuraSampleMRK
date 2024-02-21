@@ -1,0 +1,385 @@
+<aura:component  controller="ElixirOEM_ReferralUtility"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="referralRecord" type="Referral__c"/> 
+    <aura:attribute name="patientDiagnosisLst" type="List"/>
+    <aura:attribute name="patientDiagnosisLstLength" type="Integer" default="0"/>
+    
+    <aura:attribute name="patientProcedureLst" type="List"/> 
+    <aura:attribute name="patientProcedureLstLength" type="Integer" default="0"/>
+
+    <aura:attribute name="isOpen" type="Boolean"/> 
+    <aura:attribute name="filetype" type="List" default="['.jpg', '.jpeg','.pdf','.csv','.xlsx']" />
+    <aura:attribute name="patientInfo" type="Account"/> 
+    <aura:attribute name="accountName" type="String"/>
+    <aura:attribute name="userName" type="String"/>
+    <aura:attribute name="contactName" type="String"/>
+    <aura:attribute name="locationName" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="chartSummaryOptions" type="List"/> 
+    <aura:attribute name="patientVOBDetails" type="VOB__c"/>  
+    <aura:attribute name="files" type="ContentDocument[]"/> 
+    <aura:attribute name="fileListSize" type="Integer" default="0" />
+    <aura:attribute name="accountId" type="String" default="0015Y00003Ptan2QAB"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:registerEvent name="ProblemRefreshEvt" type="c:ProblemRefreshEvt"/> 
+    <aura:registerEvent name="ElixirOEM_ReferralToggle" type="c:ElixirOEM_ReferralToggle" />
+    
+    <lightning:workspaceAPI aura:id="workspace" /> <!--Nikhil-->
+    <aura:attribute name="backPage2" type="Boolean" default="false"/> 
+
+    
+    
+    <aura:if isTrue="{!v.isOpen}">
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container new-referral_modal">
+                <!--button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                &#10005; <span class="slds-assistive-text">Cancel and close</span>
+                </button-->
+                <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModal }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Form Preview</h1>
+            </div>
+                <!--div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                            <label>Chetan </label>
+                    </div>
+                </div>
+                </div-->
+            
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Location</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.locationName}
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Referred Out Organization</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.accountName}
+                        
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Care Team Member</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.userName}
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Referred To</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.contactName}
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Email (CTM)</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.referralRecord.ElixirSuite__Email_CTM__c}
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Email (Refrerred To)</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.referralRecord.ElixirSuite__Email_Referred_To__c}
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Phone (CTM)</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.referralRecord.ElixirSuite__Phone_CTM__c}
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Phone (Refrerred To)</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        {!v.referralRecord.ElixirSuite__Phone_Referred_To__c}
+                    </div>
+                </div>
+                <aura:if isTrue="{!not(empty(v.referralRecord.ElixirSuite__Instructions__c)) }">
+                <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_large slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Instructions</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning:formattedRichText value="{!v.referralRecord.ElixirSuite__Instructions__c}" />
+                        
+                    </div>
+                </div>
+                    </aura:if>
+                    <!-- Reasons_for_Referral__c -->
+                
+                         <!-- Added for Test -->
+                            
+                    <!--Test -->
+                             
+                    <!-- Test End -->
+                    
+                        <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Reasons for Referral</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning:formattedRichText value="{!v.referralRecord.ElixirSuite__Reasons_for_Referral__c}" />                      
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table ref-prev_table">
+                            <thead>
+                                <tr>
+                                    <th>Diagnosis Code</th>
+                                    <th>Description</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:if isTrue="{!not(empty(v.patientDiagnosisLst))}">
+                                    <aura:iteration items="{!v.patientDiagnosisLst}" var="sObj" indexVar="idx">
+                                        <aura:if isTrue="{!sObj.isSelected}">
+                                            <tr>
+                                                <td>{!sObj.Name}</td>
+                                                <td>{!sObj.ElixirSuite__Code_Description1__c}</td>
+                                                <!--td><lightning:input type="checkbox" name="options" checked="{!sObj.isSelected}" /></td-->
+                                            </tr>
+                                        </aura:if>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <tr><td colspan="12"><div class="slds-text-align_center"><b>NO DATA YET!</b></div> </td></tr>
+                                    </aura:set>
+                                </aura:if>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_large slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table ref-prev_table">
+                            <thead>
+                                <tr>
+                                    <th>Procedure Code</th>
+                                    <th>Description</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:if isTrue="{!not(empty(v.patientProcedureLst))}">
+                                    <aura:iteration items="{!v.patientProcedureLst}" var="proc_sObj" indexVar="idx">
+                                        <aura:if isTrue="{!proc_sObj.isSelected}">
+                                            <tr>
+                                                <td>{!proc_sObj.Name}</td>
+                                                <td>{!proc_sObj.ElixirSuite__Code_Description__c}</td>
+                                                <!--td><lightning:input type="checkbox" name="options" disabled = "true" checked="{!proc_sObj.isSelected}" /></td-->
+                                            </tr>
+                                        </aura:if>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <tr><td colspan="12"><div class="slds-text-align_center"><b>NO DATA YET!</b></div> </td></tr>
+                                    </aura:set>
+                                </aura:if> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-p-top_small">
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <label>Patient Name</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.Name}</span>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12  slds-m-top_xx-small">
+                        <label>Phone</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.Phone}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <label>Birth Date</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.ElixirSuite__DOB__c}</span>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12  slds-m-top_xx-small">
+                        <label>Email</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.ElixirSuite__Email_Id__c}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <label>Gender</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.ElixirSuite__Gender__c}</span>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12  slds-m-top_xx-small">
+                        <label>SSN</label>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientInfo.ElixirSuite__SSN__c}</span>
+                        
+                        
+                        </div>
+                </div>
+                <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_xx-small">
+                    <div class="slds-col slds-size_12-of-12">Primary Insurance Information</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <label>Insurance Provider</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientVOBDetails.ElixirSuite__Insurance_Provider__r.Name}</span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12  slds-m-top_xx-small">
+                        <label>Insurance Phone</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientVOBDetails.ElixirSuite__Insurance_Company_Phone__c}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <label>Subscriber Name</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientVOBDetails.ElixirSuite__Subscriber_Name__c}</span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12  slds-m-top_xx-small">
+                        <label>Subscriber DOB</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>June 6, 1990</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <label>Insurance Policy ID</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientVOBDetails.ElixirSuite__Insurance_Policy_ID__c}</span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12  slds-m-top_xx-small">
+                        <label>Insurance Group No</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_xx-small">
+                        <span>{!v.patientVOBDetails.ElixirSuite__Insurance_Group_Number__c}</span>
+                    </div>
+                </div>
+                <!--div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Chart Summary</div>
+                </div-->
+                <div class="parentCBCss slds-clearfix">
+                    <!--aura:iteration items="{!v.chartSummaryOptions}" var="sObj" indexVar="idx">
+                        <lightning:input type="checkbox" label="{!sObj.label}" name="{!idx}" checked="{!sObj.isOpen}"
+                                         disabled="{!sObj.disabled}"
+                                         onchange="{!c.openEntityWindow}"/>                 
+                    </aura:iteration-->
+                </div> 
+                    
+                <aura:iteration items="{!v.chartSummaryOptions}" var="sObj" indexVar="idx">
+                       <!-- aura:iteration items="{!sObj.entityData}" var="sObj_enitity" -->
+                               <aura:if isTrue="{!sObj.isOpen}">
+                        <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium">
+                            <div class="slds-col slds-size_12-of-12">{!sObj.label}</div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                            <div class="slds-col slds-size_1-of-12"></div>
+                            <div class="slds-col slds-size_10-of-12">	
+                                <table class="slds-table referal-table">
+                                    <thead>
+                                            <tr><!-- Dynamically  create Diagnosis and  Procedure table-->
+                                            <th>{!sObj.col_1}</th>
+                                            <th>{!sObj.col_2}</th>
+                                            <th>{!sObj.col_3}</th>                                                                                  
+                                           <aura:if isTrue="{!not(empty(sObj.col_4))}">
+                                                 <th>{!sObj.col_4}</th>
+                                           </aura:if> 
+                                                
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                                <aura:iteration items="{!sObj.entityData}" var="sObj_enitity" indexVar="idx_enitity">
+                                                    <aura:if isTrue="{!sObj_enitity.isSelected}">
+                                                        <tr>
+                                                            <td>{!sObj_enitity.column_1}</td>
+                                                            <td> {!sObj_enitity.column_2}</td>
+                                                            <td>{!sObj_enitity.column_3}</td>                                                            
+                                                            <aura:if isTrue="{!not(empty(sObj.col_4))}">
+                                                				 <td>{!sObj_enitity.column_4}</td>  
+                                             				 </aura:if>
+                                                            <!--td><lightning:formattedDateTime value="{!sObj_enitity.column_4}"/></td-->
+                                                        </tr>
+                                                    </aura:if>
+                                                </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                        </aura:if><!--/aura:if-->
+                        <!-- /aura:iteration fileListSize-->
+                </aura:iteration>
+                
+                    <!--aura:iteration items="{!v.files}" var="f" {!not(empty(v.guid))}
+-->
+                    <aura:if  isTrue="{!v.fileListSize > 0}"><!--IF no doc selected  then donot display this section --> 
+                <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium">
+                    <div class="slds-col slds-size_12-of-12">Other Documents</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_10-of-12">	
+                        <table class="slds-table referal-table">
+                            <thead>
+                                <tr>
+                                    <th>Document</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <aura:iteration items="{!v.files}" var="f">  
+                                        <aura:if isTrue="{!f.isSelected}">
+                                            <tr>
+                                                <td> <lightning:button name="{!f.Id}" variant="base" label="{!f.Title}"  onclick="{!c.previewFile}"/> </td>
+                                                <td> <lightning:formattedDateTime value="{!f.CreatedDate}"/></td>
+                                                <td>{!f.FileType}</td>
+                                            </tr>
+                                        </aura:if>
+                                    </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    </aura:if>
+                    <!--/aura:iteration--> 
+                <aura:if isTrue="{!! v.loaded }">
+                    <lightning:spinner alternativeText="Loading" />
+                </aura:if>
+            </div>
+            <div class="slds-modal__footer referrals_footer">
+                <button class="slds-button slds-button_neutral" onclick="{!c.closeModal}" aria-label="Cancel and close">Cancel</button>
+                <button class="slds-button slds-button_neutral" aria-label="Back" onclick="{!c.backFromPageThree}" >Back</button>
+                <button class="slds-button slds-button_brand" onclick="{!c.generatePDF}">Save  &#38; Send Referral</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

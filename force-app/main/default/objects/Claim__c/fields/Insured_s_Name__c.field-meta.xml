@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insured_s_Name__c</fullName>
+    <description>Enter the insured’s full last name, first name, and middle initial. If the insured uses a last name suffix (e.g., Jr, Sr),  enter it after the last name and before the first name.  Titles (e.g., Sister, Capt, Dr) and professional suffixes (e.g., PhD, MD, Esq) should not be included with the name.Use commas to separate the last name, first name, and middle initial. A hyphen can be used for hyphenated names. Do not use periods within the name.</description>
+    <externalId>false</externalId>
+    <label>Insured&apos;s Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

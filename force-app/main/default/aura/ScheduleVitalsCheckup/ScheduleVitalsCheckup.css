@@ -1,0 +1,13 @@
+.THIS.examTable tr td .slds-form-element__label {
+    display: none !important;
+}
+.THIS.examTable thead tr th{
+    background-color: #493266;
+	color:#fff;
+}
+.THIS.examTable{
+    margin-bottom : 300px;
+}
+.THIS .abc{
+        width: 25%;
+}

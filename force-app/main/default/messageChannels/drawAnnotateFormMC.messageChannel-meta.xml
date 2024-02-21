@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>drawAnnotateFormMC</masterLabel>
+    <isExposed>false</isExposed>
+    <description>Message channel to pass data related to draw-annotate components</description>
+    <lightningMessageFields>
+        <fieldName>isLoaded</fieldName>
+        <description>Boolean to convey if image has been loaded or not</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

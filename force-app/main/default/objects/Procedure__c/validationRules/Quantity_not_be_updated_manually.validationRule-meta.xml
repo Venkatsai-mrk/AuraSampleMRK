@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_not_be_updated_manually</fullName>
+    <active>true</active>
+    <description>Available Quantity shouldn&apos;t be updated manually.</description>
+    <errorConditionFormula>IF(((ISNEW() &amp;&amp; Quantity__c   &lt;&gt;  0) || ISCHANGED(Quantity__c )) &amp;&amp; IsUpdatedFromFlow__c = false , true, false)</errorConditionFormula>
+    <errorMessage>Available Quantity shouldn&apos;t be updated manually.</errorMessage>
+</ValidationRule>

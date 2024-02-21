@@ -1,0 +1,8 @@
+({
+    
+    mg:[],
+    
+	helperMethod : function() {
+		
+	}
+})

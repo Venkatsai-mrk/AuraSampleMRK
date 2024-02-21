@@ -1,0 +1,985 @@
+<apex:page controller="ElixirOEM_CarePlanPDFGeneratorHelper" renderAs="pdf">  
+    <apex:form > 
+        <apex:param name="treatmentPlanID" value="{!$CurrentPage.parameters.treatmentPlanID}"/>
+        <apex:variable value="{!1}" var="rowNum"/>
+        <apex:outputPanel >
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
+            </head>
+            <body>
+                <table class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: 'Open Sans', sans-serif;  width:700px; margin: 0 auto; background-color: #fff;">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #fff;">
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 700px; text-align: left; margin: 0px;">
+                                    <tbody>
+                                        <tr>
+                                            <td style=""><apex:image url="{!$Resource.ElixirLogo}" width="200"/></td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #fff;">
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 700px; text-align: left; margin: 5px 0px 10px;font-family: 'Open Sans', sans-serif;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h2 style="margin: 0; font-weight: 500; font-size: 24px; color: #333; text-align: center;">{!masterList.carePlan.Treatment_Plan_Name__c}</h2>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #fff;">
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 700px; text-align: left;  margin: 0px;font-family: 'Open Sans', sans-serif;">
+                                    <tr>
+                                        <td style="width: 350px;">
+                                            <table border="0" cellspacing="0" cellpadding="0" style="text-align: left; width: 340px; color: #333;font-family: 'Open Sans', sans-serif;">
+                                                <thead>
+                                                    <tr>
+                                                        <td style="width: 180px;">
+                                                            <p style="font-size: 14px; margin: 2px 0 0; font-weight: 600;">Patient Name</p>
+                                                        </td>
+                                                        <td><p style="font-weight: 600; color: #333; font-size: 14px; margin: 0; margin-right: 5px;">:</p></td>
+                                                        <td><p style="font-weight: 400; color: #333; font-size: 14px; margin: 0;">{!accountName}</p></td>
+                                                    </tr>
+                                                    <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                    <tr>
+                                                        <td style="width: 180px;">
+                                                            <p style="font-size: 14px; margin: 0px 0; font-weight: 600;">Date of Birth</p>
+                                                        </td>
+                                                        <td><p style="font-weight: 600; font-size: 14px; margin: 0; margin-right: 5px;">:</p></td>
+                                                        <td>
+                                                            <p style="font-weight: 400; font-size: 14px; margin: 0;">
+                                                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!dOB}"/></apex:outputText>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                    <tr>
+                                                        <td style="width: 180px;">
+                                                            <p style="font-size: 14px; font-weight: 600; margin: 0px 0;">Primary Therapist name</p>
+                                                        </td>
+                                                        <td><p style="font-weight: 600; font-size: 14px; margin: 0; margin-right: 5px;">:</p></td>
+                                                        <td>
+                                                            <p style="font-weight: 400; font-size: 14px; margin: 0;">
+                                                                {!masterList.carePlan.Primary_Therapist__r.Name}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                    <tr>
+                                                        <td style="width: 180px;">
+                                                            <p style="font-size: 14px; font-weight: 600; margin: 0px 0;">Clinical Supervisor Name</p>
+                                                        </td>
+                                                        <td><p style="font-weight: 600;font-size: 14px; margin: 0; margin-right: 5px;">:</p></td>
+                                                        <td>
+                                                            <p style="font-weight: 400;font-size: 14px; margin: 0;">
+                                                                {!masterList.carePlan.Clinical_supervisor__r.Name}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </thead>
+                                            </table>
+                                        </td>
+                                        <td style="width: 350px;">
+                                            <table border="0" cellspacing="0" cellpadding="0" style="text-align: right;width: 250px;float: right; text-align: left; color: #333;">
+                                                <tr>
+                                                    <td style="width: 155px;text-align: left;">
+                                                        <p style="font-weight: 600; font-size: 14px; margin: 0;">Last Update</p>
+                                                    </td>
+                                                    <td><p style="font-weight: 600; font-size: 14px; margin: 0; margin-right: 10px;">:</p></td>
+                                                    <td>
+                                                        <p style="font-weight: 400; font-size: 14px; margin: 0;"> 
+                                                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                <apex:param value="{!masterList.carePlan.LastModifiedDate}"/> 
+                                                            </apex:outputText>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                <tr>
+                                                    <td style="width: 155px;text-align: left;"><p style="font-weight: 600;font-size: 14px; margin: 0;">Care Plan Start Date</p></td>
+                                                    <td><p style="font-weight: 600; font-size: 14px; margin: 0;">:</p></td>
+                                                    <td>
+                                                        <p style="font-weight: 400; font-size: 14px; margin: 0;"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                            <apex:param value="{!masterList.carePlan.Start_Date__c}"/> 
+                                                            </apex:outputText></p>
+                                                    </td>
+                                                </tr>
+                                                <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                <tr>
+                                                    <td style="width: 155px;text-align: left;"><p style="font-weight: 600;font-size: 14px; margin: 0;">Care Plan End Date</p></td>
+                                                    <td><p style="font-weight: 600; font-size: 14px; margin: 0;">:</p></td>
+                                                    <td>
+                                                        <p style="font-weight: 400; font-size: 14px; margin: 0;"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                            <apex:param value="{!masterList.carePlan.End_Date__c}"/> 
+                                                            </apex:outputText></p>
+                                                    </td>
+                                                </tr>
+                                                <tr><td style="height: 3px;" colspan="3"></td></tr>
+                                                <tr>
+                                                    <td style="width: 155px;text-align: left;"><p style="font-weight: 600; font-size: 14px; margin: 0;">Status</p></td>
+                                                    <td><p style="font-weight: 600;font-size: 14px; margin: 0;">:</p></td>
+                                                    <td>
+                                                        <p style="font-weight: 400; font-size: 14px; margin: 0;">{!masterList.carePlan.Status__c}</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                        </tr>
+                        <tr>            
+                            <td colspan="2" style="height: 15px;"></td>
+                        </tr>
+                        <apex:outputPanel rendered="{!(masterList.carePlan.Description__c != null)}">
+                        <tr>            
+                            <td colspan="2">
+                                <h3 style="color: #333; font-size: 18px; margin: 0;">Description</h3>
+                            </td>
+                        </tr>
+                        <tr>            
+                            <td colspan="2" style="height: 3px;"></td>
+                        </tr>
+                        <tr>            
+                            <td colspan="2">
+                                <p style="font-weight: 400; color: #555; font-size: 14px; margin: 0;">{!masterList.carePlan.Description__c}</p>
+                            </td>
+                        </tr>
+                        </apex:outputPanel>
+                    </thead>
+                    <tbody>
+                        <!--top level Goal starts Here -->
+                        <tr>
+                            <td>
+                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f1f2f3; width: 700px; text-align: left; margin: 10px 0 0;font-family: 'Open Sans', sans-serif;">
+                                    <apex:variable var="goalsIndex" value="{!1}" />
+                                    <apex:repeat value="{!masterList.topLevelGoal}" var="goal"> 
+                                        Goal
+                                        <tr>
+                                            <td style="border-top: 5px solid #fff;">
+                                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fdf9; width: 700px; margin: 0; padding: 20px 0px 20px 20px;font-family: 'Open Sans', sans-serif;">
+                                                    <tr>
+                                                        <td style="vertical-align: top;">
+                                                            <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                             'pdf-body/images/problem1.png')}" style="margin-right: 10px;" /></td>
+                                                        <td style="vertical-align: top;">
+                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 620px; padding: 10px 0 0 10px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h3 style="margin: 0; color: #4CC077; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                Goal 
+                                                                                <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 20px;">
+                                                                                    Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                    <apex:param value="{!goal.topGoalPer.Due_Date__c}"/> 
+                                                                                    </apex:outputText></i></h3>
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                {!goal.topGoalPer.Description__c} 
+                                                                            </h3>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 590px; padding: 10px 10px 10px 20px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                <apex:variable var="problemNotesIndex" value="{!1}" />
+                                                                                <!--apex:repeat value="{!goal.listOfNotesOfBehavDef}" var="notes">
+<tr>
+<td style="border-bottom: 1px solid #f1f2f3;">
+<p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+</td>
+</tr>
+<apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+</apex:repeat-->
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 570px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <table border="0" cellspacing="0" cellpadding="0" style="width: 570px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                            <tr>
+                                                                                                <td>	
+                                                                                                    <apex:variable var="objectiveIndex" value="{!1}" />
+                                                                                                    <apex:repeat value="{!goal.objectiveForTopGoalLst}" var="objective">
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 570px; padding: 10px 10px 10px 20px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                    <tr>
+                                                                                                                        <td style="vertical-align: top;">
+                                                                                                                            <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                             'pdf-body/images/problem2.png')}"/>
+                                                                                                                        </td>
+                                                                                                                        <td style="vertical-align: top;">
+                                                                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa;background-color: #fff;font-family: 'Open Sans', sans-serif; ">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr>
+                                                                                                                                        <td>
+                                                                                                                                            <h3 style="margin: 0; color: #47c3cd; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                Objective
+                                                                                                                                                <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 10px;">
+                                                                                                                                                    Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                    <apex:param value="{!objective.level4Rec.Due_Date__c}"/> 
+                                                                                                                                                    </apex:outputText></i></h3>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                    <tr>
+                                                                                                                                        <td>
+                                                                                                                                            <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                {!objective.level4Rec.Description__c}
+                                                                                                                                            </h3> 
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                    
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr> 
+                                                                                                                </table>
+                                                                                                                
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        
+                                                                                                        <apex:variable var="interventionUnderObjective" value="{!1}" />
+                                                                                                        <apex:repeat value="{!objective.intvForTopGoalObjLst}" var="interventionOfObjectiveInGoals">
+                                                                                                            <tr>
+                                                                                                                <td>
+                                                                                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; padding: 10px 10px 10px 60px; background-color: #fff;  font-family: 'Open Sans', sans-serif;font-family: 'Open Sans', sans-serif;">
+                                                                                                                        <tr>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                                 'pdf-body/images/problem2.png')}"/>
+                                                                                                                            </td>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 500px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; font-family: 'Open Sans', sans-serif;">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                    Intervention
+                                                                                                                                                    <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                                        Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                        <apex:param value="{!interventionOfObjectiveInGoals.level5Rec.ActivityDate}"/> 
+                                                                                                                                                        </apex:outputText></i></h3>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                    {!interventionOfObjectiveInGoals.level5Rec.Description}
+                                                                                                                                                </h3> 
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr> 
+                                                                                                                    </table>
+                                                                                                                    
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            <apex:variable var="interventionUnderObjective" value="{!interventionUnderObjective + 1}" />       
+                                                                                                        </apex:repeat>
+                                                                                                        
+                                                                                                        <apex:variable var="objectiveIndex" value="{!objectiveIndex+1}" /> 
+                                                                                                    </apex:repeat>
+                                                                                                    
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            
+                                                                                        </table>
+                                                                                        <tr><td height="10px" style="background-color: #f8fdf9;"></td></tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 590px; padding: 10px 10px 10px 20px; border-top: 10px solid #fff; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <apex:variable var="objectiveIndex" value="{!1}" />
+                                                                                                            <apex:variable var="interventionIndex" value="{!1}" />
+                                                                                                            <apex:repeat value="{!goal.intvForTopGoalLst}" var="interventions">
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <table border="0" cellspacing="0" cellpadding="0" style="width: 520px; padding: 0; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                            <tr>
+                                                                                                                                <td style="vertical-align: top;">
+                                                                                                                                    <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                                     'pdf-body/images/problem2.png')}"/></td>
+                                                                                                                                <td style="vertical-align: top;">
+                                                                                                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 540px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; font-family: 'Open Sans', sans-serif;">
+                                                                                                                                        <tbody>
+                                                                                                                                            <tr>
+                                                                                                                                                <td>
+                                                                                                                                                    <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                        {!configHeirarchy.ElixirSuite__Fifth_Level__c}
+                                                                                                                                                        <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                                            Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                            <apex:param value="{!interventions.level5Rec.ActivityDate}"/> 
+                                                                                                                                                            </apex:outputText>
+                                                                                                                                                        </i></h3> 
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td>
+                                                                                                                                                    <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                        {!interventions.level5Rec.Description}
+                                                                                                                                                    </h3> 
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            
+                                                                                                                                        </tbody>
+                                                                                                                                    </table>
+                                                                                                                                </td>
+                                                                                                                            </tr> 
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <apex:variable var="interventionIndex" value="{!objectiveIndex+1}" />  
+                                                                                                            </apex:repeat>
+                                                                                                            
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        
+                                        <apex:variable var="goalsIndex" value="{!goalsIndex+1}" />
+                                    </apex:repeat>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- top level Goal Ends Here -->
+                        
+                        <!-- top level Objective Starts Here -->
+                        <tr><td height="10px"></td></tr>
+                        <tr>
+                            <td style="">
+                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f1f2f3; width: 700px; margin: 20px 0 0; text-align: left; margin: 0; font-family: 'Open Sans', sans-serif;">
+                                    <apex:variable var="objIndex" value="{!1}" />
+                                    <apex:repeat value="{!masterList.topLevelObjective}" var="secondChild">
+                                        <span style="font-family: 'Open Sans', sans-serif;">Objective</span>
+                                        <tr>
+                                            <td style="border-top: 0px solid #fff;">
+                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 700px; padding: 10px 20px 10px 20px; margin: 10px 0px 10px;background-color: #f8fdf9; font-family: 'Open Sans', sans-serif;">
+                                                    <tr>
+                                                        <td style="vertical-align: top; background-color: #fff; width: 40px; ">
+                                                            <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                             'pdf-body/images/problem2.png')}" style="margin: 7px 10px 0;" /></td>
+                                                        <td style="vertical-align: top; background-color: #fff; width:500px;">
+                                                            <table border="0" cellspacing="0" cellpadding="0" style="width:500px; margin-top: 7px; border-bottom: 2px solid #fafafa; float:left; ">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        
+                                                                        <td style="clear:both;">
+                                                                            
+                                                                            <h3 style="margin: 0; color: #47c3cd; font-weight: 600; font-size: 16px; line-height: 16px; float: left; width: 100%;">
+                                                                                <span style="float: left; min-width: 200px;">Objective</span>
+                                                                                <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 15px;">
+                                                                                    Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                    <apex:param value="{!secondChild.topObjectivePer.Due_Date__c}"/> 
+                                                                                    </apex:outputText>
+                                                                                </i>
+                                                                            </h3> 
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                {!secondChild.topObjectivePer.Description__c} 
+                                                                            </h3>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <apex:variable var="problemNotesIndex" value="{!1}" />
+                                                                    <!--apex:repeat value="{!secondChild.listOfNotesOfGoal}" var="notes">
+<tr>
+<td style="border-bottom: 1px solid #f1f2f3;">
+<p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+</td>
+</tr>
+<apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+</apex:repeat-->
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 600px; background-color: #fff; font-family: 'Open Sans', sans-serif;">
+                                                                                <apex:variable var="interventionUnderObjective" value="{!1}" />
+                                                                                <apex:repeat value="{!secondChild.intvForTopObjetive}" var="interventionOfObjectiveInGoals">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 600px; margin: 0 5px 0 0px; padding: 10px 0; background-color: #fff;">
+                                                                                                <tr>
+                                                                                                    <td style="vertical-align: top; width: 30px;">
+                                                                                                        <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                         'pdf-body/images/problem2.png')}" style="margin-right: 0px;" /></td>
+                                                                                                    <td style="vertical-align: top;">
+                                                                                                        <table border="0" cellspacing="0" cellpadding="0" style="width: 560px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; ">
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                            <span style="float: left; min-width: 200px;"> {!configHeirarchy.ElixirSuite__Fifth_Level__c}</span>
+                                                                                                                            <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                Due Date:  <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                <apex:param value="{!interventionOfObjectiveInGoals.level5Rec.ActivityDate}"/> 
+                                                                                                                                </apex:outputText> </i></h3> 
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                            {!interventionOfObjectiveInGoals.level5Rec.Description}
+                                                                                                                        </h3> 
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </td>
+                                                                                                </tr> 
+                                                                                            </table>
+                                                                                            
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <apex:variable var="interventionUnderObjective" value="{!interventionUnderObjective + 1}" />       
+                                                                                </apex:repeat>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr> 
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <apex:variable var="objIndex" value="{!objIndex+1}" />
+                                    </apex:repeat>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- top level objective Ends Here -->
+                        
+                        <!-- top level Intervention Starts Here -->
+                        <tr><td height="10px"></td></tr>
+                        <tr>
+                            <td style="">
+                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f1f2f3; width: 700px; text-align: left; margin: 0;">
+                                    <apex:variable var="intvIndex" value="{!1}" />
+                                    <apex:repeat value="{!masterList.topLevelIntervention}" var="intervention">
+                                        <span style="font-family: 'Open Sans', sans-serif;">Intervention</span>
+                                        <tr>
+                                            <td style="border-top: 5px solid #fff;">
+                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 700px; padding: 10px 0px 10px 28px; margin: 10px 0px 10px;background-color: #f8fdf9;font-family: 'Open Sans', sans-serif; ">
+                                                    <tr>
+                                                        <td style="vertical-align: top; background-color: #fff; ">
+                                                            <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                             'pdf-body/images/problem2.png')}" style="margin: 7px 10px 0 0;" /></td>
+                                                        <td style="vertical-align: top; background-color: #fff; ">
+                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 600px; margin-top: 7px; border-bottom: 2px solid #fafafa; float:left;font-family: 'Open Sans', sans-serif; ">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        
+                                                                        <td style="clear:both;">
+                                                                            
+                                                                            <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px; float: left; width: 100%;">
+                                                                                <span style="float: left; min-width: 200px;">Intervention</span>
+                                                                                <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 7px;">
+                                                                                    Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                    <apex:param value="{!intervention.level5Rec.ActivityDate}"/> 
+                                                                                    </apex:outputText>
+                                                                                </i>
+                                                                            </h3> 
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                {!intervention.level5Rec.Description} 
+                                                                            </h3>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <apex:variable var="problemNotesIndex" value="{!1}" />
+                                                                    <!--apex:repeat value="{!secondChild.listOfNotesOfGoal}" var="notes">
+<tr>
+<td style="border-bottom: 1px solid #f1f2f3;">
+<p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+</td>
+</tr>
+<apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+</apex:repeat-->
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr> 
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <apex:variable var="intvIndex" value="{!intvIndex+1}" />
+                                    </apex:repeat>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- top level Intervention Ends Here -->
+                        <tr>
+                            <td style="">
+                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f1f2f3; width: 700px; text-align: left; border: 3px solid #fcfcfc; box-shadow: 0px 0px 6px #ebe9ea; margin: 20px 25px 10px;font-family: 'Open Sans', sans-serif;">
+                                    <tbody>
+                                        <apex:variable var="index" value="{!1}"/>
+                                        <apex:repeat value="{!masterList.lstOflevel1Records}" var="prob">
+                                            <span style="font-family: 'Open Sans', sans-serif;">Problem</span>
+                                            <tr style="display:block; margin-top: 15px;">
+                                                <td style="vertical-align: top; width: 40px;"> 
+                                                    <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                     'pdf-body/images/problem.png')}" style="margin: 0px 10px;"/></td>
+                                                <td style="vertical-align: top;">
+                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 615px; padding: 0 0 0 0px;font-family: 'Open Sans', sans-serif;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <h3 style="margin: 0; color: #c33f3a; font-weight: 600; font-size: 16px; line-height: 16px;">Problem 
+                                                                        <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 5px;">Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                        <apex:param value="{!prob.problemObj.Due_Date__c}"/> 
+                                                                        </apex:outputText></i></h3>
+                                                                </td>
+                                                            </tr>
+                                                             <tr>
+                                                                <td>
+                                                                    <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;"> {!prob.problemObj.ElixirSuite__Name__c} </h3>
+                                                                </td>
+                                                            </tr> 
+                                                       
+                                                            <tr>
+                                                                <td>
+                                                                    <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;"> {!prob.problemObj.Description__c} </h3>
+                                                                </td>
+                                                            </tr>
+                                                            <!--apex:variable var="problemNotesIndex" value="{!1}" />
+                                                            <apex:repeat value="{!prob.listOfNotes}" var="notes">
+                                                                <tr>
+                                                                    <td style="border-bottom: 1px solid #f1f2f3;">
+                                                                        <p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+                                                            </apex:repeat-->
+                                                          
+                                                                                                                   
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fdf9; width: 620px; margin: 0 0 0 50px;font-family: 'Open Sans', sans-serif;">
+                                                        <apex:variable var="goalsIndex" value="{!1}" />
+                                                        <apex:repeat value="{!prob.goalForProblemLst}" var="goal"> 
+                                                            
+                                                            <tr>
+                                                                <td style="border-top: 5px solid #fff;">
+                                                                    <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fdf9; width: 650px; margin: 0px; padding: 20px 0px 20px 20px;font-family: 'Open Sans', sans-serif;">
+                                                                        <tr>
+                                                                            <td style="vertical-align: top;">
+                                                                                <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                 'pdf-body/images/problem1.png')}" style="margin-right: 10px;" /></td>
+                                                                            <td style="vertical-align: top;">
+                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 570px; padding: 10px 0 0 10px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <h3 style="margin: 0; color: #4CC077; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                    Goals 
+                                                                                                    <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 20px;">
+                                                                                                        Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                        <apex:param value="{!goal.goalPerProblemObj.Due_Date__c}"/> 
+                                                                                                        </apex:outputText></i></h3>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                    {!goal.goalPerProblemObj.Description__c} 
+                                                                                                </h3>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; padding: 10px 10px 10px 20px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                    <apex:variable var="problemNotesIndex" value="{!1}" />
+                                                                                                    <!--apex:repeat value="{!goal.listOfNotesOfBehavDef}" var="notes">
+                                                                                                        <tr>
+                                                                                                            <td style="border-bottom: 1px solid #f1f2f3;">
+                                                                                                                <p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+                                                                                                    </apex:repeat-->
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                    <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                    <tr>
+                                                                                                    	<td>	
+                                                                                                        <apex:variable var="objectiveIndex" value="{!1}" />
+                                                                                                        <apex:repeat value="{!goal.objectiveForGoalLst}" var="objective">
+                                                                                                            <tr>
+                                                                                                                <td>
+                                                                                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 550px; padding: 10px 0px 10px 0px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                        <tr>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                                 'pdf-body/images/problem2.png')}"/></td>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 510px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa;background-color: #fff;font-family: 'Open Sans', sans-serif; ">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 0; color: #47c3cd; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                    Objective
+                                                                                                                                                    <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 0px;">
+                                                                                                                                                        Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                        <apex:param value="{!objective.level4Rec.Due_Date__c}"/> 
+                                                                                                                                                        </apex:outputText></i></h3>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                  {!objective.level4Rec.Description__c}
+                                                                                                                                                </h3> 
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr> 
+                                                                                                                    </table>
+                                                                                                                    
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            
+                                                                                                            <apex:variable var="interventionUnderObjective" value="{!1}" />
+                                                                                                            <apex:repeat value="{!objective.intvForObjectiveObjectiveForGoal}" var="interventionOfObjectiveInGoals">
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <table border="0" cellspacing="0" cellpadding="0" style="width: 500px; padding: 10px 10px 10px 40px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                            <tr>
+                                                                                                                                <td style="vertical-align: top;">
+                                                                                                                                    <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                                     'pdf-body/images/problem2.png')}"/></td>
+                                                                                                                                <td style="vertical-align: top;">
+                                                                                                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 470px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; ">
+                                                                                                                                        <tbody>
+                                                                                                                                            <tr>
+                                                                                                                                                <td>
+                                                                                                                                                    <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                        Intervention
+                                                                                                                                                        <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                                            Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                            <apex:param value="{!interventionOfObjectiveInGoals.level5Rec.ActivityDate}"/> 
+                                                                                                                                                            </apex:outputText></i></h3>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td>
+                                                                                                                                                    <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                        {!interventionOfObjectiveInGoals.level5Rec.Description}
+                                                                                                                                                    </h3> 
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            
+                                                                                                                                        </tbody>
+                                                                                                                                    </table>
+                                                                                                                                </td>
+                                                                                                                            </tr> 
+                                                                                                                        </table>
+                                                                                                                        
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <apex:variable var="interventionUnderObjective" value="{!interventionUnderObjective + 1}" />       
+                                                                                                            </apex:repeat>
+                                                                                                          
+                                                                                                            <apex:variable var="objectiveIndex" value="{!objectiveIndex+1}" /> 
+                                                                                                        </apex:repeat>
+                                                                                                    
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                            		
+                                                                                                </table>
+                                                                                                <tr><td height="10px" style="background-color: #f8fdf9;"></td></tr>
+
+                                                                                                <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 500px; padding: 10px 10px 10px 0px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                            		<tr>
+                                                                                                       <td>
+                                                                                                        <apex:variable var="objectiveIndex" value="{!1}" />
+                                                                                                        <apex:variable var="interventionIndex" value="{!1}" />
+                                                                                                        <apex:repeat value="{!goal.intvForGoalLst}" var="interventions">
+                                                                                                            <tr>
+                                                                                                                <td>
+                                                                                                                    <table border="0" cellspacing="0" cellpadding="0" style="width: 500px; padding: 10px 10px 10px 0px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                        <tr>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                                 'pdf-body/images/problem2.png')}"/></td>
+                                                                                                                            <td style="vertical-align: top;">
+                                                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 510px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; font-family: 'Open Sans', sans-serif;">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                    {!configHeirarchy.ElixirSuite__Fifth_Level__c}
+                                                                                                                                                    <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                                        Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                        <apex:param value="{!interventions.level5Rec.ActivityDate}"/> 
+                                                                                                                                                        </apex:outputText>
+                                                                                                                                                    </i></h3> 
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td>
+                                                                                                                                                <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                      {!interventions.level5Rec.Description}
+                                                                                                                                                </h3> 
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr> 
+                                                                                                                    </table>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            <apex:variable var="interventionIndex" value="{!objectiveIndex+1}" />  
+                                                                                                        </apex:repeat>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <apex:variable var="goalsIndex" value="{!goalsIndex+1}" />
+                                                        </apex:repeat>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fdf9; width: 640px; margin: -10px 0 0 50px;font-family: 'Open Sans', sans-serif;">
+                                                        <apex:variable var="goalsIndexActualGoal" value="{!1}" />
+                                                        <apex:repeat value="{!prob.objectiveForProblemLst}" var="secondChild">
+                                                            <tr>
+                                                                <td>
+                                                                    <table border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fdf9; width: 640px; margin: 0 0 0 10px; padding: 20px 0px 20px 0px;font-family: 'Open Sans', sans-serif;">
+                                                                        <tr>
+                                                                            <td style="vertical-align: top; width: 50px; ">
+                                                                                <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                 'pdf-body/images/problem2.png')}" style="margin: 7px 10px 0;" /></td>
+                                                                            <td style="vertical-align: top;  ">
+                                                                                <table border="0" cellspacing="0" cellpadding="0" style="background-color: #fff; width: 570px; margin-top: 7px; border-bottom: 2px solid #fafafa; float:left; font-family: 'Open Sans', sans-serif; padding-right: 15px;">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="clear:both;">
+                                                                                                <h3 style="margin: 10px 0 0 15px; color: #47c3cd; font-weight: 600; font-size: 16px; line-height: 16px; float: left; width: 100%;">
+                                                                                                    <span style="float: left; min-width: 200px;">Objective</span>
+                                                                                                    <i style="float: right; font-weight: 300; font-size: 14px; margin-right: 25px;">
+                                                                                                        Due Date: <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                        <apex:param value="{!secondChild.objectivePerProblemObj.Due_Date__c}"/> 
+                                                                                                        </apex:outputText>
+                                                                                                    </i>
+                                                                                                </h3> 
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <h3 style="margin: 7px 0 0 15px; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                    {!secondChild.objectivePerProblemObj.Description__c} 
+                                                                                                </h3>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <apex:variable var="problemNotesIndex" value="{!1}" />
+                                                                                        <!--apex:repeat value="{!secondChild.listOfNotesOfGoal}" var="notes">
+                                                                                            <tr>
+                                                                                                <td style="border-bottom: 1px solid #f1f2f3;">
+                                                                                                    <p style="font-size: 12px; color: #79797b; margin: 7px 0;"><b style="color: #48c3cb; font-weight: 400;">Note: {!problemNotesIndex} </b>{!notes.Notes__c}</p>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <apex:variable var="problemNotesIndex" value="{!problemNotesIndex + 1}"/>
+                                                                                        </apex:repeat-->
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 510px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                    <apex:variable var="interventionUnderObjective" value="{!1}" />
+                                                                                                    <apex:repeat value="{!secondChild.intvForObjetiveForProblem}" var="interventionOfObjectiveInGoals">
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <table border="0" cellspacing="0" cellpadding="0" style="width: 510px; margin: 0 0px 0 5px; padding: 10px; background-color: #fff;font-family: 'Open Sans', sans-serif;">
+                                                                                                                    <tr>
+                                                                                                                        <td style="vertical-align: top;width: 30px;">
+                                                                                                                            <apex:image url="{!URLFOR($Resource.CarePlanPdfImages,
+                                                                                                                                             'pdf-body/images/problem2.png')}" style="margin-right: 0px;" /></td>
+                                                                                                                        <td style="vertical-align: top;">
+                                                                                                                            <table border="0" cellspacing="0" cellpadding="0" style="width: 508px; padding: 0 0 0 10px;  border-bottom: 2px solid #fafafa; font-family: 'Open Sans', sans-serif;">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr>
+                                                                                                                                        <td>
+                                                                                                                                            <h3 style="margin: 0; color: #466bac; font-weight: 600; font-size: 16px; line-height: 16px;">
+                                                                                                                                                <span style="float: left; min-width: 200px;"> {!configHeirarchy.ElixirSuite__Fifth_Level__c}</span>
+                                                                                                                                                <i style="float: right; font-weight: 300; font-size: 14px;">
+                                                                                                                                                    Due Date:  <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                                                                                                                    <apex:param value="{!interventionOfObjectiveInGoals.level5Rec.ActivityDate}"/> 
+                                                                                                                                                    </apex:outputText> </i></h3> 
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                    <tr>
+                                                                                                                                        <td>
+                                                                                                                                            <h3 style="margin: 7px 0; color: #313131; font-weight: 400; font-size: 12px; line-height: 18px;">
+                                                                                                                                                {!interventionOfObjectiveInGoals.level5Rec.Description}
+                                                                                                                                            </h3> 
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                    
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr> 
+                                                                                                                </table>
+                                                                                                                
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <apex:variable var="interventionUnderObjective" value="{!interventionUnderObjective + 1}" />       
+                                                                                                    </apex:repeat>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr> 
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <apex:variable var="goalsIndexActualGoal" value="{!goalsIndexActualGoal + 1}" /> 
+                                                        </apex:repeat>
+                                                        <apex:variable var="index" value="{!index + 1}" />
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        
+                        <!-- APPROVAL PROCESS --> 
+                        <div class="slds-grid slds-wrap">
+                            <ul class="parent_list_items slds-grid slds-gutters_x-large slds-grid_vertical-align-end">
+                        <apex:repeat value="{!approvalLevels.approvedValues}" var="approvedLevel">
+                            <!-- <div class="slds-col"> -->
+                            <li class="list_items slds-col" style="display: inline-block; font-size: 12px; margin-right:10px; width:210px;font-family: 'Open Sans', sans-serif;">
+                                <span class="filecard">
+                                    
+                                    <apex:outputPanel rendered="{!(approvedLevel.signatureContentDocumentId != null)}">
+                                        <apex:image url="{!'/sfc/servlet.shepherd/document/download/' + approvedLevel.signatureContentDocumentId}" width="150" height="100" />
+                                    </apex:outputPanel>    
+                                    <apex:outputPanel rendered="{!(approvedLevel.signatureAttachmentId != null)}">
+                                        <apex:image url="{!'/servlet/servlet.FileDownload?file=' + approvedLevel.signatureAttachmentId}" width="250" height="200" />
+                                    </apex:outputPanel>
+                                    
+                                    
+                                    <p class="slds-p-left_medium" style="font-size: 13px; margin:0;"><b>Signed On : </b> 
+                                        <apex:outputText value="{0,date,MM/dd/yyyy h:mm a}">
+                                            <apex:param value="{!approvedLevel.dateOfApproval}" />
+                                        </apex:outputText>
+                                    </p>  
+                                    <apex:outputPanel rendered="{!(approvedLevel.patientName != null)}">
+                                        <p class="slds-p-left_medium" style="font-size: 13px; margin:0;">
+                                            <b>Signed By : </b> {!approvedLevel.patientName} <span> (Patient)</span>
+                                        </p>  
+                                    </apex:outputPanel> 
+                                    <apex:outputPanel rendered="{!(approvedLevel.userName != null)}">
+                                        <p class="slds-p-left_medium" style="font-size: 13px; margin:5px 0 0;">
+                                            <b>Signed By : </b> {!approvedLevel.userName}<span> ({!approvedLevel.userRole}) </span>
+                                        </p> 
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!(approvedLevel.comments != null)}">
+                                        <p class="slds-p-left_medium" style="font-size: 13px; margin:0;">
+                                            <b>Notes : </b> 
+                                            <b>{!approvedLevel.comments}</b>
+                                        </p>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!(approvedLevel.customLabel != null)}">
+                                        <b>__________________________</b><br/><br/>
+                                        <b>{!approvedLevel.customLabel}</b>
+                                        
+                                        <!--apex:outputPanel rendered="{!NOT(approvedLevel.customLabel)}">
+                                            <br/><br/>
+                                        </apex:outputPanel-->
+                                    </apex:outputPanel>
+                                </span>
+                            </li>
+                            <!-- </div> -->
+                        </apex:repeat>
+                            </ul>
+                        </div>
+                        <!-- APPROVAL PROCESS END --> 
+                        
+                    </tbody>
+                </table>
+            </body> 
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

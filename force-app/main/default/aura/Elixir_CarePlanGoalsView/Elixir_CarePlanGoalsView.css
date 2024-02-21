@@ -1,0 +1,227 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;    
+}
+.THIS.accordian_header {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.THIS.accordian_header .chevron_btn {
+    margin-top: 0px;
+    float: left;
+    width: 30px;
+    border: none;
+    color: #706e6b;
+    margin-left: 5px;
+}
+.THIS.accordian_header .chevron_btn:hover {
+    background-color: transparent;
+    border: none;
+}
+.THIS.accordian_header .chevron_btn:focus {
+    border: none;
+    outline: none;
+}
+.THIS.accordian_header .chevron_btn .slds-button__icon {
+    height: 16px;
+    width: 16px;
+}
+.THIS .right-side_bar1 .btncss {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    line-height: 0;
+    color: #333;
+    font-size: 12px;
+}
+.THIS .right-side_bar .slds-input {
+    width: 100px;
+    text-align: left;
+    padding: 0 0 0 20px;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+    color: #333;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0;
+    top: 4px;
+    fill: #ccc;
+}
+.THIS .right-side_bar svg.slds-button__icon.slds-button__icon_left {
+    fill: #666;
+}
+.THIS .right-side_bar label.slds-form-element__label {
+    display: none;
+}
+.THIS .accordian_open .right-side_bar button.btncss:hover {
+    border: none;
+    background-color: transparent;
+}
+.THIS .third_accordian {
+    float: right;
+    width: calc(100% - 50px);
+    background-color: #f8fcf9;
+    border-radius: 0;
+    padding-top: 0;
+    margin-top: 0px;
+}
+.THIS .third_accordian .slds-page-header {
+    background-color: #fff;
+    width: calc(100% - 50px);
+    padding-right: 30px;
+}
+.THIS .third_accordian .btncss {   
+    background-color: #f8fcf9 !important;
+    border: 1px solid #999!important;
+    color: rgb(1, 118, 211)!important;
+    padding: 5px 15px!important;
+    margin-bottom: 10px;
+}
+.THIS .third_accordian .right-side_bar1 .btncss {
+    background-color: transparent;
+    border: none !important;
+    margin-right: 0;
+    margin-top: 0px;
+    color: #333 !important;
+}
+.THIS .third_accordian h3 {
+    color: #48c3cc !important;
+}
+.THIS .third_accordian .slds-icon-utility-food-and-drink {
+    background-color: #48c3cc;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.THIS .third_accordian .slds-icon-utility-food-and-drink .slds-icon {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+}
+.THIS .third-accordian_bl {
+    height: 20px;
+    width: 2px;
+    background-color: #48c3cc;
+    float: left;
+    margin-left: 61px;
+}
+.THIS .third_accordian .third-accordian_bl:last-child {
+    display:none;
+}
+
+.THIS .fourthaccordian {
+    margin-bottom: 10px;
+}
+.THIS .fourthaccordian .slds-page-header {
+    background-color: #fff;
+    width: calc(100% - 38px);
+    padding-right: 30px;
+}
+.THIS .fourthaccordian .btncss {
+    background-color: #48c3cc;
+    border: 1px solid #48c3cc;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+.THIS .fourthaccordian .right-side_bar1 .btncss {
+    margin-top: 0px;
+    background-color: transparent;
+    border: none;
+    margin-right: 0;
+}
+.THIS .fourthaccordian .btncss:hover {
+    background-color: transparent;
+    color: #466bac;
+}
+.THIS .fourthaccordian h3 {
+    color: #466bac !important;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink {
+    background-color: #466bac;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 100%;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink .slds-icon {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+}
+.THIS .fourthaccordian .third-accordian_bl:last-child {
+    display:none;
+}
+.THIS .slds-icon-action-goal{
+    margin-top: 2px;
+    padding: 2px;
+    background-color: #4bc076;
+    margin-bottom: 12px;
+    margin-right: 13px;
+}
+.THIS .editStyle textarea{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    width: calc(100% - 20px);
+}
+.THIS .c-point {
+    cursor: pointer;
+    width: calc(100% - 50px);
+    float: right;
+}
+.THIS .goals-head {
+    font-size: 18px;
+    color: #4bc076;
+    line-height: 15px;
+    margin-bottom: 7px;
+}
+.THIS .first-inner-dl {
+    height: 20px;
+    width: 2px;
+    float: left;
+    margin-left: 75px;
+    background-color: #4bc076;
+}
+.THIS.care-plan_header {
+    width: calc(100% - 50px);
+    float: right;
+    padding: 0 0 0px;
+}
+.THIS.care-plan_header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+}
+.THIS .spaceEdit {
+    margin-left: 10px;
+}
+.THIS.problem_parent .care-plan_header {
+    display: none;
+}
+@media (max-width: 576px) {
+    .THIS .third_accordian .btncss {
+        margin-right: 0;
+    }
+    .THIS .uiOutputTextArea {
+        margin-top: 5px;
+        display: inline-block;
+    }
+}
+
+.THIS .due_date svg.slds-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.THIS .due_date span.uiOutputDate {
+    font-size: 13px;
+    margin-left: 5px;
+    color: #000;
+}

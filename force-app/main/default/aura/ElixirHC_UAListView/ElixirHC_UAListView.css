@@ -1,0 +1,47 @@
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg{
+    fill : red;
+}
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+
+.THIS .selected{
+    height: 40px;
+    width: 60px;
+    margin-bottom: 15px;
+    padding : 2px;
+    border: 1px solid ;
+}
+
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+}
+.THIS .mg-p-list {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .pr {
+  /*  position:relative;*/
+}
+.THIS .showdel-btn {
+    text-align:right;
+    padding-right:2.3rem;
+}

@@ -1,0 +1,94 @@
+.THIS .c1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+.THIS .c2 {
+   color: red;
+   font-weight: 700;
+}
+.THIS .c3 {
+    font-size:15px ;
+}
+.THIS .c4 {
+   margin-top:20px
+}
+.THIS .c5 {
+    font-size: 20px;
+    font-weight: 600;
+}
+.THIS .divcss{
+    background-color:white
+}
+.THIS .slds-align_absolute-center{
+    font-size: 20px;
+}
+.THIS .slds-align_absolute-center{
+    font-size: 20px;
+}
+.THIS .slds-p-around_xxx-small{
+    padding-left: 10px;font-weight: 700;
+}
+.THIS .slds-p-around_xxx-small{
+    padding-left: 10px
+}
+.THIS .divcss_1{
+    font-weight: 700;
+}
+.THIS .divcss_2{
+    padding-left:10px
+}
+/* changes */
+.THIS .changemargintop{
+    margin-top:20px;
+}
+.THIS .changetopheight{
+    font-weight: 700;font-size: 20px;
+}
+.THIS .changeborder{
+    border: solid;border-width: 1px;border-right: 1px;border-bottom: 1px;
+}
+.THIS .changebottomorder{
+    border: solid;border-width: .5px;border-bottom: 1px;
+}
+.THIS .changevottom1{
+    border: solid;border-width: 1px;border-bottom: 1px;
+}
+.THIS .changebottomwidth{
+    border: solid;border-width: 1px;border-right: 1px;border-bottom: 1px;
+}
+.THIS .changebottomsolid{
+    border: solid;border-width: 1px;border-bottom: 1px;
+}
+.THIS .changeborderright{
+    border: solid;border-width: 1px;border-bottom: 1px;border-right: 1px;
+}
+.THIS .changeborderwith{
+    border: solid;border-width: 1px;border-bottom: 1px;border-right: 1px;
+}
+.THIS .changeborder1{
+    border: solid;border-width: 1px;border-bottom: 1px;
+}
+.THIS .changewidth2{
+    border: solid;border-width: 1px;border-right: 1px;
+}
+.THIS .changerightborder{
+    border: solid;border-width: 1px;border-right: 1px;
+}
+.THIS .changeright2{
+    border: solid;border-width: 1px;
+}
+.THIS .changemargin2{
+    margin-top:20px;
+}
+.THIS .changefontwightsize{
+    font-size: 20px;font-weight: 700;
+}
+.THIS .changemargintop10{
+    margin-top:10px;
+}
+.THIS .changewight10{
+    font-weight: 700;
+}
+.THIS .chnagetop10{
+    margin-top:10px;
+}

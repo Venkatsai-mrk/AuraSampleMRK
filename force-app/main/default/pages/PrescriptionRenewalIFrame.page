@@ -1,0 +1,4 @@
+<apex:page controller="PrescriptionRenewal" applyHTMLTag="true" applyBodyTag="true" readOnly="true">
+    
+    <iframe height="800px" id="Renew" title ="Renew" name="Renew" src="{!src}" width="100%" ></iframe>
+</apex:page>

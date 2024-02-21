@@ -1,0 +1,236 @@
+<aura:component  controller="MasterProblemListController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    
+    <aura:attribute name="isView" type="Boolean"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/> 
+    <aura:attribute name="selectedRecord" type="Object" default="" description="selected Record Details" />
+    <aura:attribute name="diagnoseValue" type="String"/>
+    <aura:attribute name="diagnosisName" type="String"/> 
+    <aura:attribute name="fieldSetData" type="List" />
+    <aura:attribute name="problemName" type="String"/>
+    <aura:attribute name="recordDetail" type="String"/>
+    <aura:attribute name="ICDPickList" type="list"/>
+    <aura:registerEvent name="ProblemRefreshEvt" type="c:ProblemRefreshEvt"/>
+    <aura:attribute name="ICDSearchParam" type="String"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>
+    <aura:attribute name = "Title" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="diagnosisEvent" event="c:diagnosisEvent" action="{!c.diagnosisComponentEvent}"/>
+     <aura:registerEvent name="diagnosisRemoveCmpEvent" type="c:diagnosisRemoveCmpEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+     <aura:attribute name="activeSections" type="List" default="['A','B']" />
+    <div class="parentCSS"  aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"  aria-describedby="modal-content-id-1" class="childCSS slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv">
+                
+                <header class="slds-modal__header headerCSS">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <aura:if isTrue="{!v.Title == 'Edit '}">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-transform:uppercase"><b>{!v.Title} PROBLEM &amp; DIAGNOSIS TO PATIENT FILE : {!v.recordDetail.problemName}</b></h2>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.Title == 'View '}">
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-transform:uppercase"><b>{!v.Title} PROBLEM &amp; DIAGNOSIS TO PATIENT FILE : {!v.recordDetail.problemName}</b></h2>
+                                 <aura:set attribute="else">
+                                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-transform:uppercase"><b>ADD PROBLEM TO PATIENT FILE</b></h2>
+                                </aura:set>
+                            </aura:if>
+                            
+                        </aura:set>
+                    </aura:if>
+                    
+                    
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium spinnerCSS slds-theme_shade" id="modal-content-id-1">
+                    <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true" activeSectionName="{!v.activeSections }">
+                       
+                           <!--lightning:accordionSection class="form_config" name="A" label="Problem/Complaint Details"-->
+                          <h2 class="slds-text-heading_medium instruction_head" >Problem/Complaint Details</h2><br/>
+                    
+                    <div class="widthForAll">
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12 p_name">
+                                Problem Name : 
+                                <c:ElixirOEM_Problem_GlobalSearch ICDSearchParam = "{!v.recordDetail.ICDVersion}" selectRecordId="{!v.selectRecordId}" diagnosisName = "{!v.recordDetail.ICDCodeLabel}"
+                                                                  selectRecordName = "{!v.recordDetail.problemName}" AllFlag="{!v.AllFlag}"/> 
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                           <!-- <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" disabled= "{!v.AllFlag}" label="ICD-CM Code" value="{!v.recordDetail.ICDCodeLabel}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>-->
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" disabled= "{!v.AllFlag}" label="SNOMED CT Code"  value="{!v.recordDetail.SnomedCode}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                           
+                        </div>
+                         <div class="slds-grid slds-gutters "  id="TaskList2">  
+                             <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label=" Problem Type"  disabled= "{!v.AllFlag}" onchange="" value="{!v.recordDetail.ProblemType}">
+                                    <option value="">NONE</option>
+                                    <option value="Primary" label="Primary"/>   
+                                    <option value="Secondary" label="Secondary"/>    
+                                    
+                                    
+                                    
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label="Status" disabled= "{!v.AllFlag}" onchange="" value="{!v.recordDetail.Status}">
+                                    <option value="">NONE</option>
+                                    <option value="Active" label="Active"/>   
+                                    <option value="Inactive" label="Inactive"/>    
+                                    <option value="Completed" label="Completed"/>   
+                                    
+                                    
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="date" name="" label="Start Date" disabled= "{!v.AllFlag}" value="{!v.recordDetail.DateOnset}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                 
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                           <!--/lightning:accordionSection-->
+                
+                     <!--lightning:accordionSection class="form_config" name="B" label="Diagnosis Details"-->
+                          <h2 class="slds-text-heading_medium instruction_head" >Diagnosis Details</h2><br/>
+                    <div class="widthForAll">
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                         <div class="slds-col slds-size_6-of-12">
+                                <c:diagnosisLookupComponent label="ICD-CM Code"
+                                                   objectName="ElixirSuite__ICD_Codes__c" 
+                                                   fieldName="Name"
+                                                   selectedRecordId="{!v.recordDetail.diagnosisId}"
+                                                   selectedRecordName = "{!v.recordDetail.ICDCodeLabel}"
+                                                   searchString = "{!v.recordDetail.ICDCodeLabel}"
+                                                   AllFlag="{!v.AllFlag}"
+                                                   problemName = "{!v.selectRecordName}"
+                                                   />
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                             <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" disabled= "{!v.AllFlag}" label="ICD Description"  value="{!v.recordDetail.description}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                    
+                         <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label="ICD Version" disabled= "{!v.AllFlag}" onchange="{!c.handleICDVersionChange}" value="{!v.recordDetail.ICDVersion}">
+                                    
+                                    <aura:iteration items="{!v.ICDPickList}" var="item">
+                                        <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.ICDVersion}">                                               
+                                        </option> 
+                                    </aura:iteration>                                        
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                             <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name="" disabled= "{!v.AllFlag}" label="Diagnosis Type" onchange="" value="{!v.recordDetail.diagnosisType}">
+                                    <option value="">NONE</option>
+                                    <option value="Primary" label="Primary"/>   
+                                    <option value="Secondary" label="Secondary"/> 
+                                    <option value="Other" label="Other"/> 
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                           <div class="slds-grid slds-gutters"  id="TaskList2"> 
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="date" name="" label="Date Diagnosed" disabled= "{!v.AllFlag}" value="{!v.recordDetail.DateDiagnised}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>   
+                     </div>
+                      <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                        <div class="slds-col slds-size_12-of-12 p_name">
+                            <lightning:textarea name="input3" label="Notes"  disabled= "{!v.AllFlag}" placeholder="Add your notes here..."
+                                                value="{!v.recordDetail.notes}"/>
+                        </div>
+                    </div>
+                       
+
+
+
+
+                    <div class="slds-grid slds-gutters">
+                        <aura:if isTrue="{!not(empty(v.fieldSetData))}">
+                        <aura:iteration items="{!v.fieldSetData}" var="field">
+                            <aura:if isTrue="{!field.fieldType == 'DATETIME'}">
+                                <aura:if isTrue="{!field.value == 'ElixirSuite__Diagnosis_Attestation_on__c'}">
+                                    <div class="slds-col slds-size_6-of-12 hideLabel">
+                                        <div>
+                                            <label>{!field.label}</label>
+                                        </div>
+                                        <div class="fieldLabel">
+                                            <lightning:input disabled= "{!v.AllFlag}" type="datetime" value="{!v.recordDetail.diagnosisAttestationOn}" />
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </aura:if>
+                            <aura:if isTrue="{!field.fieldType == 'REFERENCE'}">
+                                <aura:if isTrue="{!field.value == 'ElixirSuite__Diagnosed_By__c'}">
+                                    <div class="slds-col slds-size_6-of-12">
+                                    <div>
+                                        <label>{!field.label}</label>
+                                    </div>
+                                        <aura:if isTrue="{!v.AllFlag}"> 
+                                            <div class="fieldLabel disableField">
+                                                <c:lookupComponent disabled= "{!v.AllFlag}" iconName="" selectedRecord="{!v.selectedRecord}" objectName="Contact" fieldName="Name" value = "{!v.recordDetail.diagnoseValue}" filterClause = "" searchString = "{!v.diagnoseValue}" />
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="fieldLabel">
+                                                    <c:lookupComponent iconName="" selectedRecord="{!v.selectedRecord}" objectName="Contact" fieldName="Name" value = "{!v.recordDetail.diagnoseValue}" filterClause = "" searchString = "{!v.diagnoseValue}" />
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                    </div>
+                                </aura:if>
+                             </aura:if>
+                        </aura:iteration>
+                        </aura:if>
+                    </div>
+
+
+                         </div>
+                           <!--/lightning:accordionSection-->
+                </lightning:accordion>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters footerCSS">
+                        <div class="slds-col slds-size_12-of-12">                              
+                            <lightning:button variant="neutral"  class="colPayHeader1" label="Cancel" title="Cancel" onclick="{!c.closeModel }" />                           
+                            <lightning:button variant="neutral"  class="colPayHeader1" label="Save &#38; New" title="Update &#38; New" onclick="{!c.updateAndNew}"  disabled= "{!v.AllFlag}"/>                        
+                            <lightning:button variant="brand"  class="colPayHeader1" label="Save" title="Save" onclick="{!c.updateRecord }"  disabled= "{!v.AllFlag}"/>
+                        </div>                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </div>
+</aura:component>

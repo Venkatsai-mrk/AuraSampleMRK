@@ -1,0 +1,130 @@
+.THIS .bill_summry {
+    border: 2px solid #1798c1;
+    padding: 0;
+}
+.THIS .bill_summry h3 {
+    background-color: #1798c1;
+    border-radius: 0;
+    color: #fff;
+    padding-left: 15px;
+    width: calc(100% + 0px);
+}
+.THIS .bill_summry1 {
+    border-bottom: none;
+}
+.THIS .bill_summry2 {
+    border-bottom: 2px solid #1798c1;
+    border-top: none;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .bill_summry2 h3 {
+    color: #000;
+    background-color: #f7c164;
+    font-size: 18px;
+    font-weight: 700;
+    border-top: 5px solid #f7c164;
+    border-bottom: 5px solid #f7c164;
+    width:calc(100% + 26px);
+}
+.THIS .bill_summry2 .slds-size_6-of-12:first-child h3 {
+    border-right: 2px solid #fff;
+}
+.THIS .bill_summry2 .slds-size_6-of-12:last-child h3 {
+    width: calc(100% + 31px);
+}
+.THIS .pre_bal {
+    border-right: 1px solid #1798c1;
+}
+.THIS .pre_bal .slds-form-element__label {
+    display: none;
+}
+.THIS .hor-line hr {
+    width: 100%;
+    margin: 10px auto;
+    background-color: #1798c1;
+    height: 1px;
+}
+.THIS .tq-stmt {
+    background-color: #f1f2f3;
+    padding: 10px 15px;
+    margin: 0 auto;
+    width: 100%;
+}
+.THIS .bill_summry1 .slds-size_6-of-12:first-child{
+    border-right: 1px solid #f7c164;
+}
+.THIS .dolor {
+    display: block;
+    background-color: #5d8eae;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    font-size: 42px;
+    line-height: 74px;
+}
+.THIS .sign {
+    position: relative;
+    z-index: 0;
+}
+.THIS .sign b {
+    z-index: 1;
+    font-size: 24px;
+}
+.THIS .sign hr {
+    background-color: #ccc;
+    height: 1px;
+    margin: 5px 0 0 0px;
+    width: calc(100% + 15px);
+}
+.THIS .payment-list {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.THIS .payment-list h2 {
+    color: #000;
+    font-weight: 700;
+    font-size: 28px;
+}
+.THIS .slds-modal__container{
+    max-width: 80rem !important;
+    width:80% !important;
+}
+.THIS .slds-modal.slds-fade-in-open {
+    background-color: rgba(0,0,0,0.5);
+}
+.THIS .slds-modal__content {
+    padding:20px 40px 20px 40px;
+    display:block;
+}
+@media(max-width: 767px) {
+	.THIS .payment-list {
+        width: 86%;
+    }  
+    .THIS .defaultBackground {
+        display: block;
+        margin-top: 15px;
+    }
+    .THIS .defaultBackground .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .pre_bal {
+        border-right: none;
+    }
+    .THIS .slds-modal__container {
+        width: 86% !important;
+    }
+} 
+@media(max-width: 576px) {
+	.THIS .payment-list {
+        width: 90%;
+    } 
+}

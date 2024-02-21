@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" 
+                controller="CriteriaFilterSubmitController">
+    <!--Attribute Definition-->
+    <aura:attribute name="criteriaFilter" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="c:CriteriaFilterEvent" action="{!c.handleFilterEvent}"/>
+    <lightning:card title="Logic for Criteria" class="slds-m-around_medium">
+        <div class="slds-text-align_left slds-m-around_medium">
+            <lightning:input type="text" aura:id="criteriafilterId" value="{!v.criteriaFilter}" name="inputFilter" label="Enter Logic" onchange="{! c.handleChange}"/>
+            <lightning:button class="slds-m-top_medium" variant="brand" label="Submit" title="Submit" onclick="{!c.submitCriteriaFilter}" />
+        </div>
+    </lightning:card>
+    
+</aura:component>

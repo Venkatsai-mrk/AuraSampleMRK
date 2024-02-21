@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Air_Travel</fullName>
+    <active>true</active>
+    <label>Air Travel</label>
+    <picklistValues>
+        <picklist>Approved_Programs__c</picklist>
+        <values>
+            <fullName>The Freedom Center</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Travel_Mode__c</picklist>
+        <values>
+            <fullName>Airplane</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Transport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pick-up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Train</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uber</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Travel_Status__c</picklist>
+        <values>
+            <fullName>Confirmed Pickup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirmed Travel Arrangements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missed Travel Arrangement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Re-booked Travel Arrangement</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

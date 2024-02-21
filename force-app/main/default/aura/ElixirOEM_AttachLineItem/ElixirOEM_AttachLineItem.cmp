@@ -1,0 +1,209 @@
+<aura:component controller = "ElixirOEM_AttachEraLineItemHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="childERAtableList" type="List"/>  
+    <aura:attribute name="lineItemLst" type="List" />
+    <aura:attribute name="lineItemLstCopy" type="List" />
+    <aura:attribute name="parentClaimId" type="String"/> 
+    <aura:attribute name="patientName" type="String"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="reasonList" type="List" />
+    <aura:attribute name="erasObj" type="Object"/> 
+    
+    <!-- Added by Neha  -->
+    <aura:attribute name="selectedOption1" type="List" />
+    <aura:attribute name="eraId" type="String" />
+    <aura:attribute name="suppRemarkCodesPicklistVal" type="List"/>
+    <aura:attribute name="infoRemarksMap" type="List"/>
+    <aura:attribute name="selectedOptions" type="List"/> 
+    <aura:attribute name="selectedInfoText" type="String" />
+     <aura:attribute name="selectedInfoCodesList" type="List" />
+    
+    <!--<aura:handler name="sendInfoRemarks" event="c:infoRemarkSelectedValues" action="{!c.setInfoRemarksMap}"/>-->
+    <!-- -->
+    
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{!c.cancelWindow}">
+                &#10005; <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header attach_claim-head">
+                <aura:if isTrue="{!not(empty(v.erasObj.eraHash))}">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.patientName} -  {!v.erasObj.eraHash}     </h1>
+                     <aura:set attribute="else">
+                     {!v.patientName} -  {!v.erasObj.ClaimNumber} 
+                      </aura:set>
+                </aura:if>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-card">
+                    <div class="patient_name-claim">
+                        
+                        <section class="slds-accordion__section slds-is-open">
+                            <div class="slds-accordion__summary">
+                                <h2 class="slds-accordion__summary-heading custom-accordian">
+                                    <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true" activeSectionName="sectionInstance[0].claimLineItemId">
+                                        <aura:iteration items="{!v.lineItemLst}" var="sectionInstance" indexVar="rowIndex">
+                                            <lightning:accordionSection name="{!sectionInstance.claimLineItemId}" label= "{!sectionInstance.procCodeNameAndDescription}"> <!--replaced 'procCode' with 'procCodeNameAndDescription' by Anusha - LX3-5744 -14/10/22-->
+                                                <div class="" id="referenceId-42">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Procedure Code</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                                            <lightning:input type="text" value = "{!sectionInstance.procCodeERAprocLineItem}"  disabled = "{!v.erasObj.isPosted}" name="input2"  /> 
+                                                        </div>
+                                                        <!--div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Payment Status</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                                           {!sectionInstance.paymentStatus}
+                                                        </div-->
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Billed Amount</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            ${!sectionInstance.billedAmt}
+                                                                                                                    </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Patient Responsibility</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            ${!sectionInstance.patientResp}
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Allowed Amt.</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                                            <lightning:input type="number"  formatter="currency" step="0.01" min="0" value = "{!sectionInstance.allowedAmt}"  disabled = "{!v.erasObj.isPosted}" name="{!rowIndex}"
+                                                                             onchange="{!c.onAllowedAmtChanged}"/> 
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Paid Amt.</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                                            <lightning:input type="number"  formatter="currency" step="0.01" min="0" value =  "{!sectionInstance.paidAmt}"  disabled = "{!v.erasObj.isPosted}" name="{!rowIndex}" 
+                                                                             onchange="{!c.onPaidAmtChanged}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Adjustment Amt.</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            ${!sectionInstance.adjustMentAmt}
+                                                                                                                    </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Provider Adjustment</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            ${!sectionInstance.providerAdj}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-grid slds-gutters">
+                                                        
+                                                        <!-- Added by Neha --> 
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Remark Codes</label>
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small" >
+                                                                                                                     <c:ParentERAMultiSelectInformationCode options_="{!sectionInstance.infoRemarkCodes}" MultipleoptnId = "{!sectionInstance.selectedInfoRemarkCodes}" 
+                                                                                                    disabled = "{!v.erasObj.isPosted}"></c:ParentERAMultiSelectInformationCode>
+                                                            
+                                                               
+                                                        </div>
+                                                        <!-- -->
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            <label>Other Insurance Resposibility</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium">
+                                                            ${!sectionInstance.otherInsuranceResposibility}
+                                                        </div> 
+                                                        
+                                                        
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_12-of-12 slds-m-top_medium">
+                                                            <div class="attach_claim-head">
+                                                                <h3>Add Adjustment Codes</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                                            <table class="slds-table attach_table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Adjustment Amount</th>
+                                                                        <th>Adjustment Reason</th>
+                                                                        <th>Adjustment Group Code</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <aura:iteration items="{!sectionInstance.adjustmentCodeTable}" var="adjCdeTabl" indexVar="adjCodeRowIndex">
+                                                                        <tr>
+                                                                            <td><lightning:input type="number"  formatter="currency" step="0.01" min="0" value =  "{!adjCdeTabl.adjCdTbl_adjustmentAmount}" disabled = "{!v.erasObj.isPosted}"
+                                                                                                 onchange="{!c.calculatePatientResposibility}"  name="{! rowIndex +'$'+adjCodeRowIndex}"  
+                                                                                                 /></td>
+                                                                            <td>
+                                                                                <lightning:select value ="{!adjCdeTabl.adjCdTbl_adjustmentCodeReason}" disabled = "{!v.erasObj.isPosted}">
+                                                                                    <option text="None" value="None" />
+                                                                                    <aura:iteration items="{!adjCdeTabl.reasonList}" var="item">
+                                                                                        <option label="{!item.label}" value="{!item.label}" />
+                                                                                    </aura:iteration>
+                                                                                </lightning:select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <lightning:select value="{!adjCdeTabl.adjCdTbl_adjustmentGroupCode}" onchange="{!c.calculatePatientResposibility}"
+                                                                                                  name="{! rowIndex +'$'+adjCodeRowIndex}" disabled = "{!v.erasObj.isPosted}">
+                                                                                    <option text="None" value="None" />
+                                                                                    <aura:iteration items="{!adjCdeTabl.adjustmentGrpCodeLst}" var="item">
+                                                                                        <option text="{!item.label}" value="{!item.value}" />
+                                                                                    </aura:iteration>
+                                                                                </lightning:select> 
+                                                                            </td>
+                                                                                                                                                        <td> 
+                                                                                <lightning:button label="&#10010;" name="{! rowIndex +'$'+adjCodeRowIndex}"  title="Attach" onclick="{!c.addRowForAdjCodeTable}" disabled = "{!v.erasObj.isPosted}"/>
+                                                                                <lightning:button label="&#10005;" name = "{!rowIndex+'$'+adjCodeRowIndex}" title="Attach" onclick="{!c.delRowForAdjCodeTable}" disabled = "{!v.erasObj.isPosted}"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </aura:iteration>
+                                                                    
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </lightning:accordionSection>
+                                        </aura:iteration>
+                                    </lightning:accordion>
+                                </h2>
+                            </div>
+                            
+                        </section>
+                        
+                    </div>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                </div>            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.cancelWindow}">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick="{!c.doneWithLineItems}">Done</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</aura:component>

@@ -1,0 +1,215 @@
+<aura:component controller="Elixir_FormApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="formId" type="String" />
+    <aura:registerEvent name="changehandlerEvent" type="c:changehandlerEvent" />
+    <aura:attribute name="formName" type="String" />
+    <aura:attribute name="allCreateNotes" type="List"/>
+    <aura:attribute name="isOpen1" type="boolean" default="false"/>
+    <aura:attribute name="parentSelectedValues" type="String"/>
+    <aura:attribute name="parentinputSelectedValues" type="String"/>     
+    <aura:attribute name="proceedWithDefaultProblem" type="Boolean" default="true"/>
+    <aura:attribute name="showConfirmDialog" type="Boolean" default="false"/>
+    <aura:attribute name="allergyData" type="String"/> 
+    <aura:attribute name="medicationData" type="String"/> 
+    <aura:attribute name="glucoseData" type="Object"/> 
+    <aura:attribute name="problemDiagnosesData" type="Object"/> 
+    <aura:attribute name="vitalSignsData" type="Object" />
+    <aura:attribute name="allergyDataToSave" type="list[]"/> 
+    <aura:attribute name="inputTextAreaSelectedValues" type="String"/>
+    <aura:attribute name="inputDateselectedValues" type="String"/>
+    <aura:attribute name="inputDateTimeselectedValues" type="String" />
+    <aura:attribute name="inputTimeselectedValues" type="String"/>
+    <aura:attribute name="medicationJSON" type="String"/>
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+    <aura:attribute name="selectedUser" type="String"/>
+    <aura:attribute name="selectedVia" type="String"/>
+    <aura:attribute name="patientID" type="String" />  
+    <aura:attribute name="passCode" type="String" />
+    <aura:attribute name="accName" type="String" /> 
+    <aura:attribute name="imgId" type="String" />   
+    <aura:attribute name="multiPicklistValues" type="List"/>  
+    <aura:attribute name="verifyOtp" type="Boolean" default="false"/>
+    <aura:attribute name="showSign" type="Boolean" default="true"/>
+    <aura:attribute name="ErrorMessage" type="Boolean" default="false"/>
+    <aura:attribute name="physicalTherapist" type="List"/>
+    <aura:attribute name="currentUser" type="object"/>
+    <aura:attribute name="attachId" type="Id"/>
+    <aura:attribute name="signComment" type="String"/>
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name="dateTodayForForm" type="String"/>
+    <aura:attribute name="toDeleteRecordsOnForm" type="list"/>
+    <aura:attribute name="toUpdateRecordsOnForm" type="list"/>
+    <aura:attribute name="toUpdateNotesToProblemRecordsOnForm" type="List"/>
+    <aura:attribute name="pathWay" type="string"/>  
+    <aura:attribute name="nameSpace" type="string" default="ElixirSuite__"/> 
+    <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->
+    <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/-->
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="FormMedicationData" event="c:FormMedicationData" action="{!c.handleMedicationDataEventForSaving}"/> 
+    <!--a:handler name="OTPMatchCmpEvent" event="c:EventOnOTPMatching" action="{!c.parentComponentEvent}"/-->
+    <aura:attribute name="showDetail" type="object" />
+    <aura:attribute name="showDetail1" type="object" />
+    <aura:attribute name="currentlyUploadedDocumetIDs" type="list"/> 
+    <aura:attribute name="runScroll" type="Boolean" default="true"/>
+    <aura:attribute name="dynamicOffset" type="Integer" default="0"/>
+    <aura:attribute name="isRestrict" type="Boolean" default="false"/>
+    <aura:attribute name="RestrictButtons" type="Boolean" />
+    <aura:attribute name="SecurityKeys" type="String"/>
+    <aura:attribute name="isRestricted" type="Boolean" default=""/>
+    <aura:registerEvent name="RefreshViewEvent" type="c:RefreshViewEvent"/>
+    <aura:if isTrue="{!v.isOpen1}">
+        
+        
+        <section role="dialog"  tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open new_form-popup FormsListViewSectionCls">
+            
+            <div class="slds-modal__container hideDiv" aura:id="ParentDiv"  >
+                <header class="slds-modal__header" > 
+                    <lightning:buttonIcon iconName="utility:close"  disabled="{!v.RestrictButtons}" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Form</h2>
+                    
+                    <ui:inputCheckbox aura:id="checkbox" label="Patient Mode" value="{!v.isRestrict}" change="{!c.onCheck}"/>
+                    
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <aura:if isTrue="{!v.Spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>    
+                    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                    <div class="widthForAll">
+                        <div class="slds-form"> 
+                            
+                            <div class="slds-m-left_medium over-hide" onscroll="{!c.callMethod}"  id="table-div">
+                                
+                                <div class = "slds-grid slds-gutters cardCls">
+                                    <div class="slds-col slds-size_6-of-12 ">
+                                        <c:PatientCard_MAR recordId="{!v.patientID}"></c:PatientCard_MAR>
+                                        <!-- FOR PATIENT INFORMATION -->
+                                    </div>  
+                                </div>
+                                
+                                <aura:iteration items="{!v.showDetail}" var="item" indexVar="currentindexVar"> 
+                                    <div class="e">
+                                        <c:ListView accName="{!v.accName}" physicalTherapist="{!v.physicalTherapist}" showDetail = "{!item}" currentIndex = "{!currentindexVar}"
+                                                    selectedValues="{!v.parentSelectedValues}" inputSelectedValues = "{!v.parentinputSelectedValues}" 
+                                                    inputDateSelectedValues="{!v.inputDateselectedValues}" inputTextAreaSelectedValues="{!v.inputTextAreaSelectedValues}" 
+                                                    fixedmultiPicklistValues="{!v.multiPicklistValues}" allergyData = "{!v.allergyData}" patientID="{!v.patientID}"
+                                                    currentUser="{!v.currentUser}" medicationData="{!v.medicationData}" inputDateTimeselectedValues = "{!v.inputDateTimeselectedValues}"
+                                                    glucoseData = "{!v.glucoseData}" vitalSignsData="{!v.vitalSignsData}" problemDiagnosesData = "{!v.problemDiagnosesData}"
+                                                    toDeleteRecordsOnForm = "{!v.toDeleteRecordsOnForm}" toUpdateRecordsOnForm= "{!v.toUpdateRecordsOnForm}"
+                                                    toUpdateNotesToProblemRecordsOnForm = "{!v.toUpdateNotesToProblemRecordsOnForm}" runScroll="{!v.runScroll}" pathWay="{!v.pathWay}"
+                                                    currentlyUploadedDocumetIDs="{!v.currentlyUploadedDocumetIDs}" CustomProblemToDel="{!v.CustomProblemToDel}"
+                                                    allCreateNotes = "{!v.allCreateNotes}" /> 
+                                        
+                                        
+                                    </div>  
+                                    
+                                </aura:iteration>
+                            </div>
+                            <!--   <aura:if isTrue="{!v.showSign}">
+                                    <lightning:button variant ="neutral" label ="Patient Signature" onclick = "{!c.showVerifyOtp}"/>     
+                                </aura:if>-->
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.showConfirmDialog}">
+                        
+                        <div role="dialog" class="slds-modal slds-fade-in-open ">
+                            <div class="slds-modal__container">
+                                
+                                <header class="slds-modal__header">
+                                    <h1 class="slds-text-heading--medium">NO PROBLEM RECORD SELECTED!</h1>
+                                </header>
+                                
+                                <div class="slds-modal__content slds-p-around--medium">
+                                    <center><b>You have not selected any PROBLEM. A default PROBLEM RECORD will be creted with name "DEFAULT CREATED". Continue?</b></center>
+                                </div>
+                                
+                                <footer class="slds-modal__footer">
+                                    <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                                </footer>
+                                
+                            </div>
+                        </div>
+                        <div class="slds-backdrop slds-backdrop--open"></div>            
+                    </aura:if>
+                    <!--  <aura:if isTrue="{!v.verifyOtp}">
+                            <c:VerifyWithOTP isActive="{!v.verifyOtp}" patId = "{!v.patientID}" recId = "{!v.formId}" pwCode="{!v.accName.passCode}"/>
+                        </aura:if>
+                         
+                           
+                            <img class="imgCls" src="{!v.attachId}" width="180" height="100"/>
+                            {!v.dateTodayForForm}   {!v.signComment} 
+                            -->
+                    
+                </div>
+                <footer class="slds-modal__footer footercls ">
+                    <div class="slds-grid slds-gutters">
+                        <div aura:id="buttons-cls" class="slds-col slds-size_3-of-12 buttonRound">                            
+                            <lightning:button variant ="neutral"  disabled="{!v.RestrictButtons}" label ="Close" onclick = "{!c.closeModel}"/>                               
+                            <lightning:button variant="brand" label="Submit"  disabled="{!v.RestrictButtons}" type="submit" onclick = "{!c.Save}" aura:id = "submitid"/>         
+                        </div>
+                        <div class="slds-col slds-size_9-of-12 datetime_class">    
+                            <div class="slds-grid slds-gutters">
+                                
+                                <div class="slds-col slds-size_6-of-12 calendarIcon">   
+                                    <lightning:input autocomplete="off" type="datetime" aura:id="procedure-start_time" name="input3" label="Start Time" required="true" value="{!v.todayString}" onchange="{!c.procedureValidity}"/>  
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 calendarIcon">   
+                                    
+                                    <lightning:input autocomplete="off" type="datetime" aura:id="procedure-end_time" name="input3" label="End Time" required="true" value="{!v.endString}" onchange="{!c.procedureValidity}"/> 
+                                </div>       
+                            </div>
+                        </div>
+                    </div>
+                </footer> 
+            </div>
+        </section>
+        
+        
+    </aura:if>
+    <!--  modal for restricting user from accessing other things -->
+    <div>
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.isRestricted}">
+            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__containerr" >
+                    
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium cls" id="modal-content-id-1">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Enter Security Keys</label>
+                            <div class="slds-form-element__controller">
+                                <ui:inputText class="slds-input" value="{!v.SecurityKeys}" aura:id="userName"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <lightning:button class="uu" variant="Neutral" 
+                                          label="Submit"
+                                          title="Submit"
+                                          onclick="{! c.onSubmit }"/>
+                        <lightning:button class="uu" variant="destructive" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.onCancel }"/>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+    </div>
+</aura:component>

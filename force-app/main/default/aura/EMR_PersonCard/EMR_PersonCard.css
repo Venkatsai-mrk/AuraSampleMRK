@@ -1,0 +1,146 @@
+.THIS .slds-medium-show {
+      display: none;
+}
+.THIS .slds-avatar--large{   
+    height:4.3rem;
+    width:4.3rem;
+}
+.THIS .slds-media__figure{
+    z-index: 1;
+}
+.THIS .firstCustom{
+    padding-top: 0px;
+    padding-left: 0px;
+}
+.THIS .dotFont{
+    display: inline-block;
+    width: 229px;
+   /* white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;*/
+}
+.THIS .bill-cont {
+    overflow:hidden;
+    height: 14rem;
+    min-width: 10rem;
+    width: 100%; 
+    background: rgb(243, 242, 242); 
+    padding: 1rem;
+    border: 1px solid;
+    border-color:rgb(224, 226, 229);
+}
+.THIS .license {
+    background: #f9fafc;
+    border: 1px solid #eee;
+    padding: 10px 20px;
+}
+.THIS .p-name {
+    color: #493266;
+    font-size: 20px;
+}
+.THIS .bill-summ {
+    
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;color: white;
+    background-color: #3b87a5;
+    border: none;
+    font-weight: 500; 
+    width: 130px; 
+    font-size: 14px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 4px;
+}
+.THIS .vpalce {
+    color:blue;
+    font-weight:bold
+}
+.THIS .c-container {
+    padding: 0 0 0 12px;
+}
+.THIS .billing-summry div {
+    width: 120px;
+    float: left;
+    margin-right: 10px
+}
+.THIS.ui-widget {
+    margin-bottom: 15px !important;
+}
+@media (max-width:767px) {
+    .THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+        padding: 0 3px;
+    }
+}
+/* change */
+.THIS .changefront{
+    font-size:12px;
+}
+.THIS .changefloat{
+    float: center;
+}
+.THIS .changepadding{
+    padding: 5px; 
+    box-shadow: 1px 1px 5px 0px ;/* #66666675;change*/
+  border-radius: 5px;color: white;background-color: #3b87a5;border: none;font-weight: 600;
+     width: 380px; font-size: 14px;
+}
+.THIS .changeNew{
+    padding-top: 15px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+    font-size: 12px;
+    padding: 0 5px;
+    height: 28px;
+    position: relative;
+    z-index: 0;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:hover {
+    background-color: #fff;
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:after {
+    position: absolute;
+    z-index: 1;
+    content: "Upload Photo";
+    background-color: #fff;
+    color: #298BDA;
+    height: calc(100% - 2px);
+    width: calc(100% - 22px);
+    top: 1px;
+    right: 1px;
+    font-size: 11px;
+    line-height: 24px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .slds-media__body {
+   font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .profile_data {
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .profile_data tr th {
+    vertical-align :top;
+}
+.THIS .profile_data tr th:nth-child(2) {
+    width: 15px;
+    text-align: center;
+}
+.THIS .profile_data tr td {
+    word-break: break-all;
+}
+.THIS .changeNew img{
+    height:100%;
+    width:100%;
+}
+.THIS .upload-btn .slds-form-element {
+    margin-bottom: 0 !important;
+}
+.THIS .upload-btn .slds-file-selector__dropzone {
+    border: none;
+    padding : 0;
+}
+.THIS table.profile_data tr th:first-child {
+    width: 50px;
+}

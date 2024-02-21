@@ -1,0 +1,6 @@
+.THIS .slds-modal__header .slds-modal__close {
+    display: none;
+}
+.THIS.slds-spinner_container{
+    background: none;
+}

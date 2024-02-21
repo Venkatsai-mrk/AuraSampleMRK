@@ -1,0 +1,69 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="AppointmentsForPortal" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="navigateToComponent" type="force:navigateToComponent" />
+    <aura:attribute name="upcomingAppointmentsList" type="List" />
+    <aura:attribute name="route" type="String" default="homepage"/>
+    <aura:attribute name="cancelAppointment" type="Boolean" default="false" />
+    <aura:attribute name="selectedAppointmentId" type="String" default=""/>
+<aura:attribute name="isEnableAppointment" type="Boolean" />
+    <aura:attribute name="filterOption" type="Object" default="{ value: 'Upcoming Appointments', label: 'Upcoming Appointments' }"/>
+    <lightning:navigation aura:id="navigationService" />
+    <div class="upapp_port">
+        <div class="care-head">
+            <div class="slds-text-heading_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_8-of-12">Upcoming Appointments</div>
+                    <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+<aura:if isTrue="{!v.isEnableAppointment}">
+                    	<button class="slds-button new_appoint" onclick="{!c.handleNewAppointment}">New Appointment</button>
+</aura:if>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="care_team-box">   
+            <aura:if isTrue="{!empty(v.upcomingAppointmentsList)}">
+                <div class="iconAlign">
+                    <lightning:icon iconName="utility:event" size="medium" alternativeText="Event" />
+                    <div class="slds-text-color_weak">
+                        <h3 class="slds-text-heading_medium fontSize">No Upcoming Appointments…</h3>
+                    </div>
+                </div>
+            
+            <aura:set attribute="else">
+            <aura:iteration items="{!v.upcomingAppointmentsList}" var="appointment">
+            <div class="appointment_list">
+            	<div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                        <div class="appoint_datge">
+                        	<p><lightning:formattedDateTime value="{!appointment.StartDateTime}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                minute="2-digit" hour12="true"/></p>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="appoint_name">
+                            <h4>{!appointment.Subject}</h4>
+                            <p>{!appointment.ElixirSuite__Practitioner__r.Name}</p>
+<a href="{!'https://' + appointment.ElixirSuite__Virtual_Meeting_Link__c}" target="_blank"><p>{!appointment.ElixirSuite__Virtual_Meeting_Link__c}</p></a>
+                            <!--p>{!appointment.Owner.FirstName}&nbsp;{!appointment.Owner.LastName}</p-->
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                        <div class="appoint_btn">
+                            <button class="edit cancel" onclick="{!c.cancelAppointment}" data-appointment-id="{!appointment.Id}">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:iteration>
+            </aura:set>
+                </aura:if>
+        </div>
+        <div class="ma_btn">
+            <button class="slds-button slds-button_brand" onclick="{!c.navToMoreAppointments }">More Appointments</button>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.cancelAppointment}">
+        <c:PromptForCancelAppointment cancelAppointment="{!v.cancelAppointment}" selectedAppointmentId="{!v.selectedAppointmentId}"/>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Treatment_Centers</fullName>
+    <columns>Treatment_center_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>Email__c</columns>
+    <columns>Houses_in_this_Treatment_Center__c</columns>
+    <columns>Total_Beds__c</columns>
+    <columns>Occupied_Beds__c</columns>
+    <columns>Available_beds__c</columns>
+    <columns>Percentage_of_available_beds__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Active Treatment Centers</label>
+</ListView>

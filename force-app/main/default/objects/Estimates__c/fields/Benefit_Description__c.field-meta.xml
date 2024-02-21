@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Benefit_Description__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Benefit Description</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>30 = Health Benefit Plan Coverage</fullName>
+                <default>false</default>
+                <label>30 = Health Benefit Plan Coverage</label>
+            </value>
+            <value>
+                <fullName>AI = Substance Abuse</fullName>
+                <default>false</default>
+                <label>AI = Substance Abuse</label>
+            </value>
+            <value>
+                <fullName>CI = Substance Abuse Facility - Inpatient</fullName>
+                <default>false</default>
+                <label>CI = Substance Abuse Facility - Inpatient</label>
+            </value>
+            <value>
+                <fullName>CJ = Substance Abuse Facility - Outpatient</fullName>
+                <default>false</default>
+                <label>CJ = Substance Abuse Facility - Outpatient</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

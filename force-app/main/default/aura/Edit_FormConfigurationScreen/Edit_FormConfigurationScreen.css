@@ -1,0 +1,316 @@
+.THIS .form_config {
+    box-shadow: 0 0 5px 0px #493266;
+    border-radius: 10px;
+    background-color: #f9f8f7;
+    margin-bottom: 10px;
+}
+.THIS .form_config .slds-accordion__section {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+/*.THIS .form_config .slds-accordion__section {
+padding-left: 0;
+padding-right: 0;
+}
+.THIS .form_config tr:nth-child(2) td {
+padding-bottom: 10px;
+border-bottom : 2px solid #333;
+}*/
+.THIS .form_config tr:last-child td {
+    padding-bottom: 0px;
+    border-bottom : none;
+}
+.THIS .form_config tr:hover th, .THIS .form_config tr:hover td {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+.THIS .add_button, .THIS .child-add_btn {
+    text-align: right;
+    padding-right: 0;
+}
+.THIS .add_button a {
+    margin-top: 0px;
+    display: block;
+    text-align: center;
+    float: right;
+    line-height: 28px;
+    color: #fff;
+}
+.THIS .add_button .slds-button {
+    margin-top: 0px;
+    margin-left: 10px;
+    display: block;
+    text-align: center;
+    float: right;
+    line-height: 28px;
+    color: #fff;
+}
+.THIS .add_button a svg.slds-icon.slds-icon-text-default.slds-icon_small {
+    fill: #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #493266;
+    box-shadow: 0px 0px 0 5px #493266;
+}
+.THIS .add_button .slds-button {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+    border-radius: 50%;
+    background-color: #94C11F;
+    box-shadow: 0 0 0 5px #94c11f;
+}
+.THIS .add_button a svg.slds-icon.slds-icon-text-error.slds-icon_small{
+    height: 18px !important;
+    width: 18px !important;
+    border-radius: 50%;
+    background-color: rgb(194, 57, 52);
+    box-shadow: 0px 0px 0 6px rgb(194, 57, 52);
+    fill: #fff;
+}
+.THIS .add_button .slds-button svg.slds-icon{
+    height: 18px !important;
+    width: 18px !important;
+    border-radius: 50%;
+    background-color: rgb(194, 57, 52);
+    box-shadow: 0px 0px 0 6px rgb(194, 57, 52);
+    fill: #fff;
+}
+.THIS .child-add_btn .slds-button, .THIS .child-add_btn a {
+    margin-top: 0px;
+    float: right;
+    display: block;
+    border-radius: 50%;
+    border: 1px solid #493266;
+    border-right: 1px solid rgb(194, 57, 52);
+    text-align: center;
+}
+.THIS .child-add_btn a svg.slds-icon.slds-icon-text-default.slds-icon_small {
+    height: 16px;
+    width: 16px;
+    fill: #493266;
+    margin-top: 4px;
+}
+.THIS .child-add_btn a svg.slds-icon.slds-icon-text-error.slds-icon_small {
+    height: 16px;
+    width: 16px;
+    margin-top: 3px;
+}
+.THIS ul.slds-accordion {
+    width: 100%;
+}
+.THIS .form_data {
+    width: 100%;
+}
+.THIS .form_config-1 {
+    border-radius: 0;
+    box-shadow: 0px 0px 2px 0px #493266;
+    border-bottom: 10px solid transparent;
+}
+.THIS .form_config .slds-accordion__content {
+    background-color: aliceblue;/* rgba(0,10,150, 0.2);*/
+    padding: 10px 0;
+    border-radius: 0 0 10px 10px;
+}
+.THIS .form_config .slds-accordion__summary {
+    margin-bottom: 0;
+    background-color: #666;
+    width: calc(100% - 152px); /*  width: calc(100% - 108px);*/
+    border-radius: 10px 0px 0 0;
+    margin-left: 0;
+    padding-left: 24px;
+}
+.THIS .form_config .slds-accordion__summary .slds-button {
+    color:#fff;
+}
+.THIS .form_config .slds-accordion__summary .slds-button .slds-button__icon {
+    fill: #fff;
+} 
+.THIS .child-box {
+    background-color: #ddeeff;
+    width: calc(100% - 50px);
+    margin-left: 25px;
+    padding: 1px 10px;
+    margin-top: 10px;
+    box-shadow: 0px 0px 3px 0px #0098d5;
+}
+.THIS .swap_footer .slds-button {
+    border-radius: 10px;
+}
+.THIS .child-swap_btn .slds-button {
+    margin-top: 20px;
+    border-radius: 50%;
+    height: 27px;
+    width: 27px;
+    border: 1px solid #94c11f;
+    border-right: 1px solid #493266;
+}
+.THIS .child-swap_btn .slds-button svg.slds-button__icon {
+    color: #94c11f;
+}
+.THIS .swap-modal_body {
+    background-color: aliceblue;
+}
+.THIS .objectMatchingInfo .slds-modal__header{
+    background-color: #493266;
+}
+.THIS .objectMatchingInfo .swap_footer{
+    background-color: #493266;
+}
+.THIS .slds-textarea {
+    height: 138px;
+}
+.THIS .consentButton .slds-form-element{
+    /*position: absolute;
+    top: 0px;
+    right: 0px;    right: 108px;*/
+    z-index: 1;
+    
+}
+.THIS .consentButton .slds-form-element__label {
+    /* color : #fff;*/ 
+}
+.THIS .child-box .slds-form-element.lightningInputRichText {
+    margin: 10px 0; 
+}
+.THIS .ql-editor.ql-blank.slds-rich-text-area__content.slds-text-color_weak.slds-grow {
+    height:150px;
+}
+.THIS .allWidgets {
+    float: right;
+    margin: 1px 0px 0px 0;
+    z-index: 2; /*9*/
+    background-color: #666;
+    padding: 7px 14px 7px;
+    border-radius: 0 10px 0 0;
+    width: 152px;
+    height: 44px;
+}
+.THIS .allWidgets ul li {
+    display: inline-block;
+    margin: 1px 10px;
+}
+.THIS .allWidgets .slds-icon.slds-icon-text-default.slds-icon_small {
+    fill: #fff;
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    background-color: #493266;
+    box-shadow: 0px 0px 0 5px #493266;
+}
+.THIS .allWidgets svg.slds-icon.slds-icon-text-error.slds-icon_small{
+    height: 18px !important;
+    width: 18px !important;
+    border-radius: 50%;
+    background-color: rgb(194, 57, 52);
+    box-shadow: 0px 0px 0 6px rgb(194, 57, 52);
+    fill: #fff;
+}
+.THIS .allWidgets span.slds-form-element__label {
+    color: #fff;
+}
+.THIS .allWidgets .slds-button {
+    fill: #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #94C11F;
+    box-shadow: 0 0 0 5px #94c11f;
+    margin: 3px 0;
+}
+.THIS .align-icons {
+    width: 60px;
+    display: block;
+    float: left;
+    margin-top:22px;
+}
+.THIS .align-icons lightning-icon.slds-icon-utility-formula.slds-icon_container {
+    float: left;
+    margin-top: 1px;
+}
+.THIS .align-icons lightning-icon.slds-icon-utility-formula.slds-icon_container 
+svg.slds-icon.slds-icon-text-default {
+    height: 25px;
+    width: 25px;
+}
+.THIS .align-icons lightning-input.slds-form-element {
+    float: left;
+}
+.THIS .align-icons .slds-form-element__control.slds-grow {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+.THIS .align-icons lightning-input.slds-form-element .slds-checkbox_faux,
+.THIS .align-icons lightning-input.slds-form-element .slds-form-element__label {
+    margin-right: 0 !important;
+    padding-right: 0;
+}
+.THIS .heightForFieldApi .slds-input{
+    height: 177px;  
+}
+.THIS .w-120 {
+    width: 120px;
+}
+.THIS .w-400 {
+    width: 400px;
+}
+.THIS .obj-match {
+    color: white;
+    font-weight: 600;
+}
+.THIS .loading {
+    min-height: 50vh; 
+    margin-left:50%
+}
+.THIS .customMatrixTable{
+    width: calc(100% - 50px);
+    margin: 10px 25px 0;   
+}     
+.THIS .customMatrixTable td,.THIS .customMatrixTable th{
+    padding: 5px 10px;
+    border:1px solid #666;
+    border-right:none;
+    border-bottom:none;   
+}
+.THIS .customMatrixTable tr:last-child td,.THIS .customMatrixTable tr:last-child th{
+   border-bottom:1px solid #666;
+   padding-bottom: 5px;
+}
+.THIS .customMatrixTable tr td:last-child,.THIS .customMatrixTable tr th:last-child{
+    border-right:1px solid #666;    
+}
+.THIS .customMatrixTable th{
+    font-weight:700;
+    
+}
+.THIS span.slds-is-absolute {
+    right: 0px;
+    top: 0px;
+    background-color: #493266;
+    color: #fff;
+    border-radius: 0px;
+    padding: 0px 3px;
+    line-height: 18px;
+}
+/* change */
+.THIS .changemargin{
+    margin-left:25px;
+}
+/*New Changes by Deepak Meshram*/
+.THIS .additional_row {
+    width: 100%;
+}
+.THIS table.additional_row td {
+    padding-top: 0;
+}
+.THIS td.child-add_btn {
+    vertical-align: bottom;
+    padding-bottom: 3px !important;
+}
+.THIS table.additional_row td {
+    vertical-align: top;
+}

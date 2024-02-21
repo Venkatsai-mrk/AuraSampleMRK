@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_type__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Item_type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Utility</fullName>
+                <default>false</default>
+                <label>Utility</label>
+            </value>
+            <value>
+                <fullName>Medicine</fullName>
+                <default>false</default>
+                <label>Medicine</label>
+            </value>
+            <value>
+                <fullName>Main</fullName>
+                <default>false</default>
+                <label>Main</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Inventory</controllingFieldValue>
+            <valueName>Utility</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Inventory</controllingFieldValue>
+            <valueName>Medicine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Equipment</controllingFieldValue>
+            <valueName>Main</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,165 @@
+.THIS #indexlabel {
+    color: red;
+    /*position: absolute;*/
+    font-size: 16px;
+    border : 1px solid black;
+}
+.THIS .parentHeader {
+    background-color: white;
+    margin-top:12px;
+    padding:15px ;
+   
+}
+.THIS .parentSelectEvents {
+    z-index : 1; /*9999;*/
+  
+}
+.THIS .onHoverSection {
+/*position: absolute;
+    z-index: 9999;
+    top: 35px;*/
+    background-color: #fff;
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid #ccc;
+    display:none;
+}
+.THIS .utlityCSS {
+    border:1px solid #ccc;
+    padding : 3px;
+    font-size: 14px;
+    text-align: center;
+}
+.THIS .utlityCSS svg.slds-icon.slds-icon-text-default {
+    /*position: absolute;
+    z-index: 1;
+    right: 5px;
+    top: 4px;*/
+    height: 24px;
+    width: 24px;
+}
+.THIS .parentSelectEvents:hover .onHoverSection{
+   display:block;
+}
+.THIS .hideLabel label.slds-form-element__label{
+     display:none;
+}
+.THIS .masterParent {
+    background-color: white;
+	box-shadow: 0px 0px 3px 1px #ccc;
+    
+} 
+.THIS .canvasjs-chart-tooltip * {
+  pointer-events: auto !important;
+  -webkit-user-select: auto !important; /* Safari 3.1+ */
+  -moz-user-select: auto !important; /* Firefox 2+ */
+  -ms-user-select: auto !important; /* IE 10+ */
+  user-select: auto !important; /* Standard syntax */
+    boder-color:#ccc;
+}
+.THIS .legendSubChild {
+    border:1px solid red;
+    float: left; 
+    width: 10%;
+    padding: 12px; 
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.THIS .chartWrapper {
+    position: relative;
+}
+
+.THIS .chartWrapper > canvas {
+    /*position: absolute;
+    left: 0;
+    top: 0;*/
+    pointer-events:none;
+}
+
+.THIS .chartAreaWrapper {
+    width: 600px;
+    overflow-x: scroll;
+}
+.THIS .colorBox {
+      border: 1px solid #ccc;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    margin: 5px 0;
+    float: right;
+}
+.THIS .textCSS {
+     color: black;
+    margin: 5px 0 5px 25px;
+}
+.THIS .parentLegendHandle{
+    width:100%;
+    float:left;
+   }
+.THIS .parentLegendHandle .slds-col{
+    float:left;
+}
+.THIS .forGridLines {
+    border:1px solid #ccc;
+    border-bottom:none;
+    width: calc(100% - 30px);
+    margin-left: 15px;
+}
+.THIS .subGridLines {
+    text-align: right;
+    padding: 10px;
+}
+
+.THIS .dates .slds-form-element__label{
+    display:none;
+}
+.THIS s.checkmark {
+  /*position: absolute;
+  top: 0;
+  left: 0;*/
+  height: 25px;
+  width: 25px;
+  background-color: red;
+}
+.THIS .onHoverSection hr{
+    margin: 8px 0px;
+    width:calc(100% + 30px);
+        border: none;
+}
+.THIS .canvasjs-chart-toolbar{
+    display:none;
+}
+.THIS a.canvasjs-chart-credit{
+    display:none;
+}
+.THIS .parent_heading {
+    color:#493266;
+    font-size:24px;
+    font-weight: 600;
+    line-height: 22px;
+}
+.THIS .hover_sec {
+    display: block; 
+    width: 100%;
+}
+.THIS .item-data {
+    float: left;     
+    margin: 1px 0;
+    width: calc(100% - 16px);
+}
+.THIS .chartcontainer {
+    height: 680px; 
+    width: calc(100% - 30px);
+    margin-left:15px;
+    border:1px solid #ccc;
+    border-top:none;
+}
+.THIS .changeBCBM{
+    border:1px solid #ccc;
+    color:white;
+    background-color: #fff;
+    margin-left:0px;
+}
+.THIS .changeText{
+    text-align:left;
+}

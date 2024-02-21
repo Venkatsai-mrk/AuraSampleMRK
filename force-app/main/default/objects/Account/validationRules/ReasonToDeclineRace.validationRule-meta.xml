@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReasonToDeclineRace</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( Decline_to_Specify_Race__c ,
+ISBLANK(TEXT(Reason_to_Decline_Race__c)))</errorConditionFormula>
+    <errorDisplayField>Reason_to_Decline_Race__c</errorDisplayField>
+    <errorMessage>Please select an appropriate reason for declining to specify</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ERA_Received__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates whether an Electronic Remittance Advice has been received (used for technical purposes).</description>
+    <externalId>false</externalId>
+    <label>ERA Received</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

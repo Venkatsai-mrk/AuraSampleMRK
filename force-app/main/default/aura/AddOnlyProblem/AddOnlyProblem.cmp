@@ -1,0 +1,124 @@
+<aura:component controller="AddOnlyProblemController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="showAddOnlyProblem" type="Boolean" default="false"/>
+    <aura:attribute name="showAddExistingProblem" type="Boolean"/>
+    <aura:attribute name="problemList" type="Dataset1__c[]"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.ProblemEvent}"/>
+    <aura:registerEvent name="AddOnlyProblemEvent" type="c:AddOnlyProblemEvent"/>
+    <aura:attribute name="notesSpecificData" type="Object"/>
+    <aura:attribute name="formUniqueId" type="String"/>
+    
+    <aura:if isTrue="{!v.showAddOnlyProblem}">
+        <!--Table Part-->           
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small p_table"> 
+            <thead>
+                <tr class="slds-text-title_small">
+                    <th scope="col" class="slds-p-left_none pr5 bg-white">
+                        <div class="slds-truncate">S.No</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Problem Name">Name</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-100">
+                        <div class="slds-truncate" title="SNOMED CT Code">SNOMED CT Code</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Problem Type">Problem Type</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Status">Status</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-128">
+                        <div class="slds-truncate" title="Start Date">Start Date</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-128">
+                        <div class="slds-truncate" title="End Date">End Date</div>
+                    </th>
+                    <th scope="col" colspan="2" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Notes">Notes</div>
+                    </th>
+                </tr>
+            </thead>   
+            <tbody>
+                
+                <aura:iteration items="{!v.problemList}" var="problemInstance" indexVar="rowIndex">
+                    <tr class="slds-text-title_caps">
+                        <td> 
+                            {!rowIndex + 1}
+                        </td>
+                        <td class="search_bar">
+                            <c:AddOnlyProblemSearch name="{!rowIndex}" selectRecordId="{!problemInstance.ProblemId}"
+                                                                  selectRecordName = "{!problemInstance.ProblemName}"/>
+                            
+                        </td>
+                        <td>
+                            <lightning:input type="text" name="{!rowIndex}" value="{!problemInstance.SNOMEDCTCode}" placeholder="SNOMED CT Code" class="small-placeholder-text"/>
+                        </td>
+                        <td>
+                            <lightning:select name=""  label="" onchange="" value="{!problemInstance.ProblemType}" class="customFont">
+                                <option value="">NONE</option>
+                                <option value="Primary" label="Primary"/>   
+                                <option value="Secondary" label="Secondary"/>    
+                            </lightning:select>
+                        </td>
+                        <td>
+                            <lightning:select name=""  label="" onchange="" value="{!problemInstance.Status}" class="customFont">
+                                <option value="Active" label="Active"/>   
+                                <option value="Inactive" label="Inactive"/>    
+                                <option value="Completed" label="Completed"/>
+                            </lightning:select>
+                            
+                        </td>
+                        <td class="calender">
+                            <lightning:input type="date" name="{!rowIndex}" value="{!problemInstance.DateOnset}"/>
+                        </td>
+                        <td class="calender">
+                            <lightning:input type="date" name="{!rowIndex}" value="{!problemInstance.EndDate}"/>
+                        </td>
+                        <td>
+                            <lightning:textarea name="{!rowIndex}" value="{!problemInstance.Notes}"/>
+                        </td>
+                        <td class="slds-text-align_center pr_5">
+                            <aura:if isTrue="{!rowIndex == 0}">
+                                <aura:if isTrue="{!lessthanorequal(v.problemList.length,9)}">
+                                    <a onclick="{!c.addNewRow}">
+                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                        <span class="slds-assistive-text">Add Icon</span>
+                                    </a>
+                                    <aura:set attribute="else">
+                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                    </aura:set>
+                                </aura:if>   
+                                
+                                <aura:set attribute="else">
+                                    <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>
+                                </aura:set> 
+                            </aura:if>
+                        </td> 
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        <br/>
+        <div class="slds-text-align_right slds-m-bottom_small">
+            <!--Save Button which is call Save js function on click --> 
+            <button class="slds-button slds-button_neutral" onclick="{!c.Cancel}">Cancel</button>
+            <button class="slds-button slds-button_brand " onclick="{!c.addOnlyProblem}">Add</button>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showAddExistingProblem}">
+        <c:addOnlyExistingProblem showAddExistingProblem="{!v.showAddExistingProblem}" 
+                                  patientID="{!v.patientID}"
+                                  onproblemsadded="{!c.handleModalSave}"
+                                  objectName="ElixirSuite__Dataset1__c" 
+                                  fieldName="Name"/> 
+    </aura:if>
+</aura:component>

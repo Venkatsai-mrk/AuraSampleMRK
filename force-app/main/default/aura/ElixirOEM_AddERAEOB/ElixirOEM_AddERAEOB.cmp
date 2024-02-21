@@ -1,0 +1,347 @@
+<!-- 
+Created By - Tanveer Ahmed
+Created Date - 25-May-2022
+Description - ERA Screen Flow
+-->
+<aura:component  controller="ElixirOEM_AddEraHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="EOBRecToSave" type="EOB__c"/> 
+    <aura:attribute name="attachClaimParam" type="String"/> 
+        <aura:attribute name="ERAid" type="String"/> 
+
+    <aura:attribute name="allClaimResultTable" type="List"/> 
+    <aura:attribute name="defPaymentMethod" type="String"/>
+    <aura:attribute name="childERAtableList" type="List"/>  
+    <aura:attribute name="paymentMethodLst" type="List"/>  
+    <aura:attribute name="actionsToBeTakenLst" type="List"/>  
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="reasonList" type="List" />
+    <aura:attribute name="arrGrpCode" type="List" /> 
+    <aura:attribute name="isOpen" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="openAttachClaimWindow" type="Boolean" default="false"/>
+    
+    <!--Added by Jothi and Khushi -->
+    <aura:attribute name="selectedERAId" type="String"/>
+    <aura:attribute name="claimNo" type="String"/>
+    <aura:attribute name="openRecommendationNoteWindow" type="Integer" default="-1"/>
+    <aura:handler name="cmpEvent" event="c:FollowupRecommendationEvent" action="{!c.handleComponentEventFollowupNotes}"/>
+    <aura:attribute name="noteList" type="List"/>
+    <aura:attribute name="recommendationList" type="List"/>
+    <!-- -->
+    
+    <!--Added by Neha-->
+    <aura:attribute name="infoRemarkCodesPicklistVal" type="List"/>
+    <aura:attribute name="suppRemarkCodesPicklistVal" type="List"/>
+     <aura:attribute name="selectedInfoRemarkCodes" type="List"/>
+     <aura:attribute name="recList" type="String"/>
+     <aura:attribute name="selRec" type="String" default="" description="selected Record Details" />
+    <aura:attribute name="searchString"   type="string" default="" description="String to search"/>
+    <aura:attribute name="checkValue" type="Boolean"/>
+    <!-- -->
+     <aura:attribute name="postedClaimFlagLst" type="List"/>
+    <aura:attribute name="flagPostedClaimLst" type="Boolean" default="false"/> 
+    <aura:registerEvent name="ElixirOEM_BillingERARefresh" type="c:ElixirOEM_BillingERARefresh" />
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small form_notes-mockup">
+        <div class="slds-modal__container parentMockup">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{! c.cancelModal }">
+                &#10005;
+                <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add ERA/EOB</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-form">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_3-of-12 search_payor">
+                            <label class="slds-form-element__label">Insurance Payer</label> 
+                            <!--<c:PayorCustomLookup selectRecordId = "{!v.EOBRecToSave.ElixirSuite__Payer__c}"/>-->
+                            <c:lookupComponent
+                                                   objectName="ElixirSuite__Payor__c" 
+                                                   fieldName="Name"
+                                                   value="{!v.EOBRecToSave.ElixirSuite__Payer__c}"
+                                                   />
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                            <lightning:select value = "{!v.EOBRecToSave.ElixirSuite__Payment_Method__c}" label="Payment Method" >
+                                <aura:iteration items="{!v.paymentMethodLst}" var="paymentItem">
+                                    <option value="{!paymentItem.label}" label="{!paymentItem.label}" selected="{!paymentItem.value == v.EOBRecToSave.ElixirSuite__Payment_Method__c}">                                               
+                                    </option> 
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                        </div>
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                            <lightning:input type="text"  value = "{!v.EOBRecToSave.ElixirSuite__Payment_Trace__c}"   disabled = "" name="input3" label="Payment Trace #"  />
+                        </div>
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                            <lightning:input type="date"  value = "{!v.EOBRecToSave.ElixirSuite__Check_EFT_Date__c}"   disabled = "" name="input4" label="Cheque/EFT Date"  />
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                            <lightning:input type="text" value = "{!v.EOBRecToSave.ElixirSuite__EOB_Id__c}"   disabled = "" name="input3" label="ERA/EOB ID"  />
+                        </div>
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small changeon88">
+                            <lightning:input type="number"  value = "{!v.EOBRecToSave.ElixirSuite__Total_Paid__c}"   disabled = "" name="input4" label="Total ERA Paid Amt."  />
+                            
+                        </div>
+                    </div>
+                </div>
+                <hr class="underline" />
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12 ">
+                        <lightning:button class="attach_claims" label="Attach Claims" title="Neutral action" onclick="{!c.openAttachClaims}"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.openAttachClaimWindow}">
+                    <div class="attach_claim slds-p-bottom_small slds-m-top_small">
+                        <div class="attach_claim-head">
+                            <h3>Attach claims</h3>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-p-left_small  slds-p-right_small">
+                            <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                                Patient Name : 
+                                <c:PatientLookupForBilling selectRecordId = "{!v.attachClaimParam.patientId}" selectRecordName =  "{!v.attachClaimParam.patientName}" />
+                                <!--c:lookupComponent
+                                                   objectName="Account" 
+                                                   fieldName="Name"
+                                                   /-->
+                                
+                            </div>
+                            <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small">
+                                Claim Number :
+                                <c:ClaimLookupForBilling selectRecordName = "{!v.attachClaimParam.claimHash}" patientId = "{!v.attachClaimParam.patientId}"
+                                                         />
+                                <!--c:lookupComponent
+                                                   objectName="ElixirSuite__Claim__c" 
+                                                   fieldName="Name"
+                                                   /-->
+                                
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-p-left_small  slds-p-right_small">
+                            <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+                                <button class="slds-button slds-button_neutral btn attach_claims" aria-label="Search" disabled = ""   onclick="{!c.searchClaim}" >Search</button>
+                                <button class="slds-button slds-button_neutral btn attach_claims" aria-label="Clear Filter" disabled = ""    onclick="{!c.clearClaimSearchFilter}" >Clear Filter</button>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.attachClaimParam.openResultTable}"> 
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                    <table class="slds-table attach_table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Patient Name</th>
+                                                <th>Claim#</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <aura:iteration items="{!v.allClaimResultTable}" var="sObj" indexVar="rowIndex">
+                                            <tbody>
+                                                
+                                                <tr class="{!sObj.cssClass}"> 
+                                                    <td>{!rowIndex+1}</td>
+                                                    <td>{!sObj.patientName}</td>
+                                                    <td>{!sObj.ClaimNumber}</td>
+                                                    <td class="exitColor">
+                                                        <lightning:button label="Attach" title="Attach" disabled = "{!sObj.attachAbility}" name="{! sObj +'$'+rowIndex}"
+                                                                          onclick="{!c.attachClaimToChildERAtable}"/>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </aura:iteration>
+                                        
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                    
+                </aura:if> 
+                <div class=" table-head_fixed slds-m-top_medium slds-scrollable_y slds-is-relative">
+                	<div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12 changehight">
+                        <table class="slds-table era_table slds-table_bordere">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Patient Name</th>
+                                    <th>Internal Claim#</th>
+                                    <th>Payer Claim#</th>
+                                    <th>ERA Status Code</th>
+                                    <th>Total Billed Amt.</th>
+                                    <!--th>Total Contracted Amt.</th-->
+                                    <th>Total Allowed Amt.</th>                                   
+                                    <!--th>Total Adjustment Amt.</th-->
+                                    <th>Total Paid Amt.</th>
+                                    <th>Net Paid Amt.   <lightning:helptext
+                                                                    content=" Net amount paid by the insurance company post incorporating interest and late filling charges."
+                                                                    /></th>
+                                    <!--th>Payment Status</th-->
+                                    <th>Action to be Taken </th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:if isTrue="{!not(empty(v.childERAtableList))}">
+                                    <aura:iteration items="{!v.childERAtableList}" var="erasObj" indexVar="eraTableIndex">
+                                        <tr>
+                                            <td>{!eraTableIndex+1}</td>
+                                            <td>
+                                                {!erasObj.patientName}
+                                            </td>
+                                            <td>
+                                                {!erasObj.ClaimNumber}     
+                                            </td>
+                                            <td>
+                                                <lightning:input type="text" value = "{!erasObj.payerClaimHash}"  disabled = "" name="input" label=""  />
+                                            </td>
+                                            <td>
+                                                <lightning:select value="{!erasObj.eraStatusCode}">
+                                                    <option  label="NONE"> </option>
+                                                    <aura:iteration items="{!erasObj.eraStatusCodePickLstVal}" var="item">
+                                                        <option value="{!item.label}" label="{!item.label}">                                               
+                                                        </option> 
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </td>
+                                            <td>
+                                                <lightning:input type="number"  formatter="currency" step="0.01" min="0" value = "{!erasObj.totalBilledAmount}"  disabled = "true" name="input" label=""  />
+                                            </td>
+                                            <!--td>
+                                                <lightning:input type="text" value = "{!erasObj.totalContractedAmt}"  disabled = "true" name="input" label=""  />
+                                            </td-->
+                                            <td>
+                                                <lightning:input type="number"  formatter="currency" step="0.01" min="0" value = "{!erasObj.totalAllowedAmt}"  disabled = "true" name="{!eraTableIndex}" label="" 
+                                                                 onchange="{!c.handleAllowedAmtChanged}"/>
+                                            </td>
+                                            
+                                            <!--td>
+                                                <lightning:input type="text" value = "{!erasObj.totalAdjustmentAmt}"  disabled = "true" name="input" label=""  />
+                                            </td-->
+                                            <td>
+                                                <lightning:input type="number"  formatter="currency" step="0.01" min="0" value = "{!erasObj.paidAmt}"  disabled = "true" name="{!eraTableIndex}" label="" onchange="{!c.handlePaidAmtChanged}"
+                                                                 />
+                                            </td>
+                                            <td>
+                                              
+                                                <lightning:input type="number"  formatter="currency" step="0.01" min="0" value = "{!erasObj.netPaidAmount}"   name="{!eraTableIndex}" label="" 
+                                                                 />
+                                            </td>
+                                           
+                                            <td>
+                                                <lightning:select value="{!erasObj.actionToBeTakenVal}">
+                                                    <option  label="NONE"> </option>
+                                                    <aura:iteration items="{!erasObj.actionToBeTakenPickLstVal}" var="item">
+                                                        <option value="{!item.label}" label="{!item.label}">                                               
+                                                        </option> 
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </td>
+                                            <td class="era-btns">
+                                                <lightning:buttonIcon iconName="utility:edit" variant="container" title="Edit ERA Line Items" name="{!eraTableIndex}" onclick="{!c.openRespectiveLineItem}" />
+                                                <lightning:buttonIcon iconName="utility:delete" variant="container" name="{!eraTableIndex}" title="Delete" onclick="{!c.removeChildERA}" />
+                                                <lightning:buttonIcon iconName="utility:locker_service_api_viewer" variant="container" title="View or Edit Recommendations and Follow-up Notes" name="{!eraTableIndex}" onclick="{!c.openRecommendationsNotes}" />
+                                                <!--lightning:button label="Edit ERA" title="Edit ERA Line Items" name="{!eraTableIndex}" onclick="{!c.openRespectiveLineItem}"/ -->
+                                                <!--lightning:button label="Delete" title="Delete" name="{!eraTableIndex}" onclick="{!c.removeChildERA}"/ -->
+                                                <!--lightning:button label="View or Edit Recommendations and Follow-up Notes" title="View or Edit Recommendations and Follow-up Notes" name="{!eraTableIndex}"  onclick="{!c.openRecommendationsNotes}"/-->
+                                            </td>
+                                        </tr>
+                                        <aura:if isTrue="{!erasObj.openLineItemWindow}">
+                                            <c:ElixirOEM_AttachLineItem isOpen = "{!erasObj.openLineItemWindow}" parentClaimId = "{!erasObj.Id}"
+                                                                        erasObj = "{!erasObj}" childERAtableList = "{!v.childERAtableList}"
+                                                                        reasonList = "{!v.reasonList}" patientName = "{!erasObj.patientName}"/>
+                                        </aura:if>
+                                    </aura:iteration>
+                                    
+                                    <aura:set attribute="else">
+                                        <tr><td colspan="12"><div class="slds-text-align_center"><b>NO DATA YET!</b></div> </td></tr>
+                                        
+                                    </aura:set>
+                                    
+                                </aura:if>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+                <br></br>
+                 <aura:if isTrue="{!not(empty(v.childERAtableList))}">
+                    <aura:iteration items="{!v.childERAtableList}" var="erasObj" indexVar="eraTableIndex">
+                        <div class="slds-hide" aura:id="newButtonDiv">
+                            <c:Elixir_AddNotesClaimERARecommendation recid="{!erasObj.Id}" claimNo="{!erasObj.ClaimNumber+' '}" ERAIndex="{!v.openRecommendationNoteWindow}" eraHash="{!erasObj.ClaimNumber}"/>
+                        </div>   
+                    </aura:iteration>
+                </aura:if>
+             <!--  <aura:if isTrue="{!not(v.openRecommendationNoteWindow == -1)}">
+                     <c:Elixir_AddNotesClaimERARecommendation recid="{!v.selectedERAId}" claimNo="{!v.claimNo+' '}" ERAIndex="{!v.openRecommendationNoteWindow}"/>
+                 </aura:if> 
+                 <aura:if isTrue="{!v.openRecommendationNoteWindow}">
+                     
+                  <c:RecommendationComponent aura:id="recommendationComp" eraId = "{!v.ERAid}" isOpen="{!v.openRecommendationNoteWindow}"/> 
+                     <br></br>
+                     <c:Elixir_AddNotesParentERARecommendation aura:id="notesComp" eraId = "{!v.ERAid}" isOpen="{!v.openRecommendationNoteWindow}"/>
+                 </aura:if-->
+                      <aura:if isTrue="{!v.flagPostedClaimLst}">
+                                    <!--Modal Box Start-->
+                                    <div role="dialog" class="slds-modal slds-fade-in-open ">
+                                        <div class="slds-modal__container objectMatchingInfo">
+                                            <!--Modal Box Header Start-->
+                                            <header class="slds-modal__header">
+                                                <h1 class="slds-text-heading--medium obj-match">PLEASE REVIEW THE FOLLOWING</h1>
+                                            </header>
+                                            <div class="slds-modal__content slds-p-around_medium">
+                                                
+                                                <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                    <div class="slds-col slds-size_12-of-12" >
+                                                        <p class="slds-m-around_none slds-text-heading_small">Do you want to update the posted transactions for the following Claims :</p>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        <ol class="slds-m-left_medium slds-list_ordered">
+                                                            <aura:iteration items="{!v.postedClaimFlagLst}" var="item" indexVar="rowIndexObjectMatching">
+                                                                
+                                                                <li>
+                                                                    <option value="{!item}" label="{!item}">
+                                                                        
+                                                                    </option>
+                                                                </li>
+                                                                
+                                                                
+                                                            </aura:iteration>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <footer class="slds-modal__footer slds-text-align_center swap_footer">
+                                                <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.allowSaveWithPostedClaims}'/>
+                                                <lightning:button class="btn" name='No' label='No' onclick='{!c.closeWindow}'/>
+                                            </footer>
+                                            <!--Modal Box Button End-->
+                                        </div>
+                                    </div>
+                                    <div class="slds-backdrop slds-backdrop--open"></div>                                                                         
+                                </aura:if>       
+                <aura:if isTrue="{!! v.loaded }">
+                    <lightning:spinner alternativeText="Loading" />
+                </aura:if>
+            </div>
+            <div class="slds-modal__footer slds-text-align_center">
+                <button class="slds-button slds-button_neutral btn" aria-label="Cancel" onclick="{!c.cancelModal}" >Cancel</button>
+                <button class="slds-button slds-button_neutral btn" aria-label="Save and New" onclick="{!c.saveAndNew}" >Save and  New</button>
+                <button class="slds-button slds-button_neutral btn" aria-label="Save and Post Payments" onclick="{!c.saveAndPostPayments}" >Save and Post Payments</button>
+                <button class="slds-button slds-button_neutral btn attach_claims" aria-label="Save" disabled = ""   onclick="{!c.saveERA}" >Save</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</aura:component>

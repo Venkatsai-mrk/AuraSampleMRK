@@ -1,0 +1,344 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <div class="divcss">
+        <div class="slds-align_absolute-center c1">
+            Referral Request Form
+        </div>
+        <div class="slds-align_absolute-center c2">
+            (Items with ** are required for processing)
+        </div>
+        <div class="slds-align_absolute-center c3">
+            Fax To: 650-320-9443 or submit online using prism
+        </div>
+        <div class="slds-align_absolute-center c3">
+            Radiology Referrals / Orders: Use Form: https//stanfordhealthcare.org/imaging
+        </div>
+        
+        <div class="c4">
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <th width="50%">
+                            <div class="slds-align_absolute-center">
+                                Patient Information
+                            </div>
+                        </th>
+                        <th width="50%">
+                            <div class="slds-align_absolute-center">
+                                Reason for Referral
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_xxx-small">
+                                If Medical Records Cover Sheet is included,
+                                Patient Information can be left blank
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_xxx-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="2">
+                                        <div class="divcss_1">
+                                            Priority: 
+                                        </div>
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="3">
+                                        <lightning:input type="checkbox" label="Routine" name="Routine"/>
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input type="checkbox" label="Medically Urgent" name="medicallyUrgent"/>
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input name="Name" label="Name(First, Middle, Last)**" value=""/>
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <div class="divcss_2">
+                                            <lightning:layout>
+                                                <lightning:layoutitem size="2">
+                                                    Sex: 
+                                                </lightning:layoutitem>
+                                                <lightning:layoutitem size="4">
+                                                    <lightning:input type="checkbox" label="Male" name="Male"/>
+                                                </lightning:layoutitem>
+                                                <lightning:layoutitem size="6">
+                                                    <lightning:input type="checkbox" label="Female" name="Female"/>
+                                                </lightning:layoutitem>
+                                            </lightning:layout>
+                                        </div>
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="medicallyUrgent" label="If Medically Urgent, please describe" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:input type="date" name="dateOfBirth" label="Date of Birth**" />
+                            </div >
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="diagnosis/ICD" label="Diagnosis/ICD 10**" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input name="Phone" label="Phone# **" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input name="SecondaryContact" label="Secondary Contact #" />
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="clinic/SpeciallyRequested" label="Clinic / Specially Requested**" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="Address" label="Address**" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input name="physicianRequested" label="Physician Requested" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input name="locationRequested" label="Location Requested" />
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input name="city" label="City**" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input name="zipCode" label="Zip Code**" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input name="state" label="State" />
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                If Requested Physician is Unavailable, Can Patient be seen by another provider?
+                            </div>
+                            <div class="slds-p-around_xxx-small">
+                                <lightning:layout>
+                                    <lightning:layoutitem size="2">
+                                        <lightning:input type="checkbox" name="yes" label="Yes" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="2">
+                                        <lightning:input  type="checkbox" name="no" label="No" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:input type="checkbox" name="contactReferringProvider" label="Contact Referring Provider" />
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout multipleRows="true">
+                                    <lightning:layoutitem size="6">
+                                        <div>
+                                            Interpreter Needed?
+                                        </div>
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <lightning:layout>
+                                            <lightning:layoutitem size="6">
+                                                <lightning:input type="checkbox" name="yes" label="Yes" />
+                                            </lightning:layoutitem>
+                                            <lightning:layoutitem size="6">
+                                                <lightning:input type="checkbox" name="no" label="No" />
+                                            </lightning:layoutitem>
+                                        </lightning:layout>
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="6">
+                                        <div>
+                                            Preferred Language:
+                                        </div>
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-p-around_x-small">
+                                <lightning:layout multipleRows="true">
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input type="checkbox" name="consultation" label="Consultation" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input type="checkbox" name="2ndOpinion" label="2nd Opinion" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input type="checkbox" name="procedure" label="Procedure" />
+                                    </lightning:layoutitem>
+                                    <lightning:layoutitem size="4">
+                                        <lightning:input type="checkbox" name="other" label="Other" />
+                                    </lightning:layoutitem>
+                                </lightning:layout>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        <div class="changemargintop">
+            <div class="slds-align_absolute-center changetopheight">
+                Referring Provider Information
+            </div>
+            
+            <div>
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutitem size="8">
+                        <div class="changeborder">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="referringProviderName" label="Referring Provider Name**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="4">
+                        <div class="changebottomorder">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="PCPName" label="PCP Name" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    
+                    <lightning:layoutitem size="12">
+                        <div class="changevottom1">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="practiceName" label="Practice Name**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="8">
+                        <div class="changebottomwidth">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="officeAddress" label="Office Address**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="4">
+                        <div class="changebottomsolid">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="city" label="City**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="4">
+                        <div class="changeborderright">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="state" label="State**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="4">
+                        <div class="changeborderwith">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="zipCode" label="Zip Code**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="4">
+                        <div class="changeborder1">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="npiNumber" label="NPI Number**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="3">
+                        <div class="changewidth2">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="phone" label="Phone**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="3">
+                        <div class="changerightborder">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="fax" label="Fax**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="6">
+                        <div class="changeright2">
+                            <div class="slds-p-around_x-small">
+                                <lightning:input name="providerSpeciality" label="Provider Speciality**" />
+                            </div>
+                        </div>
+                    </lightning:layoutitem>
+                </lightning:layout>
+            </div>
+            
+            <div class="changemargin2">
+                <div class="slds-align_absolute-center changefontwightsize">
+                    Documenation Required
+                </div>
+                <div  class="slds-align_absolute-center changemargintop10">
+                    <lightning:layout >
+                    <lightning:layoutitem size="5">
+                        <lightning:input type="checkbox" label="Relevant Clinical Notes" name="input1"/>
+                        </lightning:layoutitem>
+                        <lightning:layoutitem size="8">
+                            <div class="changewight10">
+                                (History and Physical, Imaging amd Lab results)
+                            </div>
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                </div>
+                <div class="slds-align_absolute-center chnagetop10">
+                    <lightning:layout >
+                    <lightning:layoutitem size="5">
+                        <lightning:input type="checkbox" label="Copy of Insurance Card" name="input1"/>
+                        </lightning:layoutitem>
+                        <lightning:layoutitem size="8">
+                            <lightning:input type="checkbox" label="Insurance Authentication Information (If required)" name="input1"/>
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Description_3__c</fullName>
+    <description>Provides a description for the third aspect of the order line item.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Description of belonging 3</inlineHelpText>
+    <label>Description</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

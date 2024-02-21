@@ -1,0 +1,59 @@
+<apex:page showHeader="false" controller="BarCodeGeneratorController" sidebar="false" standardStylesheets="false" applyHtmlTag="false">
+     <apex:param name="OrderId" value="{!$CurrentPage.parameters.OrderId}"/>
+    <apex:includeScript value="{!$Resource.JQuery}"/>
+    <apex:includeScript value="{!$Resource.jquerybarcode}"/>
+    <apex:includeScript value="{!$Resource.html2canvas}"/>
+    <apex:includeScript value="{!$Resource.jspdf}"/>
+    <apex:includeScript value="{!$Resource.FileSaverWord}"/>
+    <apex:includeScript value="{!$Resource.WordExport}"/>
+    <br/>
+
+    <div id="export-content" style="background-color:white;">
+        <script>
+        var uniqueDivNames=[];
+        var fileName = "{!sampleListAndContainerDivIdList[0].listOfSamples[0].name}";
+   
+        </script>
+        <apex:repeat value="{!sampleListAndContainerDivIdList}" var="iterateObj">
+            <script>
+            uniqueDivNames.push('{!iterateObj.divId}');
+            </script>
+            <div id="{!iterateObj.divId}" style="float:left;margin-left: 10px;margin-right: 10px;padding-bottom:10px;background:#FFFFFF">
+                <apex:repeat value="{!iterateObj.listOfSamples}" var="sampleObj">
+                    <div style="float:left;padding-bottom:85px; padding-right:60px; word-wrap:break-word;">
+                        <div id='barcodeTarget{!sampleObj.id}'></div>
+                        <script>
+                        $("#barcodeTarget{!sampleObj.id}").barcode("{!sampleObj.id}", 'code128');
+                        </script>
+                        <div style="margin-left:6px; padding-bottom:100px;">
+                            Sample ID : {!sampleObj.Name}
+                            <br/>
+                            Patient Name:{!sampleObj.Account__r.Name}
+                            <br/>
+                        </div>
+                        <script>
+                        html2canvas($("#barcodeTarget{!sampleObj.id}"),{
+                            onrendered:function(canvas){
+                                var imgData = canvas.toDataURL('image/jpeg');
+                                var pHtml = "<img src="+imgData+" />";
+                                //var doc = new jsPDF('p', 'mm');
+                                //doc.addImage(imgData, 'PNG', 0, 100);
+                                //doc.save('label.pdf');
+                                $("#barcodeTarget{!sampleObj.id}").empty();
+                                $("#barcodeTarget{!sampleObj.id}").append(pHtml);
+                            }
+                        });
+                        </script> 
+                    </div>
+                </apex:repeat>
+            </div>
+        </apex:repeat>
+        <script>
+        /*jQuery(document).ready(function($) {
+            $("#export-content").wordExport();
+        });*/
+        </script>
+        
+    </div>
+
+</apex:page>

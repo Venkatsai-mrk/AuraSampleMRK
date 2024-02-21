@@ -1,0 +1,31 @@
+.lgc-bg {
+    background-color: rgb(200, 200, 200);
+}
+
+.slds-modal__container {
+    height: 80%;
+    width: 60%;
+    max-width: 50vh;
+}
+
+.modal-body {
+    height: 40vh !important;
+    max-height: 40vh !important;
+}
+
+.slds-modal__header {
+    height: 2 vh;
+    background-color: gainsboro;
+}
+.BackGroundColour{
+    background-color:rgba(255,255,255);
+}
+.heading{
+    font-weight:normal;
+    padding-left: 2px;
+    font-size:20px;
+    text-align:left;
+}
+.button1{
+    padding-right:3px;
+}

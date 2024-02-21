@@ -1,0 +1,26 @@
+@media (max-width: 767px) {
+    .THIS .slds-modal__container {
+        width: 92%;
+        padding-left: 0;
+        margin-left: 5%;
+    }
+    .THIS .add-problem_modal {
+        margin-left: 3% !important;
+    }
+    .THIS .add-problem_modal lightning-dual-listbox {
+        margin-left: 0% !important;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        width: 92%;
+        padding-left: 0;
+        margin-left: 5%;
+    }
+    .THIS .add-problem_modal {
+        margin-left: 3% !important;
+    }
+    .THIS .add-problem_modal lightning-dual-listbox {
+        margin-left: 0% !important;
+    }
+}

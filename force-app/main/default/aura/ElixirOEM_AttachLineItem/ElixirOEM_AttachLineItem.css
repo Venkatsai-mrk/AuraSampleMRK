@@ -1,0 +1,79 @@
+.THIS body, .THIS .slds-form-element__label, .THIS label {
+    font-size: 12px;
+}
+.THIS.slds-card {
+    border: none;
+}
+.THIS .attach_claim-head {
+    background-color: #493266;
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.THIS .patient_name-claim .slds-accordion__list-item {
+    margin-bottom: 10px;
+}
+.THIS .patient_name-claim .slds-accordion__section.slds-is-open {
+    border: 1px solid #493266;
+}
+.THIS .patient_name-claim  button.slds-button.slds-button_reset.slds-accordion__summary-action {
+    background-color: #493266;
+    border-radius: 0;
+    color: #fff;
+}
+.THIS .patient_name-claim .slds-form-element__label {
+    display: none;
+}
+.THIS .attach_table {
+    width: 100%;
+}
+.THIS .attach_table th, .THIS .attach_table td {
+    font-size: 12px;
+    white-space: normal !important;
+    border: 1px solid #ccc;
+    padding: 3px 10px;
+}
+.THIS .attach_table th {
+    padding: 10px;
+}
+.THIS .attach_table  td:last-child .slds-button {
+    background-color: #0070ff;
+    color: #fff;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    border: 1px solid #0070ff;
+    padding: 0;
+    line-height: 28px;
+    margin-right: 10px;
+}
+.THIS .attach_table  td:last-child .slds-button:last-child {
+    background-color: #fff;
+    color: #f00 !important;
+    border: 1px solid #f00;
+}
+.THIS .attach_table tbody tr td .slds-form-element__label {
+    display:none;
+} 
+.THIS .attach_table .slds-button {
+    background-color: #493266;
+    border: 1px solid #493266;
+    color: #fff;
+    height: 30px;
+}
+.THIS .p_5-15{
+    padding: 5px 15px;
+}
+.THIS .custom-accordian .slds-accordion  {
+    width: 100%;
+}
+.THIS .slds-modal__container {
+    width: 100%;
+}
+.THIS .slds-modal__content {
+    min-height: calc(100% - 60px);
+}
+.THIS .slds-input, .THIS li.slds-accordion__list-item {
+    font-size: 12px;
+}

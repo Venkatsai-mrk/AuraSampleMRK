@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Beds</fullName>
+    <columns>NAME</columns>
+    <columns>Building__c</columns>
+    <columns>BedtoSuite__c</columns>
+    <columns>BedToRoom__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Location__c.Bed</value>
+    </filters>
+    <label>Beds</label>
+</ListView>

@@ -1,0 +1,70 @@
+.THIS.care_team-box1 {
+    padding:0.5rem;
+    background:#f4f4f4;
+    color: #493266;
+}
+.THIS.care_team-box {
+    border: 1px solid #eee;
+    height: 140px;
+    background-color: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS.care_team-box1 h1 {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);        
+}
+.THIS .slds-box {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #dedede;
+}
+.THIS.care_team-box div:last-child .slds-box {
+    border-bottom: none;
+}
+.THIS.care_team-box .slds-button.slds-button_neutral {
+    padding: 0;
+    line-height: 0;
+    border:none;
+    margin-top: 8px;
+}
+.THIS.care_team-box .slds-button.slds-button_neutral:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS.care_team-box1 svg.slds-button__icon.slds-button__icon_left {
+    margin-right: 0;
+    height: 24px;
+    width: 24px;
+    fill: #493266;
+}
+.THIS.care_team-box1 svg.slds-icon.slds-icon-text-default.slds-icon_x-small {
+    fill: #493266;
+}
+.THIS.care_team-box .slds-button {
+    color: #000;
+    width:100%;
+    min-height: 38px;
+    background-color: #fff;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS.care_team-box .slds-button:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+.THIS.care_team-box .slds-button h2{
+    width:100%;
+    font-size: 12px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+
+.THIS .notification{
+    line-height : 18px;
+}
+.THIS .notification_date{
+    font-size : 10px;
+    color: #666;
+}

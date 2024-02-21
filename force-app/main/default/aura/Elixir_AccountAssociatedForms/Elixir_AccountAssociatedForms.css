@@ -1,0 +1,281 @@
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg{
+    fill : red;
+}
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+.THIS .hideLabelForFooter .slds-form-element .slds-size_1-of-1 .slds-form-element__label {
+    display :none;
+}
+.THIS .hideLabelForFooter .slds-form-element__group .slds-form-element__label {
+    display :none;
+}
+/*.THIS .datetime_class .slds-form-element__group{
+width: 70%;
+margin-left: 100px;
+}
+
+.THIS .datetime_class legend{
+margin-bottom : -20px;
+}
+
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+position:relative;
+}
+.THIS .datetime_class lightning-datetimepicker button{
+position: absolute;
+right: 0;
+bottom: 0;
+top:-1px;
+}
+.THIS .selected{
+height: 40px;
+width: 60px;
+margin-bottom: 15px;
+padding : 2px;
+border: 1px solid ;
+}
+*/
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+}
+.THIS button{
+    width: max-content;  
+}
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #ffffff;
+} 
+.THIS .redcolor svg{
+    fill : white;
+}
+.THIS .redcolor .slds-grid {
+    color: #FFF;
+    background-color: #ff726f;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .redcolor svg{
+    fill: red !important;
+}
+.THIS .blackcolor svg{
+    fill : white; 
+}
+.THIS .blackcolor .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .blackcolor svg{
+    color : black !important;
+}
+
+.THIS .greycolor svg{
+    fill : white; 
+}
+.THIS .greycolor .slds-grid {
+    color: #FFF;
+    background-color: grey;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .greycolor svg{
+    color : black !important;
+}
+
+/*.THIS .bluecolor svg{
+fill : white; 
+}
+.THIS .bluecolor .slds-grid {
+color: #FFF;
+background-color: lightblue;
+padding: 2px 25px;
+border-radius: 25px;
+display: inline-block;
+}
+.THIS .bluecolor svg{
+color : black !important;
+}
+*/
+.THIS .bluecolor svg{
+    fill : white; 
+}
+.THIS .bluecolor .slds-grid {
+    color: #FFF;
+    /*background-color: lightblue;*/
+    background-color: #151B54;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .bluecolor svg{
+    fill: white !important;
+    /* color : black !important;*/
+}
+.THIS .darkcolor svg{
+    fill : white;
+}
+.THIS .darkcolor .slds-grid {
+    color: #FFF;
+    background-color: #151B54;
+    padding: 2px 25px;
+    
+    display: inline-block;
+}
+.THIS .darkcolor svg{
+    fill: white !important;
+}
+.THIS .slds-modal__container {
+    max-width: 100%!important;
+    width: 100%!important;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.THIS .fitDynamicUI .slds-modal__content {
+    height: calc(100% - 100px);
+    max-height: calc(100% - 100px);
+}
+.THIS .close svg{
+    fill : black; 
+}
+.THIS .close .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .close svg{
+    color : black !important;
+}
+.THIS .removeScroll {
+    overflow-y : hidden ; 
+}
+.THIS  .slds-modal__containerr{ 
+    height : auto; width: 50%; max-width: 40vh; 
+   /* position: fixed;*/
+    top: 12%;
+    left: 77%;
+} 
+.THIS .modal-body{ 
+    height : 40vh !important; 
+    max-height: 40vh !important; 
+} 
+.THIS .uu{
+    float:right;
+}
+.THIS .uiInput.uiInputCheckbox.uiInput--default.uiInput--checkbox {
+    float: right;
+}
+.THIS label.uiLabel-left.form-element__label.uiLabel {
+    float: left;
+    margin-right: 10px;
+}
+.THIS .mglist-p {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .l-status {
+    margin-top:2px; 
+    margin-left:10px;
+}
+.THIS .lpr-p {
+    position:relative;
+}
+.THIS .lpr-c {
+    /*  position: absolute; */
+    bottom:13px;
+}
+.THIS .pdf-set {
+    text-align:right;
+    padding-right:2.3rem;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-modal__containerr {
+        width: 30%;
+        max-width: 30%;
+        left: 68%;
+        top: 10%;
+    }
+}
+@media (max-width: 992px) {
+    .THIS .slds-modal__container {
+        max-width: 100%!important;
+        width: 86%!important;
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+    .THIS .table-scroll {
+        overflow-x: srcoll;
+    }
+    .THIS .slds-modal__content.slds-p-around_medium.prescription-order {
+        overflow-x: scroll;
+    }
+    .THIS .slds-modal__containerr {
+        width: 40%;
+        max-width: 40%;
+        left: 53%;
+        top: 10%;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .mgList h5 {
+        font-size: 18px;
+    }
+    .THIS .lpr-c {
+        font-size: 12px;
+    }
+    .THIS .slds-modal__containerr {
+        width: 50%;
+        max-width: 50%;
+        left: 41%;
+        top: 10%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        max-width: 100%!important;
+        width: 86%!important;
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+    .THIS .mgList h5 {
+        font-size: 16px;
+    }
+    .THIS .mgList .form-element__label {
+        font-size: 9px;
+    }
+    .THIS .lpr-c {
+        font-size: 9px;
+    }
+    .THIS .slds-modal__containerr {
+        width: 50%;
+        max-width: 50%;
+        left: 43%;
+    }
+}

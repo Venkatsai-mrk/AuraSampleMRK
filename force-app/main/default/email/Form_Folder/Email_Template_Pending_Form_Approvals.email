@@ -1,0 +1,14 @@
+<html>
+<head>
+<style>
+/* Define your CSS styles here */
+</style>
+</head>
+<body>
+<p>Hello,</p>
+<p>The Approval for the {!Form_Value__c.Form_Name__c} form for {!Account.Name} is pending. Please do the needful.</p>
+<br>
+<p>Regards,</p>
+<p>Care Team</p>
+</body>
+</html>

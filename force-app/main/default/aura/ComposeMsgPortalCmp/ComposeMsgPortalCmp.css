@@ -1,0 +1,25 @@
+.THIS .my-button-class {
+  background-color: #493266;
+}
+.THIS .my-icon {
+  --lwc-colorTextIconDefault: #fff;
+}
+    .THIS .myDiv_ForUpload{
+        width: max-content;
+        text-align: left !important;
+    }
+.THIS .my-bg-color {
+background-color: #493266;
+}
+.THIS .center {
+display: flex;
+justify-content: center;
+}
+.THIS .my-button {
+font-size: 0.4rem;
+padding: 0.1rem 0.2rem;
+}
+/* MyComponent.css */
+.THIS .my-header {
+font-size: 1.2rem;
+}

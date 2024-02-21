@@ -1,0 +1,63 @@
+<template>
+    <div class="details_page">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_8-of-12">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input type="date" value={fromDate} name="fromDate" class="fDate" onchange={changeFromDate}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input type="date" value={toDate} name="toDate" class="tDate" onchange={changeToDate}></lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                <button class="slds-button search-btn slds-m-right_small" onclick={search}>Search</button>
+                <button class="slds-button search-btn" onclick={clearFilter}>Clear Filter</button>
+            </div>
+        </div>
+    </div>
+    <div class="details_page-list " onscroll={loadMoreRecords}>
+        <template for:each={transactions} for:item="transaction" for:index="index">
+        <ul key={transaction.lstTransaction.Id}>
+            <li>
+                <div class="card">
+                    <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12 slds-text-align_center">
+                        <h3><lightning-formatted-date-time value={transaction.lstTransaction.ElixirSuite__Payment_DateTime__c} year="numeric" month="short" day="2-digit"></lightning-formatted-date-time></h3>
+                    </div>
+                    <div class="slds-col slds-size_9-of-12 slds-text-align_left slds-p-top_small">
+                        <!--<h4>Reno Renown Health Payment</h4>-->
+                        <template if:true={transaction.isCash}>
+                        <p>Cash</p>
+</template>
+                        <template if:true={transaction.isCard}>
+                            <img src={transaction.isImageURL} alt="My Image" width="30" height="30" /> &nbsp;{transaction.lstTransaction.ElixirSuite__Payment_Information__r.ElixirSuite__Credit_Card_Number__c}
+                        </template>
+                        <template if:true={transaction.isCheque}>
+                            <p>{transaction.lstTransaction.ElixirSuite__Cheque_Number__c}</p>
+                            <p>Cheque</p>
+                        </template>
+                        
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-text-align_right">
+                        <h2><lightning-formatted-number value={transaction.lstTransaction.ElixirSuite__Amount_Paid__c} format-style="currency" currency-code="USD"></lightning-formatted-number></h2>
+                    </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+</template>
+
+        <!--
+        <div style="height: 50px" class="slds-is-relative">
+            <template if:true={loadingMoreRecords}>
+                <lightning-spinner alternative-text="Loading" size="x-small" variant="brand"></lightning-spinner>
+            </template>
+        </div>
+        -->
+        
+        
+        
+    </div>
+</template>

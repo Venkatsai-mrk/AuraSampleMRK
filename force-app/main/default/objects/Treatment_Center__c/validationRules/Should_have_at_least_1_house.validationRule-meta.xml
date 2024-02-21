@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Should_have_at_least_1_house</fullName>
+    <active>true</active>
+    <description>A treatment center should have at least 1 house</description>
+    <errorConditionFormula>AND( PRIORVALUE(Houses_in_this_Treatment_Center__c) &lt; Houses_in_this_Treatment_Center__c,
+Houses_in_this_Treatment_Center__c &lt; 1)</errorConditionFormula>
+    <errorMessage>A treatment center should have at least one house</errorMessage>
+</ValidationRule>

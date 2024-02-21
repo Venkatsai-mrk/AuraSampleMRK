@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Care_Physician__c</fullName>
+    <description>Identifies the primary care physician assigned to the account.</description>
+    <externalId>false</externalId>
+    <label>Primary Care Physician</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>TextArea</type>
+</CustomField>

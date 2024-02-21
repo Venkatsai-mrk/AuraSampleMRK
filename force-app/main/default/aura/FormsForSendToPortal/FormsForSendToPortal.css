@@ -1,0 +1,67 @@
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.THIS .slds-modal__header{
+    background-color: rgb(243, 242, 242);
+}
+.THIS .widthForAll .slds-radio [type=radio]+.slds-radio__label .slds-radio_faux {
+    border: 1px solid #000;   
+}
+.THIS .colPayHeader {
+   color: white;
+   background-color: #493266;
+    padding: 12px;
+}
+.THIS .colPayHeader1 {
+   color: white;
+   background-color: #493266;
+}
+.THIS .widthForAll label.slds-radio__label {
+    margin: 10px 0;
+    display: block;
+}
+.THIS .slds-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0%;
+    padding : 0 2%;   
+}
+/*.THIS .AllFormsCls .slds-modal {}*/
+.THIS .AllFormsCls {
+    height:auto;
+}
+.THIS .headerCSS{
+    font-size: x-large;
+}
+.THIS .tableCSS{
+    width:75%;
+}
+.THIS .hideDiv  {
+    max-width: 60% !important;
+    width: 60% !important;
+}
+.THIS .radios .slds-form-element__label{
+    margin-left:10px;
+}
+.THIS.row {
+    padding: 5px 0;
+    margin-bottom: 15px;
+}
+
+.THIS.row .header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.THIS .send-forms_patient tr:hover td {
+    background-color: transparent !important;
+}
+.THIS .b-bottom {
+    border-bottom: 1px dotted #ccc;
+} 
+@media (max-width: 767px) {
+    .THIS .hideDiv  {
+        max-width: 90% !important;
+        width: 90% !important;
+    }   
+}

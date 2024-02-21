@@ -1,0 +1,412 @@
+.THIS .customParentModal {
+    border: none;
+    box-shadow: none;
+}
+.THIS .customParentModal .slds-form-element__control.slds-grow.slds-input-has-icon.slds-input-has-icon_left-right {
+    box-shadow: 0px 0px 9px 1px #cdcbcb;
+}
+.THIS .customParentModal input#input-399 {
+    height:45px;
+}
+.THIS .colPayHeader {
+   color: white;
+   background-color: #4472c4;
+    padding: 12px;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #4472c4;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .customParentModal .slds-table {
+    border-spacing: 2px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.THIS .customParentModal .slds-table thead th {
+    background-color: #4472c4;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size:14px;
+}
+.THIS .customParentModal .slds-table tbody tr:nth-child(odd) td{
+   /* background-color: #cfd5ea;*/
+    background-color: #e9ebf5;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.THIS .customParentModal .slds-table tbody tr:nth-child(even) td{
+   background-color: #e9ebf5;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.THIS .customParentModal .slds-button_neutral{
+    background-color: #4472c4;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px #999;
+    font-size: 16px;
+    padding: 7px 20px;    
+}
+.THIS .AddNewProblem {
+    width: 50% !important;
+}
+.THIS .slds-modal__content.AddNewProblemBody {
+    min-height: 300px;
+    height: 300px;
+}
+.THIS .buttonRound .slds-button {
+    box-shadow: 3px 3px 5px #999;
+}
+.THIS .reportTableCustom thead th {
+    padding-top : 10px !important;
+    padding-bottom : 10px !important;
+}
+
+.THIS .reportTableCustom tbody tr:nth-child(odd) td{
+    background-color: #bccde9 !important;
+}
+.THIS .reportTableCustom tbody tr:nth-child(even) td{
+    background-color: #dae3f3 !important;
+}
+.THIS .reportTableCustom tbody tr td:first-child .slds-button:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .reportTableCustom tbody tr td:first-child .slds-button .slds-button__icon {
+    width: 18px;
+    height: 18px;
+}
+.THIS .reportTableCustom tbody tr:last-child td{
+    border : none; 
+    border-spacing : 0px;
+    border: 1px solid #ccc;
+}
+.THIS .reportTableCustom tbody tr:last-child td:first-child{
+    border:none;
+}
+.THIS .reportTableCustom:hover {
+    box-shadow:none !important;
+}
+.THIS .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus){
+    box-shadow:none !important;
+}
+.THIS .footerArea  {
+    color: #000;
+    padding: 0px 0px 10px;
+    font-size: 14px;
+    /*box-shadow: 0px 0px 5px 0px #4472c4;*/
+      box-shadow: 0px 0px 5px 0px #4472c4;
+   /* border: 1px solid #4472c4;*/
+    border: 1px solid #4472c4; 
+}
+.THIS .footerArea h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white ;
+    margin-bottom: 6px;
+    width: calc(100% + 0px);
+    padding: 7px 15px; 
+    background-color: #4472c4;
+}
+.THIS .ql-editor.slds-rich-text-area__content.slds-text-color_weak.slds-grow{
+    min-height: 40px;
+    padding-bottom: 0;
+    padding-top: 10px;
+}
+.THIS .slds-rich-text-editor__toolbar.slds-shrink-none{
+    display:none;
+}
+.THIS .fixedHeight input {
+    height : 40px;
+}
+.THIS .widthForAll {
+    width: 90%;
+    margin-left: 5%;
+}
+.THIS .widthForAll button.slds-button.slds-section__title-action {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: #888;
+    font-weight: 600;
+}
+
+.THIS .patient_heading {
+    box-shadow: 0px 0px 5px 0px #999;
+    padding: 0;   
+    background-color: #f1f2f3;
+}
+.THIS .patient_heading h3.slds-section__title {
+    background-color: #4472c4;
+    width: 100%;
+    padding: 4px 15px;
+    border-radius: 0;
+    color: white;
+}
+.THIS .p_name label.slds-form-element__label {
+    display: none;
+}
+.THIS .p_name .slds-input-has-icon .slds-input__icon {
+    top: 40%;
+}
+
+.THIS .p_name input[type=checkbox] {
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+}
+
+.THIS .p-code div.slds-form-element {
+    width: 120px;
+    float: left;
+}
+.THIS .p-code div.slds-form-element .slds-select {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+.THIS .p-code div.slds-form-element .slds-select_container:before {
+    display:none;
+}
+.THIS .p-code div.slds-form-element .slds-select_container:after {
+    border-top: 10px solid #000;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    top: 12px;
+}
+.THIS .p-code .slds-form-element {
+    /*width: calc(100% - 120px);*/
+    float: left;
+}
+.THIS .p-code .slds-form-element .slds-input {
+	width: 115%;
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+
+.THIS .e-employer {
+    position: relative;
+    z-index: auto;
+}
+.THIS .e-employer .slds-form-element__label {
+    display: none;
+}
+.THIS .e-employer .slds-icon_container {
+    z-index: 1;
+    right: 0px;
+    top: 1px;
+}
+.THIS .newCls{
+    position:relative;
+}
+.THIS .slds-listbox .slds-listbox_vertical
+{
+    background : white;
+}
+.THIS .e-employer button.slds-input__icon.slds-input__icon_right.slds-button.slds-button_icon.iconheight {
+    right: 0;
+    top: 6px;
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+    margin-top: 5px;
+}
+.THIS .e-employer .slds-icon_container .slds-close {
+    margin-right: 2px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 {
+    padding: 0;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item {
+    border-bottom: 1px dotted #ccc;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item:last-child {
+    border-bottom: none;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item h3 {
+    font-weight: 600;
+    color: #4472c4;
+    font-size: 14px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item i {
+    font-weight: 500;
+    color: #000;
+    font-size: 12px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item i span {
+    color: #4472c4;
+}
+.THIS .pr.slds-dropdown.slds-dropdown_length-with-icon-7.slds-dropdown_fluid {
+    top: 30px;
+    left: 101px;
+    width: 38%;
+}
+
+
+.THIS .patient_heading .ql-editor.ql-blank.slds-rich-text-area__content.slds-text-color_weak.slds-grow {
+    background-color: var(--lwc-colorBackgroundInputDisabled,rgb(236, 235, 234));
+        }
+
+        .THIS .customParentModal {
+            border: none;
+            box-shadow: none;
+        }
+        .THIS .customParentModal .slds-form-element__control.slds-grow.slds-input-has-icon.slds-input-has-icon_left-right {
+            box-shadow: 0px 0px 9px 1px #cdcbcb;
+        }
+        .THIS .customParentModal input#input-399 {
+            height:45px;
+        }
+        .THIS .customParentModal .slds-table {
+            border-spacing: 2px;
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            white-space: pre-line;
+        }
+        .THIS .customParentModal .slds-table thead th {
+            background-color: #4472c4;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size:14px;
+            color: white;
+        }
+        .THIS .customParentModal .slds-table tbody tr:nth-child(odd) td{
+            background-color: #cfd5ea;
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+
+        .THIS .customParentModal .slds-table tbody tr:nth-child(even) td{
+            background-color: #e9ebf5;
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+        .THIS .customParentModal .slds-button_neutral{
+            background-color: #4472c4;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px #999;
+            font-size: 16px;
+            padding: 7px 20px;    
+        }
+        .THIS .AddNewProblem {
+            width: 50% !important;
+        }
+        .THIS .slds-modal__content.AddNewProblemBody {
+            min-height: 300px;
+            height: 300px;
+        }
+        .THIS .buttonRound .slds-button {
+            box-shadow: 3px 3px 5px #999;
+        }
+        .THIS .reportTableCustom thead th {
+            background-color : #9dc3e6 !important;
+            color : #000 !important;
+            padding-top : 10px !important;
+            padding-bottom : 10px !important;
+        }
+        
+        .THIS .reportTableCustom tbody tr:nth-child(odd) td{
+            background-color: #bccde9 !important;
+            width:20%;
+            white-space: pre-line;
+        }
+        .THIS .reportTableCustom tbody tr:nth-child(odd) td tablewidth{
+            width:10%;
+        }
+        .THIS .reportTableCustom tbody tr:nth-child(even) td{
+            background-color: #dae3f3 !important;
+            width:20%;
+            white-space: pre-line;
+        }
+        .THIS .reportTableCustom tbody tr td:first-child{
+            position:relative;
+            z-index:0;
+        }
+        .THIS .reportTableCustom tbody tr td:first-child .slds-button:focus {
+            box-shadow: none;
+            border: none;
+        }
+        .THIS .reportTableCustom tbody tr td:first-child .slds-button .slds-button__icon {
+            width: 18px;
+            height: 18px;
+        }
+        .THIS .reportTableCustom tbody tr:last-child td{
+            border : none; 
+            border-spacing : 0px;
+            border: 1px solid #ccc;
+        }
+        .THIS .reportTableCustom tbody tr:last-child td:first-child{
+            border:none;
+        }
+        .THIS .reportTableCustom:hover {
+            box-shadow:none !important;
+        }
+        .THIS .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus){
+            box-shadow:none !important;
+        }
+        .THIS .ql-editor.slds-rich-text-area__content.slds-text-color_weak.slds-grow{
+            min-height: 40px;
+            padding-bottom: 0;
+            padding-top: 10px;
+        }
+        .THIS .slds-rich-text-editor__toolbar.slds-shrink-none{
+            display:none;
+        }
+        .THIS .fixedHeight input {
+            height : 40px;
+        }
+        .THIS .widthForAll {
+            width: 100%;
+            margin-left: 0%;
+        }
+        .THIS .widthForAll button.slds-button.slds-section__title-action {
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            background-color: #888;
+            font-weight: 600;
+        }
+           .THIS .slds-section__title .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+            display: inline;
+            vertical-align: middle;
+            font-size: var(--lwc-fontSize3,0.8125rem);
+                    color: white;
+                }
+                .THIS .customBox{
+                    margin-top:20px                      
+                }
+                .THIS .tabnew{
+                    font-weight: bold;
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                    padding-left: 22px;
+                }
+                .THIS .slds-modal__container{ 
+                    max-width: 85% !important; 
+                    width:80% !important; 
+                }
+                .THIS .slds-modal.slds-fade-in-open {
+                    background-color: rgba(0,0,0,0.5);
+                } 
+                .THIS .slds-modal__content.slds-p-around_medium {
+                    display:block;
+                }
+                .THIS .w-100 {
+                    width: 100%;
+                }
+                
+                
+                
+                .THIS .slds-modal__footer.buttonRound .slds-grid.slds-gutters {
+                    text-align: center;
+                }
+                @media (max-width: 767px) {
+                    .THIS .mobile-grid {
+                        display: block;
+                    }
+                    .THIS .mobile-grid .slds-size_4-of-12 {
+                        width: 100%;
+                    }                    
+                }

@@ -1,0 +1,213 @@
+<aura:component controller= "PatientStatementHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Generate Statement', 'value': 'Generate Statement'},
+                                                        {'label': 'View Historical Statement', 'value': 'View Historical Statement'}
+                                                        ]"/>
+    <aura:attribute name="optValue" type="String" default="Generate Statement"/>
+    <aura:attribute name="isStatementHistoryAllowed" type="Boolean"/> 
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="statementID" type="String"/>
+    <aura:attribute name="redirectToSingleStatement" type="Boolean"/>
+    <aura:attribute name="recordId" type="String"/> 
+    <aura:attribute name="isViewStatementAllowed" type ="Boolean"/>
+    <aura:attribute name="isOpen" type="Boolean"/> 
+    <aura:attribute name="openStatementHistory" type="Boolean"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="heading" type="String"/> 
+    <aura:attribute name="fromDate" type="Date"/> 
+    <aura:attribute name="toDate" type="Date"/> 
+    <aura:attribute name="fromDateSH" type="Date"/> 
+    <aura:attribute name="isImage" type="Boolean" default="true"/> 
+    <aura:attribute name="toDateSH" type="Date"/>
+    <aura:attribute name="statementRecords" type="List"/>
+    <aura:attribute name ="RowId" type = "String"/> 
+    <aura:attribute name="secondvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="thirdvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="fourthvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="firstvalidation" type="Boolean" default="false"/>
+    <div aura:id="text" onscroll="{!c.scrollBottom}">
+         <aura:if isTrue="{!v.isOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv">
+                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate colPayHeader"><b>PATIENT STATEMENT</b></h2>                  
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                    <aura:if isTrue="{!v.isImage}">
+                        
+                        <div class="patient_stmt-img">
+                            <img src="{!$Resource.patient_statement}"/>
+                        </div>
+                        
+                        <aura:set attribute="else">
+                            <div class="widthForAll">
+                                
+                                <aura:if isTrue="{!v.isStatementHistoryAllowed}">
+                                    <div class="slds-grid down_stmt">
+                                        
+                                        <div class="slds-col slds-size_12-of-12"> 
+                                         <!--   <div class="slds-grid">
+                                                <div class="slds-col slds-size_12-of-12"><h2>Download Statement</h2></div>
+                                            </div>-->
+                                            <div class="slds-grid ds-row">
+                                                <div class="slds-col slds-size_2-of-12 slds-p-right_medium "></div>
+                                                <div class="slds-col slds-size_3-of-12 slds-p-right_medium fromdtMarlft">
+                                                    <lightning:input type="Date" name="From" label="From" value="{!v.fromDate}"/>
+                                                    <aura:if isTrue="{!v.secondvalidation}">
+                                                        <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.fourthvalidation}">
+                                                        <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                    </aura:if>
+                                                </div>
+                                                
+                                                <div class="slds-col slds-size_3-of-12 slds-p-right_medium todtMarlft">
+                                                    <lightning:input type="Date" name="To" label="To" value="{!v.toDate}"/>
+                                                    <aura:if isTrue="{!v.firstvalidation}">
+                                                        <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.thirdvalidation}">
+                                                        <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                    </aura:if>
+                                                </div>       
+                                                
+                                                <!--div class="slds-col slds-size_3-of-12 slds-p-top_large slds-text-align_left">
+                                                    <lightning:button class="btn" label="Apply" title="Apply" onclick="{!c.fetchPaymentTransactions}" />
+                                                </div-->
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </aura:if>
+                                <aura:if isTrue="{!v.isViewStatementAllowed}">
+                                    <div class="slds-form--compound pr">
+                                        
+                                        <div class="slds-grid down_stmt">
+                                            
+                                            <div class="slds-col slds-size_12-of-12"> 
+                                                <div class="slds-grid ">
+                                                    <div class="slds-col slds-size_12-of-12"><h2>STATEMENTS</h2></div>
+                                                </div>
+                                                <div class="slds-grid ds-row">
+                                                    <div class="slds-col slds-size_2-of-12 slds-p-right_medium "></div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-right_medium ">
+                                                        <lightning:input type="Date" name="From" label="From" value="{!v.fromDateSH}"/>
+                                                        <aura:if isTrue="{!v.secondvalidation}">
+                                                            <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!v.fourthvalidation}">
+                                                            <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                        </aura:if>
+                                                    </div>
+                                                    
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-right_medium ">
+                                                        <lightning:input type="Date" name="To" label="To" value="{!v.toDateSH}"/>
+                                                        <aura:if isTrue="{!v.firstvalidation}">
+                                                            <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!v.thirdvalidation}">
+                                                            <lightning:formattedText class="slds-text-color_error" value="Please enter date"/>
+                                                        </aura:if>
+                                                    </div>       
+                                                    
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-top_large slds-text-align_left">
+                                                        <lightning:button class="btn" label="Apply" title="Apply" onclick="{!c.fetchStatementHistory}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <aura:if isTrue="{!v.openStatementHistory}">
+                                            <table class="slds-table slds-table--bordered view_stmt slds-m-top_medium">  
+                                                <thead>  
+                                                    <tr>  
+                                                        <th>Statement from</th> 
+                                                        <th>Statement to</th> 
+                                                        <th></th>
+                                                        <th></th>     
+                                                    </tr>  
+                                                </thead>  
+                                                <tbody>
+                                                    
+                                                    <aura:iteration items="{!v.statementRecords}" var="f">  
+                                                        <tr>  
+                                                            <!--<td><a href="javascript:void(0)" id="{!f.Id}" onclick="{!c.delFiles}">Delete</a></td>-->
+                                                            <!-- <td>{!f.Patient_Code__c}</td>     
+                                          <td>{!f.Statement_Date__c}</td> -->
+                                                            <td><p><lightning:formattedDateTime value="{!f.ElixirSuite__Statement_from__c}"/></p></td>
+                                                            <td><p><lightning:formattedDateTime value="{!f.ElixirSuite__Statement_to__c}"/></p></td>
+                                                            <!-- <td>$ {!f.PaymentsAdjustments_Received__c}</td>  -->
+                                                            <!--  <td> {!f.Account_Number__c}</td> -->
+                                                            <td> <lightning:button name="{!f.Id}" class="btn" label="View"  onclick="{!c.viewStatement}"/> </td>
+                                                            <td> <lightning:button name="{!f.Id}" class="btn" label="Download"  onclick="{!c.delFiles}" />  </td>
+                                                            <!-- <td><a href="" id="{!f.Id}" onclick="{!c.previewFile}">{!f.Title}</a></td>-->  
+                                                        </tr>  
+                                                    </aura:iteration>  
+                                                    
+                                                </tbody>  
+                                            </table> 
+                                            
+                                            
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.Spinner}">
+                                            <div class="slds-spinner_container">
+                                                <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                                                    <div class="slds-spinner__dot-a"></div>
+                                                    <div class="slds-spinner__dot-b"></div>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </aura:if>
+                                
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                </div>
+                <footer class="slds-p-around_none slds-modal__footer">
+                    <lightning:layout verticalAlign="center" class="x-large">
+                        <lightning:layoutItem flexibility="auto" padding="around-small">
+                            <div class="slds-align_absolute-center">
+                                
+                                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.closeModel}">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick="{!c.fetchPaymentTransactions}">Apply</button>
+                                
+                            </div>
+                        </lightning:layoutItem>
+                       <!-- <lightning:layoutItem size="6">
+                            <div  class="slds-align_absolute-center">
+                                <button class="previous-stmt-btn" 
+                                        onclick="{! c.viewPreviousStatements }">   
+                                    View Previous Statements
+                                </button>
+                            </div>
+                        </lightning:layoutItem>-->
+                    </lightning:layout>
+                    <!--div class="slds-grid slds-gutters changesalign" >
+                        <div class="slds-col slds-size_12-of-12">  
+                            <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                        </div>
+                        
+                    </div-->
+                    
+                </footer>
+            </div>
+        </section>
+        </aura:if>
+             <aura:if isTrue="{!v.redirectToSingleStatement}">
+            <c:PatientStatement_final isOpen="{!v.redirectToSingleStatement}" statementID="{!v.statementID}"/>
+        </aura:if>
+    </div>
+</aura:component>

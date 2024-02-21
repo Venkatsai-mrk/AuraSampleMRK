@@ -1,0 +1,45 @@
+.THIS .new_icon svg {
+    fill : #493266;
+}
+.THIS .theme_backgroundColor {
+    background-color: #493266;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+
+}
+.THIS .slds-modal__header.attach_claim-head {
+    background-color: #493266;
+    color: #fff;
+}
+.THIS .patient_name-claim label.slds-form-element__label.slds-no-flex{
+    display: none;
+}
+.THIS .attach_table label.slds-form-element__label {
+    display: none;
+}
+.THIS .attach_table svg.slds-button__icon.slds-button__icon_small {
+    height: 25px;
+    width: 25px;
+}
+.THIS .h100{
+    height: 100px;
+}
+.THIS .attach_table .slds-listbox.slds-listbox_vertical{
+    height: 100px;
+    overflow-y: scroll;
+    
+}
+.THIS .attach_table .slds-listbox.slds-listbox_vertical .slds-media.slds-listbox__option{
+    padding: 0px 10px;
+   
+}
+.THIS .attach_table .slds-media__figure.slds-listbox__option-icon{
+    display:none;
+}
+.THIS .adjustment_reason{
+    width: 220px;
+}
+.THIS .adjustment_reason .slds-form-element__control{
+    width: 200px;
+}

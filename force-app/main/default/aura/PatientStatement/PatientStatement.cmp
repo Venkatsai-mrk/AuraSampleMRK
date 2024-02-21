@@ -1,0 +1,393 @@
+<aura:component controller = "PatientStatementHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="statementID" type="String"/>
+    <aura:attribute name="statementRecord" type="String"/>
+    <aura:attribute name="accountDetails" type="String"/>
+    <aura:attribute name="billDate" type="String"/>
+    <aura:attribute name="totalSum" type="Integer"/>
+    <aura:attribute name="newCharges" type="Integer"/>
+    <aura:attribute name="allOperatedProcedures" type="List"/>
+    <aura:attribute name="paymentAdjustments" type="Integer"/> 
+    <div class="header_parent_css" aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" 
+                 aria-modal="true" 
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectionCSS">
+            <div class="slds-modal__container hideDiv">
+                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <header class="slds-modal__header headerCSS">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">PATIENT STATEMENT</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium divCSS" id="modal-content-id-1" 
+                     >
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="StatementCustom">
+                        <div class="slds-grid slds-gutters defaultBackground">
+                            <div class="slds-col slds-size_6-of-12 fixedHeight logo"><img src="{!$Resource.ElixirLogo}"/></div>
+                            <div class="slds-col slds-size_6-of-12 fixedHeight">
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Patient Name:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.Name}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Guarantor Name:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.Name}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Guarantor Account #:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.ElixirSuite__Account_Number__c}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Bill Date:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.billDate}</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-grid slds-gutters "> 
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-section slds-is-open" aura:id="task2">
+                                    <div class="bill_summry">
+                                        <h3 class="slds-section__title">
+                                            <span class="slds-truncate" title="PHYSICIAN SERVICES STATEMENT SUMMARY">PHYSICIAN SERVICES STATEMENT SUMMARY</span>
+                                        </h3>
+                                        <div class="slds-section__content" id="TaskList2" >
+                                            <div class="widthForAll slds-p-bottom_medium " id="TaskList2">
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12  fixedHeight pre_bal">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12  fixedHeight">Previous Balance :</div>
+                                                            <div class="slds-col slds-size_6-of-12  fixedHeight">  
+                                                                <lightning:input type="text" name="" value="$0.00" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">New Charges :</div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight sign">  
+                                                                <b>+</b><lightning:input type="text" name="" value="{!v.newCharges}" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground "  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">Payments/Adjustments : </div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small slds-p-bottom_xx-small  fixedHeight sign">  
+                                                                <b>--</b><lightning:input type="text" name="" value="{!v.paymentAdjustments}" placeholder="N/A"  disabled= "true"/>
+                                                                <hr/>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">New Balance :</div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">  
+                                                                <lightning:input type="text" name="" value="{!v.totalSum}" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12 slds-text-align--center pre_bal fixedHeight">
+                                                        <div class="slds-grid slds-gutters  defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12  fixedHeight">  
+                                                                Your Insurance Has Been Billed.
+                                                                Your Responsibility To Pay Is
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12  fixedHeight">  
+                                                                <h2 class="slds-text-heading_large slds-m-top_x-small "><b>$ {!v.totalSum}</b></h2>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12 slds-text-align--center fixedHeight">
+                                                        
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12   fixedHeight">  
+                                                                Please Pay In Full By
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12 fixedHeight">  
+                                                                <h2 class="slds-text-heading_large slds-m-top_x-small "><b>11/30/20</b></h2>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12 fixedHeight"> 
+                                                        <p class="tq-stmt">Thank you for choosing Mission Community Hospital. The amount due represents your responsibility.</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                
+                                                
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12 fixedHeight"> 
+                                                        <p class="tq-stmt"><u>Insurance Information On File</u></p> 
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    
+                                                    <div class="slds-col slds-size_3-of-12 slds-m-top_small fixedHeight">
+                                                        Primary : 
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-m-top_small fixedHeight">
+                                                        Aetna
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_3-of-12 slds-m-top_small fixedHeight">
+                                                        Secondary :
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-m-top_small fixedHeight">
+                                                        No Secondary Insurance
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="page_2">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <h2>Page 1 of 2</h2>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small">
+                                        <div class="slds-col slds-size_1-of-12"></div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <p class="danger">For your security, credit card payments are accepted online or by phone. </p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <h3>Pay Online (Recommended)</h3>
+                                            <p>myhealthonline.sutterhealth.org</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <h3>Pay By Phone (24/7)</h3>
+                                            <p>Call (877) 252-1777.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <h3>Pay By Mail</h3>
+                                            <p>Send your payment using the coupon below</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <h3>Billing Help</h3>
+                                            <p>Call (877) 252-1777, Billing Representatives are
+                                                available M-F 7:00am - 7:00pm and Saturday
+                                                7:00am - 2:00pm PST. When asked, please provide
+                                                your account #, which is <span> 13296223 </span> . Please note
+                                                that our call volumes are heaviest on Mondays,
+                                                which may result in longer than average wait times.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <h3>Financial Assistance</h3>
+                                            <p>Call (877) 252-1777. Please tell us if you cannot
+                                                pay your bill in full and let us help you. Monthly
+                                                payment plans and other financial assistance
+                                                programs are available for those patients that meet
+                                                certain financial criteria.</p>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-p-top_small">
+                                        <div class="slds-col slds-size_1-of-12 slds-p-right_none">
+                                            <img src="{!$Resource.PayByMail}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            <p class="danger slds-m-top_small">Please See Reverse Side for Account Detail.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <!--div class="bill_summry slds-m-bottom_x-small">
+                                <h3 class="slds-section__title"><span class="slds-truncate" title="GUARNTOR DETAIL">GUARNTOR DETAIL</span></h3>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 pre_bal slds-m-top_small slds-m-bottom_small">
+                                        <p class=""><b>Guarantor Account #</b><span class="slds-float_right">13296223</span></p>
+                                        <p class="slds-m-top_small"><b>Due Date</b><span class="slds-float_right">03/28/20</span></p>
+                                        <p class="slds-m-top_small"><b>Payment Due</b><span class="slds-float_right">$ 1,015.40</span></p>
+                                        <p class="slds-m-top_small"><b>Amount I am paying</b><span class="slds-float_right">$</span></p>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-top_small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-12">
+                                                <span class="dolor">$</span>
+                                            </div>
+                                            <div class="slds-col slds-size_10-of-12 slds-p-top_medium">
+                                                <p>Pay online at elixir@healthcareElixir.com or by phone at (877) 252-1777. We accept Visa, MasterCard, Discover, and American Express</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div-->
+                            <div class="bill_summry bill_summry1">
+                                <aura:iteration items="{!v.allOperatedProcedures}" var="item" indexVar = "idx">
+                                    <h3 class="slds-section__title"><span class="slds-truncate">{!idx+1}  {!item.ElixirSuite__Procedure_Name__c}</span></h3>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12 slds-p-top_small ">
+                                            <b>Date of Service :</b> {!item.ElixirSuite__Date_FreeText__c}
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 slds-p-top_small ">
+                                            <b>Provider:</b> Mission Community Hospital
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small slds-m-bottom_small">
+                                            <p class="">Date of Service<span class="slds-float_right">{!item.ElixirSuite__Date_FreeText__c}</span></p>
+                                            <p class="slds-m-top_small">Charges<span class="slds-float_right">$ {!item.ElixirSuite__Actual_Price__c}</span></p>
+                                            <p class="slds-m-top_small">Patient Payments<span class="slds-float_right"> $ {!item.ElixirSuite__Patient_Payments__c}</span></p>
+                                            <p class="slds-m-top_small">Insurance Payments/Adjustments<span class="slds-float_right">-$ {!item.ElixirSuite__Insurance_Payments__c}</span></p>
+                                            <p class="slds-m-top_small  ">Amount You Will Need To Pay<span class="slds-float_right">$ {!item.ElixirSuite__Adjustments__c}</span></p>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small">
+                                            <p class=""><u>Insurance Remarks</u></p>
+                                            <p><b>A</b></p>
+                                        </div>
+                                        
+                                    </div>
+                                </aura:iteration>
+                                
+                            </div>
+                            <!--div class="bill_summry bill_summry1">
+                                <h3 class="slds-section__title"><span class="slds-truncate" title="RADIOLOGY">2 Radiology</span></h3>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12 slds-p-top_small ">
+                                        <b>Date of Service :</b> 07/10/10
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 slds-p-top_small ">
+                                        <b>Provider:</b> Ingrid Maria Shireen Hogberg MD, Cardiology
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-top_small slds-m-bottom_small">
+                                        <p class="">Date of Service<span class="slds-float_right">07/10/10</span></p>
+                                        <p class="slds-m-top_small">Charges<span class="slds-float_right">$ 2,356.00</span></p>
+                                        <p class="slds-m-top_small">Patient Payments<span class="slds-float_right">0.00</span></p>
+                                        <p class="slds-m-top_small">Insurance Payments/Adjustments<span class="slds-float_right">-1,356.00</span></p>
+                                        <p class="slds-m-top_small  ">Amount You Will Need To Pay<span class="slds-float_right">$ 1,000.00</span></p>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-top_small">
+                                        <p class=""><u>Insurance Remarks</u></p>
+                                        <p><b>A</b></p>
+                                    </div>
+                                    
+                                </div>
+                                
+                                
+                            </div-->
+                            <div class="bill_summry bill_summry1 bill_summry2">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12  ">
+                                        <h3 class="slds-section__title">Payment Due : <span class="slds-float_right slds-p-left_small">$ {!v.totalSum}</span>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 ">
+                                        <h3 class="slds-section__title"><span class="slds-truncate" >Please Pay In Full By 11/30/20</span></h3>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="slds-grid slds-gutters defaultBackground slds-m-top_xx-small"  id="TaskList2">
+                                    <div class="slds-col slds-size_12-of-12 fixedHeight"> 
+                                        <p class="tq-stmt "><u>Insurance Information On File</u></p> 
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                    
+                                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small slds-m-bottom_xx-small fixedHeight">
+                                        A-Coinsurance Amount
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                    
+                                    <div class="slds-col slds-size_3-of-12 slds-m-top_xx-small slds-m-bottom_xx-small fixedHeight">
+                                        B-Deductible Amount 
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters footerCSS">
+                        <div class="slds-col slds-size_12-of-12">  
+                            <!--lightning:button variant="brand" label="Save" title="Save" onclick="{! c.save }" /-->
+                            <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                        </div>
+                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+    </div>
+    
+    
+</aura:component>

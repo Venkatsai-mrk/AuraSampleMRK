@@ -1,0 +1,13 @@
+<apex:page standardController="Procedure__c" extensions="ShowSuccess_ctrl" lightningStyleSheets="true" recordSetVar="procs">
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageMessages />
+                <apex:pageBlockButtons location="bottom">
+                    <p>Do you want to send the procedures for claim generation? If yes, then please click on submit.</p>
+                    <apex:commandButton value="Submit" action="{!insertacc}"/>
+                    <apex:commandButton value="Cancel" action="{!listView}"/>
+                </apex:pageBlockButtons>
+                
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

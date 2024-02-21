@@ -1,0 +1,9 @@
+<messaging:emailTemplate subject="Alert!!!" recipientType="User" >
+<messaging:htmlEmailBody >
+ <p>Hi Team,</p>
+  <p>Here is the Following List of Rooms that needs Cleaning.</p>
+  <p> <c:RoomNeedsCleaning /></p>
+  <p>Thanks</p>
+  Admin
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

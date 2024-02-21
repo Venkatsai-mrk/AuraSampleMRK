@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Hi {!Contact.Name},</font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style=""><font face="arial">{!Contact.Message_Comment_Body__c}</font></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[Log In to the portal to view the complete message.<div><a href="https://momentum-efficiency-1743-dev-ed.scratch.my.salesforce.com/servlet/networks/switch?networkId=0DB1m0000001Fff" class="net-url" data-networkid="0DB1m0000001Fff" target="_blank" style="color: rgb(1, 91, 167); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;">https://momentum-efficiency-1743-dev-ed.scratch.my.site.com</a></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

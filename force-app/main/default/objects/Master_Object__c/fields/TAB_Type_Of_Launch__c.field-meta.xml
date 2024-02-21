@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TAB_Type_Of_Launch__c</fullName>
+    <externalId>false</externalId>
+    <label>Type Of Launch</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>event</fullName>
+                <default>false</default>
+                <label>event</label>
+            </value>
+            <value>
+                <fullName>component</fullName>
+                <default>false</default>
+                <label>component</label>
+            </value>
+            <value>
+                <fullName>workspace</fullName>
+                <default>false</default>
+                <label>workspace</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

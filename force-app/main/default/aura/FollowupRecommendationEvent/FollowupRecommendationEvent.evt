@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="notesData" type="Notes__c[]"/>
+    <aura:attribute name="delNotesData" type="List"/>
+    <aura:attribute name="recommendationData" type="Recommendation__c[]"/>
+    <aura:attribute name="delRecommendationData" type="List"/>
+    <aura:attribute name="mapIndex" type="Integer"/>
+</aura:event>

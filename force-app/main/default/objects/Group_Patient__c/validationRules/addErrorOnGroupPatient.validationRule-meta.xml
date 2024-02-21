@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>addErrorOnGroupPatient</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND((Group_Name__r.Maximum_Patients__c =  Group_Name__r.Number_of_Patients__c),
+(Group_Name__r.PatientGroupValidationBreak__c = true) )</errorConditionFormula>
+    <errorMessage>You’ve reached the maximum patient limit for this group. Please remove existing patients to add more</errorMessage>
+</ValidationRule>

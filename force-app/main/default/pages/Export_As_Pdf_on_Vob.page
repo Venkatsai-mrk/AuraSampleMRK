@@ -1,0 +1,2 @@
+<apex:page standardController="VOB__c" applyHtmlTag="false"  showHeader="False"   renderAs="PDF" sidebar="False">
+  </apex:page>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LabOrder_Priority__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>LabOrder Priority:
+1. CHC LabOrder
+2. Dummy LabOrder
+
+Note: Please add text same as mentioned here.</inlineHelpText>
+    <label>LabOrder Priority</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,81 @@
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg{
+    fill : red;
+}
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+
+.THIS .selected{
+    height: 40px;
+    width: 60px;
+    margin-bottom: 15px;
+    padding : 2px;
+    border: 1px solid ;
+}
+
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS span.slds-radio {
+    float: left;
+}
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+}
+.THIS.Class1{
+    height:100%
+}
+.THIS .Class2{
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .Class3{
+    font-size:20px;
+}
+.THIS .Class4{
+    margin-top:2px; 
+    margin-left:10px;
+}
+.THIS .Class5{
+    position:relative ;
+}
+.THIS .Class6{
+    /*position: absolute; for appexchange*/
+    bottom:13px
+}
+.THIS .Class7{
+    text-align:right;
+    padding-right:2.3rem;
+}
+.THIS .mgList1 {
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+.THIS .mgheading {
+    font-size: 20px;
+}
+
+.THIS .approvalIcon .slds-icon-utility-check svg {
+    fill:green;
+}
+
+.THIS .approvalIcon .slds-icon-utility-close svg {
+    fill:red;
+}
+

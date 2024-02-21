@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Type_Sec__c</fullName>
+    <description>Code specifying the type of secondary insurance, such as Tricare, Medicare Secondary Black Lung, 	Medicare Secondary Worker&apos;s Compensation, etc.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Note: Required for Medicare Plans Only</inlineHelpText>
+    <label>Secondary insurance type code</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tricare</fullName>
+                <default>false</default>
+                <label>Tricare</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan Medicare Secondary End-Stage Renal Disease Beneficiary in the Mandated Coordination period</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan Medicare Secondary End-Stage Renal Disease Beneficiary in the Mandated Coordination period</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary No-fault Insurance including Auto is Primary</fullName>
+                <default>false</default>
+                <label>Medicare Secondary No-fault Insurance including Auto is Primary</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Worker&apos;s Compensation</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Worker&apos;s Compensation</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Public Health Service (PHS) or Other Federal Agency</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Public Health Service (PHS) or Other Federal Agency</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Black Lung</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Black Lung</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Veteran&apos;s Administration</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Veteran&apos;s Administration</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Disabled Beneficiary Under Age 65 with Larger Group Health Plan (LGHP)</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Disabled Beneficiary Under Age 65 with Larger Group Health Plan (LGHP)</label>
+            </value>
+            <value>
+                <fullName>Medicare Secondary Other Liability Insurance is Primary</fullName>
+                <default>false</default>
+                <label>Medicare Secondary Other Liability Insurance is Primary</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,25 @@
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.iconColumn {
+    width: 60px;
+}
+
+.iconCell {
+    text-align: center;
+}
+
+.iconViewMode {
+    display: none;
+}

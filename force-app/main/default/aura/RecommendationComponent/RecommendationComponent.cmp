@@ -1,0 +1,82 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-01-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+ <aura:component controller="Elixir_ViewEditERAEOBRecs" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" > 
+    
+   <!-- <aura:attribute name="rec1id" type="String" />
+    <aura:attribute name="eraId" type="String"  />
+     <aura:method name="saveRecommends" action="{!c.saveRecommends}" description="To create and update Recommendations">
+    </aura:method>
+     <aura:handler action="{!c.doInit}" name="init" value="{!this}" />
+    <aura:handler event="c:ElixirOEM_saveRecommendations" action="{!c.saveRecommends}"/>
+
+    <aura:attribute name="activeSections" type="List" default=" " />
+	<aura:attribute name="deleteRecommendationList" type="List"/>   
+    <aura:attribute name="isOpen" type="Boolean" default="false" />
+    <aura:attribute name="recommendationList" type="Recommendation__c[]"/>
+    <aura:attribute name="searchString"   type="string" default="" description="String to search"/>
+    <div class="childname">
+        <lightning:accordion
+                             allowMultipleSectionsOpen="true"
+                             onsectiontoggle="{!c.handleSectionToggle}"
+                             activeSectionName="{!v.activeSections}">
+            <lightning:accordionSection name="A" label="Recommendations" >
+                
+   
+                <div class="slds-p-around_medium">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered eraline_table">
+                                <thead>
+                                    <tr>
+                                        <th>Recommendation</th>
+                                        <th>Assign To</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                   
+                                     <aura:iteration items="{!v.recommendationList}" var="code" indexVar="index">
+                                        <tr>
+                                            <td>
+                                                 <lightning:textarea name="recommendation" placeholder="" value="{!code.ElixirSuite__Elixir_Recommendation__c}"/>
+   
+                                            </td>   
+                                            <td>                                
+                                                <c:lookupComponent 
+                                                   objectName="user" 
+                                                   fieldName="Name"
+                                                   value = "{!code.	ElixirSuite__Elixir_Assign_To__c}"
+                                                   />
+                                            </td>
+                                           
+                                            <td>
+                                                <a onclick="{!c.addRecommendation}" data-record="{!index}">
+                                                    <lightning:icon iconName="utility:new" class="slds-icon slds-icon_small add_icon" size="small"  alternativeText="add"/>
+                                                    <span class="slds-assistive-text">Add Icon</span>
+                                                </a> 
+                                                <a onclick="{!c.removeRecommendation}" data-record="{!index}">
+                                                    <lightning:icon iconName="utility:delete"  class="slds-icon slds-icon_small new_del" size="small" alternativeText="Delete"/>
+                                                    <span class="slds-assistive-text">Delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                 
+                                </tbody> 
+                                
+                            </table>
+                        </div>
+                            </div>
+        </div>
+                    
+                
+                 </lightning:accordionSection>
+            </lightning:accordion>
+            
+    </div>  -->
+ </aura:component> 

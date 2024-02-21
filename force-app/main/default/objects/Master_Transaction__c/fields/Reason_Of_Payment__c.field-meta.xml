@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_Of_Payment__c</fullName>
+    <externalId>false</externalId>
+    <label>Reason for Payment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applied Payment</fullName>
+                <default>false</default>
+                <label>Applied Payment</label>
+            </value>
+            <value>
+                <fullName>Unallocated Payment</fullName>
+                <default>false</default>
+                <label>Unallocated Payment</label>
+            </value>
+            <value>
+                <fullName>ERA/EOB Payment</fullName>
+                <default>false</default>
+                <label>ERA/EOB Payment</label>
+            </value>
+            <value>
+                <fullName>Interest/Late Filing Charges</fullName>
+                <default>false</default>
+                <label>Interest/Late Filing Charges</label>
+            </value>
+            <value>
+                <fullName>Discounted Payment</fullName>
+                <default>false</default>
+                <label>Discounted Payment</label>
+            </value>
+            <value>
+                <fullName>Discounted Percentage</fullName>
+                <default>false</default>
+                <label>Discounted Percentage</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

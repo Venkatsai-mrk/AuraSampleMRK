@@ -1,0 +1,70 @@
+.THIS .Allegies_box {
+    border: 1px solid #ddd;
+    height: 100%;
+    box-shadow: 0px 0px 5px 0px #ccc;
+    border-radius: 5px;
+}
+.THIS .my-container {
+    width: 80%;
+    margin-left: 0%;
+    padding-top: 120px;
+}
+.THIS .Allegies_box h3 {
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 5px;
+    text-align: center;
+    background: #fbf9fa;
+}
+.THIS .Allegies_box ul.main-list {
+    padding : 0;
+    margin: 0%;
+    width: 100%;
+}
+.THIS .Allegies_box ul.main-list li {
+    color: #555;
+    font-size: 14px;
+    margin: 12px 15px;
+    line-height: 15px;
+    font-weight: 600;
+}
+.THIS .Allegies_box ul.sub-list li {
+    font-weight: 500;
+    margin: 8px 1px;
+}
+.THIS .medical-alert h3 {
+    background-color: #fdefef;
+}
+.THIS .Allegies_box-child {
+    overflow-y: scroll;
+    height: 250px;
+}
+.THIS .slds-col.slds-size_3-of-12 {
+    width: 37%;
+}
+.THIS .slds-modal__header {
+    padding: 0;
+    border: none;
+}
+.THIS .slds-modal__container1 {
+    max-width: 100% !important;
+    width: 67% !important;
+    margin-top: 65px;
+    margin-left: 207px;
+}
+.THIS    .slds-modal__container1{ max-width: 100% !important; width:67% !important; }
+.THIS .paragrpahCSS{
+    margin-top:5px;font-size:12px;
+}
+/*style="{!'position: relative; height: 100vh; background:' + v.backgroundColor + ' url(' + v.backgroundImageURL +') no-repeat;background-position: center;background-size: cover;'}"
+ 
+.THIS .slds-modal__content{
+    background: url(/resource/1581067771000/WaterMarkAllergies) no-repeat;
+    background-position: center;
+   
+}*/
+/* changes */
+.THIS .chnagesheight{
+    height:auto;
+}

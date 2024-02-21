@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Elixir_Contact_Type__c</fullName>
+    <description>The value in this field will be populated via a flow in the project.</description>
+    <externalId>false</externalId>
+    <label>Elixir Contact Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Elixir_Practitioner_Contact</fullName>
+                <default>false</default>
+                <label>Elixir_Practitioner_Contact</label>
+            </value>
+            <value>
+                <fullName>Elixir_Contact</fullName>
+                <default>false</default>
+                <label>Elixir_Contact</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

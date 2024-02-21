@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="NewMessagesForPortal">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="messagesFromPatientChart" type="List" />
+    <aura:attribute name="messageRecordId" type="String" default="false"/>
+    <aura:attribute name="isFromNewMessages" type="Boolean" default="false" />
+
+    <lightning:navigation aura:id="navigationService" />
+    
+    <div class="care_team-box1">
+        <div class="slds-text-color_inverse slds-text-heading_small">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12"><h1>New Messages</h1></div>
+                <div class="slds-col slds-size_6-of-12 slds-text-align_right">
+                    <a href="javascript:void(0);" onclick="{!c.handleMoreMessagesOClick}" class="m-msg">More Messages</a>
+                    <lightning:icon iconName="utility:chat" size="x-small" class="slds-icon-text-default" alternativeText="Chat" />
+                </div>
+            </div>
+		</div>
+    </div>
+    
+        <div class="care_team-box slds-is-relative slds-m-bottom_medium" >
+        	
+                <div class="currentMessage">
+                    
+                        <aura:iteration items="{!v.messagesFromPatientChart}" var="message">
+                    	<div class="slds-box slds-box_xx-small">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-3">
+                                <div>
+                                    <h2 class="slds-truncate">{!message.ElixirSuite__Sender__c}</h2>
+                                </div>
+                                <div>
+                                    <p class="slds-truncate">
+                                        {!message.ElixirSuite__Subject__c}
+                                        <a href="javascript:void(0);" onclick="{!c.handleReadMoreClick}" data-messageId="{!message.Id}">read more</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-text-align_right messages_date">
+                                
+                                <lightning:formattedDateTime value="{!message.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                             minute="2-digit" hour12="true"/>
+                            </div>
+                        </div>
+    				</div>
+                            </aura:iteration>
+            </div>
+        <!--div class="more-msg slds-is-absolute slds-box_xx-small slds-text-align_center"></div-->
+    </div>
+</aura:component>

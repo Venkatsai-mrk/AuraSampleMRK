@@ -1,0 +1,117 @@
+.THIS .pateint_info .slds-form-element__help {
+    top: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+    border: none;
+    box-shadow: none;
+}
+.THIS .footercls .slds-form-element__help {
+    z-index: 1;
+    left: 3px;
+}
+.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+.THIS .datetime_class .slds-form-element__row .slds-form-element label{
+    display :none;
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+.THIS .datetime_class lightning-datetimepicker button{
+    right: 0;
+    bottom: 0;
+}
+.THIS .modalCOntainer{
+background: rgba(0, 0, 0, 0.5);
+width: 100% !important;
+max-width: 100% !important;
+padding: 0 10%; 
+}
+.THIS .modalCOntainer{
+    max-width: 100% !important;
+    width:100% !important;
+}
+.THIS .vitalTable{
+    overflow:scroll;
+}
+.THIS td{
+    height:46px;
+}
+.THIS .slds-modal.slds-fade-in-open.cVitalSigns.cMAR {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.THIS .rowHeight{
+    line-height:47px;
+    padding-left:20px;
+}
+.THIS .tableHeader {
+    border: 0.25px solid black;
+}
+.THIS .vitalTable th.rowHeight {
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+    width: 170px;
+    display: inline-block;
+}
+.THIS .vitalTable1 {
+    overflow-x:scroll;
+    width:100%
+}
+.THIS .vitalTable1 th.rowHeight:first-child {
+    border-bottom: 1px solid transparent;
+    padding: 10px 0px 0px 40px;
+}
+.THIS .vitalTable tbody .rowHeight {
+    width: 170px;
+    display: block;
+    float: left;
+}
+.THIS .d-flex {
+    display: flex;
+}
+.THIS .h-400 {
+    height: 400px;
+}
+.THIS .alicebg {
+    background: white;
+}
+.THIS .rowHeight-250 {
+    /*background: aliceblue; */
+    background: white;
+    width: 250px;
+}
+.THIS .rowHeight-189 {
+    width: 189px; 
+    display: block;
+}
+.THIS .rowHeight-199 {
+    width: 199px; 
+    display: block;
+}
+.THIS .scroll-table {
+    width: auto; 
+    height: 450px; 
+    overflow-x: scroll;
+}
+.THIS .scroll-table .vitalTable {
+    overflow-x: scroll; 
+    width: max-content;
+}
+@media (max-width: 992px) {
+    .THIS .d-flex {
+        display: block;
+    }
+    .THIS .d-flex .slds-size_4-of-12 {
+        width: 100%;
+    }
+}
+.THIS .slds-modal__header{
+    background-color:#493266; 
+    color:#fff;
+    padding:5px;
+}

@@ -1,0 +1,4 @@
+<!--ObjectiveEvent.evt-->
+<aura:event type="APPLICATION" description="Objective Event">
+    <aura:attribute name="message" type="List" />
+</aura:event>

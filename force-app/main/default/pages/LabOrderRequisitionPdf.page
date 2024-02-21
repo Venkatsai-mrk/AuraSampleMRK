@@ -1,0 +1,4 @@
+<apex:page controller="LabOrderDetails" applyHTMLTag="true" applyBodyTag="true" showHeader="false" cache="true" readOnly="true">
+   <!-- <apex:iframe name="Requisition Pdf" src="{!URLFOR($Action.Attachment.Download, Attachment.Id)}"/>-->
+   <iframe height="800px" id="Requisition Pdf" title ="Requisition Pdf" name="Requisition Pdf" src="{!URLFOR($Action.Attachment.Download, Attachment.Id)}" width="100%"></iframe>
+</apex:page>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Private_Payment_Transactions</fullName>
+    <columns>NAME</columns>
+    <columns>Actual_Price__c</columns>
+    <columns>Procedure__c</columns>
+    <columns>Payment_Type__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Payment_Transaction__c.Private_Payment</value>
+    </filters>
+    <label>Private Payment Transactions</label>
+</ListView>

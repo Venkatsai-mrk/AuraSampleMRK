@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calender_Event_Layout</fullName>
+    <fields>Subject</fields>
+    <fields>WhatId</fields>
+    <fields>WhoId</fields>
+    <fields>Practitioner__c</fields>
+    <fields>Status__c</fields>
+    <fields>Practitioner_Start_Time__c</fields>
+    <fields>Practitioner_End_Time__c</fields>
+    <label>Calender Event Layout</label>
+</CompactLayout>

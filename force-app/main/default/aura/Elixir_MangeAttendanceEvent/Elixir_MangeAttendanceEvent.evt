@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Attendance Event" >
+     <aura:attribute name="attended" type="Integer" />
+     <aura:attribute name="missed" type="Integer"/>
+    <aura:attribute name="listVal" type="List"/>
+</aura:event>

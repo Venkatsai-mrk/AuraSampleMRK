@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grand_Parent_Message__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Original Message to which all the child Messages have been originated and linked.</description>
+    <externalId>false</externalId>
+    <label>Grand Parent Message</label>
+    <referenceTo>Message_Subject__c</referenceTo>
+    <relationshipLabel>Message Subjects (Message Subject)</relationshipLabel>
+    <relationshipName>Message_Subjects1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_deniel__c</fullName>
+    <description>This field is used to enter details about the patient&apos;s reasons for denying certain aspects of the assessment.</description>
+    <externalId>false</externalId>
+    <label>Reason for denial</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Medically Denied</fullName>
+                <default>false</default>
+                <label>Medically Denied</label>
+            </value>
+            <value>
+                <fullName>Clinically Denied</fullName>
+                <default>false</default>
+                <label>Clinically Denied</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

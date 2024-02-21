@@ -1,0 +1,108 @@
+<template>
+    <!--we have to create a table of input elements-->
+    <!--thead should display headings-->
+    <!--1st row should display + at the end-->
+    <!--last row should display 'delete' icon at the end-->
+    <div class="modualrTableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <template for:each={section.ElixirSuite__Headings__c} for:item="heading">
+                        <th key={heading}>{heading}</th>
+                    </template>
+                    <th class={iconColumnClass}></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template iterator:it={privateSectionData}>
+                    <tr key={it.value.rowNumber}>
+                        <template for:each={it.value.columns} for:item="column">
+                            <td key={column.columnNumber}>
+                                <template if:true={isViewMode}>
+                                    <template if:true={column.isText}>
+                                        <lightning-input disabled class="label-hidden" variant="label-hidden"
+                                            type='text' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isTextArea}>
+                                        <lightning-textarea disabled class="label-hidden" variant="label-hidden"
+                                            value={column.value} name={it.value.rowNumber} label={column.columnNumber}
+                                            onchange={updateValue}></lightning-textarea>
+                                    </template>
+
+                                    <template if:true={column.isdate}>
+                                        <lightning-input disabled class="label-hidden" variant="label-hidden"
+                                            type='date' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isdatetime}>
+                                        <lightning-input disabled timezone="GMT" class="label-hidden" variant="label-hidden"
+                                            type='datetime' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isNumber}>
+                                        <lightning-input disabled class="label-hidden" variant="label-hidden"
+                                            type='number' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+                                </template>
+
+                                <template if:false={isViewMode}>
+                                    <template if:true={column.isText}>
+                                        <lightning-input class="label-hidden" variant="label-hidden"
+                                            type='text' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isTextArea}>
+                                        <lightning-textarea class="label-hidden" variant="label-hidden"
+                                            value={column.value} name={it.value.rowNumber} label={column.columnNumber}
+                                            onchange={updateValue}></lightning-textarea>
+                                    </template>
+
+                                    <template if:true={column.isdate}>
+                                        <lightning-input class="label-hidden" variant="label-hidden"
+                                            type='date' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isdatetime}>
+                                        <lightning-input timezone="GMT" class="label-hidden" variant="label-hidden"
+                                            type='datetime' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+
+                                    <template if:true={column.isNumber}>
+                                        <lightning-input class="label-hidden" variant="label-hidden"
+                                            type='number' value={column.value} name={it.value.rowNumber}
+                                            label={column.columnNumber} onchange={updateValue}></lightning-input>
+                                    </template>
+                                </template>
+
+                            </td>
+                        </template>
+
+                        <td if:true={it.first} class={iconCellClass}>
+                            <template if:false={isViewMode}>
+                                <lightning-button-icon icon-name="utility:add" variant="bare" size="large"
+                                    alternative-text="add row" title="add row" onclick={addRow}></lightning-button-icon>
+                            </template>
+                        </td>
+
+                        <td if:false={it.first} class={iconCellClass}>
+                            <template if:false={isViewMode}>
+                                <lightning-button-icon icon-name="utility:delete" variant="bare" size="large"
+                                    alternative-text="delete row" title="delete row" name={it.value.rowNumber}
+                                    onclick={deleteRow}></lightning-button-icon>
+                            </template>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

@@ -1,0 +1,569 @@
+<apex:page renderAs="pdf" controller="ElixirOEM_ReferralPDFHelper">
+    <apex:form >
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet"/> 
+            <style>
+            </style>
+        </head>
+        <table width="710" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="font-family: 'Inter', sans-serif;">
+            <thead>
+                <tr>
+                    <td style="background-color: #493266; color: #fff; text-align: center;">
+                        <h2 style="margin:5px 0;font-family: 'Inter', sans-serif; font-size: 18px;">{!parentReferralRecord.Name}</h2>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="690" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                            <tr><td style="height: 10px;" colspan="4"></td></tr>
+                            <tr>
+                                <th style="font-weight: 700;">Location</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Provider__r.Name}
+                                </td>
+                                <th style="font-weight: 700;">Referred Out Organization</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Referred_Out_Organization__r.Name}
+                                </td>
+                            </tr>
+                            <tr><td style="height: 5px;" colspan="4"></td></tr>
+                            <tr>
+                                <th style="font-weight: 700;">Care Team Member</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__User__r.Name}
+                                </td>
+                                <th style="font-weight: 700;">Referred To</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Referred_To__r.Name}
+                                </td>
+                            </tr>
+                            <tr><td style="height: 5px;" colspan="4"></td></tr>
+                            <tr>
+                                <th style="font-weight: 700;">Email (CTM)</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Email_CTM__c}
+                                </td>
+                                <th style="font-weight: 700;">Email (Refrerred To)</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Email_Referred_To__c}
+                                </td>
+                            </tr>
+                            <tr><td style="height: 5px;" colspan="4"></td></tr>
+                            <tr>
+                                <th style="font-weight: 700;">Phone (CTM)</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Phone_CTM__c}
+                                </td>
+                                <th style="font-weight: 700;">Phone (Refrerred To)</th>
+                                <td>
+                                    {!parentReferralRecord.ElixirSuite__Phone_Referred_To__c}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!--apex:outputText rendered="{!parentReferralRecord.Instructions__c != ''}"-->
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td style="background-color: #eeeeee; color: #333;">
+                        <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Instructions</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="reason-box" style="border: 1px solid #ccc;width: 646px;margin: 15px;min-height: 80px;display: block; padding: 0 15px;">
+                            <apex:outputText escape="false" value="{!parentReferralRecord.Instructions__c}" ></apex:outputText>
+                        </div>
+                    </td>
+                </tr>
+                <!--/apex:outputText-->
+                <!--apex:outputText rendered="{!parentReferralRecord.Reasons_for_Referral__c != ''}"-->
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td style="background-color: #eeeeee; color: #333;">
+                        <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Reasons for Referral</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="reason-box" style="border: 1px solid #ccc;width: 646px;margin: 15px;min-height: 80px;display: block; padding: 0 15px;">
+                            <apex:outputText escape="false" value="{!parentReferralRecord.Reasons_for_Referral__c}" ></apex:outputText>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td style="height: 15px;"></td></tr>
+                <tr>
+                    <td>
+                        <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Diagnosis Code</th>
+                                    <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Description</th>
+                                    <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Actions</th-->
+                                </tr>
+                                <apex:repeat value="{!diagnosisLst}" var="sObj_Diagnosis" id="theRepeat">
+                                    
+                                    <tr>
+                                        <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">{!sObj_Diagnosis.Name}</td>
+                                        <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">{!sObj_Diagnosis.ElixirSuite__Code_Description1__c}</td>
+                                        <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">
+											<input type="checkbox" style="width: 18px; border: 1px solid #ccc; height: 18px; background-color: #000;" checked="true" />
+										</td-->
+                                    </tr>
+                                </apex:repeat>
+                                
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td>
+                        <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Procedure Code</th>
+                                    <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Description</th>
+                                    <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Actions</th-->
+                                </tr>
+                                <apex:repeat value="{!procedureLst}" var="sObj_Procedure" id="theRepeat_Procedure">
+                                    <tr>
+                                        <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">{!sObj_Procedure.Name}</td>
+                                        <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">{!sObj_Procedure.ElixirSuite__Code_Description__c}</td>
+                                        <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color: #fff;">
+                                            <input type="checkbox" style="width: 18px; border: 1px solid #ccc; height: 18px; background-color: #000;" checked="true" / >
+                                        </td -->
+                                    </tr>
+                                </apex:repeat>
+                                
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <!--/apex:outputText-->
+                <tr><td style="height: 30px"></td></tr>
+                <tr>
+                    <td style="background-color: #493266; color: #fff; text-align: center;">
+                        <h2 style="margin:5px 0;font-family: 'Inter', sans-serif; font-size: 18px;">Referral Information</h2>
+                    </td>
+                </tr>
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td>
+                        <table width="690" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="margin-left:15px; font-size: 14px; font-weight: 600;">
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Patient Name</th>
+                                <td style="font-weight: 500;">{!patientInfo.Name}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">Phone</th>
+                                <td style="font-weight: 500;">{!patientInfo.Phone}</td>
+                            </tr>
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Birth Date</th>
+                                <td style="font-weight: 500;">{!patientInfo.ElixirSuite__DOB__c}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">Email</th>
+                                <td  style="font-weight: 500;">{!patientInfo.ElixirSuite__Email_Id__c}</td>
+                            </tr>
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Gender</th>
+                                <td style="font-weight: 500;">{!patientInfo.ElixirSuite__Gender__c}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">SSN</th>
+                                <td style="font-weight: 500;">{!patientInfo.ElixirSuite__SSN__c}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 20px"></td></tr>
+                <tr>
+                    <td style="background-color: #eeeeee; color: #333;">
+                        <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Primary Insurance Information</h3>
+                    </td>
+                </tr>
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td>
+                        <table width="690" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="margin-left: 15px; font-size: 14px; font-weight: 600;">
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Insurance Provider</th>
+                                <td style="font-weight: 500;">{!patientVOBDetails.ElixirSuite__Insurance_Provider__r.Name}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">Insurance Phone</th>
+                                <td style="font-weight: 500;">{!patientVOBDetails.ElixirSuite__Insurance_Company_Phone__c}</td>
+                            </tr>
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Subscriber Name</th>
+                                <td style="font-weight: 500;">{!patientVOBDetails.ElixirSuite__Subscriber_Name__c}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">Subscriber DOB</th>
+                                <td  style="font-weight: 500;">June 4,1990</td>
+                            </tr>
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            <tr>
+                                <th style="font-weight: 600;">Insurance Policy ID</th>
+                                <td style="font-weight: 500;">{!patientVOBDetails.ElixirSuite__Insurance_Policy_ID__c}</td>
+                                <td style="width: 15px;"></td>
+                                <th style="font-weight: 600;">Insurance Group No</th>
+                                <td style="font-weight: 500;">{!patientVOBDetails.ElixirSuite__Group_Number__c}</td>
+                            </tr>
+                            <tr><td style="height: 10px;" colspan="5"></td></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 20px"></td></tr>
+                <!--tr>
+<td style="background-color: #d0e695; color: #333;">
+<h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Chart Summary</h3>
+</td>
+</tr-->
+                <tr><td style="height: 15px"></td></tr>
+                <tr>
+                    <td>
+                        
+                        <apex:outputPanel rendered="{! vitalLst.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Vitals</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Temprature</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Pulse</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Blood Pressure</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">BMI</th>
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!vitalLst}" var="vitals" id="the">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!vitals.Temperature__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!vitals.Pulse__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!vitals.Blood_Pressure_Diasystolic__c} / {!vitals.Blood_Pressure_Systolic__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!vitals.BMI__c}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! diagnosisLstChartSummary.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Diagnosis Code</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Diagnosis Code</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Description</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">ICD Version</th>
+                                                <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Created Date</th-->
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!diagnosisLstChartSummary}" var="diagnosis" id="theDiagnosis">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!diagnosis.ElixirSuite__Diagnosis_Code_and_Name__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!diagnosis.ElixirSuite__Code_Description1__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!diagnosis.ElixirSuite__Version__c} </td>
+                                                    <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!diagnosis.CreatedDate}</td-->
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! allergyLst.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Allergies</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Allergy Name</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Reaction</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Severity</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Notes</th>
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!allergyLst}" var="allergyObj" id="theAllergy">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!allergyObj.Allergy_Name__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!allergyObj.Reaction__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!allergyObj.Severity__c} </td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!allergyObj.Note__c}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! procedureLstChartsummary.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Procedure Codes</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Procedure Code</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Description</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Category</th>
+                                                <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Created Date</th-->
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!procedureLstChartsummary}" var="procObj" id="theProcedure">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!procObj.Name}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!procObj.ElixirSuite__Code_Description__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!procObj.ElixirSuite__Code_Category__c}</td>
+                                                    <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!procObj.CreatedDate}</td-->
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! problemLst.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Problems</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Problem</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">SNOMED CT Code</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Problem Type</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Date Onset</th>
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!problemLst}" var="problemObj" id="theProblem">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!problemObj.Name}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!problemObj.SNOMED_CT_Code__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!problemObj.Problem_Type__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!problemObj.Date_Onset__c}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! prescriptionLst.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Medications</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Medication Name</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Reason</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Route</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Days</th>
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!prescriptionLst}" var="medicationObj" id="theMedication">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!medicationObj.Drug_Name__c}</td>	
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!medicationObj.Reason_new__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!medicationObj.Route_New__c}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!medicationObj.Number_of_Times_Days_Weeks__c}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!openForms == true}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Notes</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Name</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Category</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Created By</th>
+                                                <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Date</th-->
+                                                <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Actions</th-->
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!referrealSelectedForms}" var="forms_sObj" id="theRepeat_chartSummaryData_Formds">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!forms_sObj.formName}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!forms_sObj.formCategory}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!forms_sObj.CreatedBy}</td>
+                                                    <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!forms_sObj.CreatedDate}</td-->
+                                                    <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">
+<input type="checkbox" style="width: 18px; border: 1px solid #ccc; height: 18px; background-color: #000;" checked="true" />
+</td-->
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                            <tr><td style="height: 10px;" colspan=""></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! labOrderLst.size !=0}">
+                            <tr><td style="height: 16px"></td></tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Lab Results</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Lab Order</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Medical Test</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Status</th>
+                                                <!--th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Created Date</th-->
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!labOrderLst}" var="labOrdersObj" id="theLabOrder">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!labOrdersObj.Name}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!labOrdersObj.Medical_Test__c}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!labOrdersObj.Status__c}</td>
+                                                    <!--td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!labOrdersObj.CreatedDate}</td-->
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! fiels.size !=0}">
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr>
+                                <td style="background-color: #eeeeee; color: #333;">
+                                    <h3 style="margin: 3px 15px; font-weight: 500; font-size: 16px;">Other Documents</h3>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 15px"></td></tr>
+                            <tr >
+                                <td>
+                                    <table width="680" border="0" align="center" cellspacing="2" cellpadding="0" class="full" style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px; background-color: #ccc;">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Document</th>
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;">Type</th>
+                                                
+                                                <th style="font-weight:500;text-align: center; background-color: #e5e5e5; padding: 5px 10px;"> Date</th>
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!fiels}" var="contentObj" id="thecontanet">
+                                                <tr>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!contentObj.Title}</td>
+                                                    
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!contentObj.FileType}</td>
+                                                    <td style="font-weight:500;text-align: center; padding: 5px 10px; background-color:#fff;">{!contentObj.CreatedDate}</td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td style="height: 16px"></td></tr>
+                        </apex:outputPanel>
+  
+                    </td>
+                </tr>
+                
+                
+                
+            </tbody>
+        </table>
+    </apex:form>
+</apex:page>

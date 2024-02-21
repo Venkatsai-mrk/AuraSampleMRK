@@ -1,0 +1,87 @@
+.THIS .headerCSS{
+   /* background-color: #493266;
+      padding: 12px;*/
+}
+.THIS .colPayHeader1 {
+   color: white;
+   background-color: #493266;
+}
+.THIS .gridClass {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.THIS .headerCSS .slds-text-heading_medium.slds-hyphenate {
+    color: black;
+}
+.THIS .slds-modal__container {
+    margin: 0 auto;
+    max-width: 100% !important;
+    width: 97%!important;
+}
+.THIS .form_config .slds-accordion__summary {
+   /* margin-bottom: 0;
+    background-color: #666;*/
+   /*  width: calc(100% - 110px); /*  width: calc(100% - 108px);*/
+    /*border-radius: 10px 0px 0 0;
+    margin-left: 0;
+    padding: 5px;
+    width: 100%;*/
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: #493266;
+    color: #fff;
+    font-weight: 600;
+}
+.THIS .form_config .slds-accordion__summary .slds-button {
+    color:#fff;
+}
+.THIS .instruction_head {
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+  text-align: center;
+}
+.THIS .inp-border .slds-input {
+    border: 1px solid lightgray;
+    box-shadow: none;
+    width:5rem;
+}
+.THIS .my-select{
+        width:75%;
+    }
+ .THIS .my-select .slds-select_container {
+        border:  none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+.THIS table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-left: 5%;
+}
+.THIS .td .slds-form-element{
+    display: flex;
+    justify-content: center;  
+}
+.THIS .tdrInp{
+    padding-bottom:1rem;  
+}
+.THIS th{
+    border: 1px solid lightgray;
+    text-align: center; 
+    vertical-align: middle; 
+}
+.THIS td {
+    border: 1px solid lightgray;
+    text-align: center; 
+    vertical-align: middle;
+}
+
+.THIS th {
+    background-color: #f2f2f2;
+}
+.THIS .headingCSS {
+    font-size:15px;
+}

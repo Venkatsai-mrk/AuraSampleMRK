@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    
+   
+    
+    <aura:attribute name="rxAdmin" type="Boolean" />
+   
+    
+    <lightning:card> 
+        <div class="parentCSS explicitClass">
+            <div class="parentCSS_Header slds-is-fixed">
+                <ul>
+                    <li><button class="parentCSS_1" aura:id="rxadmin"  onclick="{!c.handleRxAdminScreen}">Prescription Admin</button></li>
+                    
+                </ul>
+            </div>
+            <div class="parent_content">
+              
+                <aura:if isTrue="{!v.rxAdmin}">
+                      <iframe width="100%" height="100%" id="rxAdmin" src="/apex/ElixirSuite__NC_RxAdminPage" />     
+                </aura:if>
+            </div>
+           
+           
+            </div>
+      
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,8 @@
+<!--
+DEVELOPER NAME : TANVEER AHMED
+PURPOSE : TO CREATE PDF OF FORMS
+-->
+
+<apex:page controller="ElixirHC_FormsPDFGeneratorHelper" renderAs="pdf">
+    
+</apex:page>

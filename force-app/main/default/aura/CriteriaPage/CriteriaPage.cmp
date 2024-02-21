@@ -1,0 +1,210 @@
+<aura:component controller="CriteriaPageController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="criteriaList1" type="Criteria_Assignment__c[]"/>
+    <!-- aura attributes--> 
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="criteriaRecordId" type="String" />
+    <aura:attribute name="parentList" type="list" default="[]" description=""/>
+    <aura:attribute name="childList" type="list" default="[]"/>
+    <aura:attribute name="pickListMap" type="map"/>
+    <aura:attribute name="disabledChildField" type="boolean" default="true"/>
+    <aura:attribute name="disabledParent" type="boolean" default="false"/>
+    
+    <aura:attribute name="objectName" type="string" default="ElixirSuite__Criteria_Assignment__c"/>
+    <aura:attribute name="parentFieldAPI" type="string" default="ElixirSuite__Criteria_Type__c"/>
+    <aura:attribute name="childFieldAPI" type="string" default="ElixirSuite__Operator__c"/>
+    <aura:attribute name="parentFieldLabel" type="string" />
+    <aura:attribute name="childFieldLabel" type="string"/>
+    <aura:attribute name="parentValue" type="string" default=""/>
+    <aura:attribute name="childValue" type="string" default=""/>
+    
+    <aura:attribute name="parentValue1" type="string" default=""/>
+    <aura:attribute name="childValue1" type="string" default=""/>
+    
+    <aura:attribute name="selectedLOCLookUpRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedLocationLookUpRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedAccountLookUpRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedCareTeamLookUpRecords" type="sObject[]" default="[]"/>
+    
+    <aura:attribute name="criteriaTypeMap" type="Map" default="{AdmitDate:'ElixirSuite__Admit_Date__c',Age:'ElixirSuite__Age__c',LOC: 'ElixirSuite__Programs__c',CareTeamMember: 'User',
+                                                               CurrentPatientName: 'Account',Location: 'ElixirSuite__Provider__c',
+                                                               }"/>
+    <aura:attribute name="selectedLookupTypeCriteriaValue" type="String"/>
+    <aura:attribute name="selectedOperator" type="String"/>
+    <aura:attribute name="ageField" type="string" />
+    <aura:attribute name="admitDateField" type="string"/>   
+    <aura:attribute name="admitEndDateField" type="string"/> 
+    <aura:attribute name="emptyValue" type="string"  default=" "/>
+    <aura:attribute name="newValueList" type="List" default="[]" />
+    <aura:attribute name="ageValue" type="integer" />
+    
+    <aura:attribute name="admitDateValue" type="Date"/>   
+    <aura:attribute name="admitEndDateValue" type="Date"/> 
+    
+    <aura:attribute name="flag" type="boolean"/>
+    <aura:attribute name="EmptyCriteria" type="boolean"/>
+    
+    <!--aura:handler name="change" value="{!v.flag}" action="{!c.itemsChange}"/-->
+  <aura:attribute name="isOperatorOpen" type="boolean" default="true"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="refreshflag" type="boolean" default="false"/>
+    <aura:attribute name="title" type="String"/>
+   
+    <aura:attribute name="selectedCriteriaType" type="String" />
+    
+    <aura:attribute name="selectedAgeCriteria" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAdmitDateCriteria" type="Boolean" default="false"/>
+    <aura:attribute name="SelectedRecords" type="sObject[]" default="[]" description="Use,for store SELECTED sObject Records"/>
+    
+    <aura:attribute name="filterValue" type="String" />
+    
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordsEvent" action="{!c.handleComponentEvent}"/>
+    
+    <aura:handler name="selectedRecordRemovalEvent" event="c:selectedObjectRecordsRemovalEvent" action="{!c.handleOnClearComponentEvent}"/>
+    
+    <aura:handler event="c:oneditPrepopulateCriteriaRecordEvent" action="{!c.handleonEditComponentEvent}"/>
+    
+     <aura:handler name="change" value="{!v.parentValue}" action="{!c.changeHandler}"/>
+    
+    <!--Register the component level event>
+    <aura:registerEvent name="datatableRefreshEvent" type="c:CriteriaDatatableRefeshEvent"/-->
+     
+    
+    <!--Register the Application level event -->
+    <aura:registerEvent name="filterEvent" type="c:CriteriaFilterEvent"/>
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container edit_container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.title}</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-gutters"> 
+                        <div class="slds-col slds-size_4-of-12">
+                            <lightning:layoutItem>    
+                                <lightning:select name="parentField" aura:id="parentField"
+                                                  value="{!v.parentValue}"
+                                                  label="{!v.parentFieldLabel}"
+                                                  disabled="{!v.disabledParent}"
+                                                  onchange="{!c.parentFieldChange}">
+                                    <aura:iteration items="{!v.parentList}" var="value">
+                                        <option value="{!value}" selected = "{!value == v.parentValue}">{!value}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </lightning:layoutItem>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                             <!--Dependent Field-->
+                            <aura:if isTrue="{!v.isOperatorOpen}">
+                                <lightning:layoutItem >
+                                    <lightning:select name="childField" aura:id="childField"
+                                                      value="{!v.childValue}"
+                                                      label="{!v.childFieldLabel}"
+                                                      disabled="{!v.disabledChildField}"
+                                                      onchange="{!c.childFieldChange}">
+                                       
+                                        <aura:iteration items="{!v.childList}" var="value">
+                                            <option value="{!value}" selected = "{!value == v.childValue}">{!value}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem>
+                            </aura:if>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            
+                            <aura:renderIf isTrue="{!v.selectedCriteriaType == 'Age'}">
+                        <lightning:layoutItem >
+                            <lightning:input type="number" aura:id="AgeField" value="{!v.ageValue}" name="inputAge" label="Enter Age" onchange="{!c.ageInputHandler}"/>
+                        </lightning:layoutItem>
+                                
+                    </aura:renderIf>  
+                    
+                    
+                    <aura:renderIf isTrue="{!v.selectedCriteriaType == 'Admit Date'}">
+                        <lightning:layoutItem class="slds-m-right_xx-large">
+                            <lightning:input type="date" aura:id="admitField" value="{!v.admitDateValue}" name="inputAdmitDate" label="Enter Admit Start Date" onchange="{!c.dateFieldHandler}"/>
+                        </lightning:layoutItem>
+                        
+                        <lightning:layoutItem class="slds-m-right_xx-large slds-m-top_large">
+                            <lightning:input type="date" aura:id="admitEndField" value="{!v.admitEndDateValue}" name="inputAdmitDate" label="Enter Admit End Date" onchange="{!c.endDateFieldHandler}"/>
+                        </lightning:layoutItem>
+                        
+                    </aura:renderIf>
+                    
+                    <aura:renderIf isTrue="{!v.selectedCriteriaType == 'LOC'}">
+                        <lightning:layoutItem >
+                            <c:reUsableMultiSelectLookup objectAPIName="{!v.selectedLookupTypeCriteriaValue}"
+                                                         IconName="standard:account"
+                                                         lstSelectedRecords="{!v.selectedLOCLookUpRecords}"
+                                                         label="Select Field Value"/>
+                        </lightning:layoutItem>
+                        
+                    </aura:renderIf>
+                    <aura:renderIf isTrue="{!v.selectedCriteriaType == 'Location'}">
+                        <lightning:layoutItem >
+                            <c:reUsableMultiSelectLookup objectAPIName="{!v.selectedLookupTypeCriteriaValue}"
+                                                         IconName="standard:account"
+                                                         lstSelectedRecords="{!v.selectedLocationLookUpRecords}"
+                                                         label="Select Field Value"/>
+                        </lightning:layoutItem>
+                        
+                    </aura:renderIf>
+                    <aura:renderIf isTrue="{!v.selectedCriteriaType == 'Current Patient Name'}">
+                        <lightning:layoutItem >
+                            <c:reUsableMultiSelectLookup objectAPIName="{!v.selectedLookupTypeCriteriaValue}"
+                                                         IconName="standard:account"
+                                                         lstSelectedRecords="{!v.selectedAccountLookUpRecords}"
+                                                         label="Select Field Value"/>
+                        </lightning:layoutItem>
+                        
+                    </aura:renderIf>
+                    <aura:renderIf isTrue="{!v.selectedCriteriaType == 'Care Team Member'}">
+                        <lightning:layoutItem >
+                            <c:reUsableMultiSelectLookup objectAPIName="{!v.selectedLookupTypeCriteriaValue}"
+                                                         IconName="standard:account"
+                                                         lstSelectedRecords="{!v.selectedCareTeamLookUpRecords}"
+                                                         label="Select Field Value"/>
+                        </lightning:layoutItem>
+                        
+                    </aura:renderIf>
+                        </div>
+                    </div>
+                    
+                    
+                   
+                    
+                        
+                    
+                    
+                    
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    
+                    
+                    <lightning:button variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand"
+                                      label="Save Criteria"
+                                      title="Save Criteria"
+                                      onclick="{! c.handleSave}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+   
+</aura:component>

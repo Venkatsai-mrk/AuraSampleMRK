@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LabOrder_HL7_Results_ID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>LabOrder HL7 Results_ID</label>
+    <referenceTo>HL7__c</referenceTo>
+    <relationshipLabel>Info_Related_To_Hl7Results</relationshipLabel>
+    <relationshipName>Info_Related_To_Hl7Results</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,406 @@
+<apex:page renderAs="pdf" Controller="SuperBill_PdfGenerator" >
+    
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+        <title>Content Marketing</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;1,100&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" />
+        <style type="text/css">
+            body {
+            margin: 0;
+            padding: 0;
+            background: #f1f2f3;
+            font-family: 'Montserrat', sans-serif;
+            }
+            @media(max-width: 550px) {
+            .main-table {
+            width: 100% !important;
+            }
+            }  
+        </style>
+    </head>
+    <body>
+        <table align="center" class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: 'Montserrat', sans-serif; width: 700px; margin: 0px auto; background-color: #fff;border:1px solid #000;">
+            <thead>
+                <tr>
+                    <td style="">
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin:0px 0 0;">
+                            <tbody>
+                                <tr>
+                                    <th style="width:140px;"><img src="{!imagePdf}" width="140px"  style="object-fit: cover;"/></th>
+                                    <th style="font-family: 'Lato', sans-serif; text-align: center; font-size: 28px; letter-spacing: 2px; font-weight: 900; vertical-align:middle;">Superbill</th>
+                                    <th style="width:140px;"></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 15px;"></td></tr>
+                <tr>
+                    <td style="">
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin:0px 0 0;">
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align: top; border: 1px solid #000;border-right: 0px solid;">
+                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 175px; ">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="font-size: 12px; text-align: left; height: 20px; border-bottom: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Provider Information</span>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Billing Provider</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 23px; font-weight: 500; border-bottom: 1px solid #ccc;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Care_Episode_Location__r.Name}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Billing Address</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500; border-bottom: 1px solid #ccc; border-right: 1px solid #000;">
+                                                        <span style="display: block; margin-left: 5px;">{!care.ElixirSuite__Care_Episode_Location__r.Address__c}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Billing Provider NPI</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Care_Episode_Location__r.Provider_Code__c}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Billing Provider Tax ID</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;border-right: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Care_Episode_Location__r.Provider_Tax_Id__c}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!--tr>
+<td style="vertical-align: top; ">
+<table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; ">
+<tbody>
+<tr>
+<td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;">
+<span style="margin-left: 5px;">Provider's Name</span>
+</td>
+<td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;">
+<span style="margin-left: 5px;">Provider NPI Number</span>
+</td>
+<td style="font-size: 8px; color: #666; font-weight: 500;">
+<span style="margin-left: 5px;">Provider email</span>
+</td>
+</tr>
+<tr>
+<td style="font-size: 12px; color: #666; background-color: #f2f4ff; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+<span style="margin-left: 5px;">Dr Beth Harker</span>
+</td>
+<td style="font-size: 12px; color: #666; background-color: #f2f4ff; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+<span style="margin-left: 5px;">123-456-7890</span>
+</td>
+<td style="font-size: 12px; color: #666; background-color: #f2f4ff; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+<span style="margin-left: 5px;">bharker@example.co</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr-->
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="border-bottom: 5px; border: 1px solid #000;border-left: 0px solid;">
+                                        
+                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 175px; ">
+                                            <tbody>
+                                                
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;border-top: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Rendering Provider</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 23px; font-weight: 500; border-bottom: 1px solid #ccc;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Rendering_Provider__r.Name}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;">
+                                                        <span style="margin-left: 5px;">Rendering Address</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+                                                        <span style="display: block; margin-left: 5px;">{!renderingProviderAddress}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;">
+                                                        <span style="margin-left: 5px;">Rendering Provider NPI</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Rendering_Provider__r.ElixirSuite__Practitioner_NPI__c}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;">
+                                                        <span style="margin-left: 5px;">Rendering Provider Tax ID</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+                                                        <span style="margin-left: 5px;">{!care.ElixirSuite__Rendering_Provider__r.ElixirSuite__Tax_Id__c}</span>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                        
+                                    </td>
+                                    <td style="vertical-align: top;border: 1px solid #000;">
+                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; border-right: 1px solid #000;">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="font-size: 12px; text-align: left; height: 20px; border-bottom: 1px solid #000;">
+                                                        <span style="margin-left: 5px;">Patient Information</span>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align: top; ">
+                                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; ">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Patient First Name(s)</span>
+                                                                    </td>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Patient Last Name</span>
+                                                                    </td>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Date of Birth</span>
+                                                                    </td>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Patient Phone</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!acc.ElixirSuite__First_Name__c}</span>
+                                                                    </td>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!acc.ElixirSuite__Last_Name__c}</span>
+                                                                    </td>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!accDob}</span>
+                                                                    </td>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!acc.Phone}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px;">
+                                                        <span style="margin-left: 5px;">Patient Address</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500; border-bottom: 1px solid #ccc;">
+                                                        <span style="display: block; margin-left: 5px;">{!patientAddress}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="height: 20px; border-top: 1px solid #000; border-bottom: 1px solid #000; font-size: 12px; text-align: left;">
+                                                        <span style="margin-left: 5px;">Patient's Insurance Information</span>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align: top; ">
+                                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; ">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Primary Insurance</span>
+                                                                    </td>
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px; width: 150px;">
+                                                                        <span style="margin-left: 5px;">Policy Number</span>
+                                                                    </td>
+                                                                    <!--td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;">
+<span style="margin-left: 5px;">Insurance Plan</span>
+</td>
+<td style="font-size: 8px; color: #666; font-weight: 500;">
+<span style="margin-left: 5px;">Contact Number</span>
+</td-->
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!vobRec.ElixirSuite__Payer__r.Name}</span>
+                                                                    </td>
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc; width: 150px;">
+                                                                        <span style="margin-left: 5px;">{!vobRec.ElixirSuite__Member_Id__c}</span>
+                                                                    </td>
+                                                                    <!--td style="font-size: 12px; color: #666; background-color: #f2f4ff; height: 22px; font-weight: 500;border-bottom: 1px solid #ccc;">
+<span style="margin-left: 5px;">555-5555</span>
+</td-->
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align: top; ">
+                                                        <table align="center" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; ">
+                                                            <tbody>
+                                                                <tr>
+                                                                    
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;border-right: 1px solid #ccc;height : 14px;">
+                                                                        <span style="margin-left: 5px;">Secondary Insurance</span>
+                                                                    </td>
+                                                                    
+                                                                    <td style="font-size: 8px; color: #666; font-weight: 500;height : 14px; width: 150px;">
+                                                                        <span style="margin-left: 5px;">Policy Number</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500;border-right: 1px solid #ccc;">
+                                                                        <span style="margin-left: 5px;">{!secondaryVobRec.ElixirSuite__Payer__r.Name}</span>
+                                                                    </td>
+                                                                    
+                                                                    <td style="font-size: 10px; color: #666; height: 22px; font-weight: 500; width: 150px;">
+                                                                        <span style="margin-left: 5px;">{!secondaryVobRec.ElixirSuite__Member_Id__c}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="font-size: 12px; text-align: center; height: 20px; border: 1px solid #000;">
+                        <span style="margin-left: 5px;">Procedure Information</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #000;">
+                        <table align="center" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 701px; margin:0px 0 0;">
+                            <thead>
+                                <tr>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Date of Procedure</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">CPT Code</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">CPT Description</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Units</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">M1</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">M2</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">M3</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">M4</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Dx</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Fees</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Amount Paid</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Amount Due</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!wrpLst}" var="procWrp">
+                                    <tr>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.dateOfProcedure}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.cptCode}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.cptDescription}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.units}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.m1}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.m2}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.m3}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.m4}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!procWrp.diagnosisPointer}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">${!procWrp.charges}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">${!procWrp.amountPaid}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">${!procWrp.amountDue}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="font-size: 12px; text-align: center; height: 20px; border: 1px solid #000;">
+                        <span style="margin-left: 5px;">Diagnosis</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #000;">
+                        <table align="center" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 701px; margin:0px 0 0;">
+                            <thead>
+                                <tr>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center; width: 40px;">Dx</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center;">Diagnosis</th>
+                                    <th style="height: 20px; verticle-align: bottom; font-size: 10px; text-align: center; width: 90px;">ICD-10 Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!diagWrpLst}" var="diagWrp">
+                                    <tr>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;width: 40px;">{!diagWrp.diagnosisPointer}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666;">{!diagWrp.diagnosisName}</td>
+                                        <td style="height: 18px; font-size: 10px; text-align: center; color: #666; width: 90px;">{!diagWrp.icdCode}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table align="right" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 350px; margin:2px 0 0; border-right: 1px solid #000; border-bottom:1px solid #000;">
+                            <thead>
+                                <tr>
+                                    <td style="color: #666; height: 18px; font-size: 10px; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                        <span style="color: #000; margin-left: 5px; font-weight:600;">Total Charges:</span>${!totalCharges}
+                                    </td>
+                                    <td style="color: #666; height: 18px; font-size: 10px; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                        <span style="color: #000; margin-left: 5px; font-weight: 600;">Total Paid:</span>${!totalPaid}
+                                    </td>
+                                    <td style="color: #666; height: 18px; font-size: 10px; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                        <span style="color: #000; margin-left: 5px; font-weight: 600;">Total Due:</span>${!totalDue}
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</apex:page>

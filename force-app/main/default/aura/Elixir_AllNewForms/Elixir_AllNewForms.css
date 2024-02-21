@@ -1,0 +1,61 @@
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.THIS .slds-modal__header{
+    background-color: rgb(243, 242, 242);
+}
+.THIS .widthForAll .slds-radio [type=radio]+.slds-radio__label .slds-radio_faux {
+    border: 1px solid #000;   
+}
+.THIS .colPayHeader {
+   color: white;
+   background-color: #493266;
+    padding: 7px 15px;
+}
+.THIS .colPayHeader1 {
+   color: white;
+   background-color: #493266;
+}
+.THIS .widthForAll label.slds-radio__label {
+    margin: 10px 0;
+    display: block;
+}
+.THIS .slds-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0%;
+    padding : 0 2%;   
+}
+/*.THIS .AllFormsCls .slds-modal {}*/
+.THIS .AllFormsCls {
+    height:auto;
+    padding-bottom: 45px;
+}
+.THIS .headerCSS{
+    font-size: x-large;
+}
+.THIS .tableCSS{
+    width:75%;
+}
+.THIS .radios .slds-form-element__label{
+    margin-left:10px;
+}
+.THIS td.tableCSS {
+    background-color: rgb(243, 243, 243);
+}
+.THIS.all_notes-box {
+    min-height: 100%;
+} 
+.THIS .all-notes_footer {
+    width: 100%;
+    left: 0;
+    background-color: #f3f3f3;
+    bottom: 0;
+    padding: 10px 15px
+}
+@media (max-width: 767px) {
+    .THIS .hideDiv  {
+        max-width: 90% !important;
+        width: 90% !important;
+    }   
+}

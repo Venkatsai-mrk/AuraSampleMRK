@@ -1,0 +1,21 @@
+<aura:component>
+    
+    <!--Declare Event Handlers-->
+    
+    
+    <!--Declare Attributes-->
+    <aura:attribute name="GenreList" type="List" default="[]" description="Genre Picklist Values"/>
+    <aura:attribute name="selectedGenreList" type="List" default="[]" description="Selected Genre Picklist Values"/>
+    <aura:attribute name="enableAbility" type="Boolean"/> 
+        <div class="slds-m-around_xx-large">
+            <lightning:dualListbox aura:id="selectGenre"
+                                   name="Genre"
+                                   disabled="{!v.enableAbility}"
+                                   sourceLabel="Available Fields"
+                                   selectedLabel="Selected Fields"
+                                   options="{!v.GenreList }"
+                                   value="{!v.selectedGenreList}"
+                                   onchange="{!c.handleGenreChange}"/>
+            
+        </div>
+    </aura:component>

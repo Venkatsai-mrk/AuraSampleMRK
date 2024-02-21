@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Need_JCAHO_CARF_PHP_IOP_OP__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Do we need to have JCAHO or CARF accreditation for PHP, IOP and OP?</inlineHelpText>
+    <label>Need JCAHO/CARF for PHP, IOP, OP?</label>
+    <length>250</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,54 @@
+<aura:component controller="inlineEditCareEpisodeController">
+
+<aura:attribute name="promptUserForInput" type="boolean" default="false"/>
+    
+<aura:attribute name="medicationData" type="Object"/>
+<aura:attribute name="medicationsLoaded" type="boolean"/>
+
+<aura:attribute name="editingThisMedicationName" type="String"/>
+<aura:attribute name="editingThisMedicationId" type="String"/>
+<aura:attribute name="currentCareEpisode" type="String"/>
+<aura:attribute name="currentAccountId" type="String"/>
+<aura:attribute name="formUniqueId" type="String"/>
+<aura:attribute name="procedureId" type="String"/>
+<aura:attribute name="previousCare" type="String"/>
+<aura:attribute name="procTableVal" type="String"/>
+<aura:attribute name="selectedCare" type="List"/>
+
+
+<aura:handler event="c:LookUpEvent" action="{!c.selectedRecord}"/>
+
+<aura:registerEvent name="FormsRefreshEvt" type="c:FormsRefreshEvt"/>
+
+<aura:method name="open" action="{!c.open}" description="Update Care Episode"/>
+
+
+<div class="main">
+    <aura:if isTrue="{!v.promptUserForInput}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Care Episode</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h3>Select Care Episode</h3>
+                    <!-- Care Episode Lookup -->
+                    <c:lookupComponent
+	                    objectName="ElixirSuite__Visits__c"
+	                    fieldName="Name"
+                        accountId ="{!v.currentAccountId}"
+                        value="{!v.previousCare}"
+	                    filterClause = "ElixirSuite__Status__c!=null"/>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button variant="brand" label="Cancel" onclick="{! c.cancel }" />
+                    <lightning:button variant="brand" label="Done" onclick="{! c.done }" />
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</div>
+
+</aura:component>	

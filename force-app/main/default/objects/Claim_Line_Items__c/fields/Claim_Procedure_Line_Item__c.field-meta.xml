@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Claim_Procedure_Line_Item__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Reference to the parent claim line item.</description>
+    <externalId>false</externalId>
+    <label>Parent Claim Procedure Line Item</label>
+    <referenceTo>Claim_Line_Items__c</referenceTo>
+    <relationshipLabel>Claim Procedure Line Items</relationshipLabel>
+    <relationshipName>Claim_Procedure_Line_Items</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

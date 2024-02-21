@@ -1,0 +1,66 @@
+<aura:component controller="AppointmentsForPortal" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">
+    <aura:attribute name="showDetails" type="Boolean" default="false" />
+    <aura:attribute name="appointment" type="Object" />
+    <aura:attribute name="isEnablePayNow" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:navigation aura:id="navigationService" />
+    <aura:attribute name="pageReference" type="Object" />
+    <aura:attribute name="appointmentId" type="string"/>
+    <aura:attribute name="cancelAppointment" type="Boolean" default="false" />
+    <div class="slds-col slds-size_12-of-12 slds-p-around_medium slds-text-align_center">
+        <h1 class="slds-text-title_bold">Appointment Details</h1>
+    </div>
+
+    <div class="slds-grid slds-wrap">
+        
+        <div class="slds-col slds-size_6-of-12 slds-p-around_medium">
+            <lightning:button label="Back to List View" variant="base" class="slds-button" onclick="{!c.handleBackToListView}" />
+        </div>
+
+        <div class="slds-col slds-size_6-of-12 slds-p-around_medium">
+            <lightning:button class="slds-button slds-m-left_large"  label="Cancel Appointment" variant="brand" onclick="{!c.handleCancel}" />
+            <aura:if isTrue="{!v.isEnablePayNow}">
+                
+                <lightning:button class="slds-button"  label="Pay Now" variant="brand" onclick="{!c.handlePayNow}" />
+            </aura:if>
+        </div>
+
+        <div class="slds-col slds-size_6-of-12 slds-p-around_medium">
+            <p class="slds-text-title_bold">Subject</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.subject}</p>
+            <p class="slds-text-title_bold slds-truncate">Practitioner</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.practitionerName}</p>
+            <p class="slds-text-title_bold slds-truncate">Start Date and Time</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.startDateTime}</p>
+            <p class="slds-text-title_bold">Virtual Meeting Link</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.virtualMeetingLink}</p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 slds-p-around_medium">
+            <p class="slds-text-title_bold">Appointment Type</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.appointmentType}</p>
+            <p class="slds-text-title_bold">Practitioner's Specialty</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.practitionerSpecialty}</p>
+            <p class="slds-text-title_bold">End Date and Time</p>
+            <p class="slds-m-bottom_medium">{!v.appointment.endDateTime}</p>
+        </div>
+    </div>
+    
+     <aura:if isTrue="{!v.cancelAppointment}">
+         <div role="dialog" class="slds-modal slds-fade-in-open ">
+             <div class="slds-modal__container">
+                 <header class="slds-modal__header">
+                     <h1 class="slds-text-heading--medium">Confirmation</h1>
+                 </header>
+                 <div class="slds-modal__content slds-p-around--medium">
+                     <center>Are you sure you want to cancel this appointment?</center>
+                 </div>
+                 <footer class="slds-modal__footer">
+                     <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                     <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                 </footer>
+                 
+             </div>
+         </div>
+         <div class="slds-backdrop slds-backdrop--open"></div>            
+     </aura:if>
+</aura:component>

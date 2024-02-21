@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_Ethnicity</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISPICKVAL( Reason_to_Decline_Ethnicity__c ,&quot;OTH&quot;)) ,NOT(ISBLANK( Reason_Ethnicity__c ) ))</errorConditionFormula>
+    <errorDisplayField>Reason_Ethnicity__c</errorDisplayField>
+    <errorMessage>Please provide a reason only when &apos;Something else, please describe&apos; is selected as the Reason to decline.</errorMessage>
+</ValidationRule>

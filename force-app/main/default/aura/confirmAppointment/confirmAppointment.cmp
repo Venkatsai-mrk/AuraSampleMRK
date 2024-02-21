@@ -1,0 +1,383 @@
+<aura:component controller="confirmAppointment" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name = "headingTitle" type="String" default="Review Appointment"/>
+    
+<aura:attribute name="allDisclaimersJson" type="Object" default=""/>
+    <aura:attribute name="noDisclaimer" type="Boolean"/>
+        
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="showAvalibility" type="Boolean" default="false"/>
+    <aura:attribute name="startDateVal" type="Date"/>
+    <aura:attribute name="startTime" type="Time"/>
+    <aura:attribute name="endDateVal" type="Date"/>
+    <aura:attribute name="endTime" type="Time"/>
+    <aura:attribute name="appointmentType" type="String" default=""/>
+    <aura:attribute name="appointmentTypeLabel" type="String" default=""/>
+    <aura:attribute name="practionerName" type="String"/>
+    <aura:attribute name="locationName" type="String"/>
+    <aura:attribute name="practionerId" type="String"/>
+    <aura:attribute name="locationId" type="String"/>
+    <aura:attribute name="locationLst" type="List"/>
+    <aura:attribute name="accLst" type="List"/>
+    <aura:attribute name="conLst" type="List"/>
+    <aura:attribute name="subject" type="string"/>
+    <aura:attribute name="specialityName" type="String" default=""/>
+    <aura:attribute name="byPassPatientBooking" type="Boolean" default="false"/>
+    <aura:attribute name="confirmPatientBooking" type="Boolean" default="false"/>
+    <aura:attribute name="providerId" type="String"/>
+    <aura:attribute name="patientBookingAlert" type="String" default=""/>
+    <aura:attribute name="patientBookingAlert2" type="String" default=""/>
+    <aura:attribute name="addComments" type="String" default=""/>
+    <aura:attribute name="patientName" type="string"/>
+    <aura:attribute name="meetingName" type="string"/>
+    <aura:attribute name="schedule" type="Boolean" default="false"/>
+     <aura:attribute name="isChecked" type="Boolean" default="false" />
+     <aura:attribute name="additionalAttendees" type="string"  />
+    <aura:attribute name="virtualMeetingLink" type="string"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:attribute name="activeSections" type="List" default="['Practitioner Information','Appointment Information','Patient Information','Meeting Information']" />
+    <aura:attribute name="activeSectionsDisclaimers" type="List" default="['Disclaimers']" />
+     <aura:attribute name="enableScheduleZoomMeeting" type="Boolean" default="false"/>
+    <aura:attribute name="StartDateTime" type="DateTime" />
+    <aura:attribute name="EndDateTime" type="DateTime" />
+    <aura:attribute name="selectedSlot" type="Object" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="portalAccountId" type="string"/>
+    <lightning:navigation aura:id="navigationService" />
+    <aura:attribute name="route" type="String" default=""/>
+    <aura:attribute name="selectedRoomRecord" type="Object" default="" description="selected Room Record Details" />
+    <aura:if isTrue="{!v.showAvalibility}">
+        <c:showAvailabilityAppointment  pracName="{!v.practionerName}" 
+                                       locName="{!v.locationName}" 
+                                       pracId="{!v.practionerId}" 
+                                       locId="{!v.locationId}" 
+                                       startDate="{!v.startDateVal}" 
+                                       accId="{!v.recordId}"
+                                       aptTypevalue = "{!v.appointmentType}"
+                                       specName = "{!v.specialityName}"
+                                       route ="{!v.route}"/>
+        <aura:set attribute="else">
+            <div class="parentCSS slds-is-relative">
+                
+                <div class="childCSS">
+                    <div class = "border">
+                        <span>
+                            <!-- heading --> 
+                            <h5 class="headingCSSClass headerClass"><b>{!v.headingTitle}</b></h5> 
+                        </span>
+                        
+                        <aura:if isTrue="{!v.noDisclaimer}">
+                            
+                            <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="{!v.activeSections}">
+                            <!--lightning:accordionSection class="heading" name="Practitioner Information" label="Practitioner Information">
+                                
+                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Name</label>  <br></br> <ui:outputText value="{!v.practionerName}"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Specality</label>  <br></br>  <ui:outputText value="{!v.specialityName}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </lightning:accordionSection-->
+                            
+                            
+                            <lightning:accordionSection class="heading" name="Appointment Information" label="Appointment Information">
+                                
+                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Practitioner</label>  <br></br> <ui:outputText value="{!v.practionerName}"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Practitioner’s Specialty</label>  <br></br>  <ui:outputText value="{!v.specialityName}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                
+                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Start Date/Time</label>  <br></br> <ui:outputText value="{!v.selectedSlot.startDateTime}"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem  class = "gridChildClass" size="6">
+                                        <label class = "textClass">End Date/Time</label>  <br></br> <ui:outputText value="{!v.selectedSlot.endDateTime}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Location </label>  <br></br>
+                                        <aura:iteration items="{!v.locationLst}" var="location">
+                                            
+                                            <ui:outputText value="{!location.Name}"/> <br></br> <br></br>
+                                            <label class = "textClass">Address </label>  <br></br>
+                                            <aura:if isTrue="{!not(empty(location.ElixirSuite__Address__c))}">
+                                                <ui:outputText value="{!location.ElixirSuite__Address__c}"/><br></br> 
+                                                <aura:if isTrue="{!not(empty(location.ElixirSuite__Provider_City__c))}">
+                                                    <ui:outputText value="{!location.ElixirSuite__Provider_City__c}"/> ,
+                                                </aura:if> 
+                                                <aura:if isTrue="{!not(empty(location.ElixirSuite__Provider_State__c))}">
+                                                    <ui:outputText value="{!location.ElixirSuite__Provider_State__c}"/> -
+                                                </aura:if> 
+                                                <ui:outputText value="{!location.ElixirSuite__Provider_Zip__c}"/>
+                                            </aura:if> 
+                                        </aura:iteration>
+<br></br> <br></br>
+                                        <aura:if isTrue = "{!empty(v.portalAccountId)}">
+                                        <lightning:layoutItem size="6">
+                                         <label class = "textClass">Rooms</label>  <br></br> 
+                                        <c:lookupComponent
+                                                           objectName="ElixirSuite__Location__c"
+                                                           fieldName="Name"
+                                                           value = ""
+                                                           disabled="{!v.AllFlag}"
+                                                           filterClause="{! 'RecordType.DeveloperName=\'Business_Room\' AND ElixirSuite__Provider__c=\'' + v.providerId + '\'' }"
+                                                           selectedRecord = "{!v.selectedRoomRecord}"
+                                                           />
+                                        </lightning:layoutItem>
+                                            </aura:if>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Appointment Type</label><br></br><ui:outputText value="{!v.appointmentTypeLabel}"/> <br></br> <br></br>
+                                        <label class = "textClass">Subject </label>
+                                        <br></br>
+                                        <ui:outputText value="{!v.subject}"/>
+
+                                            
+                                            
+                                        </lightning:layoutItem>
+                                    </lightning:layout> 
+                                    <div>
+                                        <label class = "textClass">Additional Comments</label>  <br></br> 
+                                        
+                                        <lightning:textarea variant="label-hidden" 
+                                                            value="{!v.addComments}" 
+                                                            maxlength="5000"/>  
+                                        </div> 
+                                <aura:if isTrue = "{!empty(v.portalAccountId)}">
+                                    
+                                        <lightning:layout>
+                                            <lightning:layoutItem class = "gridChildClass" size="6">
+                                                <label class = "textClass">Schedule {!v.meetingName}  Meeting</label>  <br></br> <ui:inputCheckbox value="{!v.isChecked}" change="{!c.handleCheckboxChange}"/>
+                                            </lightning:layoutItem>
+                                            
+                                        </lightning:layout>
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue = "{!v.enableScheduleZoomMeeting}">
+                                        <lightning:layout>
+                                            <lightning:layoutItem class = "gridChildClass" size="6">
+                                                <label class = "textClass">Schedule {!v.meetingName}  Meeting</label>  <br></br> <ui:inputCheckbox value="{!v.isChecked}" change="{!c.handleCheckboxChange}"/>
+                                            </lightning:layoutItem>
+                                            
+                                        </lightning:layout>
+                                        </aura:if>
+                                    </aura:set>
+                                    
+                                    
+                                </aura:if>
+                                
+                                 
+                                <aura:if isTrue = "{!v.schedule}">
+                                   <aura:if isTrue = "{!empty(v.portalAccountId)}"> 
+                                     <lightning:layout>
+                                          
+                                        <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Additional Attendees</label>  <br></br> <ui:inputTextArea value="{!v.additionalAttendees}"/>
+                                        </lightning:layoutItem>
+                                       
+                                    </lightning:layout>
+                                </aura:if>
+                                </aura:if>
+                                                            </lightning:accordionSection>
+                                                        <lightning:accordionSection class="heading" name="Patient Information" label="Patient Information">
+                                <aura:iteration items="{!v.accLst}" var="acc">
+                                    <lightning:layout>
+                                                                                <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Name</label>  <br></br> <ui:outputText value="{!acc.Name}"/>
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Phone</label>  <br></br> <ui:outputText value="{!acc.Phone}"/>
+                                        </lightning:layoutItem>
+                                    </lightning:layout>
+                                    <lightning:layout>
+                                        <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Email</label>  <br></br> <ui:outputText value="{!acc.ElixirSuite__Email_Id__c}"/>
+                                        </lightning:layoutItem>
+                                        
+                                    </lightning:layout>
+                                </aura:iteration>
+                            </lightning:accordionSection>
+                                                    </lightning:accordion>
+                                                        <aura:set attribute="else">
+                                                            <div class="slds-grid slds-gutters">  
+                            <div class="slds-col slds-size_6-of-12">   
+                                                            <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="{!v.activeSections}">
+                                                        <lightning:accordionSection class="heading" name="Appointment Information" label="Appointment Information">
+                                                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Practitioner</label>  <br></br> <ui:outputText value="{!v.practionerName}"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Practitioner’s Specialty</label>  <br></br>  <ui:outputText value="{!v.specialityName}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Start Date/Time</label>  <br></br> <ui:outputText value="{!v.selectedSlot.startDateTime}"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem  class = "gridChildClass" size="6">
+                                        <label class = "textClass">End Date/Time</label>  <br></br> <ui:outputText value="{!v.selectedSlot.endDateTime}"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                        <label class = "textClass">Location </label>  <br></br>
+                                        <aura:iteration items="{!v.locationLst}" var="location">
+                                            
+                                            <ui:outputText value="{!location.Name}"/> <br></br> <br></br>
+                                            <label class = "textClass">Address </label>  <br></br>
+                                            <aura:if isTrue="{!not(empty(location.ElixirSuite__Address__c))}">
+                                                <ui:outputText value="{!location.ElixirSuite__Address__c}"/><br></br> 
+                                                <aura:if isTrue="{!not(empty(location.ElixirSuite__Provider_City__c))}">
+                                                    <ui:outputText value="{!location.ElixirSuite__Provider_City__c}"/> ,
+                                                </aura:if> 
+                                                <aura:if isTrue="{!not(empty(location.ElixirSuite__Provider_State__c))}">
+                                                    <ui:outputText value="{!location.ElixirSuite__Provider_State__c}"/> -
+                                                </aura:if> 
+                                                <ui:outputText value="{!location.ElixirSuite__Provider_Zip__c}"/>
+                                            </aura:if> 
+                                        </aura:iteration>
+<br></br> <br></br>
+<label class = "textClass">Subject </label>
+                                                        <br></br>
+                                                        <ui:outputText value="{!v.subject}"/><br></br><br/>
+                                        <aura:if isTrue = "{!empty(v.portalAccountId)}">
+                                        <label class = "textClass">Schedule {!v.meetingName}  Meeting</label>  <br></br> <ui:inputCheckbox value="{!v.isChecked}" change="{!c.handleCheckboxChange}"/>
+                                                            <aura:set attribute="else">
+                                                                <aura:if isTrue = "{!v.enableScheduleZoomMeeting}">
+                                                                    <label class = "textClass">Schedule {!v.meetingName}  Meeting</label>  <br></br> <ui:inputCheckbox value="{!v.isChecked}" change="{!c.handleCheckboxChange}"/>
+                                                                </aura:if>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        <aura:if isTrue = "{!v.schedule}">
+                                                            <aura:if isTrue = "{!empty(v.portalAccountId)}">
+                                                                <label class = "textClass">Additional Attendees</label>  <br></br> <ui:inputTextArea value="{!v.additionalAttendees}"/>
+                                                            </aura:if>
+                                                        </aura:if>
+                                                    </lightning:layoutItem>
+                                                    <lightning:layoutItem class = "gridChildClass" size="6">
+                                                        <label class = "textClass">Appointment Type</label><br></br><ui:outputText value="{!v.appointmentTypeLabel}"/> <br></br><br/>
+                                                        <label class = "textClass">Additional Comments</label>  <br></br> 
+                                                        <lightning:textarea variant="label-hidden" 
+                                                                            value="{!v.addComments}" 
+                                                                            maxlength="5000"/>   <br></br> 
+                                                        <aura:if isTrue = "{!empty(v.portalAccountId)}">
+                                                            <lightning:layoutItem size="10">
+                                         <label class = "textClass">Rooms</label>  <br></br> 
+                                        <c:lookupComponent
+                                                           objectName="ElixirSuite__Location__c"
+                                                           fieldName="Name"
+                                                           value = ""
+                                                           disabled="{!v.AllFlag}"
+                                                           filterClause="{! 'RecordType.DeveloperName=\'Business_Room\' AND ElixirSuite__Provider__c=\'' + v.providerId + '\'' }"
+                                                           selectedRecord = "{!v.selectedRoomRecord}"
+                                                           />
+                                        </lightning:layoutItem>
+                                            </aura:if>
+                                    </lightning:layoutItem>
+                                                                        </lightning:layout>
+                                                                </lightning:accordionSection>
+                                                        <lightning:accordionSection class="heading" name="Patient Information" label="Patient Information">
+                                <aura:iteration items="{!v.accLst}" var="acc">
+                                    <lightning:layout>
+                                                                                <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Name</label>  <br></br> <ui:outputText value="{!acc.Name}"/>
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Phone</label>  <br></br> <ui:outputText value="{!acc.Phone}"/>
+                                        </lightning:layoutItem>
+                                    </lightning:layout>
+                                    <lightning:layout>
+                                        <lightning:layoutItem class = "gridChildClass" size="6">
+                                            <label class = "textClass">Email</label>  <br></br> <ui:outputText value="{!acc.ElixirSuite__Email_Id__c}"/>
+                                        </lightning:layoutItem>
+                                        
+                                    </lightning:layout>
+                                </aura:iteration>
+                            </lightning:accordionSection>
+                                                    </lightning:accordion>
+                                                            </div>  
+                                                        <div class="slds-col slds-size_6-of-12">   
+                                                            <div class="rightSideCont">
+                                                                    <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="{!v.activeSectionsDisclaimers}">
+                                                                            <lightning:accordionSection class="heading" name="Disclaimers" label="Disclaimers">
+                                
+                                            <aura:iteration items="{!v.allDisclaimersJson}" var="gen" indexVar="index">
+                                            <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildClass" size="12">
+                                        <lightning:formattedRichText value="{!gen.description}" />
+                                    </lightning:layoutItem>
+                                                </lightning:layout>
+                                            <lightning:layout>
+                                    <lightning:layoutItem class = "gridChildDiscClass" size="12">
+                                        
+                                            <aura:if isTrue="{!gen.noneType}">
+                                            
+                                                <aura:set attribute="else">
+                                                
+                                            <aura:if isTrue="{!gen.checkBoxType}">
+                                        <div class="slds-grid slds-gutters">
+                                            <lightning:input type="checkbox" name="{!gen.disclaimerId}" variant = "label-hidden" class="checkBoxClass" onchange="{!c.onValueChanged1}"/>
+                                        <label class = "textClass1">{!$Label.c.AppointmentDisclaimerAgreement}</label>
+                                                                                                </div>
+
+                                                        <aura:set attribute="else">
+                                                        
+                                                            <label class = "textClass">Please provide your input</label>  <br></br> 
+                                                            
+                                                            <lightning:textarea variant="label-hidden" 
+                                                                                value="{!gen.inputBox}" 
+                                                                                maxlength="5000"/>  
+                                                            
+                                                        </aura:set>
+                                                        
+                                                    </aura:if>
+                                                    
+                                                </aura:set>
+                                           
+                                            </aura:if>
+                                        
+                                                                            </lightning:layoutItem>
+                                </lightning:layout>
+                                            </aura:iteration>
+                            </lightning:accordionSection>
+                                                                                                                            </lightning:accordion>
+                                                                    </div>
+                            </div></div>
+                                                            </aura:set>
+                        </aura:if>
+                                                <div class ="button1">
+                            <lightning:button  label="Pick a new slot"  onclick="{!c.handlePrev}"/>
+                            <lightning:button label="Schedule" onclick="{!c.handleNext}" />
+                                                    </div>
+                                            </div>
+                                    </div>
+            </div>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.byPassPatientBooking}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container"><!-- Modal/Popup Box Header Starts here-->
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium borderRad" id="modal-content-id-1" >
+                    <h1 class ="buttonGrp"><b>{!v.patientName} {!v.patientBookingAlert} <br/>{!v.patientBookingAlert2}</b></h1>
+                </div><!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <div class ="buttonGrp">
+                        <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{!c.closePopUp}"/>
+                        <lightning:button variant="brand" label="Confirm" title="save" onclick="{!c.handleNext}"/>
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+    
+</aura:component>

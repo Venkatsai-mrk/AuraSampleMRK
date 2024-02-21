@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>In_Maintenance__c</fullName>
+    <description>Flags whether the lot line item is currently in maintenance.</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>In Maintenance</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

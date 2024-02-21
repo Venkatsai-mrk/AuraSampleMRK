@@ -1,0 +1,201 @@
+.THIS .customParentModal {
+    border: none;
+    box-shadow: none;
+}
+.THIS .customParentModal .slds-form-element__control.slds-grow.slds-input-has-icon.slds-input-has-icon_left-right {
+    box-shadow: 0px 0px 9px 1px #cdcbcb;
+}
+.THIS .customParentModal input#input-399 {
+    height:45px;
+}
+.THIS .customParentModal .slds-table {
+    border-spacing: 2px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.THIS .customParentModal .slds-table thead th {
+    background-color: #4472c4;
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size:14px;
+}
+.THIS .customParentModal .slds-table thead th a {
+    color: #fff;
+}
+.THIS .customParentModal .slds-table tbody tr:nth-child(odd) td{
+    background-color: #cfd5ea;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.THIS .customParentModal .slds-table tbody tr:nth-child(even) td{
+    background-color: #e9ebf5;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.THIS .customParentModal .slds-button_neutral{
+    background-color: #2f5597;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px #999;
+    font-size: 16px;
+    padding: 7px 20px;    
+}
+.THIS .AddNewProblem {
+    width: 50% !important;
+}
+.THIS .slds-modal__content.AddNewProblemBody {
+    min-height: 300px;
+    height: 300px;
+}
+.THIS .buttonRound .slds-button {
+      box-shadow: 3px 3px 5px #999;
+}
+.THIS div#modal-content-id-1 {
+    padding-left: 60px;
+}
+.THIS .reportTableCustom thead th {
+    background-color : #9dc3e6 !important;
+    color : #000 !important;
+    padding-top : 10px !important;
+    padding-bottom : 10px !important;
+}
+
+.THIS .reportTableCustom tbody tr:nth-child(odd) td{
+    background-color: #bccde9 !important;
+}
+.THIS .reportTableCustom tbody tr:nth-child(even) td{
+    background-color: #dae3f3 !important;
+}
+.THIS .reportTableCustom tbody tr td:first-child{
+    position:relative;
+    z-index:0;
+}
+.THIS .reportTableCustom tbody tr td:first-child .slds-button{
+   /* position: absolute;*/
+    z-index: 1;
+    left: -20px;
+    top: 7px;    
+}
+.THIS .reportTableCustom tbody tr td:first-child .slds-button:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .reportTableCustom tbody tr td:first-child .slds-button .slds-button__icon {
+    width: 18px;
+    height: 18px;
+}
+.THIS .reportTableCustom tbody tr:last-child td{
+    border : none; 
+    border-spacing : 0px;
+    background-color : #fff !important;
+    border: 1px solid #ccc;
+    }
+.THIS .reportTableCustom tbody tr:last-child td:first-child{
+    border:none;
+}
+.THIS .reportTableCustom:hover {
+     box-shadow:none !important;
+}
+.THIS .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus){
+    box-shadow:none !important;
+}
+.THIS .footerArea  {
+    color: #000;
+    padding: 0px 15px 10px;
+    font-size: 14px;
+    box-shadow: 0px 0px 5px 0px #4472c4;
+    border: 1px solid #4472c4;
+}
+.THIS .footerArea h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4472c4;
+    margin-bottom: 6px;
+    width: calc(100% + 30px);
+   /* margin-left: -15px;*/
+    padding: 7px 15px; 
+    background-color: #ccc;
+}
+.THIS .ql-editor.slds-rich-text-area__content.slds-text-color_weak.slds-grow{
+    min-height: 40px;
+    padding-bottom: 0;
+    padding-top: 10px;
+}
+.THIS .slds-rich-text-editor__toolbar.slds-shrink-none{
+    display:none;
+}
+.THIS .fixedHeight input {
+    height : 40px;
+}
+.THIS .widthForAll {
+    width: 90%;
+    margin-left: 5%;
+}
+.THIS .widthForAll button.slds-button.slds-section__title-action {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: #888;
+    color: #fff;
+    font-weight: 600;
+}
+.THIS .widthForAll button.slds-button.slds-section__title-action .slds-icon {
+    fill: #fff;
+}
+.THIS .widthForAll .slds-input {
+  /*  background-color: #fff9ff;*/
+}
+.THIS .attach-to-bottom{
+   /* position: absolute;*/
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+}
+.THIS .patient_heading {
+    box-shadow: 0px 0px 5px 0px #999;
+    padding: 0 15px;   
+    background-color: #f1f2f3;
+}
+.THIS .patient_heading h3.slds-section__title {
+    background-color: #4472c4;
+    color: #fff;
+    width: calc(100% + 30px);
+  /*  margin-left: -15px;*/
+    padding: 4px 15px;
+    border-radius: 0;
+}
+.THIS .patient_heading .ql-editor.ql-blank.slds-rich-text-area__content.slds-text-color_weak.slds-grow {
+    background-color: var(--lwc-colorBackgroundInputDisabled,rgb(236, 235, 234));
+}
+.THIS span.slds-form-element__label {
+    color: #fff;
+}
+/*changes*/
+.THIS .slds-modal__container{ 
+    max-width: 100% !important;
+     width:97% !important;
+    }
+
+.THIS .changeNew{
+    height:auto;
+}
+
+.THIS .changeBcakColor{
+    background-color: rgba(0,0,0,0.5);
+}
+.THIS .changeFontSize{
+    font-size: x-large;
+}
+.THIS .changePaddis{
+    padding:0px 40px 20px 40px;display:block;
+}
+.THIS .changeWid{
+    width:100%;
+}
+.THIS .changeMargeTop{
+    margin-top: 10px;
+}
+.THIS .changeTextAlign{
+    text-align: center;
+}

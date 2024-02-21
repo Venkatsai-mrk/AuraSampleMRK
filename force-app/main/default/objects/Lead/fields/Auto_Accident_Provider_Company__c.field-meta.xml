@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Accident_Provider_Company__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Auto Accident Provider Company</label>
+    <referenceTo>Payor__c</referenceTo>
+    <relationshipLabel>Leads (Auto Accident Provider Company)</relationshipLabel>
+    <relationshipName>Leads3</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

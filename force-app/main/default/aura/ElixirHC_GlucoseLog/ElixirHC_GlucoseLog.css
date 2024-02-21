@@ -1,0 +1,25 @@
+.THIS {}
+.THIS.glucose_table .slds-form-element .slds-form-element__label {
+    display: none !important;
+}
+.THIS.glucose_table .slds-form-element .slds-form-element__control.slds-grow {
+    padding-left: 0 !important;
+}
+.THIS .slds-modal__container{ max-width: 100% !important; width:90% !important; }
+/*Changes By pratiksha*/
+.THIS .slds-truncate {
+    background-color:#493266; 
+    color:#fff;
+    padding:5px;
+    
+}
+.THIS .pl5{
+    padding-left: 0px !important;
+}
+.THIS .pr5{
+    padding-right: 0px !important;
+}
+.THIS .bg-white{
+    background-color: #fff !important;
+}
+/*End*/

@@ -1,0 +1,88 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller = "UpcomingAppointmentController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="eventList" type="List" />    
+    <aura:attribute name="listShow" type="Boolean" default="false"/>
+    
+    
+    <!--section 1 start-->  
+    <div class="slds-section slds-is-open" aura:id="fruitsSection">
+        <!--section header-->
+        <h3 class="slds-section__title">
+            <button  aria-controls="fruitsList" class="slds-button slds-section__title-action changeOn12">
+                <span onclick="{!c.toggleSection}" data-auraId="fruitsSection">
+                    <lightning:icon iconName="utility:switch"
+                                    size="x-small"
+                                    class="slds-section__title-action-icon slds-button__icon_left"
+                                    alternativeText="button icon" 
+                                    />
+                </span>
+                   <span class="slds-truncate" title="Fruits">Upcoming Appointments</span>
+            </button>
+        </h3>
+        <!--section body-->
+        <div class="slds-section__content" id="fruitsList">
+            <ul class="slds-has-dividers_bottom-space">
+                
+                <aura:if isTrue="{!v.listShow}">
+                    <aura:iteration items="{!v.eventList}" var="eventRec">
+                        <li class="slds-item changeOn29" >
+
+                            <lightning:tile  label="Dr. Adam Boylan" href="">
+                                <aura:set attribute="media">
+                                    <lightning:avatar src="/docs/component-library/app/images/examples/avatar1.jpg" fallbackIconName="standard:event" alternativeText="Lexee L. Jackson" size="large"/>
+                                </aura:set>
+                                <lightning:layout multipleRows="true">
+                                    <lightning:layoutItem size="6">
+                                        <div class="changeOn37">
+                                            {!eventRec.Location}
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="6">
+                                        
+                                        <div class="changeOn43">
+                                            <div>
+                                                <span class="changeOn54">Date : &nbsp;</span> 
+                                                <span class="changeOn55">
+                                                    <lightning:formattedDateTime value="{!eventRec.StartDateTime}"/>
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            <div class="changeOn53">
+                                                <span class="changeOn54">Time : &nbsp;</span>
+                                                <span class="changeOn55">
+                                                    <lightning:formattedDateTime value="{!eventRec.StartDateTime}" 
+                                                                                 hour="2-digit" 
+                                                                                 minute="2-digit" 
+                                                                                 timeZone="UTC"
+                                                                                 timeZoneName="short"/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="12">
+                                        <div>
+                                            
+                                            <div class="changeOn71">
+                                                <span class="changeOn72">Purpose : &nbsp;</span> 
+                                                <span class="changeOn73">
+                                                    {!eventRec.Subject}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>      
+                            </lightning:tile>
+                        </li>
+                    </aura:iteration>
+                </aura:if>       
+            </ul>
+        </div>
+    </div>
+  
+</aura:component>

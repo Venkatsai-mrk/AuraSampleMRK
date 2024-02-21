@@ -1,0 +1,106 @@
+<aura:component controller="PatientDetailLedger_for_ehr" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="paymentSched" type="Boolean"/>
+    <aura:attribute name="patStatement" type="Boolean"/>
+    <aura:attribute name="COCalculator" type="Boolean"/> 
+    <aura:attribute name="firstCall" type="Boolean"/>
+    <aura:attribute name="secondCall" type="Boolean"/>
+    <aura:attribute name="claimView" type="Boolean"/>
+    <aura:attribute name="vobInfo" type="List"/>  
+    <aura:attribute name="vobResultInfo" type="Object"/>
+    <aura:attribute name="patientData" type="Object"/>
+    <aura:attribute name="totalInsuranceResp" type="Decimal" default="0.0"/>
+    <aura:attribute name="payPosting" type="Boolean"/>
+    <aura:attribute name="isResult" type="Boolean" />
+    <aura:attribute name="srcId" type="String"/>
+    
+    <aura:attribute name="optVal" type="String" default="Claims"/>
+    <aura:attribute name="payHistory" type="Boolean"/>
+    <aura:attribute name="cocEstimates" type="Boolean"/>
+    <aura:attribute name="paySchedule" type="Boolean"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{! c.init }"/>
+    <aura:handler name="IntegCmpEvent" event="c:VobIntegrationEvent" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!or(v.Billing,v.ContactCentr)}">
+        <aura:if isTrue="{!v.firstCall}">
+            <lightning:card>
+                <div class="slds-p-left_medium slds-p-right_medium">
+                    <div class="slds-gutters slds-grid ">
+                        <div class="slds-col slds-size_4-of-12 changeWid" >
+                            <aura:if isTrue="{!v.secondCall}">
+                                <aura:if isTrue="{!not(empty(v.vobInfo))}">
+                                    <aura:iteration items="{!v.vobInfo}" var="vobRec">
+                                        <div class="demo-only slds-grid patient-ac">
+                                            <div class=" slds-grid slds-grid_vertical slds-nowrap">
+                                                <div class=" slds-size_12-of-12 o_financ changeMargin">
+                                                    <div class=" slds-grid slds-gutters slds-p-bottom_small">
+                                                        <div class="slds-col slds-size_10-of-12 "><h3 class="change43" >Insurance Details</h3></div>
+                                                        <div class="slds-col slds-size_2-of-12 ">
+                                                            <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.init}"/> 
+                                                        </div>
+                                                    </div>
+                                                    <div class=" slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_7-of-12  slds-p-right_none">
+                                                            <p>Payer Name&nbsp; : <b><span class="change50">{!vobRec.ElixirSuite__Payer__r.Name}</span></b></p>
+                                                            <p >Member Id&nbsp; : <b><span class="change51">{!vobRec.ElixirSuite__Member_Id__c}</span></b></p>
+                                                            
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_5-of-12 slds-p-left_none changepadding1">
+                                                            <div class="changetextalign">
+                                                                <aura:if isTrue="{!vobRec.ElixirSuite__VOB_Verification_Status__c != 'Approved'}">
+                                                                    <button class="changeboxshadow" 
+                                                                            onclick="{! c.VfpageCall }" 
+                                                                            name="{!vobRec.Id}"
+                                                                            id="{!vobRec.Id}"
+                                                                            >
+                                                                        Verify
+                                                                    </button>
+                                                                </aura:if>
+                                                                <div class="changefontstyle"> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+                                                    <div class=" slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_12-of-12">
+                                                            <p class="grpId2">Group Id &nbsp;: <b><span class="changecolorpadding">{!vobRec.ElixirSuite__Insured_Policy_Group_FECA_Number__c}</span></b></p>
+                                                            <p class="grpId">Status &nbsp;:
+                                                                <aura:if isTrue="{!vobRec.ElixirSuite__VOB_Verification_Status__c == 'Approved'}">
+                                                                    <b class="back-col-na"> Approved</b>
+                                                                    <aura:set attribute="else">
+                                                                        <b class="back-col">Not Approved</b> 
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <p class="newCls"> No ACTIVE VOB PRESENT</p>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                </div>
+            </lightning:card>
+        </aura:if>
+        <aura:if isTrue="{!v.isResult}">
+            
+            <c:VOBIntegration recordId="{!v.srcId}" ></c:VOBIntegration>
+        </aura:if>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,87 @@
+<!-- 
+Created By - Tanveer Ahmed
+Created Date - 16-May-2022
+Description - Forms list view for session notes
+Apex Class - EventNotesViewHelper
+-->
+<aura:component controller="EventNotesViewHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name ="patientID" type = "String"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name ="nameSpace" type = "String"/>
+    <aura:attribute name ="heading" type = "String" default="Lab Orders"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="sortedBy" type="String" default="Name"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" /> 
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/>
+       <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="editAbility" type="boolean" default="false"/>
+    <div class="slds-grid Class4">
+        <div class="slds-col slds-size_7-of-12 Class5">
+            <div class="Class6">
+                {! v.data.length }  items . Sorted by {!v.sortedBy} 
+                <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                    <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                </aura:if>
+            </div>
+        </div> 
+        
+        <div class="slds-col slds-size_5-of-12 slds-m-left_small slds-m-bottom_small Class7">
+            
+            
+            <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class="inline-buttons left-margin"/> 
+        </div>
+    </div> 
+    <div>         
+        <!--to display datatable-->
+        <div class="slds-grid">
+            <div aura:id="dataTable" class="slds-col">
+                
+                <lightning:datatable data="{! v.data }"  
+                                     class = "abc"
+                                     aura:id="myCol"
+                                     columns="{! v.mycolumns }" 
+                                     keyField="Id"
+                                     selectedRows="{!v.selectedRows}"
+                                     hideCheckboxColumn="true"
+                                     onsort="{!c.updateColumnSorting}"
+                                     sortedBy="{!v.sortedBy}"  
+                                     sortedDirection="{!v.sortedDirection}"
+                                     onrowaction="{! c.handleRowAction }"
+                                     onrowselection="{!c.selectedRows}"
+                                     resizeColumnDisabled="false" />
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!! v.loaded }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <aura:if isTrue="{!v.editScreen}">
+        <c:FormNoteMockup noteId = "{!v.RowId}" isOpen = "{!v.editScreen}" isDisabled = "{!v.editAbility}"
+                          patientID = "{!v.patientID}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showConfirmDialog}">
+        
+        <div role="dialog" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container myWidth">
+                
+                <header class="slds-modal__header">
+                    <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                </header>
+                
+                <div class="slds-modal__content slds-p-around--medium">
+                    <center><b>Are you sure you want to delete this item?</b></center>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                </footer>
+                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>            
+    </aura:if>
+</aura:component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remark_Codes__c</fullName>
+    <description>This field is used to have remark codes send by the claim MD.</description>
+    <externalId>false</externalId>
+    <label>Remark Codes</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

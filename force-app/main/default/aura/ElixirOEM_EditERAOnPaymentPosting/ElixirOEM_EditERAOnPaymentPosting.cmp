@@ -1,0 +1,231 @@
+<aura:component controller="ERAEOBEdit_Ctrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:handler name="eralineEvent" event="c:EditERALineEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="ClaimLineComponentEvent" event="c:MapClaimLineEvent" action="{!c.handleClaimLineMapEvent}"/>
+    <aura:attribute name="route" type="String" default=""/>  
+    <aura:attribute name="eraId" type="String" default=""/> 
+    <aura:attribute name="patientName" type="String" /> 
+    <aura:attribute name="InternalClaim" type="String" /> 
+    <aura:attribute name="erasObj" type="Object" />  
+    <aura:attribute name="payerClaim" type="String" />
+    <aura:attribute name="era" type="EOB__c" /> 
+    <aura:attribute name="eraLineList" type="ERA_Line_Item__c[]" />
+    <aura:attribute name="eraLineLst" type="list" />
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenERALine" type="Boolean" default="false"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="false"/> 
+    <aura:attribute name="childERAtableList" type="List"/>  
+    <aura:attribute name="BilledAmount" type="Integer"/>
+    <aura:attribute name="PaidAmt" type="Integer"/>
+    <aura:attribute name="InterestLateFilingCharge" type="Integer"/>
+    <aura:attribute name="AllowedAmt" type="Integer"/>
+    <aura:attribute name="AdjustmentAmt" type="Integer"/>
+    <aura:attribute name="ProviderAdjustment" type="Integer"/>
+    <aura:attribute name="netPaid" type="Integer"/>
+    <aura:attribute name="PaymentStatus" type="String"/>
+    <aura:attribute name="TotalAllowedAmount" type="Integer"/>
+    <aura:attribute name="TotalPaid" type="String"/>
+    <aura:attribute name="TotalAdjustmentAmt" type="Integer"/>
+    <aura:attribute name="MatchedAmt" type="Integer"/>
+    <aura:attribute name="UnmatchedAmt" type="Integer"/>
+    
+    <aura:attribute name="PatientResponsibility" type="Integer" />
+    <aura:attribute name="interestLateFilingCharges" type="String"/>
+    <aura:attribute name="TotalProviderAdjustmentAmt" type="Integer"/>
+    <aura:attribute name="OtherInsuranceResponsibility" type="Integer"/>
+    
+    <aura:attribute name="eraStatusCodeList" type="List"/>
+    <aura:attribute name="actionToBeTakenList" type="List"/>
+    <aura:attribute name="eraStatusCodeSelected" type="String"/>
+    <aura:attribute name="actionToBeTakenSelected" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+   
+    <!--button class="slds-button slds-button_brand" aria-label="OpenPopup" onclick="{!c.openPop}">Open</button-->
+    <aura:if isTrue="{!v.isOpen}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{!c.cancelWindow}">
+                    &#10005; <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header attach_claim-head">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.era.Name}</h1>
+                </div>
+                <div class="slds-modal__content" id="modal-content-id-1">
+                    <div class="slds-card">
+                        <div class="patient_name-claim">
+                            
+                            <div class="" id="referenceId-42">
+                                <div class="slds-p-around_medium">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Parent ERA#</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="text" value = "{!v.era.ElixirSuite__EOB__r.Name}"  disabled = "true" name="input2" 
+                                                             /> 
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Patient Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="text" value = "{!v.erasObj.patientName}"  disabled = "true" name="input3"  />
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Internal Claim#</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="text" value = "{!v.erasObj.ClaimNumber}"  disabled = "true" name="input2"  /> 
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Payer Claim#</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small"> 
+                                            <lightning:input type="text" value = "{!v.erasObj.payerClaimHash}"  disabled = "{!v.isDisabled}" name="input3"  />
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Billed Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            
+                                            <lightning:input type="number" value = "{!v.erasObj.totalBilledAmount}"  disabled = "true" name="input2" formatter="currency" step="0.01" min="0"/> 
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Allowed Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.erasObj.totalAllowedAmt}"  disabled = "true" name="input2" formatter="currency" step="0.01" min="0"/> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Paid Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.erasObj.paidAmt}"  disabled = "true" name="input3" formatter="currency" step="0.01" min="0"/>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Adjustment Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.TotalAdjustmentAmt}"  disabled = "true" name="input2"  formatter="currency" step="0.01" min="0"/> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Net Paid Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" required="true" value = "{!v.erasObj.netPaidAmount}" disabled = "{!v.isDisabled}" name="input2"  onchange="{!c.calculateInterestLateFilingCharge_onChange}" formatter="currency" step="0.01" min="0"/> 
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Interest/ Late Filling Charges</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.interestLateFilingCharges}"  disabled = "true" name="input3" formatter="currency" step="0.01" min="0"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Provider Adjustment Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.TotalProviderAdjustmentAmt}"  disabled = "true" name="input3" formatter="currency" step="0.01" min="0"/>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Patient Responsibility</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.PatientResponsibility}"  disabled = "true" name="input3" formatter="currency" step="0.01" min="0" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Total Other Insurance Responsibility</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.OtherInsuranceResponsibility}"  disabled = "true" name="input2" formatter="currency" step="0.01" min="0" /> 
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Matched Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.MatchedAmt}"  disabled = "true" name="input2" formatter="currency" step="0.01" min="0" /> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Unmatched Amt.</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                            <lightning:input type="number" value = "{!v.UnmatchedAmt}"  disabled = "true" name="input3" formatter="currency" step="0.01" min="0"  />
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12"></div>
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>Action To be Taken</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium actiontakenClass">
+                                            <!--lightning:combobox  value="{!v.erasObj.actionToBeTakenVal}" placeholder=""  disabled = "{!v.isDisabled}" options="{!v.actionToBeTakenList }"/-->
+                                           
+                                            <lightning:select name="{!index}" aura:id="{!index}" value="{!v.erasObj.actionToBeTakenVal}"
+                                                              disabled = "{!v.isDisabled}">
+                                                        <!--option text="None" value="None" / -->
+                                                        <aura:iteration items="{!v.actionToBeTakenList}" var="item">
+                                                            <option text="{!item.label}" value="{!item.value}" selected="{!item.value == v.erasObj.actionToBeTakenVal}"
+                                                                    />
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+                                            <label>ERA Status Code</label>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 slds-m-top_medium actiontakenClass">
+                                         
+                                            <lightning:select name="{!index}" label="" aura:id="{!index}" value="{!v.erasObj.eraStatusCode}"
+                                                              disabled = "{!v.isDisabled}">
+                                                        <!--option text="None" value="None" /-->
+                                                        <aura:iteration items="{!v.eraStatusCodeList}" var="item">
+                                                            <option text="{!item.label}" value="{!item.value}" selected="{!item.value == v.erasObj.eraStatusCode}"/>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+    
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            
+                            
+                        </div>
+                        <aura:if isTrue="{!! v.loaded }">
+                            <lightning:spinner alternativeText="Loading" />
+                        </aura:if>
+                    </div>            </div>
+                
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.cancelWindow}">Cancel</button>
+                    <button class="slds-button slds-button_brand" aria-label="Save" disabled = "{!v.isDisabled}" onclick="{!c.saveERA}">Done</button>
+                </div>
+            </div>
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

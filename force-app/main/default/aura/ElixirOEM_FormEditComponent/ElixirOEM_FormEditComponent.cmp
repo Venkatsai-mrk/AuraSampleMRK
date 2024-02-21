@@ -1,0 +1,113 @@
+<!-- 
+ Developer Name : Kishan Kumar
+    Purpose : To Open Form in View and Editable Mode in ModalBox.
+ Apex Class : Elixir_FormApexController , Test Class : Elixir_FormApexControllerTest
+ -->
+<aura:component controller="Elixir_FormApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "RefreshList" type="String"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>
+    <aura:attribute name= "PresId" type="String"/>
+     <aura:attribute name= "incomingRoute" type="String"/>
+    <aura:attribute name="problemDiagnosesData" type="Object"/> 
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="isOpen1" type="boolean" default="true"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/> 
+    <aura:attribute name="SaveButton" type="boolean" default="false"/>
+     <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="listDetails" type="Form__c[]"/>
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="offset" type="Integer"  default="20"/>
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="vForms" type="Boolean" default="false"/>
+    <aura:attribute name ="patientID" type = "Id"/>
+    <aura:attribute name="accName" type="object" />
+    <aura:attribute name="deletionAbility" type="Boolean" default="false"/>
+    <aura:attribute name ="recId" type = "Id"/>
+    <aura:attribute name="enableExportAsPdf" type="boolean" default="false"/>
+    <aura:attribute name ="FormId" type = "Id"/>
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="actionName" type="Object"/> 
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name = "result" type = "String"/>
+    <aura:attribute name ="emailAddress" type="String"/>
+    <aura:attribute name="sortedBy" type="String" default="Name"/>   <!--to sort columns-->
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="Title" type="String"/>
+    <aura:attribute name="allergyDataToSave" type="list[]"/> 
+    <aura:attribute name="timeMessage" type="String"/>
+    <aura:attribute name = "categorized" type="String"/>
+    <aura:attribute name = "subCategorized" type="String"/>
+    <aura:attribute name = "headingTitle" type="String"/>
+    <aura:attribute name = "SelectedRec" type="String"/>
+    <aura:attribute name="showDeleteButton" type="Boolean" default="false"/>
+    <aura:attribute name = "openMedicationModal" type="boolean" default="false"/>
+    <aura:registerEvent name="RefreshUAListView" type="c:RefreshUAListView" /> 
+    <aura:attribute name = "editScreenDisabled" type="boolean" default="false"/>
+    <aura:attribute name="showDetail" type="object" />
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedLabOrders" type="List" />
+    <aura:attribute name="showData" type="Form_Data__c" />
+    <aura:attribute name="parentSelectedValues" type="String"/>
+    <aura:attribute name="inputSelectedValues" type="String"/>
+    <aura:attribute name="inputTextAreaSelectedValues" type="String"/>
+    <aura:attribute name="inputDateselectedValues" type="String"/>
+    <aura:attribute name="ErrorMessage" type="Boolean" default="false"/>
+    <aura:attribute name="physicalTherapist" type="List"/>
+    <aura:attribute name="currentUser" type="object"/>
+    <aura:attribute name="allergyData" type="String"/> 
+    <aura:attribute name="medicationData" type="String"/> 
+    <aura:attribute name="inputDateTimeselectedValues" type="String" />
+    <aura:attribute name="multiPicklistValues" type="List"/>  
+    <aura:attribute name="formData" type="String"/>  
+    <aura:attribute name="signatureValue" type="String"/>
+    <aura:attribute name="vitalSignsData" type="Object" />
+    <aura:handler name="FormMedicationData" event="c:FormMedicationData" action="{!c.handleMedicationDataEventForSaving}"/> 
+    <aura:handler value="{!this}" name="init" action="{!c.init}"/>
+     <aura:attribute name="medicationJSON" type="String"/>
+    <aura:attribute name="runScroll" type="Boolean" default="true"/>
+    <aura:attribute name="dynamicOffset" type="Integer" default="0"/>
+    <aura:attribute name="openAssessmentForm" type="Boolean" default="false"/>
+    <aura:attribute name="OpenOneForm" type="Boolean" default="false"/>
+    <aura:attribute name="initButtons" type="Boolean" default="true"/>
+    <!-- for Signature and approval process-->   
+    <aura:attribute name="level1ApprovalValid" type="Boolean" default="false" />
+    <aura:attribute name="level2ApprovalValid" type="Boolean" default="false" />
+    <aura:attribute name="level3ApprovalValid" type="Boolean" default="false"/>
+    <aura:attribute name="sObjectName" type="String" default="Account"/>
+    <aura:attribute name="loggedInUserRole" type="String"/>
+    <aura:attribute name="verifyOtp" type="Boolean" default="false"/>
+    <aura:attribute name="showSign" type="Boolean" default="true"/>
+    <aura:attribute name="showSignLevel2" type="Boolean" default="true"/>
+    <aura:attribute name="showSignLevel3" type="Boolean"/>
+    <aura:attribute name="verifyCode" type="String"/>
+    <aura:attribute name="attachId" type="String"/>
+    <aura:attribute name="signComment1" type="String"/>
+    <aura:attribute name="dateTodayForForm1" type="String"/>
+    <aura:attribute name="newSign" type="Boolean"/>
+    <aura:attribute name="newSign2" type="Boolean"/>
+    <aura:attribute name="newSign3" type="Boolean"/>
+    <aura:attribute name="LevelOfApproval" type="String"/>
+    <aura:attribute name="signee1" type="String"/>
+    <aura:attribute name="signee2" type="String"/>
+    <aura:attribute name="signee3" type="String"/>
+    <aura:attribute name="signComment2" type="String"/>
+    <aura:attribute name="signComment3" type="String"/>
+     <aura:attribute name="AllDates" type="Object"/>
+    <aura:attribute name="dateTodayForForm2" type="String"/>
+    <aura:attribute name="dateTodayForForm3" type="String"/>
+    <aura:attribute name="attachId2" type="String"/>
+    <aura:attribute name="attachId3" type="String"/>
+    <aura:attribute name="ApprovalValue1" type="String"/>
+    <aura:attribute name="ApprovalValue2" type="String"/>
+    <aura:attribute name="ApprovalValue3" type="String"/> 
+    <aura:attribute name="userVerifyCode" type="String"/>
+    <aura:attribute name="userSignatureVerifyCode" type="String"/>
+    <aura:attribute name="AccountDetails" type="Account"/>
+    <aura:attribute name="glucoseData" type="Object" />
+    <aura:registerEvent name="RefreshViewEvent" type="c:RefreshViewEvent"/>
+    <aura:handler name="OTPMatchCmpEvent" event="c:EventOnOTPMatching" action="{!c.parentComponentEvent}"/>
+  
+   
+</aura:component>

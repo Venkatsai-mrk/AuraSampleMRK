@@ -1,0 +1,42 @@
+.THIS .slds-modal__container {
+    width: 80%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+.THIS .headerCSS {
+    background-color: #493266;
+    color: White;
+}
+.THIS .parentCSS {
+    background-color: #FDFDFF;
+}
+.THIS .slds-modal__footer {
+    background-color: #A9A9A9;
+}
+.THIS container.slds-template__container{
+    background-color: white;
+}
+.THIS .slds-modal__container {
+    width: 70%;
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.THIS .slds-col1 {
+    float: left;
+    margin: 0.5%;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    height: 300px;
+}
+
+.THIS.hideDiv {
+    display: none;
+}
+.THIS .changeBackColorpurp{
+    background-color: #493266;color: White;
+}
+.THIS .changeBackColorWhite{
+    background-color: #D3D3D3;
+}

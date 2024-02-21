@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Out_Network_OON__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if the insurance provider is out of the network.</description>
+    <externalId>false</externalId>
+    <label>Out Network(OON)</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

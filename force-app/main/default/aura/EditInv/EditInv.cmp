@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="invValue" type="List"/>
+    
+    <aura:attribute name="invRecords" type="List"/>
+    
+    <aura:attribute name="column" type="Object"/> 
+    
+    <aura:attribute name="InvTable" type="Boolean" default="false"/>
+    
+    <aura:attribute name="mode" type="String"/>
+    
+    <aura:attribute name="changesSave" type="Boolean" default="false"/>
+    
+    <aura:attribute name="addInv" type="Boolean" default="false" />
+
+    <aura:attribute name="defType" type="String"/>
+
+    <aura:attribute name="lotReq" type="Boolean" />
+
+    <aura:attribute name="addLst" type="List"/>
+
+    <aura:attribute name="Avail" type="Integer"/>
+    
+    <aura:attribute name="defEqId" type="String"/>
+    
+    <c:addInventory isShowModal="true" oneditchange="{!c.getValueFromLwc}" onclosechange="{!c.closeLwc}" column="{!v.column}" clmode="{!v.mode}" lotRequired="{!v.lotReq}"  />
+    
+</aura:component>

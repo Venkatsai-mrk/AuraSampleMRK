@@ -1,0 +1,140 @@
+<aura:component access="global" implements="force:appHostable,force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome"
+                controller="ElixirOEM_TimelineHelper"   >
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isJqueryLoaded" type="Boolean"/>
+    <aura:attribute name="isGridLinesEnabled" type="Boolean"/>
+    <aura:attribute name="fromDate" type="date"/> 
+    <aura:attribute name="toDate" type="date"/> 
+    <aura:attribute name="recordVal" type="String"/>  
+    <aura:attribute name="allObjects" type="Object"/> 
+    <aura:attribute name="uncheckedKeys" type="list"/> 
+    <aura:attribute name="legendRoot" type="list"/> 
+    <aura:attribute name="mapOfObjectNameAndData" type="Object"/> 
+    <aura:attribute name="dataTree" type="List"/> 
+    <aura:attribute name="allObjectsCopy" type="Object"/> 
+    <aura:attribute name="stockChartVariable" type="Object"/> 
+    <aura:attribute name="datapointsArray" type="List"/> 
+    <aura:attribute name="orgWideValidNamespace" type="String" /> 
+   <aura:attribute name="baseURL" type="String" />  
+   <!--Added by Ashwini-->
+   <aura:attribute name="greaterSign" type="String" default=">"/>
+   <aura:attribute name ="accName" type = "String"/>
+    <html>
+        <body>  
+            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+            
+            <ltng:require  scripts="{!join(',',
+                                    $Resource.jqueryTimeline,
+                                    $Resource.canvasJs )}"
+                          afterScriptsLoaded="{!c.doInit}" />  
+            <div class="masterParent">
+                <div class="parentHeader">
+                    <div class="slds-grid slds-gutters"> 
+                        <div class="slds-size_3-of-12 slds-col">
+                            <ol><li>
+                                <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a> {!v.greaterSign} <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                                                              </li>
+                                                              </ol>
+                                 <div class="slds-p-bottom_x-small"></div>
+                            <h4 class="parent_heading">Timeline</h4>
+                        
+                        </div>
+                        <div class="slds-size_6-of-12 slds-col dates">
+                            
+                            <div class="slds-grid">
+                                <div class="slds-size_1-of-12 slds-col slds-p-top_x-small slds-text-align_right">
+                                    <label> From</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-left_medium slds-p-right_medium">
+                                    <lightning:input type="Date" name="From"  value="{!v.fromDate}"/>
+                                    <aura:if isTrue="{!v.secondvalidation}">
+                                        <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.fourthvalidation}">
+                                        <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-size_1-of-12 slds-col slds-p-top_x-small slds-text-align_right">
+                                    <label> To</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-left_medium slds-p-right_medium">
+                                    <lightning:input type="Date" name="To" value="{!v.toDate}"/>
+                                    <aura:if isTrue="{!v.firstvalidation}">
+                                        <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.thirdvalidation}">
+                                        <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                                    </aura:if>
+                                </div>       
+                                
+                                <div class="slds-col slds-size_2-of-12 slds-p-left_medium slds-p-right_medium changeText" >
+                                    <lightning:button variant="brand" label="Apply" title="Apply" onclick="{!c.fetchData}" />
+                                </div>
+                                
+                            </div>   
+                        </div>
+                       
+                        <div class="slds-size_3-of-12 slds-col slds-p-left_none">
+                            
+                            <div class="parentSelectEvents slds-is-relative">
+                                <div  class="utlityCSS">
+                                    Select All events  
+                                    <lightning:icon iconName="utility:down" iconSize="x-small"/>
+                                </div>
+                                <div class="onHoverSection slds-is-absolute">
+                                    <aura:iteration items="{!v.allObjects}" var="item" indexVar="idx">
+                                        <div class="hover_sec">
+                                           
+                                            {!item.objectCategory} 
+                                        </div>
+                                        
+                                        <aura:iteration items="{!item.data}" var="subItem" indexVar="subidx">  
+                                            <lightning:input class="item-data" type="checkbox" checked="{!subItem.isObjectOnGraph}" 
+                                                             onchange="{!c.handleObjectCheckbox}"  
+                                                             value="{!subItem}" name="{!idx+'$'+subidx}" 
+                                                             label="{!subItem.Name}" />
+                                            <div class="colorBox" style="{!subItem.style}"/> <!--style="{!subItem.style}"-->
+                                        </aura:iteration>     
+                                        <hr/>
+                                    </aura:iteration>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>          
+                    <div>
+                        <div class="slds-grid slds-gutters slds-m-top_medium parentLegendHandle changeBCBM"> 
+                            <aura:iteration items="{!v.legendRoot}" var="item" indexVar="subidx">  
+                                <div class="slds-col">
+                                    <div class="colorBox" style="{!item.style}"/>
+                                    <div class="textCSS">{!item.objectName}</div>
+                                </div> 
+                            </aura:iteration>
+                        </div>
+                        <div class="slds-clearfix"/>
+                        
+                    </div>
+                </div>
+                <div>
+                    <!--div class="chartWrapper" style="height: 380px; width: 600px; overflow-x:auto;position:relative;">
+                    <div class="chartAreaWrapper"-->
+                    <div class="slds-grid slds-gutters forGridLines"> 
+                        <div class="slds-size_10-of-12 slds-col">
+                        </div>
+                        <div class="slds-size_2-of-12 slds-col subGridLines">
+                            <lightning:input type="checkbox" onchange="{!c.controlGridLinesVisibility}" label="Grid Lines"/>
+                        </div>
+                        
+                    </div>
+                    <div id="chartContainer" class="chartcontainer">
+                        
+                    </div>
+                </div>
+                <canvas id="overlayedAxis"></canvas>
+                <!--canvas id="overlayedAxis"></canvas>
+                </div>
+            </div-->
+            </div>
+        </body>
+    </html>
+    
+</aura:component>

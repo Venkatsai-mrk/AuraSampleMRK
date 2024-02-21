@@ -1,0 +1,52 @@
+.THIS.hideDiv {
+    display: none;
+}
+.THIS .digi-sign {
+    border: 1px soid #f6f6f6;
+    background-color: #f7f7f7;
+}
+
+.THIS .digi-sign1 p {
+ 	color: #777;
+    margin: 15px 0 0px;
+    line-height: 18px;   
+}
+.THIS .button .slds-button {
+    box-shadow: 0px 2px 4px #aaa;
+    transition: all 500ms;
+}
+.THIS .button .slds-button:first-child {
+   /* background-color: #1b5197;*/
+}
+.THIS .button .slds-button:nth-child(2) {
+    /*background-color: #1e80d7;
+    border: 1px solid #1e80d7;
+    margin-right : 9px;*/
+}
+.THIS .button .slds-button:hover {
+    background-color: #fff;
+    color: #1b5197;
+    transition: all 500ms;
+}
+.THIS .button .slds-button:nth-child(3):hover {
+    background-color: #1b5197;
+    border: 1px solid #1b5197;
+    color: #fff;
+}
+.THIS .canvasCSS {
+    text-align: center;
+}
+.THIS .firstSectionCSS {
+    margin-top:25px;
+}
+.THIS .clearCSS{
+    clear: both;
+}
+
+.THIS .validate .slds-button{
+    background-color: #493266;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    
+}

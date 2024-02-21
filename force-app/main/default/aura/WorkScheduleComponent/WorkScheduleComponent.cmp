@@ -1,0 +1,58 @@
+<aura:component controller ="WorkScheduleController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="jsonToSave" type="list[]"/>    
+    <aura:attribute name="iconName" type="String" default="standard:service_appointment" />
+    <aura:attribute name="recordList" type="Object" />
+    <aura:attribute name="lookupValue" type="String"/>
+    <aura:attribute name="selectedRecordId" type="String" />
+    
+    <aura:attribute name="showCalendar" type="Boolean"/>
+    <aura:attribute name="showCalendarOnClickOfCheckAvailability" type="Boolean"/>
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />-->
+    <lightning:card iconName="standard:service_appointment" title="Work Schedule Calendar">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-4">
+                <div class="slds-p-left_small" >
+                    <lightning:input
+                                     aura:id="searchPractitionerText"
+                                     name="searchPractitioner"
+                                     label="Select Counselor"
+                                     type="search"
+                                     value="{!v.lookupValue}"
+                                     onkeyup="{!c.handleKeyUp}"
+                                     />
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-4 changeNew" >
+                <lightning:button variant="success" label="Show Availability" onclick="{!c.showAvailability }"/>
+            </div>
+        </div>
+        <div class="slds-p-left_small">
+            <aura:iteration items="{!v.recordList}" var="item" indexVar="index">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-4 changeNew1" >
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <li role="presentation" class="slds-listbox__item">
+                                <div id="{!index}" 
+                                     class="slds-media slds-listbox__option slds-listbox__option_entity 
+                                            slds-listbox__option_has-meta" role="option" onclick="{!c.doSelect}">
+                                    <span class="slds-media__figure slds-listbox__option-icon">
+                                        <lightning:icon iconName="{!v.iconName}" alternativeText="Event"/>
+                                    </span>
+                                    <span class="slds-media__body">
+                                        <span class="slds-listbox__option-text_entity slds-listbox__option-text_entity">
+                                            {!item.Name}
+                                        </span>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+        
+    </lightning:card>
+    <aura:if isTrue="{!v.showCalendar}">
+        <c:fullCalendarByLwc calendarJson="{!v.jsonToSave}"></c:fullCalendarByLwc>
+    </aura:if>
+</aura:component>

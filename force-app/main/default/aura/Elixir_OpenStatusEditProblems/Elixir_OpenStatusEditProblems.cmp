@@ -1,0 +1,160 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name="showProblemButton" type="Boolean" default="false"/>
+    <aura:attribute name="removedProblemId" type="List"/>
+    <aura:attribute name="removedInterventionId" type="List"/>
+    <aura:attribute name= "contentDocumentId" type="List"/>
+    <aura:attribute name="listOfNotes" type="Object[]"/>
+    <aura:attribute name= "nameSpace" type="String"/>
+    <aura:attribute name= "problem" type="Object"/> 
+    <aura:attribute name="problemId" type="String" />
+    <aura:attribute name= "treatmentPlanId" type="String"/>
+    <aura:attribute name="problemIndex" type="Integer"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name="problemsList" type="Object"/>   
+    <aura:attribute name="allGoals" type="List"/>
+    <aura:attribute name= "problemFirstCallBack" type="Boolean"/> 
+    <aura:attribute name= "customGoalModal" type="Boolean" default="false"/>
+    <aura:attribute name= "addNotesForProblemModal" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name="msOptionsList" type="Object"/>
+    <aura:attribute name="editableBoxVal" type="Boolean"/>	
+    <aura:attribute name="options" type="List" />	
+    <aura:attribute name="listEvidence" type="List"/>	
+    <aura:attribute name="openAddDiagnosis" type="Boolean"/>
+    <aura:attribute name= "usersList" type="Object[]"/>
+    <aura:attribute name="openModalAddNotes" type="Boolean" default="false"/>
+    <aura:attribute name= "openNotes" type="Boolean"/>
+    <aura:attribute name= "carePlanId" type="String"/>
+    <!-- after attributes-->
+    <aura:attribute name= "customGoalModal1" type="Boolean" default="false"/>
+    <aura:attribute name="allGoals1" type="List"/>
+    <!--end-->
+    <aura:handler name="change" value="{!v.msOptionsList}" action="{!c.handleValueChange}"/>	
+    <aura:handler name="goalTest" event="c:goalEvent" action="{!c.setGoalValue}"/>
+    <!-- AURA METHOD-->
+    <aura:method name="sampleMethod" action="{!c.handledueDateUpdate}" access="public">  
+        <aura:attribute name="dueDate" type="String" default="parameter 1"/> 
+    </aura:method>
+    <!--END-->
+    <div class="care-plan_header"><h3>Problem</h3></div>
+    <div class="slds-show accordian_header problem_parent" aura:id="problemId" >
+        <lightning:button class="slds-show chevron_btn" aura:id="problemSection" iconName="utility:chevronright"   onclick="{!c.problemSection}"/>
+        <lightning:button class="slds-hide chevron_btn" aura:id="problemSection" iconName="utility:chevrondown"   onclick="{!c.problemSection}"/>
+        <div class="slds-page-header c-point">
+            <section class="slds-clearfix">
+                <div class="slds-float--left">                    
+                    <lightning:icon  iconName="utility:puzzle"/> 
+                </div>
+                <div class="slds-m-left--large">
+                    <h3>
+                        {!v.problem.Name}
+                        <div class="slds-float--right right-side_bar">
+                            <aura:if isTrue="{!v.problem.ElixirSuite__Plan_Hierarchy__r}">
+                                <div class="slds-float_left">
+                                    <lightning:button  onclick="{!c.AddNotes }" label="+Notes" class="btn_add-note" /> &nbsp;
+                                </div>
+                            </aura:if>
+                            <div class="slds-float_left slds-m-top_xx-small">
+                                <lightning:input type="Date" placeholder="Due Date" value="{!v.problem.ElixirSuite__Plan_Hierarchy__r[0].ElixirSuite__Due_Date__c}" onchange="{!c.dueDate}"/>
+                            </div> 
+                            <div class="slds-float_left slds-m-top_xx-small">
+                                <lightning:button label="Remove" iconName="utility:delete" class="btncss" title="Neutral action" onclick="{! c.removeSection }"/>
+                            </div>                     
+                        </div>
+                    </h3>
+                    <aura:if isTrue="{!v.editableBoxVal}">	
+                        <lightning:textarea value="{!v.problem.ElixirSuite__Description__c}" class="editStyle" onblur="{!c.outsideFocus}"/>	
+                        <aura:set attribute="else">	
+                            <ui:outputTextArea value="{!v.problem.ElixirSuite__Description__c}"></ui:outputTextArea>	
+                            <aura:if isTrue="{!(v.problem.ElixirSuite__Description__c == 'Undefined' || v.problem.ElixirSuite__Description__c == null ||  v.problem.ElixirSuite__Description__c == '')}">   	
+                                <aura:set attribute="else">	
+                                    <lightning:icon iconName="utility:edit" class="spaceEdit" alternativeText="Edit Description" title="edit" size="x-small" onclick="{!c.editableBox}" />	
+                                </aura:set>	
+                            </aura:if>	
+                        </aura:set>	
+                    </aura:if>
+                    <aura:if isTrue="{!v.openNotes}">
+                        <c:Elixir_AddNotesProblems openModalAddNotes = "{!v.openModalAddNotes}" patientId = "{!v.recordVal}" problem = "{!v.problem}" carePlan = "{!v.carePlanId}" contentDocumentId = "{!v.contentDocumentId}" listOfNotes = "{!v.listOfNotes}"/>
+                    </aura:if>
+                </div>
+            </section>
+            
+            
+        </div>
+        
+        <div class="slds-hide slds-p-around--medium accordian_open slds-p-top_none" aura:id="problemSection">
+            <!--aura:if isTrue="{!not(empty(v.listEvidence))}">              	
+           <div class="chnagespadding">	
+            <c:Elixir_OpenStatusMultiSelectDropdown mslabel="RELATED TO AND EVIDENCED BY" msoptions="{!v.listEvidence}" 	
+                                          msOptionList = "{!v.msOptionsList}"/>	
+            </div>	
+            </aura:if-->
+            
+            <div class="slds-float--right">
+                
+                <lightning:button label="{!v.customSetting.ElixirSuite__Third_Level__c}" iconName="utility:adduser" class="btncss" title="Neutral action" onclick="{! c.addGoals }"/>
+                <lightning:button label="{!v.customSetting.ElixirSuite__Fourth_Level__c}" iconName="utility:adduser" class="btncss" title="Neutral action" onclick="{! c.adddef }"/>
+               <!-- <aura:if isTrue="{!v.customSetting.ElixirSuite__Diagnosis__c}">
+                    <lightning:button label="Add Daignosis" iconName="utility:adduser" class="btncss" title="Neutral action" onclick="{!c.addDiagnosis}"/>
+                </aura:if>-->
+            </div> 
+         <!--   <aura:if isTrue="{!v.customSetting.ElixirSuite__Diagnosis__c}">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        <div class="slds-p-left_medium pillColor">
+                            <aura:iteration items="{! v.problem.listOfRelatedDiagnosis}" var="diagnosisRec" indexVar="diagnosisIdx">
+                                <aura:if isTrue = "{!not(diagnosisRec.Action == 'DELETE')}">
+                                    <span class = "arrangeDiagnosis"><lightning:pill name = "{!diagnosisIdx}" label="{!diagnosisRec.ElixirSuite__Diagnosis_Code_and_Name__c}" onremove="{! c.handleRemoveDiagnosis }"/>
+                                    </span>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+                    </div>
+                    
+                </div>
+            </aura:if>-->
+            
+            <!--GOALS-->
+            <aura:iteration items="{! v.goalsList.listOfGoal }" var="goalRec" indexVar="goalIdx">
+                <aura:if isTrue = "{!not(goalRec.Action == 'DELETE')}">
+                    <!--c:Elixir_OpenStatusEditGoals goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" goal="{!goalRec}"
+                                                  goalsList="{!v.goalsList}" nameSpace="{!v.nameSpace}"
+                                                  customSetting="{!v.customSetting}"/-->
+                    
+                    <c:Elixir_CarePlanGoalsEdit customSetting="{!v.customSetting}" goalId="{!goalRec.Id}" goalIdx="{!goalRec.Name}" goal="{!goalRec}" goalName="{!goalRec.Name}"
+                                            usersList = "{!v.usersList}" goalsList="{!v.goalsList}" 
+                                            dueDateGoal = "{!v.dueDateProb}" HierarchyLevel="{!v.HierarchyLevel}" 
+                                            showObjective="true" recordVal = "{!v.recordVal}" 
+                                            carePlanId = "{!v.carePlanId}" removedInterventionId="{!v.removedInterventionId}"/>
+                    <!--div class="first-inner-dl"></div-->
+                </aura:if>
+            </aura:iteration>
+            
+            <!--BEHAVE DEF-->
+            <aura:iteration items="{! v.goalsList.listOfDef }" var="taskRec" indexVar="taskIdx">
+                <aura:if isTrue = "{!not(taskRec.Action == 'DELETE')}">
+                    <!--c:Elixir_OpenStatusEditLevel3 goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" goal="{!goalRec}"
+                                                   goalsList="{!v.goalsList}" nameSpace="{!v.nameSpace}"
+                                                   customSetting="{!v.customSetting}"/-->
+                    <c:Elixir_CarePlanObjectivesEdit carePlanObjective = "true" customSetting="{!v.customSetting}" showInterventions = "true" taskId="{!taskRec.Id}" taskIdx="{!taskRec.Name}" task="{!taskRec}" tasksList="{!v.goalsList}" 
+                                                     usersList = "{!v.usersList}" HierarchyLevel="{!v.HierarchyLevel}" 
+                                                     recordVal="{!v.recordVal}" carePlanId = "{!v.carePlanId}" removedInterventionId="{!v.removedInterventionId}"/>
+                    <!--div class="first-inner-dl"></div-->
+                </aura:if>
+            </aura:iteration>
+        </div> 
+        <aura:if isTrue="{!v.customGoalModal}">
+            <c:Elixir_AddGoalsEdit existingGoals="{!v.goalsList}" allGoals="{!v.allGoals}" customGoalModal="{!v.customGoalModal}"/>         
+        </aura:if>
+        <aura:if isTrue="{!v.customGoalModal1}">
+            <!-- BEHAVERAL DEFINITION-->      <c:Elixir_AddDef existingGoals="{!v.goalsList}" allGoals="{!v.allGoals1}" customGoalModal="{!v.customGoalModal1}"/>       
+        </aura:if>
+        <aura:if isTrue="{!v.openAddDiagnosis}">
+            <c:AddDiagnoses existingGoals="{!v.problem}" allGoals="{!v.allGoals1}" customGoalModal="{!v.openAddDiagnosis}"/>       
+        </aura:if>
+    </div>
+    
+</aura:component>

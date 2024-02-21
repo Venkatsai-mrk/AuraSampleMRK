@@ -1,0 +1,270 @@
+@isTest
+public class BulkAccountPatientStatementPDFTest {
+    
+    @isTest
+    public static void patientStatementExport() {
+        
+        
+        Id paymntTxnRecordTypeId = Schema.SObjectType.ElixirSuite__Payment_Transaction__c.getRecordTypeInfosByDeveloperName().get('Insurance_Payment').getRecordTypeId();
+        Id paymntTxnRecordTypeIdPrivate = Schema.SObjectType.ElixirSuite__Payment_Transaction__c.getRecordTypeInfosByDeveloperName().get('Private_Payment').getRecordTypeId();
+        
+        Account patient =new Account ();
+        patient.Name= 'Virat Kohli';
+        patient.ElixirSuite__DOB__c =date.newInstance(2003, 9, 15);
+        patient.ElixirSuite__Gender__c='Male';
+        patient.ElixirSuite__Email_Id__c='virat@gmail.com';
+        patient.phone='9988776655';
+        patient.ElixirSuite__First_Name__c='Virat';
+        patient.ElixirSuite__Last_Name__c='Kohli';
+        patient.BillingPostalCode='50021';
+        patient.ElixirSuite__SSN__c='12345';
+        patient.ElixirSuite__MRN_Number_New__c='1234567890';
+        insert patient;
+        
+        ElixirSuite__Provider__c exPrvdr = new ElixirSuite__Provider__c();
+        exPrvdr.ElixirSuite__Account__c = patient.Id;
+        exPrvdr.Name = 'Test Provider';
+        exPrvdr.ElixirSuite__Provider_Zip__c = '12356';
+        exPrvdr.ElixirSuite__Provider_State__c = 'TestState';
+        exPrvdr.ElixirSuite__Provider_Last_Name__c = 'TestLastProvider';
+        exPrvdr.ElixirSuite__Provider_City__c = 'TestProviderCity';
+        exPrvdr.ElixirSuite__Provider_Code__c = '14785';
+        insert exPrvdr;
+        
+        ElixirSuite__Visits__c exVisit = new ElixirSuite__Visits__c();
+        exVisit.ElixirSuite__Account__c = patient.Id;
+        exVisit.ElixirSuite__Status__c = 'Active';
+        exVisit.ElixirSuite__Location__c = 'US';
+        exVisit.ElixirSuite__Care_Episode_Location__c = exPrvdr.Id;
+        exVisit.Name = 'Test Visit';
+        insert exVisit;
+        
+        
+        ElixirSuite__Procedure__c exPrcdr = new ElixirSuite__Procedure__c();
+        exPrcdr.ElixirSuite__Account__c = patient.Id;
+        exPrcdr.ElixirSuite__Active__c = true;
+        exPrcdr.ElixirSuite__Is_Billable__c = true;
+        exPrcdr.ElixirSuite__Visits__c = exVisit.Id;
+exPrcdr.ElixirSuite__Type_of_Procedure__c = 'Private Payment';
+        exPrcdr.ElixirSuite__Charges__c = 100;
+        exPrcdr.Name = 'Test Care Episode';
+        insert exPrcdr;
+        
+        
+        Procedure__c procedure = new Procedure__c();
+        procedure.Name = 'Test Procedure';
+        procedure.Account__c = patient.Id;
+        procedure.CPT_HCPCS_Code__c = '12345';
+procedure.ElixirSuite__Type_of_Procedure__c = 'Insurance Payment';
+        procedure.ElixirSuite__Charges__c = 900;
+        procedure.ElixirSuite__From_Date_of_Service__c = System.today();
+        procedure.To_Date__c = System.today().addDays(11);
+        insert procedure;
+                
+        Payment_Transaction__c payTran = new Payment_Transaction__c();
+        payTran.Actual_Price__c = 500;
+        payTran.ElixirSuite__Procedure__c = procedure.Id;
+        payTran.Cpt_Codes__c = 'CPT100';
+        payTran.Insurance_Payments__c = 200;
+        payTran.Account__c = patient.Id;
+        payTran.RecordTypeId = paymntTxnRecordTypeId;
+        payTran.Patient_Payments__c = 100;
+        payTran.Payment_Adjustments__c = 10;
+        insert payTran;
+        
+        Transactions__c trans = new Transactions__c();
+        trans.ElixirSuite__Master_Transaction__c=payTran.Id;
+        trans.Amount_Paid__c = 200;
+        insert trans;
+        
+         Payment_Transaction__c payTran1 = new Payment_Transaction__c();
+        payTran1.ElixirSuite__Procedure__c = exPrcdr.Id;
+        payTran1.Cpt_Codes__c = 'CPT100';
+        payTran1.RecordTypeId = paymntTxnRecordTypeIdPrivate;
+        payTran1.Insurance_Payments__c = 200;
+        payTran1.Account__c = patient.Id;
+        payTran1.Patient_Payments__c = 100;
+        payTran1.Payment_Adjustments__c = 10;
+        insert payTran1;
+
+        Transactions__c trans1 = new Transactions__c();
+        trans1.ElixirSuite__Master_Transaction__c=payTran1.Id;
+        trans1.Amount_Paid__c = 200;
+        insert trans1;
+        
+        Account patient1 =new Account ();
+        patient1.Name= 'Robert Dom';
+        patient1.ElixirSuite__DOB__c =date.newInstance(2003, 9, 15);
+        patient1.ElixirSuite__Gender__c='Male';
+        patient1.ElixirSuite__Email_Id__c='dom@gmail.com';
+        patient1.phone='9988776689';
+        patient1.ElixirSuite__First_Name__c='Robert';
+        patient1.ElixirSuite__Last_Name__c='Dom';
+        patient1.BillingPostalCode='50021';
+        patient1.ElixirSuite__SSN__c='12345';
+        patient1.ElixirSuite__MRN_Number_New__c='1234567890';
+        insert patient1;
+        
+        ElixirSuite__Provider__c exPrvdr1 = new ElixirSuite__Provider__c();
+        exPrvdr1.ElixirSuite__Account__c = patient1.Id;
+        exPrvdr1.Name = 'Test Provider';
+        exPrvdr1.ElixirSuite__Provider_Zip__c = '12356';
+        exPrvdr1.ElixirSuite__Provider_State__c = 'TestState';
+        exPrvdr1.ElixirSuite__Provider_Last_Name__c = 'TestLastProvider';
+        exPrvdr1.ElixirSuite__Provider_City__c = 'TestProviderCity';
+        exPrvdr1.ElixirSuite__Provider_Code__c = '14785';
+        insert exPrvdr1;
+        
+        
+        ElixirSuite__Visits__c exVisit1 = new ElixirSuite__Visits__c();
+        exVisit1.ElixirSuite__Account__c = patient1.Id;
+        exVisit1.ElixirSuite__Status__c = 'Active';
+        exVisit1.ElixirSuite__Location__c = 'US';
+        exVisit1.ElixirSuite__Care_Episode_Location__c = exPrvdr1.Id;
+        exVisit1.Name = 'Test Visit';
+        insert exVisit1;
+        
+        ElixirSuite__Procedure__c exPrcdr1 = new ElixirSuite__Procedure__c();
+        exPrcdr1.ElixirSuite__Account__c = patient1.Id;
+        exPrcdr1.ElixirSuite__Active__c = true;
+        exPrcdr1.ElixirSuite__Is_Billable__c = true;
+        exPrcdr1.ElixirSuite__Visits__c = exVisit.Id;
+exPrcdr1.ElixirSuite__Type_of_Procedure__c = 'Private Payment';
+        exPrcdr1.ElixirSuite__Charges__c = 800;
+        exPrcdr1.Name = 'Test Care Episode';
+        insert exPrcdr1;
+        
+        Procedure__c procedure1 = new Procedure__c();
+        procedure1.Name = 'Test Procedure';
+        procedure1.Account__c = patient1.Id;
+        procedure1.CPT_HCPCS_Code__c = '12345';
+        procedure1.ElixirSuite__From_Date_of_Service__c = System.today();
+procedure1.ElixirSuite__Type_of_Procedure__c = 'Insurance Payment';
+        procedure1.ElixirSuite__Charges__c = 700;
+        procedure1.To_Date__c = System.today().addDays(11);
+        insert procedure1;
+        
+        test.startTest();
+        Payment_Transaction__c payTran2 = new Payment_Transaction__c();
+        payTran2.Actual_Price__c = 500;
+        payTran2.ElixirSuite__Procedure__c = procedure1.Id;
+        payTran2.Cpt_Codes__c = 'CPT100';
+        payTran2.Insurance_Payments__c = 200;
+        payTran2.Account__c = patient1.Id;
+        payTran2.RecordTypeId = paymntTxnRecordTypeId;
+        payTran2.Patient_Payments__c = 100;
+        payTran2.Payment_Adjustments__c = 10;
+        insert payTran2;
+     //   test.stopTest();
+        
+        ElixirSuite__Master_Transaction__c otherTransaction = new ElixirSuite__Master_Transaction__c(
+            ElixirSuite__Total_Amount_Paid__c = 1000,
+            ElixirSuite__Account__c = patient.Id,
+            ElixirSuite__Discount_Amount__c = 100,
+            ElixirSuite__Type_of_Allocation__c = 'Discounted',
+            ElixirSuite__Transaction_Date__c = system.today(), 
+            ElixirSuite__Mode_of_Payment__c = 'Cash',
+            ElixirSuite__Reason_Of_Payment__c = 'Applied Payment',
+            ElixirSuite__Payment_Received_By__c='Patient'); 
+        
+        insert otherTransaction; 
+        
+        Transactions__c trans3 = new Transactions__c();
+        trans3.ElixirSuite__Master_Transaction__c=payTran2.Id;
+        trans3.ElixirSuite__Other_Transactions__c=otherTransaction.id;
+        trans3.Amount_Paid__c = 300;
+        insert trans3;
+        
+        Payment_Transaction__c payTran3 = new Payment_Transaction__c();
+        payTran3.ElixirSuite__Procedure__c = exPrcdr1.Id;
+        payTran3.Cpt_Codes__c = 'CPT100';
+        payTran3.Insurance_Payments__c = 200;
+        payTran3.Account__c = patient1.Id;
+        payTran3.RecordTypeId = paymntTxnRecordTypeIdPrivate;
+        payTran3.Patient_Payments__c = 100;
+        payTran3.Payment_Adjustments__c = 10;
+        insert payTran3;
+
+        Transactions__c trans2 = new Transactions__c();
+        trans2.ElixirSuite__Master_Transaction__c=payTran3.Id;
+        trans2.Amount_Paid__c = 200;
+        insert trans2;
+        
+        Patient_Statement__c patSta = new Patient_Statement__c();
+        patSta.Patient_Code__c = '1234';
+        patSta.Statement_Date__c = System.today();
+        patSta.PaymentsAdjustments_Received__c = 1000;
+        patSta.Account_Number__c = '1234';
+        insert patSta;
+        
+        Patient_Statement__c patStaTwo = new Patient_Statement__c();
+        patStaTwo.Patient_Code__c = '1234';
+        patStaTwo.Statement_Date__c = System.today();
+        patStaTwo.PaymentsAdjustments_Received__c = 1000;
+        patStaTwo.Account_Number__c = '1234';
+        patStaTwo.Account__c = patient.Id;
+        patStaTwo.NewCharges__c = 100;
+        patStaTwo.PaymentsAndAdjustmnts__c = 100;
+        patStaTwo.NewBalance__c = 100;
+        patStaTwo.PreviousBalance__c = 50;
+        insert patStaTwo;
+        
+        string base64='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';
+            
+            string myTextContent=base64;
+        
+        Id recordTypeIdTemp = Schema.SObjectType.ElixirSuite__Provider__c.getRecordTypeInfosByDeveloperName().get('Template_Provider').getRecordTypeId();
+        ElixirSuite__Provider__c provRecord= new ElixirSuite__Provider__c();
+        provRecord.RecordTypeId=recordTypeIdTemp;
+        provRecord.Name='TATA';
+        provRecord.ElixirSuite__Provider_Code__c='1234567890';
+        insert provRecord;
+        
+        List<ElixirSuite__Provider__c> provRecord1 =[SELECT Id, Name, ElixirSuite__Provider_Code__c, RecordTypeId FROM ElixirSuite__Provider__c  WHERE RecordTypeId =:recordTypeIdTemp ];
+        Attachment attRecord = new Attachment();
+        attRecord.Name='Company Logo';
+        attRecord.ContentType='png';
+        attRecord.ParentId = provRecord1[0].id;
+        attRecord.Body =EncodingUtil.base64Decode(myTextContent) ;
+        attRecord.IsPrivate = false;
+        insert attRecord;
+        
+        Date startDate = System.today();
+        Date endDate = System.today().addDays(10);
+        string finalParametre = startDate + '$' + endDate;
+        
+        ElixirSuite__Patient_Statment_GenerInterval__c mc = new ElixirSuite__Patient_Statment_GenerInterval__c();
+        mc.Name = 'Bulk Patient Statement';
+        mc.ElixirSuite__Active__c = true;
+        mc.ElixirSuite__No_of_Days__c = 5;
+        insert mc;
+        
+         ElixirSuite__Patient_Statement__c patSt = new ElixirSuite__Patient_Statement__c();
+                patSt.ElixirSuite__Statement_from__c = startDate;
+                patSt.ElixirSuite__Statement_to__c = endDate;
+                patSt.ElixirSuite__Notes__c = 'fName';
+                DMLManager.insertAsUser(patSt);
+        
+        AutoPatientStatementGeneration.autoPdfGen();
+        AutoPatientStatementGeneration sh1 = new AutoPatientStatementGeneration();
+        String sch = '0 0 23 * * ?'; system.schedule('Test Check', sch, sh1);
+        
+     //   test.startTest();
+        
+        ApexPages.currentPage().getParameters().put('orderId', String.valueOf(finalParametre));
+        BulkAccountPatientStatementPDF statPdf =new BulkAccountPatientStatementPDF();
+        statPdf.getstring();
+BulkAccountPatientStatementPDF.bulkPatientStatementExist(startDate,endDate);
+        
+        BulkAccountPatientStatementPDF.getPdfImg();
+        BulkAccountPatientStatementPDF.getPDFData();
+BulkAccountPatientStatementPDF.checkProfile();
+        
+        system.assert(patSta.Patient_Code__c!=null,''); 
+        System.assertEquals(1,1,'');
+        test.stopTest();
+        
+        
+    }
+    
+}

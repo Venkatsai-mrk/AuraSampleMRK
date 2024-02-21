@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Beds</fullName>
+    <active>true</active>
+    <description>Limiting number of beds to 50</description>
+    <errorConditionFormula>OR(No_Of_Beds__c&gt; 50,No_Of_Beds__c&lt; 0)</errorConditionFormula>
+    <errorDisplayField>No_Of_Beds__c</errorDisplayField>
+    <errorMessage>Number of beds must be greater than zero and less than or equal to 50</errorMessage>
+</ValidationRule>

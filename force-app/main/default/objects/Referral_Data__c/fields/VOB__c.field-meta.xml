@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VOB__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to get the insurance details for the patient</description>
+    <externalId>false</externalId>
+    <label>VOB</label>
+    <referenceTo>VOB__c</referenceTo>
+    <relationshipLabel>Referral Data</relationshipLabel>
+    <relationshipName>Referral_Data</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

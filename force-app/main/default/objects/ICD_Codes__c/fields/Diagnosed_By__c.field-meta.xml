@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Diagnosed_By__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Who diagnosed and their info – in case if decision making goes incorrect, the accountability comes to here.</description>
+    <externalId>false</externalId>
+    <label>Diagnosed By</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Diagnosis Code</relationshipLabel>
+    <relationshipName>Diagnosis_Code</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

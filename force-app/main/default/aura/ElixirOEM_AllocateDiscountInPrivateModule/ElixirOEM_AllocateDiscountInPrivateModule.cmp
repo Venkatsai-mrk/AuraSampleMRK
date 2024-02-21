@@ -1,0 +1,227 @@
+<!-- 
+Created by - Jami Venkat Sai
+Created Date - 14-September-2022
+Description - Allocate discount screen
+Apex class - ElixirOEM_AllocateDiscountHelper
+ -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" 
+                controller="ElixirOEM_AllocateDiscountHelper">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="DiscountTableColumns" type="List" />
+    <aura:attribute name="DiscountTableData" type="list"/>
+    <aura:attribute name="DiscountTableId" type="String"/>
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="maxRowSelectionProcedures" type="Integer"/>
+    <aura:attribute name="Plist" type="list"/>
+    <aura:attribute name="hideCheckbox" type="boolean" default="false"/>
+    <aura:attribute name="renderCheckbox" type="boolean" default="true"/>
+    <aura:attribute name="amountCheckbox" type="boolean" default="false"/>
+    <aura:attribute name="discountTableDiscountPercentage" type="Decimal" default="0.0"/>
+    <aura:attribute name="discountTableUnAllocatedAmount" type="Decimal" default="0.0"/>
+    <aura:attribute name="discountType" type="String"/>
+    <aura:attribute name="showUnallocateField" type="boolean" default="true"/>
+    <aura:attribute name="cancelSave" type="boolean" default="false"/>
+    <aura:method name="reInitialize" action="{!c.init}" />
+    <aura:attribute name="procedureSearchParams" type="String" default=""/> 
+    <aura:attribute name="isSearchDisabled" type="boolean" default="false"/>
+    <aura:attribute name="makePaymentButtonDisable" type="boolean" default="false"/> 
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="totalUnAllocatedDiscount" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalUnAllocatedDiscount_SumCount" type="Decimal" default="0.0"/> 
+    <aura:attribute name="amountAllocated" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalAppliedDiscount" type="Decimal" default="0.0"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isDiscPercentageSelected" type="Boolean" default="false" />
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="amountPaid" type="Decimal" default="0.0"/>
+    <aura:attribute name="dateOfPayment" type="Date"/> 
+    <aura:attribute name="paymentTransactionNumber" type="String"/>
+    <aura:attribute name="selectedProcedureRecords" type="List"/>
+    <aura:attribute name="selectedProcedureRecordsNetInstance" type="List"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="selectedRows" type="List"/> 
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="isModalOpen" type="boolean" />
+    <aura:attribute name="customSettingData" type="List"/>
+    <aura:attribute name="PaySchedulist" type="list" default=""/>
+    <aura:attribute name="scheduleList" type="list" default=""/>
+    <aura:attribute name="NetAmount" type="integer" default="0"/>
+    <aura:attribute name="selectedSchedules" type="List" />
+    <aura:attribute name="selectedParentSchedule" type="List" />
+    <aura:attribute name="selectedParentScheduleId" type="String"/>
+    <aura:attribute name="hideSchedule" type="boolean" default="false"/>
+    <aura:attribute name="typeOfDiscountLst" type="List"/>  
+    <aura:attribute name="proceduresListDiscountChng" type="List"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+    <aura:attribute name="masterTransactionObj" type="Object" default="ElixirSuite__Master_Transaction__c"/> 
+    <aura:attribute name="remainingDiscount" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalRemAmt" type="Decimal" default="0.0"/>
+    <aura:attribute name="hideCBCols" type="boolean" default="false"/>
+    <aura:attribute name="tempVar" type="boolean" default="false"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:handler name="change" value="{!v.totalAppliedDiscount}" action="{!c.totalAppliedAmountChange}"/>
+    <aura:handler name="change" value="{!v.totalUnAllocatedDiscount}" action="{!c.totalUnAllocatedAmountChange}"/>
+    <aura:registerEvent name="PaymentEvent" type="c:PaymentEvent"/>
+    
+    <aura:method name="allocateDiscountInPrivate" action="{!c.allocateDiscountFromUI}" access="PUBLIC"/>
+    <br/>
+    <div>
+        <div class="slds-m-bottom_small">
+            <b class="slds-text-heading_medium">Discount Table</b>
+        </div>
+        <div class="table-head_fixed slds-m-top_medium slds-scrollable_y slds-is-relative changeheight">
+            <div class="slds-grid slds-gutters pay-table">
+                <div class="slds-col slds-size_12-of-12" >
+                    <div class="slds-scrollable changeNew">
+                        <div class="slds-text-longform changeNew2">
+                            <lightning:datatable
+                                                 keyField="id"
+                                                 data="{! v.DiscountTableData}"
+                                                 columns="{!v.DiscountTableColumns}"
+                                                 minColumnWidth="100px"
+                                                 onrowselection="{!c.handleTablerowChange}"
+                                                 maxRowSelection="{! v.maxRowSelection }"
+                                                 />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="slds-grid slds-gutters mobile-li2">
+            <aura:if isTrue="{!v.renderCheckbox}">
+                <aura:if isTrue="{!v.hideCheckbox}">
+                    <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                                <span class="slds-form-element__static slds-form-element__label">Do you want to equally divide the remaining unallocated amount    : </span>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 remove_label pt-5">
+                                <lightning:input type="checkbox" label=" Do you want to equally divide the remaining unallocated amount" 
+                                                 onchange = "{!c.divideAmountEqually}" 
+                                                 checked="{!v.masterTransactionObj.ElixirSuite__Divide_the_Discount_Amount_equally_among__c}"/> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                                
+                                <span class="slds-form-element__static slds-form-element__label">  Complete discount to be utilized </span>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 remove_label pt-5">
+                                <lightning:input type="checkbox" 
+                                                 onchange = "{!c.utilizeCompleteDiscount}" 
+                                                 checked="{!v.masterTransactionObj.ElixirSuite__Complete_discount_to_be_utilized__c}"/> 
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </aura:if>
+                <aura:set attribute="else">
+                    <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                                
+                                <span class="slds-form-element__static slds-form-element__label">  Complete discount to be utilized </span>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 remove_label pt-5">
+                                <lightning:input type="checkbox" 
+                                                 onchange = "{!c.utilizeCompleteDiscount}" 
+                                                 checked="{!v.masterTransactionObj.ElixirSuite__Complete_discount_to_be_utilized__c}"/> 
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </aura:set>
+                
+            </aura:if>
+        </div>
+        <br/>
+        <aura:if isTrue="{!v.PatientId!= ''}"> <!--Sagili LX3-5525-->
+            <aura:if isTrue="{!v.discountType!= ''}">
+                <div class="slds-grid slds-gutters dos-box">
+                    <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">DOS From :</div>
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <lightning:input type="date" value="{!v.procedureSearchParams.DOSFrom}" onchange="{!c.onDOSFromChange}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">DOS To :</div>
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <lightning:input type="date" value="{!v.procedureSearchParams.DOSTo}" onchange="{!c.onDOSToChange}"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters dos-box">
+                    <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">Procedure Name :</div>
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <c:ProcedureLookup selectRecordId = "{!v.procedureSearchParams.procedureId}" 
+                                           selectRecordName = "{!v.procedureSearchParams.procedureName}"
+                                           PatientId = "{!v.PatientId}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">CPT Code :</div>
+                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                        <lightning:input type="text" value="{!v.procedureSearchParams.CPTCode}" />
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                        <button class="slds-button slds-button_brand attach_claims" aria-label="Search" disabled = "{!v.isSearchDisabled}"   onclick="{!c.searchClaim}" >Search</button>
+                        <button class="slds-button slds-button_neutral btn attach_claims" aria-label="Clear All Filter" disabled = ""   
+                                onclick="{!c.clearClaimSearchFilter}" >Clear Filters</button>
+                    </div>
+                </div>
+                
+                
+                <br/>
+                <b>Patient Procedures : </b>
+                <ui:scrollerWrapper class="scrollerSize">
+                    <lightning:datatable
+                                         keyField="Id"
+                                         data="{! v.Plist }"
+                                         columns="{! v.columns }"
+                                         onrowselection="{!c.selectedRowsOnClick}"
+                                         hideCheckboxColumn="{!v.hideCBCols}"
+                                         selectedRows="{!v.selectedRows}"
+                                         class="byProcTableCss"
+                                         minColumnWidth="150"
+                                         sortedBy="{!v.sortBy}"
+                                         sortedDirection="{!v.sortDirection}"
+                                         onsort="{!c.handleSort}"
+                                         draftValues="{!v.draftValues }"
+                                         oncellchange = "{!c.handleCellBlur}"
+                                         onsave="{! c.handleSaveDataTable }"
+                                         oncancel="{!c.handleCancelDataTable}"
+                                         onrowaction="{! c.handleRowAction }"
+                                         />
+                    
+                </ui:scrollerWrapper>
+                
+                
+                <ul class="payment-list">
+                    <li class="slds-text-align--center">
+                        <!--lightning:button variant="destructive" 
+                                          label="Allocate Discount" 
+                                          title="Allocate Discount" 
+                                          disabled="{!v.makePaymentButtonDisable}"
+                                          onclick="{! c.allocateDiscountFromUI }"/-->
+                    </li>
+                </ul> 
+            </aura:if>
+        </aura:if>
+        
+        
+    </div>
+    <aura:if isTrue="{!v.loaded }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+</aura:component>

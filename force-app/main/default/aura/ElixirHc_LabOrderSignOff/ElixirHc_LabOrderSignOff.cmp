@@ -1,0 +1,52 @@
+<aura:component controller="LabOrderSignOff" implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="isActive" type="Boolean"/>
+    <aura:attribute name = "title" type = "String"/>
+    <aura:attribute name = "result" type= "String"/> 
+    <aura:attribute name = "pwCode" type= "String"/> <!-- password -->
+    <aura:attribute name = "patId" type = "Id"/> <!-- patient id-->
+    <aura:attribute name ="recId" type = "Id"/> <!-- LAb id-->
+    <aura:attribute name="showSign" type="Boolean" default="true"/>
+    <aura:attribute name = "OTPVal" type = "String"/>
+    <aura:attribute name="comment" type="String"/>
+    <aura:registerEvent name="OTPMatchCmpEvent" type="c:EventOnOTPMatching" />
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+        <div class="slds-modal__container otpBox">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Authenticate Verification Code</h2>                            
+            </header>
+            
+            
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-gutters headerCSS">
+                    <div class="slds-box1">
+                        <div class=" slds-size_4-of-6">
+                            <lightning:textarea name="comments" label="Add Comments" placeholder="Type here..." value="{!v.comment}"/><br/>
+                        </div>
+                        <div class=" slds-size_3-of-6">
+                            <lightning:input name="Enter OTP" label="Enter OTP" type="String" maxlength="6" value = "{!v.OTPVal}" required = "true"/>
+                        </div>
+                        <div class="footerCSS"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="slds-modal__footer">
+                <div class="button" align ="right">
+                    <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>                                
+                    <lightning:button variant="brand" label="Submit" type="submit" onclick = "{!c.otpMethod}" />
+                    
+                </div>
+            </footer>
+            
+        </div>
+    </div>
+    <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+</aura:component>

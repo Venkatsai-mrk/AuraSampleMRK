@@ -1,0 +1,69 @@
+<aura:component controller="patientCardController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="licenseAvailable" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="string" />    
+    <aura:attribute name="Patient_Name" type="object" />
+    <aura:attribute name="attchid" type="String" default=""/>   
+    <aura:attribute name="parentId" type="Id"/>
+    <aura:attribute name="contentId" type="Id" />
+    <aura:attribute name="allergyData" type="object"/>
+    <aura:attribute name="problemData" type="object"/>
+    
+    
+    <aura:attribute name="place" type="string" />
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}"/>
+    <aura:registerEvent name="refreshView" type="force:refreshView" />
+    
+    
+    
+    <div class="demo-only slds-grid abc">
+        <!--aura:if isTrue="{!v.licenseAvailable}"-->
+        <div class=" slds-grid slds-grid_vertical slds-nowrap def">
+            <div class="slds-form slds-form_stacked slds-grow ">
+                <!--div class="slds-panel__section slds-border_bottom">-->
+                <div class="slds-media">
+                    
+                    <div class="slds-media__figure">
+                        <span class="slds-avatar slds-avatar--large slds-avatar--circle">
+                            <aura:if isTrue="{!(v.Patient_Name.ElixirSuite__Profile_Picture__c!=null)}">
+                                <img alt="Patient Image" src="{!'/sfc/servlet.shepherd/version/download/'+ v.Patient_Name.ElixirSuite__Profile_Picture__c}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                <aura:set attribute="else">
+                                    <img alt="Patient Image" src="https://hcelixir1-dev-ed--c.na50.visual.force.com/resource/1540382832000/DefaulPicture" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                    
+                                </aura:set>
+                            </aura:if>
+                            
+                        </span>
+                    </div>
+                    <div class="slds-media__body" >
+                        <h2 class="slds-truncate slds-text-heading--small def2"  aura:id="patName" title="{!v.Patient_Name.Name}">{!v.Patient_Name.Name}</h2>
+                        
+                        <span class="slds-form-element__static slds-form-element__label">Date Of Birth : <ui:outputDate value="{!v.Patient_Name.ElixirSuite__DOB__c}">{!v.Patient_Name.ElixirSuite__DOB__c}</ui:outputDate></span>
+                        <p class="slds-truncate slds-text-body--small" title="{!v.Patient_Name.ElixirSuite__Age__c}" >Age : {!v.Patient_Name.ElixirSuite__Age__c} years</p>
+                        <!--  <p class="slds-truncate slds-text-body" title="" >Allergies : {!v.allergyData.Elixir_HC__Allergy_Name__c}</p>
+                                <p class="slds-truncate slds-text-body" title="" >Problems : {!v.problemData.HealthCloudGA__EvidenceLabel__c}</p>-->
+                    </div>
+                    
+                    
+                </div>
+                <!--div class="slds-panel__section">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">EMR Person Information</h3>-->
+                <ul>
+                    <li class="slds-form-element slds-hint-parent ">
+                        
+                     
+                    </li>
+                   
+                </ul>
+            </div>
+          
+        </div>
+    </div>
+    <aura:set attribute="else">
+        <div class="abc2">
+            {!v.place}
+            <!--p>This functionality is part of EMR. Please get in touch with Mirketa if you are interested in EMR.</p-->
+        </div>
+    </aura:set>  
+    <!--/aura:if-->
+    
+</aura:component>

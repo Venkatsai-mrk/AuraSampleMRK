@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage__c</fullName>
+    <description>The current stage of the insurance record, such as VOB In Queue, VOB Requested, VOB Approved, VOB Denied, etc .</description>
+    <externalId>false</externalId>
+    <label>Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>VOB In Queue</fullName>
+                <default>true</default>
+                <label>VOB In Queue</label>
+            </value>
+            <value>
+                <fullName>VOB Requested</fullName>
+                <default>false</default>
+                <label>VOB Requested</label>
+            </value>
+            <value>
+                <fullName>VOB Approved</fullName>
+                <default>false</default>
+                <label>VOB Approved</label>
+            </value>
+            <value>
+                <fullName>VOB Denied</fullName>
+                <default>false</default>
+                <label>VOB Denied</label>
+            </value>
+            <value>
+                <fullName>VOB Complete</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VOB Complete</label>
+            </value>
+            <value>
+                <fullName>VOB In Pending</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>VOB In Pending</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

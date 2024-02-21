@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="selectedValue" type="Object"/>
+    <aura:attribute name="noteType" type="String"/>
+</aura:event>

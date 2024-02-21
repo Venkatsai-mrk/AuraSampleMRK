@@ -1,0 +1,94 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_ViewCarePlanApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "goal" type="Object"/> 
+    <aura:attribute name="goalId" type="String" />    
+    <aura:attribute name="goalIdx" type="Integer"/>
+    <aura:attribute name="tasksList" type="Object"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name="carePlan" type="Object"/>
+    <aura:attribute name= "note" type="Object"/>
+    <aura:attribute name="listOfNotes" type="Object[]"/>
+    <aura:attribute name="allTasksList" type="Object"/>
+    <aura:attribute name="customTask" type="Boolean" default="false"/>
+    <aura:attribute name="addNotesForGoalsModal" type="Boolean" default="false"/>
+    <aura:attribute name="taskListModal" type="Boolean" default="false"/>
+    <aura:attribute name= "goalFirstCallBack" type="Boolean"/>
+    <aura:attribute name= "decisionTree" type="String"/>
+    <aura:attribute name= "labelApicombo_CustomSetting" type="String"/>
+    <aura:attribute name="customSetting" type="String" />    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-show accordian_header " aura:id="goalId" >
+        <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+            <lightning:button class="slds-show chevron_btn" aura:id="goalSection" iconName="utility:chevronright" onclick="{!c.goalSection}"/>
+            <lightning:button class="slds-hide chevron_btn" aura:id="goalSection" iconName="utility:chevrondown" onclick="{!c.goalSection}"/>
+        </aura:if>
+        <div class="slds-page-header c-point">
+            
+            <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon  iconName="action:goal"/> 
+                </div>
+                <div class="slds-float--right ">
+                    
+                </div>
+                <div class="slds-m-left--large">
+                    <h3>
+                        {!v.customSetting.ElixirSuite__Third_Level__c} {!v.goalIdx+1}
+                        <div class="slds-float--right right-side_bar right-side_bar1">
+                            <div class="slds-float_left">
+                                <div class="slds-float_left">
+                                    <p>Due Date :<ui:outputDate value="{!v.goal.ElixirSuite__Due_Date__c}"/></p>                                  
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </h3>
+                    <p>{!v.goal.ElixirSuite__Description__c}</p>
+                </div>
+                <aura:if isTrue="{!v.addNotesForGoalsModal}">
+                    <div class="Add_Notes_Problem Add_Notes_Problem_icon">
+                        <c:Elixir_AddNotesGoals carePlan="{!v.carePlan}" listOfNotes="{!v.listOfNotes}" patientId="{!v.recordVal}" goal="{!v.goal}"  notes="{!v.note}"/>
+                    </div>
+                </aura:if>
+            </section>
+        </div>
+        
+        
+        <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+            <!-- IF OBJECTIVE IS RELATED TO GOAL AND INTERVENTION ARE RELATED TO OBJECTIVE -->
+            <div class="slds-hide slds-p-around--medium third_accordian" aura:id="goalSection">
+                <aura:if  isTrue="{!v.decisionTree.openLinearTree}">
+                    <aura:if isTrue="{!v.taskListModal}">
+                        <aura:iteration items="{!v.tasksList.listOfTask }" var="taskRec" indexVar="taskIdx">
+                            <c:Elixir_CarePlanViewObjectives  labelApicombo_CustomSetting="{!v.labelApicombo_CustomSetting}" customSetting="{!v.customSetting}" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" recordVal="{!v.recordVal}" carePlan="{!v.carePlan}" note="{!v.note}"
+                                                             showInterventions = "true"/>
+                            <div class="third-accordian_bl"></div>
+                        </aura:iteration>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <!-- IF BOTH OBJECTIVE AND INTERVENTION ARE RELATED TO GOAL -->
+                        <aura:if isTrue="{!v.taskListModal}">
+                            <aura:iteration items="{!v.tasksList.listOfTask }" var="taskRec" indexVar="taskIdx">
+                                <c:Elixir_CarePlanViewObjectives  showInterventions = "false" labelApicombo_CustomSetting="{!v.labelApicombo_CustomSetting}" customSetting="{!v.customSetting}" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" recordVal="{!v.recordVal}" carePlan="{!v.carePlan}" note="{!v.note}"/>
+                                <div class="third-accordian_bl"></div>
+                            </aura:iteration>
+                            <aura:iteration items="{!v.tasksList.listOfIntervention }" var="taskRec" indexVar="taskIdx">
+                                <c:Elixir_CarePlanViewTasks  labelApicombo_CustomSetting="{!v.labelApicombo_CustomSetting}"  customSetting="{!v.customSetting}" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" recordVal="{!v.recordVal}" carePlan="{!v.carePlan}" note="{!v.note}"/>
+                                <div class="third-accordian_bl"></div>
+                            </aura:iteration>
+                        </aura:if>
+                        
+                        
+                        <!-- end --> 
+                    </aura:set>
+                </aura:if>
+            </div>
+            <!-- end -->
+        </aura:if>
+        
+        
+        
+        
+    </div>
+</aura:component>

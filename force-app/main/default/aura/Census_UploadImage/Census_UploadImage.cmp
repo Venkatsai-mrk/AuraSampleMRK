@@ -1,0 +1,69 @@
+<aura:component controller="patientCardControllerOpportunity" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="licenseAvailable" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="string" />    
+    <aura:attribute name="Patient_Name" type="object" />
+    <aura:attribute name="attchid" type="String" default=""/>   
+    <aura:attribute name="parentId" type="Id"/>
+    <aura:attribute name="contentId" type="Id" />
+    <aura:attribute name="TileConfigFieldsInOrder" type="List"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+    <aura:attribute name="place" type="string" />
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}"/>
+    <aura:registerEvent name="refreshView" type="force:refreshView" />
+    
+    <aura:if isTrue="{!v.ContactCentr}">
+    <div class="demo-only slds-grid">
+        <!--aura:if isTrue="{!v.licenseAvailable}"-->
+        <div class=" slds-grid slds-grid_vertical slds-nowrap license">
+            <div class="slds-form slds-form_stacked slds-grow ">
+                <div class="slds-media">
+                    
+                    <div class="slds-media__figure changeNew" >
+                        <span class="slds-avatar slds-avatar--large slds-avatar--circle changeNew1" >
+                            <aura:if isTrue="{!(v.Patient_Name.ElixirSuite__Profile_Picture__c!=null)}">
+                                <img alt="Patient Image" src="{!'/sfc/servlet.shepherd/version/download/'+ v.Patient_Name.ElixirSuite__Profile_Picture__c}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                <aura:set attribute="else">    
+                                    <img alt="Patient Image" src="{!$Resource.DefaultProfilePic}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                    <!--img alt="Patient Image" src="/resource/1591094887000/ElixirSuite__DefaultProfilePic" title="Patient avatar" name="patimg" aura:id="patientImage" /-->
+                                    
+                                </aura:set>
+                            </aura:if>
+
+                           
+                            
+                        </span>
+                        <div class="upload-btn">
+                            <lightning:fileUpload aura:id="fileUploader"  accept=".png, .jpg" recordId="{!v.recordId}"   onuploadfinished="{!c.handleUploadFinished}"></lightning:fileUpload>
+                        </div> 
+                    </div>
+                    <div class="slds-media__body patient-details" >
+<h2 class=" p-name"  aura:id="patName" title="{!v.Patient_Name.Name}"><b class= "slds-truncate slds-text-heading--small dotFont">{!v.Patient_Name.FullName}</b></h2>
+                        <aura:if isTrue="{!v.Patient_Name.Age !=' '}">
+                        <p class="slds-truncate slds-text-body--small" >Age  :  {!v.Patient_Name.Age} </p>
+                       </aura:if> 
+                        <aura:iteration items="{!v.TileConfigFieldsInOrder}" var="field" indexVar="key">
+                            
+                            <p class="slds-truncate slds-text-body--small" >{!field.key}  :  {!field.value} </p>
+                           </aura:iteration>
+
+                       <!-- <div >
+                            <lightning:fileUpload aura:id="fileUploader"  accept=".png, .jpg" recordId="{!v.recordId}"   onuploadfinished="{!c.handleUploadFinished}"></lightning:fileUpload>
+                        </div>  -->
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </div>
+    <aura:set attribute="else">
+        <div  class="customcolor">
+            {!v.place}
+        </div>
+    </aura:set> 
+    </aura:if>
+    
+    
+</aura:component>

@@ -1,0 +1,10 @@
+<aura:component implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+	<aura:attribute name="callClaimSubmit" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+  <aura:attribute name="claimId" type="String"/>
+	<aura:attribute name="closeSection" type="Boolean" default="true"/>
+   
+    <aura:if isTrue="{!v.callClaimSubmit}">
+    <c:ElixirOEM_EditCMS1500Form recordId="{!v.claimId}"></c:ElixirOEM_EditCMS1500Form>
+        </aura:if>
+</aura:component>

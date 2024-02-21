@@ -1,0 +1,37 @@
+<!--
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+-->
+
+<template>
+    <div class="slds-m-around_large">
+            <div if:true={isLoaded} class="slds-is-relative">
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>  
+    </div>
+
+    <div class="slds-p-horizontal_small margin">
+<div class="slds-text-align_right">
+        <template if:false={viewMode}>
+        <lightning-button  variant="brand" label="Clear Canvas" onclick={handleClick} class="cssForClearCanvas"></lightning-button > &nbsp;
+        <lightning-button  variant="brand" label="Clear Current Modification" onclick={handleClearModification} class="cssForClearCanvas"></lightning-button>
+        </template>
+</div>
+        
+        <c-draw-annotation-canvas class="da-canvas"
+            fire-auto-save={canHandleSave}
+            canvas-width="550"
+            canvas-height="550"
+            allow-canvas-resize={allowCanvasResize}
+            onsavecanvas={handleSaveCanvas}
+            onautosavecanvas={handleSaveCanvas}
+            hide-tools={viewMode}>
+        </c-draw-annotation-canvas>        
+    </div>
+</template>

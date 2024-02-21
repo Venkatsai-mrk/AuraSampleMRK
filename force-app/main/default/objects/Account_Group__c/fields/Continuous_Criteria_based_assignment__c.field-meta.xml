@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Continuous_Criteria_based_assignment__c</fullName>
+    <description>Indicates if continuous criteria-based assignment is enabled for the patient group.</description>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <inlineHelpText>The system continuously runs the criteria and adds the current patients to the group</inlineHelpText>
+    <label>Continuous Criteria based assignment</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

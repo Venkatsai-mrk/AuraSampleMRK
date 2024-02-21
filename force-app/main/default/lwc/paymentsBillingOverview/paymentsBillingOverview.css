@@ -1,0 +1,66 @@
+.dummy{
+	color : blue;
+}
+.details_page {
+    padding: 0 30px;
+}
+.card {
+    padding: 8px 0 8px;
+}
+.details_page h2 {
+    font-size: 18px;
+    color: #666;
+}
+.search-btn {
+	border: 1px solid #333;
+    color: #333;
+    padding: 2px 15px;
+    margin-top: 20px;
+	box-shadow: 3px 3px 2px #c3c3c3;
+}
+.details_page-list {
+	padding: 0 15px;
+    margin: 15px 0 0;
+    height: 445px;
+	overflow-y: scroll;
+}
+.details_page-list ul li {
+	padding: 0;
+	border-radius: 10px;
+	border: 1px solid #333;
+	box-shadow: 3px 3px 2px #c3c3c3;
+	display: block;
+	margin: 15px 0;
+}
+.details_page-list ul li button {
+	padding: 10px 15px;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+}
+.details_page-list ul li h3 {
+	font-size: 16px;
+    width: 35px;
+    text-align: center;
+    line-height: 18px;
+    font-weight: 600;
+    color: #0379d7;
+    float: right;
+}
+.details_page-list h4 {
+	font-weight: 700;
+	font-size: 14px;
+}
+.details_page-list p {
+	font-size: 12px;
+	margin-top: 3px;
+}
+.unpaid_amt {
+	color: #5dc15d;
+}
+.details_page-list h2 {
+	font-size: 22px;
+    font-weight: 700;
+    margin-right: 30px;
+    margin-top: 10px;
+}

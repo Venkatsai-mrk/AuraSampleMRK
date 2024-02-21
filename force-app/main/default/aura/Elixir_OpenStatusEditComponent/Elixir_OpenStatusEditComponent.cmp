@@ -1,0 +1,366 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "patientName" type="String"/>
+    <aura:attribute name="showProblemButton" type="Boolean" default="false"/>
+    <aura:attribute name="removedProblemId" type="List"/>
+    <aura:attribute name="removedInterventionId" type="List"/>
+    <aura:attribute name= "contentDocumentId" type="List"/>
+     <aura:attribute name="approvedValues" type="List" default="[]"/>
+    <aura:registerEvent name="RefreshCarePlan" type="c:RefreshCarePlan"/>
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "nameSpace" type="String"/>
+    <aura:attribute name= "masterProblems" type="Object"/> 
+    <aura:attribute name= "carePlan" type="Treatment_Plan__c"/> 
+    <aura:attribute name= "allProblems" type="List"/> 
+    <aura:attribute name="allGoalsShow" type="List"/>
+    <aura:attribute name="allTasksListShow" type="List"/>
+    <aura:attribute name="allIntervList" type="List"/>
+    <aura:attribute name="allGoals" type="List"/>
+    <aura:attribute name="allTasksList" type="Object"/>
+    <aura:attribute name="allIntsList" type="Object"/>
+    <aura:attribute name="customGoalModal" type="Boolean" default="false"/>
+    <aura:attribute name="customTask" type="Boolean" default="false"/>
+    <aura:attribute name="customInt" type="Boolean" default="false"/>
+    <aura:attribute name= "openModalAllProblems" type="Boolean" default="false"/> 
+    <aura:attribute name= "openViewCarePlanModal" type="Boolean"/> 
+    <aura:attribute name= "accountName" type="String"/>
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name= "userId" type="String"/>
+    <aura:attribute name= "Description" type="String"/>
+    <aura:attribute name= "usersList" type="Object[]"/>
+    <aura:attribute name= "clinicalSupervisionId" type="String"/>
+    <aura:attribute name= "patientBirthDate" type="Date"/>
+    <aura:attribute name= "pickListValuesListForStatus" type="String[]"/>
+    <aura:attribute name="carePlanName" type="String"/>
+    <aura:attribute name= "status" type="String"/>
+    
+    <aura:attribute name="openApproval" type="boolean"/>
+    <aura:attribute name= "decisionTree" type="String"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name= "selectedRow" type="String"/>
+    <aura:attribute name= "editEnabled" type="Boolean" default="true"/>
+    <!-- for Signature and approval process-->   
+    <aura:attribute name="sObjectName" type="String" default="Account"/>
+    <aura:attribute name="verifyOtp" type="Boolean" default="false"/>
+    <aura:attribute name="showSign" type="Boolean" default="true"/>
+    <aura:attribute name="verifyCode" type="String"/>
+    <aura:attribute name="attachId" type="String"/>
+    <aura:attribute name="signComment" type="String"/>
+    <aura:attribute name="dateTodayForForm" type="String"/>
+    <aura:attribute name="newSign" type="Boolean"/>
+    <aura:attribute name="LevelOfApproval" type="String"/>
+    <aura:attribute name="signee1" type="String"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name= "setUpKey" type="String"/>
+    <aura:registerEvent name="UpdateDuedateCarePlan" type="c:UpdateDueDateCarePlan"/> 
+    <aura:handler name="OTPMatchCmpEvent" event="c:EventOnOTPMatching" action="{!c.parentComponentEvent}"/>
+    
+    <aura:attribute name="eventMessage" type="List"/>  
+    <aura:handler name="GoalEventValue" event="c:GoalEventValue" action="{!c.GoalEvent}"/>
+    <aura:handler event="c:ObjectiveEvent" action="{!c.objEvent}"/>
+    <aura:handler name="IntrvntionEvent" event="c:IntrvntionEvent" action="{!c.IntrvEvent}"/>
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <div class="slds-show careplan_modal" aura:id="mainDiv">
+        <!--aura:if isTrue="{!v.openViewCarePlanModal}"-->
+            <section class="sectioncss">
+                <div class="accordian-parant">
+                    <header class="headercls slds-text-heading_large"> 
+                        <!--lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeMainModal }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close backgroundBlack"/-->
+                        <div class="care-plan_header">
+                            <div class="slds-grid slds-gutters head-mobile_grid">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <div class="pateint_info">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Patient Name<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><span>{!v.accountName}</span></h5>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Date of Birth<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 color_006cc9">
+                                                <h5><ui:outputDate aura:id="oDate" value="{!v.patientBirthDate}"/></h5>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters header_select">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Primary Therapist<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><span>
+                                                    <lightning:select onchange="{!c.setTherapist}">
+                                                        <aura:iteration items="{!v.usersList}" var="record">         
+                                                            <option selected="{!record.Id == v.carePlan.ElixirSuite__Primary_Therapist__c}" value="{!record.Id}">{!record.Name}</option>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                    </span></h5>          
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters header_select">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Clinical Supervisor<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><span>
+                                                    <lightning:select onchange="{!c.setClinicalSupervisor}">
+                                                        <aura:iteration items="{!v.usersList}" var="record">  
+                                                            <option selected="{!record.Id == v.carePlan.ElixirSuite__Clinical_supervisor__c}" value="{!record.Id}">{!record.Name}</option>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                    </span></h5>    
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size_4-of-12">
+                                    <div class="care-plane_name care-plane_name1">
+                                        <aura:if isTrue="{!v.editEnabled}">
+                                            <lightning:button iconName="utility:edit" onclick="{!c.editEnable}" />
+                                        </aura:if>
+                                        <lightning:textarea aura:id="field" value="{!v.carePlanName}" maxlength="66" onblur="{!c.editEnableBlur}" disabled="{!v.editEnabled}" placeholder="Care plan Name..."/>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <div class="pateint_info">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5 class="static_cont">Last Update<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5 class="static_cont"><ui:outputDate aura:id="oDate" value="{!v.carePlan.LastModifiedDate}"/></h5>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Care Plan Start Date<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><lightning:input aura:id="field" required="true" type="Date" placeholder="dd/mm/yyyy" value="{!v.carePlan.ElixirSuite__Start_Date__c}"/></h5>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Care Plan End Date<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><lightning:input aura:id="endDate" required="true" type="Date" onchange="{!c.handleDueDateForTree}" placeholder="dd/mm/yyyy" value="{!v.carePlan.ElixirSuite__End_Date__c}"/></h5>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5>Care Plan Status<i>:</i></h5>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h5><span>{!v.carePlan.ElixirSuite__Status__c}</span></h5>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!--<div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="due_date">
+                                            
+                                            <ui:outputDateTime value="{!v.todayString}" />
+                                            <lightning:input aura:id="field" required="true" type="Date" label="Start Date :" placeholder="dd/mm/yyyy" value="{!v.startDate}"/>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="due_date">
+                                            <lightning:select aura:id="field" required="true" name="picklistStatus" label="Status :" onchange="{!c.statusChange}">                   
+                                                <option value="">Choose One...</option>
+                                                <aura:iteration items="{!v.pickListValuesListForStatus}" var="item">                   
+                                                    <option value="{!v.status}">{!item}</option>
+                                                </aura:iteration>
+                                            </lightning:select> 
+                                            <lightning:input aura:id="endDate" required="true" type="Date" label="End Date :"  onchange="{!c.dueDate}" placeholder="dd/mm/yyyy" value="{!v.endDate}"/>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-p-around_medium ">
+                        <lightning:card >
+                            <div class="add-problems_btn">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_2-of-2">
+                                        <lightning:textarea class="slds-m-left_xx-medium" name="input1" value="{!v.Description}" label="Description" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <!--h3 class="slds-m-left_xx-large">PROBLEM (s)</h3-->
+                                </div>
+                                <div class="slds-col slds-size_8-of-12 slds-inline-flex slds-text-align_right">
+                                    <aura:if isTrue="{!v.showProblemButton}">
+                                     <lightning:button label="{!v.customSetting.ElixirSuite__First_Level__c}" iconName="utility:adduser" class="btncss" title="{!v.HierarchyLevel.ElixirSuite__First_Level__c}" onclick="{! c.addProblems }"/>   
+                                    </aura:if>
+                                    <lightning:button label="{!v.customSetting.ElixirSuite__Third_Level__c}" iconName="utility:adduser" class="btncss" title="{!v.HierarchyLevel.ElixirSuite__Third_Level__c}" onclick="{! c.addGoals }"/>
+                                    <lightning:button label="{!v.customSetting.ElixirSuite__Fourth_Level__c}" iconName="utility:adduser" class="btncss" title="{!v.HierarchyLevel.ElixirSuite__Fourth_Level__c}" onclick="{! c.addObjective }"/>
+                                    <lightning:button label="{!v.customSetting.ElixirSuite__Fifth_Level__c}" iconName="utility:adduser" class="btncss" title="{!v.HierarchyLevel.ElixirSuite__Fifth_Level__c}" onclick="{! c.addIntervention }"/>
+                                </div>          
+                            </div>
+                            <aura:if isTrue="{!v.customGoalModal}">
+                                <c:Elixir_AddGoalsEdit carePlan = "true" existingGoals="{!v.allGoalsShow}" allGoals="{!v.allGoals}" customGoalModal="{!v.customGoalModal}"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.customTask}">
+                                <c:Elixir_AddObjectivesEdit carePlan = "true" allTasksList="{!v.allTasksList}" existingTasksObj="{!v.allTasksListShow}" customTask="{!v.customTask}"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.customInt}">
+                                <c:Elixir_AddInterventionsEdit carePlan = "true" allIntsList="{!v.allIntsList}" existingIntsObj="{!v.allIntervList}" customInt="{!v.customInt}"/>
+                            </aura:if>
+                            <aura:iteration items="{!v.allGoalsShow}" var="goalRec" indexVar="goalIdx" aura:id = "careGoals">
+                                <c:Elixir_CarePlanGoalsEdit carePlan = "true" customSetting="{!v.customSetting}" goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" goalName="{!goalRec.Name}" goal="{!goalRec}"
+                                                        usersList = "{!v.usersList}" goalsList="{!v.allGoalsShow}" dueDateGoal = "{!v.dueDateProb}" HierarchyLevel="{!v.HierarchyLevel}" recordVal="{!v.recordVal}" carePlanId = "{!v.selectedRow}" contentDocumentId = "{!v.contentDocumentId}" removedInterventionId="{!v.removedInterventionId}"/>
+                                <div class="first-inner-dl"></div>
+                            </aura:iteration>
+                            
+                            <aura:iteration items="{!v.allTasksListShow}" var="taskRec" indexVar="taskIdx">
+                                <c:Elixir_CarePlanObjectivesEdit carePlanObjective = "true" customSetting="{!v.customSetting}" showInterventions = "true" taskId="{!taskRec.Id}" taskIdx="{!taskRec.Name}" task="{!taskRec}" tasksList="{!v.tasksList}" 
+                                                             usersList = "{!v.usersList}" HierarchyLevel="{!v.HierarchyLevel}" recordVal="{!v.recordVal}" carePlanId = "{!v.selectedRow}" contentDocumentId = "{!v.contentDocumentId}" removedInterventionId="{!v.removedInterventionId}" allTasksListShow="{!v.allTasksListShow}"/>                           
+                                <div class="third-accordian_bl"></div>
+                            </aura:iteration>
+                            
+                            <aura:iteration items="{!v.allIntervList }" var="taskRec1" indexVar="taskIdx1">
+                                <c:Elixir_CarePlanInterventionsEdit carePlan="true" customSetting = "{!v.customSetting}" usersList="{!v.usersList}" taskId1="{!taskRec1.Id}" taskIdx1="{!taskRec1.Subject}" task1="{!taskRec1}" tasksList1 = "{!v.allIntervList}" recordVal="{!v.recordVal}" carePlanId = "{!v.selectedRow}" contentDocumentId = "{!v.contentDocumentId}" removedInterventionId="{!v.removedInterventionId}"/>
+                                <div class="third-accordian_bl"></div>
+                            </aura:iteration>
+                            
+                            <aura:iteration items="{!v.masterProblems.listOfProblem}" var="problemRec" indexVar="problemIdx">
+                                
+                                <aura:if isTrue = "{!not(problemRec.Action == 'DELETE')}">
+                                    <c:Elixir_OpenStatusEditProblems aura:id="carePlanParent" treatmentPlanId = "{!v.selectedRow}" problemId="{!problemRec.Id}" problemIndex="{!problemIdx}"
+                                                                     problem="{!problemRec}" problemsList="{!v.masterProblems}" nameSpace="{!v.nameSpace}"
+                                                                     customSetting="{!v.customSetting}" usersList="{!v.usersList}" carePlanId = "{!v.selectedRow}" contentDocumentId = "{!v.contentDocumentId}" showProblemButton="{!v.showProblemButton}" removedProblemId="{!v.removedProblemId}" removedInterventionId="{!v.removedInterventionId}"/>
+                                    <!--div class="down-line"></div-->
+                                </aura:if>
+                            </aura:iteration>
+                            
+                            
+                            <aura:if isTrue="{!v.openModalAllProblems}">
+                                <c:Elixir_AddProblems problemsList="{!v.allProblems}" masterProblems="{!v.masterProblems}" openModalAllProblems="{!v.openModalAllProblems}"/>
+                                
+                            </aura:if>
+                        </lightning:card>
+                        <div class="slds-clearfix"></div>
+                        <div class="slds-grid slds-gutters">
+                            <c:carePlanApproval approvalType="Care Plan" approvedValues="{!v.approvedValues}"
+                                                carePlanApprovalInNewMode = "true" parentcarePlanId="{!v.selectedRow}"/>
+                        </div>
+                        
+                        <div class="therapist_sign">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <p><b>I have participated </b> in the creation of this master treatment plan. I have read the Care plan and I agree to the content added here.</p>
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!v.openApproval}">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <aura:if isTrue="{!and(v.showSign == true , v.carePlan.ElixirSuite__Status__c == 'Open')}">
+                                            <aura:if isTrue = "{!v.decisionTree.Level1}">
+                                                <img src="{!$Resource.SignAndApprove}" onclick="{!c.patientSignProcess}"/>
+                                            </aura:if>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.newSign}">
+                                            <aura:if isTrue="{!v.setUpKey == 'Patient'}">
+                                                <img class="imgCls" src="{!v.attachId}" width="180" height="100"/>
+                                                <p class="slds-m-top_small slds-p-left_medium"><span>Signed On : </span> {!v.dateTodayForForm} </p>  
+                                                <p class="slds-p-left_medium"><span>Signed By : </span> {!v.signee1} </p>  
+                                                <p class="slds-p-left_medium">
+                                                    <span>Notes : </span> 
+                                                    <b>{!v.signComment} </b></p>
+                                                <aura:set attribute="else">
+                                                    <div class="hideFile">
+                                                        <lightning:fileCard fileId="{!v.attachId}" hideDescription = "true"/> 
+                                                    </div>
+                                                    <p class="slds-m-top_small slds-p-left_medium"><span>Signed On : </span> {!v.dateTodayForForm} </p>  
+                                                    <p class="slds-p-left_medium"><span>Signed By : </span> {!v.signee1} </p>  
+                                                    <p class="slds-p-left_medium">
+                                                        <span>Notes : </span> 
+                                                        <b>{!v.signComment} </b></p>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:if>
+                                    </div>
+                                    
+                                    <!--  <div class="slds-col slds-size_4-of-12">
+                                    <aura:if isTrue="{!and(v.showSign == true , v.carePlan.Status == 'Open')}">
+                                    <img src="{!$Resource.TherapistSignature}" onclick="{!c.primaryTherapistSignProcess}"/>
+                                    </aura:if>
+                                     <aura:if isTrue="{!v.newSign}">
+                                        <img class="imgCls" src="{!v.attachId}" width="180" height="100"/>
+                                        <p class="slds-m-top_small slds-p-left_medium"><span>Signed On : </span> {!v.dateTodayForForm} </p>  
+                                        <p class="slds-p-left_medium">
+                                            <span>Notes : </span> 
+                                         <b>{!v.signComment} </b></p>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <aura:if isTrue="{!and(v.showSign == true , v.carePlan.Status == 'In Use')}">
+                                    <img src="{!$Resource.ClinicalSupervisorSignature}" onclick="{!c.clinicalSupervisorSignProcess}"/>
+                                    </aura:if>
+                                     <aura:if isTrue="{!v.newSign}">
+                                        <img class="imgCls" src="{!v.attachId}" width="180" height="100"/>
+                                        <p class="slds-m-top_small slds-p-left_medium"><span>Signed On : </span> {!v.dateTodayForForm} </p>  
+                                        <p class="slds-p-left_medium">
+                                            <span>Notes : </span> 
+                                         <b>{!v.signComment} </b></p>
+                                    </aura:if>
+                                </div>-->
+                                </div>
+                            </aura:if>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.verifyOtp}">
+                            <c:VerifyWithOTP isActive="{!v.verifyOtp}" patId = "{!v.recordVal}" recId = "{!v.selectedRow}" pwCode="{!v.verifyCode}" sObjectName="{!v.sObjectName}" approvalLevel="{!v.LevelOfApproval}"/>
+                        </aura:if>
+                        
+                    </div>
+                    <footer class="footercls">
+                        <div class="slds-grid slds-gutters footer_mobile-grid">
+                            <div class="slds-col slds-size_8-of-12 datetime_class">    
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">   
+                                        <lightning:input  autocomplete="off" type="datetime" name="input3" aura:id="procedure-start_time" label="Start Time" required="true" value="{!v.todayString}" onchange="{!c.procedureValidity}"/>  
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">   
+                                        <lightning:input  autocomplete="off" type="datetime" name="input3" aura:id="procedure-end_time" label="End Time" required="true" value="{!v.endString}" onchange="{!c.procedureValidity}"/> 
+                                    </div>       
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                                <lightning:button  onclick="{!c.closeMainModal }" label="Cancel" variant="Neutral"/>
+                                <lightning:button  onclick="{!c.Save }" label="Save" variant="Brand"/>
+                            </div>
+                        </div>
+                    </footer>
+                    
+                </div>
+            </section>
+            <!--div class="{!'slds-backdrop ' + ((v.openViewCarePlanModal) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div-->
+        <!--/aura:if-->
+    </div>
+</aura:component>

@@ -1,0 +1,50 @@
+.THIS .inputbar input{
+    box-shadow:none;
+}
+.THIS .slds-input:focus{
+    box-shadow:none;
+}
+.THIS .slds-input:active{
+    box-shadow:none;
+}
+.THIS .e-employer {
+    position: relative;
+    z-index: 1;
+}
+.THIS .e-employer .slds-form-element__label {
+    display: none;
+}
+.THIS .slds-listbox__item {
+  list-style-type: none;
+}
+.THIS .e-employer .slds-icon_container {
+    z-index: 1;
+    right: 0px;
+    top: 5px;
+}
+.THIS .slds-listbox .slds-listbox_vertical
+{
+    background : white;
+}
+.THIS .e-employer button.slds-input__icon.slds-input__icon_right.slds-button.slds-button_icon.iconheight {
+    right: 0;
+    top: 6px;
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+    margin-top: 5px;
+}
+.THIS .e-employer .slds-icon_container .slds-close {
+    margin-right: 2px;
+}
+.THIS.slds-card{
+    border-top: 1px solid #efede9;
+}
+.THIS .parentCSS{
+    margin:10px;
+}
+.THIS .childCSS{
+    text-align:right;
+}
+.THIS .child_1{
+    background: white;
+}

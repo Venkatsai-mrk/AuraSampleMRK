@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="columns" type="List"/> 
+    <aura:attribute name="finalColumnsApi" type="List"/>
+    <aura:attribute name="finalColumnsLabel" type="List"/>
+</aura:event>

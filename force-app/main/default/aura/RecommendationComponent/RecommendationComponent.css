@@ -1,0 +1,15 @@
+.THIS button.slds-button.slds-button_reset.slds-accordion__summary-action {
+    background-color: #493266;
+    border-radius: 0;
+    color: #fff;
+}
+.THIS .add_icon svg {
+    fill : #493266;
+    padding:2px;
+    margin:8px;
+}
+.THIS .new_del svg {
+    fill : #ff0000;
+    padding:2px;
+    margin:8px;
+}

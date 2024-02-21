@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rendering_Provider_Non_NPI__c</fullName>
+    <description>Identifier for the healthcare provider without using NPI.</description>
+    <externalId>false</externalId>
+    <label>Rendering Provider (Non NPI)</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

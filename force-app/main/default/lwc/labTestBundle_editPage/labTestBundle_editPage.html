@@ -1,0 +1,83 @@
+<template>
+    <lightning-card>
+        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId}>
+            <header class="slds-modal__header bcol">
+                <div class="slds-text-heading_medium slds-modal__title slds-hyphenate">Lab Test Bundle</div>
+            </header>
+            <div class="slds-modal__content">
+                <div class="slds-grid slds-gutters div1">
+                    <div class="slds-m-around_x-small slds-col" >
+                        <lightning-input 
+                                        disabled
+                                        type="text" 
+                                        label="Name" 
+                                        max-length="80"
+                                        value={name}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-m-around_x-small slds-col">
+                        <lightning-textarea 
+                                        disabled
+                                        type="text" 
+                                        label="Description" 
+                                        max-length="500"
+                                        value={description}>
+                        </lightning-textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bcol" >
+                <h3 class="slds-text-heading_medium slds-hyphenate header-string diagHeading">
+                    Associated Diagnosis Codes
+                </h3>
+            </div>
+            <!-- Lab Tests -->
+            <div class = "txt">
+                <lightning-datatable
+                        show-row-number-column
+                        key-field="Id"
+                        data={selectedDiagnosisCodes}
+                        hide-checkbox-column
+                        columns={columnsDiagnosisCodes}>
+                </lightning-datatable>
+            </div>
+
+
+            <div class="bcol" >
+                <h3 class="slds-text-heading_medium slds-hyphenate header-string procdureHeading">
+                    Associated Procedure Codes
+                </h3>
+            </div>
+            <!-- Lab Tests -->
+            <div class = "txt">
+                <lightning-datatable
+                        show-row-number-column
+                        key-field="Name"
+                        data={selectedProcedureCodes}
+                        hide-checkbox-column
+                        columns={columnsProcedureCodes}>
+                </lightning-datatable>
+            </div>
+
+
+
+            <div class="bcol" >
+                <h3 class="slds-text-heading_medium slds-hyphenate header-string testHeading">
+                    Lab Tests
+                </h3>
+            </div>
+            <!-- Lab Tests -->
+            <div class = "txt">
+                <lightning-datatable
+                        show-row-number-column
+                        key-field="Id"
+                        data={selectedTests}
+                        hide-checkbox-column
+                        columns={columnsLabTests}>
+                </lightning-datatable>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

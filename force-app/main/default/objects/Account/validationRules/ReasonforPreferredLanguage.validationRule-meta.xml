@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReasonforPreferredLanguage</fullName>
+    <active>true</active>
+    <description>If the Reason is specified and the Reason to decline is anything other than &apos;Something else, please describe</description>
+    <errorConditionFormula>AND(NOT(ISPICKVAL(  Reason_to_Decline_Preferred_Language__c ,&quot;OTH&quot;)) ,NOT(ISBLANK( Reason_Preferred_Language__c ) ))</errorConditionFormula>
+    <errorDisplayField>Reason_Preferred_Language__c</errorDisplayField>
+    <errorMessage>Please provide a reason only when &apos;Something else, please describe&apos; is selected as the Reason to decline.</errorMessage>
+</ValidationRule>

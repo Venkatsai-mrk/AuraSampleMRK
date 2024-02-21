@@ -1,0 +1,22 @@
+.THIS .slds-leftpad{
+	padding-left: 2rem;
+}
+.THIS .iconheight{
+    top: 65%;
+}
+
+.THIS .leftspace input {
+    padding-left:2rem;
+}
+.THIS .iconheight1 {
+    top: 15px;
+    left: 7px;
+}
+.THIS .iconheight2 {
+    top: 50%;
+}
+.THIS .iconheight1 .slds-icon.slds-icon_x-small {
+    /*position: absolute;*/
+    top: 4px;
+    left: 5px;
+}

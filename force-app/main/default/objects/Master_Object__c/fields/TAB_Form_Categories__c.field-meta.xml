@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TAB_Form_Categories__c</fullName>
+    <externalId>false</externalId>
+    <label>Form Categories</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NursingForms</fullName>
+                <default>false</default>
+                <label>NursingForms</label>
+            </value>
+            <value>
+                <fullName>Sleep_Physician_Notes</fullName>
+                <default>false</default>
+                <label>Sleep_Physician_Notes</label>
+            </value>
+            <value>
+                <fullName>Dentists_Notes</fullName>
+                <default>false</default>
+                <label>Dentists_Notes</label>
+            </value>
+            <value>
+                <fullName>Prescriptions</fullName>
+                <default>false</default>
+                <label>Prescriptions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

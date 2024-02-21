@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Template_Providers</fullName>
+    <columns>NAME</columns>
+    <columns>Provider_Code__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Provider__c.Template_Provider</value>
+    </filters>
+    <label>Template Providers</label>
+</ListView>

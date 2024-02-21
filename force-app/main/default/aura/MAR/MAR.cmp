@@ -1,0 +1,508 @@
+<aura:component controller="MARController" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isActive" type="Boolean"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="searchKeyword" type="String" default=""/>    <!--to serach-->
+    <aura:attribute name="searchResult" type="List"/>
+    <aura:attribute name="allData" type = "list"/>
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="allDataTaper" type = "list"/>
+    <aura:attribute name="dataTaper" type="Object" />
+    <aura:attribute name="allDataActionOrder" type = "list"/>
+    <aura:attribute name="allDataForMissedMedication" type = "list"/>
+    <aura:attribute name="dataTaperActionOrder" type="Object" />
+    <aura:attribute name="adminStatusOptions" type = "list"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="value" type="String" default="yes"/>
+    <aura:attribute name="time" type="Time"/>
+    <aura:attribute name="afterTime" type="Time"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="jsonList" type="List"/>
+    <aura:attribute name="jsonListTaper" type="List"/>
+    <aura:attribute name="jsonListActionOrder" type="List"/>
+    <aura:attribute name="jsonListCopy" type="List"/>
+    <aura:attribute name="jsonListTaperCopy" type="List"/>
+    <aura:attribute name="jsonListActionOrderCopy" type="List"/>
+    <aura:attribute name="test" type="List"/>
+    <aura:attribute name="openVitalSign" type="Boolean" /> 
+    <aura:attribute name="hidesearch" type="Boolean" default="true"/> 
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name="taperTime" type="Time"/>
+    <aura:attribute name="saveValTaper" type="Boolean"/>
+    <aura:attribute name="saveValPRN" type="Boolean"/>
+    <aura:attribute name="AlertScreen" type="Boolean" default="true"/>
+    <aura:attribute name="reason" type="String"/>
+    <aura:attribute name="sign" type="String" default="X"/>
+    <aura:attribute name= "vitalStatus" type="Boolean"/>
+    <aura:attribute name="commentData" type="String"/>
+    <aura:attribute name="radioOptions" type="Boolean"/>
+    <aura:attribute name="savedListRecord" type="List"/>
+    <aura:attribute name="savedListRecordPRN" type="List"/>
+    <aura:attribute name="savedActionOrderRecord" type="List"/>
+    <aura:attribute name="SelectedValues" type="Map" default='{}'/>
+    <aura:attribute name="index1" type="String"/>
+    <aura:attribute name="indexAction" type="String"/>
+    <aura:attribute name="index1PRN" type="String"/>
+    <aura:attribute name="activityTime" type="String"/>
+    <aura:attribute name="activityDate" type="String"/>
+    <aura:attribute name="messege" type="Boolean"/>
+    <aura:attribute name="messegePrn" type="Boolean"/>
+    <aura:attribute name="messegeTaper" type="Boolean"/>
+    <aura:attribute name="selTabId" type="String" default="tab1" />
+    <aura:attribute name="checkSave" type="Boolean"/>
+    <aura:attribute name="tapersToRemove" type="List"/>
+    <aura:attribute name="PRNToRemove" type="List"/>
+    <aura:attribute name="ActionOrdersToRemove" type="List"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    
+    <aura:attribute name="messegeVaccination" type="boolean" default="false"/>
+    <aura:attribute name="allDataVaccine" type = "list"/>
+    <aura:attribute name="dataTaperVaccine" type="Object" />
+    <aura:attribute name="jsonListVaccine" type="List"/>
+    <aura:attribute name="jsonListVaccineCopy" type="List"/>
+    <aura:attribute name="saveValVaccine" type="boolean"/>
+    <aura:attribute name="savedListVaccine" type="List"/>
+    <aura:attribute name="vaccineToRemove" type="List"/>
+    
+    <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+        <div class="slds-modal__container level" >
+            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hideExampleModal}">
+                    <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Medical Administration Record (MAR)</h2>                            
+            </header>
+            
+            
+            <div class="slds-modal__content con slds-p-around_medium " id="modal-content-id-1" >
+                
+                <aura:if isTrue="{!v.AlertScreen}">
+                    <!--c:Elixir_AllergiesMedicalPopup AlertScreen="{!v.AlertScreen}" accId="{!v.recordVal}"/-->
+                </aura:if>
+                <div class="slds-grid slds-wrap medication_tab" >
+                    <!-- Commented by sagili siva LX3-5415 -->
+                 <!--  <lightning:tabset selectedTabId="{!v.selTabId}">-->
+                       <lightning:tabset selectedTabId="{!v.selTabId}" onselect="{! c.doInit }" variant="scoped">
+                        <lightning:tab label="Current Medications" id="tab1" >
+                            <div class="slds-col slds-size_12-of-12 slds slds-grid">
+                                
+                                <div class="slds-col slds-size_6-of-12 ">
+                                    <c:PatientCard_MAR recordId="{!v.recordVal}"></c:PatientCard_MAR>
+                                    <!-- FOR PATIENT INFORMATION -->
+                                    
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-text-align_right background-class" >
+                                    <aura:if isTrue="{!v.hidesearch}">
+                                        <lightning:input value="{!v.searchKeyword}"
+                                                         placeholder="Search The List.."
+                                                         aura:id="searchFieldes"
+                                                         onchange="{!c.Searches}"
+                                                         class="inputclass search_key"/>
+                                    </aura:if>
+                                    <!--<lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" />-->
+                                    
+                                    <lightning:button label="Vital Sign" title="Vital Sign" onclick="{! c.handleClick }" class="jj"/>
+                                    <div class="slds-clearfix"></div>
+                                    <div class="parentJJ">
+                                        <div class="afterJJ"><span></span>Next 30 Minutes</div>
+                                        <div class="afterJJ"><span></span>Missed Medicines</div>
+                                        <div class="afterJJ"><span></span>Others</div>
+                                        &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" /><br/>
+                            <div class="">
+                                <!-- for tapers -->
+                                <div class="slds-col slds-size_12-of-12">
+                                    
+                                    <div class="slds-section slds-is-open" aura:id="task2">
+                                        <h3 class="slds-section__title">
+                                            <button aria-controls="TaskList2" class="slds-button slds-section__title-action">
+                                                <span onclick="{!c.toggleSection}" data-auraId="task2" >
+                                                    <lightning:icon iconName="utility:switch"
+                                                                    size="x-small"
+                                                                    class="slds-section__title-action-icon slds-button__icon_left"
+                                                                    alternativeText="button icon" 
+                                                                    />
+                                                </span>
+                                                <span class="slds-truncate" title="tapers">TAPERS MEDICATIONS</span>
+                                            </button>
+                                        </h3>
+                                        
+                                        <aura:if isTrue="{!v.messegeTaper}">
+                                            <br/>
+                                            <div class="taper">No Taper Medications Exists For this Patient</div>
+                                            
+                                            <aura:set attribute="else">
+                                                <div class="slds-section__content" id="TaskList2" >
+                                                    <table class="slds-table slds-table_cell-buffer  table-body-row">
+                                                        <thead>
+                                                            <tr class="slds-line-height_reset " >
+                                                                
+                                                                
+                                                                <th class="tableColumnPadd" scope="col">Administration Status&nbsp;</th>
+                                                                <th scope="col">Medication Name&nbsp;</th>
+                                                                <th scope="col">Strength / Route&nbsp;</th>
+                                                                <th scope="col">Scheduled Time&nbsp;</th>
+                                                                <th scope="col">Type&nbsp;</th>
+                                                                <th scope="col">Comment&nbsp;</th>
+                                                                <th scope="col">Staff&nbsp;</th>
+                                                                <!--  <th scope="col">Action</th>-->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                            <aura:iteration items="{!v.jsonListTaper}" var="sample1" indexVar="idx1">
+                                                                <aura:iteration items="{!sample1.Record}" var="sampleTaper" indexVar="idx">
+                                                                    <tr class="{!sampleTaper.times lt v.time ? 'tier-one' : sampleTaper.times lt v.afterTime ? 'tier-two' : ''}">
+                                                                        <!-- for radio buttons-->
+                                                                        <td scope="row" >
+                                                                            <div class=" d-flex" >
+                                                                                <!--<lightning:input class="jk" type="radio" label="YES" name="{!idx1 + '$' + idx + '$MedicationNameRadio'}" value="true"  onchange="{!c.recordEdit}"   />
+                                                                                <lightning:input class="jk" type="radio" label="NO" name="{!idx1 + '$' + idx  + '$MedicationNameRadio'}" value="false" onchange="{!c.recordEdit}"  />-->
+                                                                                <lightning:select name="{!idx1 + '$' + idx  + '$MedicationNameRadio'}" label="Administration Status" onchange="{!c.recordEdit}">
+                                                                                    <option value="">--None--</option>
+                                                                                    <aura:iteration items="{!v.adminStatusOptions}" var="adminStatus">
+                                                                                        <option value="{!adminStatus.value}">{!adminStatus.label}</option>
+                                                                                    </aura:iteration>
+                                                                                </lightning:select>
+                                                                            </div>
+                                                                        </td>
+                                                                        
+                                                                        <td scope="row" class="ws-nor">
+                                                                            <lightning:input type="String" name="{!idx1 + '$' + idx +'$medicationName'}" label="" readonly="true" value="{!sampleTaper.medicationName}" onblur="{!c.recordEdit}"/>
+                                                                            <div class="m-name" title="{!sampleTaper.Warning}"> 
+                                                                                {!sampleTaper.Warning}</div>
+                                                                            
+                                                                            <!--<ui:outputText aura:id="medName" value="{!sampleTaper.ElixirSuite__MedicationName__c}">{!sampleTaper.ElixirSuite__MedicationName__c}</ui:outputText></td>
+                                                               <div class="slds-truncate"   name="{!sampleTaper.ElixirSuite__MedicationName__c}">{!sampleTaper.ElixirSuite__MedicationName__c} </div></td>
+                                                            -->
+                                                                        </td>
+                                                                        <td scope="row">
+                                                                            <lightning:input type="String" name="{!idx1 + '$' + idx +'$strength'}" label="" readonly="true" value="{!sampleTaper.allStrength}" onblur="{!c.recordEdit}">
+                                                                            </lightning:input>
+                                                                            <!-- 
+                                                                <div class="slds-truncate" name="{!sampleTaper.ElixirSuite__MedicationName__c}"> {!sampleTaper.Strength} X  {!sampleTaper.Dosage}, {!sampleTaper.Units} , {!sampleTaper.ElixirSuite__Route__c} 
+                                                           </div>
+                                                              -->  
+                                                                        </td>
+                                                                        <td scope="row">
+                                                                            <div class="">
+                                                                                <lightning:input name="{!idx1 + '$' + idx +'$time'}" type="time" label="" value="{!sampleTaper.times}" disabled="true" onblur="{!c.recordEdit}"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td scope="row" class="ws-nor">
+                                                                            <div class="slds-text-align_center">
+                                                                                <lightning:input type="String" name="{!idx1 + '$' + idx +'$type'}" label="" readonly="true" value="{!sampleTaper.Type}" onblur="{!c.recordEdit}"/>
+                                                                            </div>
+                                                                            <!--  <div class="slds-truncate slds-text-align_center" name="{!sampleTaper.ElixirSuite__MedicationName__c}">{!sampleTaper.ElixirSuite__Type__c}</div>-->
+                                                                        </td>
+                                                                        
+                                                                        <td scope="row">
+                                                                            <div class="">
+                                                                                <lightning:input type="text" name="{!idx1 + '$' + idx +'$comment'}" maxlength="255" label="" onblur="{!c.recordEdit}" value="{!sampleTaper.commentData}"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td scope="row">
+                                                                            <div class="slds-text-align_center">
+                                                                                <lightning:input type="String" name="{!idx1 + '$' + idx +'$owner'}" label="" readonly="true" value="{!sampleTaper.Owner}" onblur="{!c.recordEdit}" />
+                                                                            </div>
+                                                                        </td>
+                                                                        <!--  <div class="slds-truncate slds-text-align_center" name="{!sampleTaper.ElixirSuite__MedicationName__c}">
+                                                                    {!sampleTaper.Owner}
+                                                                </div>-->
+                                                                        
+                                                                        <!--   <td scope="row">
+                                                                <div class="slds-truncate">
+                                                                    <lightning:button label="Save" title="Save" onclick="" class="pos" tabindex="{!idx}" ariaLive="off"/>
+                                                                 
+                                                                </div>
+                                                            </td>-->
+                                                                    </tr>
+                                                                </aura:iteration>
+                                                            </aura:iteration>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                                
+                                
+                                <!-- for PRN Data -->
+                                <div class="slds-col slds-size_12-of-12">
+                                    
+                                    <div class="slds-section slds-is-open" aura:id="task1">
+                                        <h3 class="slds-section__title">
+                                            <button aria-controls="TaskList1" class="slds-button slds-section__title-action">
+                                                <span onclick="{!c.toggleSection}" data-auraId="task1" >
+                                                    <lightning:icon iconName="utility:switch"
+                                                                    size="x-small"
+                                                                    class="slds-section__title-action-icon slds-button__icon_left"
+                                                                    alternativeText="button icon" 
+                                                                    />
+                                                </span>
+                                                <span class="slds-truncate" title="prn medications">PRN MEDICATIONS</span>
+                                            </button>
+                                        </h3>
+                                        <aura:if isTrue="{!v.messegePrn}">
+                                            <br/>
+                                            <div class="no-prn">No PRN Medications Exists For this Patient</div>
+                                            
+                                            <aura:set attribute="else">
+                                                <div class="slds-section__content" id="TaskList1" >
+                                                    <div class="abc">
+                                                        <table class="slds-table slds-table_cell-buffer  table-body-row">
+                                                            <thead>
+                                                                <tr class="slds-line-height_reset " >
+                                                                    
+                                                                    
+                                                                    <th class="tableColumnPadd" scope="col">Administration Status&nbsp;</th>
+                                                                    <th scope="col">Medication Name&nbsp;</th>
+                                                                    <th scope="col">Strength / Route&nbsp;</th>
+                                                                    <th scope="col">Scheduled Time&nbsp;</th>
+                                                                    <th scope="col">Type&nbsp;</th>
+                                                                    <th scope="col">Comment&nbsp;</th>
+                                                                    <th scope="col">Staff&nbsp;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <aura:iteration items="{!v.jsonList}" var="sample1" indexVar="idx1">
+                                                                    <aura:iteration items="{!sample1.Record}" var="sample" indexVar="idx">
+                                                                        <tr class="slds-hint-parent">
+                                                                            <!-- for radio buttons-->
+                                                                            <td scope="row" >
+                                                                                <div class=" d-flex" >
+                                                                                    <!--<lightning:input class="jk" type="radio" label="YES" name="{!idx1 + '$' + idx + '$MedicationNameRadioPRN'}" value="true"  onchange="{!c.recordEdit1}" />
+                                                                                    <lightning:input class="jk" type="radio" label="NO" name="{!idx1 + '$' + idx  + '$MedicationNameRadioPRN'}" value="false" onchange="{!c.recordEdit1}"/>-->
+                                                                                    <lightning:select name="{!idx1 + '$' + idx  + '$MedicationNameRadioPRN'}" label="Administration Status" onchange="{!c.recordEdit1}">
+                                                                                    <option value="">--None--</option>
+                                                                                    <aura:iteration items="{!v.adminStatusOptions}" var="adminStatus">
+                                                                                        <option value="{!adminStatus.value}">{!adminStatus.label}</option>
+                                                                                    </aura:iteration>
+                                                                                </lightning:select>
+                                                                                </div>
+                                                                                <aura:if isTrue="{!and(idx==0,not(empty(sample1.ActivityDate)))}">
+                                                                                    <div>Last Administered on {!sample1.ActivityDate} <br/>
+                                                                                        at {!sample1.ActivityTime}</div>
+                                                                                </aura:if>
+                                                                            </td>
+                                                                            
+                                                                            <td scope="row" class="ws-nor" >
+                                                                                <div class="">
+                                                                                    <lightning:input align="center" type="String" name="{!idx1 + '$' + idx +'$medicationName'}" label="" readonly="true" value="{!sample.medicationName}" onblur="{!c.recordEdit1}"/>
+                                                                                    <div class="m-name"  title="{!sample.Warning}"> 
+                                                                                        {!sample.Warning}</div>
+                                                                                </div>
+                                                                            </td>
+                                                                            
+                                                                            <td scope="row">
+                                                                                <lightning:input type="String" name="{!idx1 + '$' + idx +'$strength'}" label="" readonly="true" value="{!sample.allStrength }" onblur="{!c.recordEdit1}">
+                                                                                </lightning:input>   
+                                                                            </td>
+                                                                            <td scope="row">
+                                                                                <div class="">
+                                                                                    <lightning:input name="{!idx1 + '$' + idx +'$time'}" type="time" label="" value="{!v.time}" disabled="true" onblur="{!c.recordEdit1}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td scope="row">
+                                                                                <div class="ws-nor">
+                                                                                    <lightning:input type="String" name="{!idx1 + '$' + idx +'$type'}" label="" readonly="true" value="{!sample.Type}" onblur="{!c.recordEdit1}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            
+                                                                            <td scope="row">
+                                                                                <div class="">
+                                                                                    <lightning:input type="text" name="{!idx1 + '$' + idx +'$comment'}" maxlength="255" label="" onblur="{!c.recordEdit1}" value="{!sample.commentData}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td scope="row">
+                                                                                <div class="align">
+                                                                                    <lightning:input type="String" name="{!idx1 + '$' + idx +'$owner'}" label="" readonly="true" value="{!sample.Owner}" onblur="{!c.recordEdit1}" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <!--    <td scope="row">
+                                                                    <div class="slds-truncate">
+                                                                         <aura:if isTrue="{!v.saveVal}">
+                                                                        <lightning:button label="Save" title="Save" onclick="" class="pos"/>
+                                                                        </aura:if>
+                                                                    </div>
+                                                                </td>-->
+                                                                        </tr>
+                                                                    </aura:iteration>
+                                                                </aura:iteration>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div> 
+                                
+                                <!-- for Action Order Data -->
+                                <div class="slds-col slds-size_12-of-12">
+                                    
+                                    <div class="slds-section slds-is-open" aura:id="task3">
+                                        <h3 class="slds-section__title">
+                                            <button aria-controls="TaskList3" class="slds-button slds-section__title-action">
+                                                <span onclick="{!c.toggleSection}" data-auraId="task3" >
+                                                    <lightning:icon iconName="utility:switch"
+                                                                    size="x-small"
+                                                                    class="slds-section__title-action-icon slds-button__icon_left"
+                                                                    alternativeText="button icon" 
+                                                                    />
+                                                </span>
+                                                <span class="slds-truncate" title="Action Order">Action Order</span>
+                                            </button>
+                                        </h3>
+                                        <aura:if isTrue="{!v.messege}">
+                                            <br/>
+                                            <div class="taper">No Action Order Exists For this Patient</div>
+                                            
+                                            <aura:set attribute="else">
+                                                <div class="slds-section__content" id="TaskList3" >
+                                                    <div class="abc">
+                                                        <table class="slds-table slds-table_cell-buffer  table-body-row">
+                                                            <thead>
+                                                                <tr class="slds-line-height_reset " >
+                                                                    
+                                                                    
+                                                                    <th scope="col">Status&nbsp;</th>
+                                                                    <th scope="col">Medication Name&nbsp;</th>
+                                                                    <th scope="col">Scheduled Time&nbsp;</th>
+                                                                    <th scope="col">Comment&nbsp;</th>
+                                                                    <th scope="col">Staff&nbsp;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                
+                                                                
+                                                                <aura:iteration items="{!v.jsonListActionOrder}" var="sampleAction3" indexVar="idxAction3">
+                                                                    <aura:iteration items="{!sampleAction3.Record}" var="sampleAction" indexVar="idxAction"> 
+                                                                        <!--div class="slds-hint-parent"-->
+                                                                        <tr class="{!sampleAction.timesActionOrder lt v.time ? 'tier-one' : sampleAction.timesActionOrder lt v.afterTime ? 'tier-two' : ''}">
+                                                                            <!-- for radio buttons-->
+                                                                            <td scope="row" >
+                                                                                <div class="slds-truncate" >
+                                                                                    <lightning:input class="jk" type="radio" label="Done" name="{!idxAction3 + '$' + idxAction + '$MedicationNameRadioAOrder'}" value="true"  onchange="{!c.recordEditAction}"/>
+                                                                                    <lightning:input class="jk" type="radio" label="Not Done" name="{!idxAction3 + '$' + idxAction  + '$MedicationNameRadioAOrder'}" value="false" onchange="{!c.recordEditAction}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            
+                                                                            <td scope="row">
+                                                                                <div class="slds-truncate mt-6">
+                                                                                    <lightning:input type="String" name="{!idxAction3 + '$' + idxAction +'$medicationName'}" label="" readonly="true" value="{!sampleAction.medicationName}" onblur="{!c.recordEditAction}"/>
+                                                                                    
+                                                                                </div>
+                                                                            </td>
+                                                                            <td scope="row">
+                                                                                <div class="slds-truncate">
+                                                                                    <lightning:input name="{!idxAction3 + '$' + idxAction +'$time'}" type="time" label="" value="{!sampleAction.timesActionOrder}" disabled="true" onblur="{!c.recordEditAction}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td scope="row">
+                                                                                <div class="slds-truncate">
+                                                                                    <lightning:input type="text" name="{!idxAction3 + '$' + idxAction +'$comment'}" maxlength="255" label="" onblur="{!c.recordEditAction}" value="{!sampleAction.commentData}"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            
+                                                                            <td scope="row">
+                                                                                <div class="slds-truncate slds-text-align_center">
+                                                                                    <lightning:input type="String" name="{!idxAction3 + '$' + idxAction +'$owner'}" label="" readonly="true" value="{!sampleAction.Owner}" onblur="{!c.recordEditAction}" />
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <!--/div-->
+                                                                    </aura:iteration>
+                                                                </aura:iteration>
+                                                                
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </aura:set>
+                                            
+                                        </aura:if>
+                                    </div> 
+                                    
+                                </div>
+                            </div>
+                        </lightning:tab>
+                        <lightning:tab label="Past/Taken Medications" onactive="" id="tab2" aura:id="tab2">
+                            
+                            <div class="slds-col slds-size_12-of-12">
+                                <c:MARMedicalStatement recordId="{!v.recordVal}"></c:MARMedicalStatement>
+                            </div>
+                        </lightning:tab>
+                    </lightning:tabset>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                </div>
+                
+                <div class="slds-clearfix"></div>
+                
+            </div>
+            
+            <footer class="slds-modal__footer">
+                <div class="slds-grid slds-gutters button mobile-grid">         
+                    <div class="slds-col slds-size_8-of-12 datetime_class">    
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">   
+                                <lightning:input type="datetime" aura:id="procedure-start_time" label="Start Time" required="true" value="{!v.todayString}" onchange="{!c.procedureValidity}" />  
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">   
+                                <lightning:input type="datetime" aura:id="procedure-end_time" label="End Time" required="true" value="{!v.endString}" onchange="{!c.procedureValidity}" /> 
+                            </div>       
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-p-top_large">  
+                        <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.hideExampleModal}"/>  
+                        <aura:if isTrue="{!v.selTabId == 'tab1'}">
+                            <lightning:button label="Administer Records" title="Administer Records" onclick="{! c.saveMarRecord }" disabled="{!v.checkSave}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.selTabId == 'tab3'}">
+                            <lightning:button label="Administer Vaccine Records" title="Administer Vaccine Records" onclick="{! c.saveVaccineRecord }" disabled="{!v.checkSave}"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </footer>
+            
+        </div>
+    </div>
+    <div class="{!'slds-backdrop ' + ((v.isActive) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+    
+    <aura:if isTrue="{!v.showConfirmDialog}">
+        
+        <div role="dialog" class="slds-modal slds-fade-in-open custom-modal">
+            <div class="custom-modal-c1 slds-border_top">
+                
+                <div class="slds-modal__content slds-p-around--medium">
+                    <center><b>Procedure End Date-Time missing. Do you want to default it to the current date-time?</b></center>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                </footer>
+                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>            
+    </aura:if>
+    
+    
+    <aura:if isTrue="{!v.openVitalSign}">
+        <c:VitalSigns openVitalSign = "{!v.openVitalSign}" AccountId="{!v.recordVal}" />         
+    </aura:if>
+    
+</aura:component>

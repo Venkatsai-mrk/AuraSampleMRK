@@ -1,0 +1,13 @@
+<aura:component implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global">
+    <aura:attribute name="crecordId" type="String" />
+    <aura:attribute name="labOrderId" type="String" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="show" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <lightning:unsavedChanges aura:id="unsaved" />
+    <div class="slds-theme_default slds-is-relative">
+        
+        <c:addOrderFormUpdate labOrderId="{!v.labOrderId}" newid='{!v.crecordId}' onfieldchange='{!c.handleFieldChangeAura}' oncloseclicked='{!c.handleFilterChange}'/>
+    </div>
+</aura:component>

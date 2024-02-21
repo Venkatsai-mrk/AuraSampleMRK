@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Diagnose_Field_Set</fullName>
+    <description>In Problem and Diagnose Screen</description>
+    <displayedFields>
+        <field>Diagnosis_Attestation_on__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Diagnosed_By__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <label>Diagnose Field Set</label>
+</FieldSet>

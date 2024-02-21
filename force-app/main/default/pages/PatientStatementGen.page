@@ -1,0 +1,281 @@
+<apex:page standardController="Patient_Statement__c" Extensions="PatientStatment_ctr" sidebar="false" renderAs="pdf">
+    <apex:form >
+        <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 680px; margin: 0 auto; background-color: #fafafa;" >
+            <thead>
+                <tr>
+                    <th style="background-color: #fff; padding: 0px 0px 0;">
+                        <table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 0px;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 0px 25px 0px 20px; width: 200px;">
+                                        <apex:image value="{!IF(isBlank(pdfData.PDF_Header_Logo__c), ' ' ,$Resource[pdfData.PDF_Header_Logo__c] )}"  width="180" style="margin: 20px 0 0 15px;" />		  
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </th>
+                </tr>          
+                <tr style="margin:100px;">  
+                    <td style="padding:0px 3px;">
+                        <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%;">
+                            <tbody>                          
+                                <tr>                       
+                                    <td>
+                                        <h4 style="margin: 0 0; font-size: 20px;"></h4>
+                                        
+                                        <p style="margin: 3px 0; font-size: 16px;"><b>Patient Name :</b> {!objPatSt.Account__r.Name} <span> </span></p>
+                                        
+                                        <p style="margin: 3px 0; font-size: 14px;"><b>Guarantor Name :</b> {!objPatSt.Account__r.Name} <span> </span></p>
+                                        
+                                        <p style="margin: 3px 0; font-size: 14px;"><b>MRN Number :</b>  {!objPatSt.Account__r.MRN_Number_New__c}<span> </span></p>
+                                        
+                                        <p style="margin: 3px 0; font-size: 14px;"><b>Statment Date :</b>  
+                                            <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}">
+                                                <apex:param value="{!mainDate}" />
+                                            </apex:outputText>
+                                            <span> </span></p>
+                                        
+                                    </td>   
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            
+                        </table>
+                        
+                    </td>
+                </tr>
+                
+            </thead>
+            <tbody>      
+                <table border="0" cellspacing="0" cellpadding="0" style="margin: 1px auto; width:680px;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <table border="0" cellspacing="0" cellpadding="0" style="margin: 10px 15px 0 0 ; width:100%;border: 3px solid #039eda;" >
+                                    <tbody>
+                                        <tr><th colspan="4" style="background-color: #039eda;">
+                                            
+                                            <h4 style="color: #fff;margin:5px 15px;display: block; ">Services Statement Summary</h4></th></tr>
+                                        <tr>
+                                            
+                                            <td style="padding: 2px 15px; font-size: 16px;">
+                                                
+                                                <b>
+                                                    Previous Balance : 
+                                                </b> </td>
+                                            <td style="padding: 2px 15px; font-size: 16px;">
+                                                <b>
+                                                    $ {!objPatSt.PreviousBalance__c}</b>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td style="padding: 2px 15px;">                                
+                                                <h4 style="margin: 0 0; font-size: 16px;">New Charges</h4>
+                                            </td>
+                                            <td style="padding: 2px 15px;">
+                                                
+                                                <h4 style="margin: 0 0; font-size: 16px;"> ${!objPatSt.NewCharges__c}</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td style="padding: 2px 15px;">
+                                                
+                                                <h4 style="margin: 0 0; font-size: 16px;">Payments/Adjustments</h4>
+                                            </td>
+                                            <td style="padding: 2px 15px;">
+                                                <h4 style="margin: 0 0; font-size: 16px;">( ${!objPatSt.PaymentsAndAdjustmnts__c} )</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td style="padding: 2px 15px;">
+                                                
+                                                <h4 style="margin: 0 0; font-size: 16px;">New Balance</h4>
+                                            </td>
+                                            <td style="padding: 2px 15px;">
+                                                
+                                                <h4 style="margin: 0 0; font-size:16px;"> $ {!objPatSt.NewBalance__c}</h4>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr><td colspan="2"><hr/></td></tr>
+                                        <tr><td colspan="2"  style="padding: 2px 15px;text-align: center;">Payment Due</td></tr>
+                                        <tr><td colspan="2"  style="padding: 2px 15px;text-align: center;">Your Insurance has been billed. Your responsibility to Pay is</td></tr>
+                                        <tr><td colspan="2"  style="padding: 2px 15px;text-align: center; font-weight: 700; font-size: 36px;"> $ {!objPatSt.NewBalance__c}</td></tr>
+                                        <tr>
+                                            
+                                            <td colspan="2" style="text-align:center;">
+                                                <hr/>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="padding: 2px 15px;text-align: center;">
+                                                Please Pay In Full By
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="padding: 2px 15px;text-align: center; font-size: 36px; font-weight: 700;">
+                                                <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!payFullBy}" /> </apex:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr><td colspan="2"><hr/></td></tr>
+                                        <tr>
+                                            <td colspan="2" style="padding: 2px 15px;text-align: center;">
+                                                Thank you for choosing us
+                                                The amount due represents
+                                                your responsibility.
+                                            </td>
+                                        </tr>
+                                        <tr><td colspan="2"><hr/></td></tr>
+                                        <!--tr>
+                                            
+                                            <td colspan="2" style="padding: 2px 15px;">
+                                                
+                                                <b>Insurance Information On File</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table border="0" cellspacing="0" cellpadding="0" >
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding: 2px 15px; width:100px;">
+                                                                Primary:
+                                                            </td>
+                                                            <td style="padding: 2px 15px;">
+                                                                {!primaryInsuranceName}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 2px 15px; width:100px;">
+                                                                Secondary:
+                                                            </td>
+                                                            <td style="padding: 2px 15px;">
+                                                                {!secInsuranceName}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>                           
+                                        </tr-->                                     
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>   
+                <table border="0" cellspacing="0" cellpadding="0" style="margin:20px auto;" >
+                    <tbody>
+                        <apex:repeat value="{!privateProcedures}" var="item" id="theRepeat">
+                            <table style="width:100%;">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="4" style="background-color: #493266;font-size: 14px; font-weight: 150; margin: 5px 0 5px 15px; color: #fff;">  <!-- background-color: #039eda;--> 
+                                            <table style="width:100%;">
+                                                <tr>
+                                                    <td>
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">
+                                                            Procedure Name :  {!item.procedureName} 
+                                                        </h4> 
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Date of Service :
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!item.dos}" /> </apex:outputText>
+                                                        </h4>
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Provider : {!item.providerName} </h4>
+                                                    </td>
+                                                    <td>
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Charges  : $ {!item.charges} </h4> 
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Patient Payments	:	 $ {!item.patientPayments} </h4>
+                                                        <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Amount You will need to Pay : $ {!item.amountToPay}  
+                                                        </h4>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                    <apex:outputText style="margin-top:10px;margin:bottom:10px;" rendered="{!item.transactions.size == 0}">
+                                    	<p style="text-align:center;">
+                                            No Payments Made
+                                        </p>
+                                    </apex:outputText>
+                                    <apex:repeat value="{!item.transactions}" var="subitem">
+                                        <table style="width:100%;background-color:#f1f2f3;margin:6px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Transaction Date:</td>
+                                                    <td style="padding: 2px 15px;"> 
+                                                        <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}">
+                                                            <apex:param value="{!subitem.CreatedDate}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                </tr>
+                                                <tr> 
+                                                    <td style="padding: 2px 15px;">Patient Payments:</td>
+                                                    <td style="padding: 2px 15px;">$ {!subitem.Amount_Paid__c}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </apex:repeat><br/>
+                                </tbody>
+                            </table>
+                        </apex:repeat>
+                        <apex:repeat value="{!insuranceProcedures}" var="item">
+                            <table style="width:100%;">
+                                <tbody>
+                                    <tr><th colspan="4" style="background-color: #493266;font-size: 14px; font-weight: 150; margin: 5px 0 5px 15px; color: #fff;">  <!-- background-color: #039eda;-->
+                                        <table style="width:100%;">       
+                                            <tr>
+                                                <td>
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Procedure Name : {!item.procedureName} </h4> 
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Date of Service :
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!item.dos}" /> </apex:outputText>
+                                                    </h4>
+                                                </td>
+                                                <td>
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Provider :  {!item.providerName} </h4>
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Charges  : $ {!item.charges} </h4> 
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Patient Payments	:	 $ {!item.patientPayments} </h4>
+                                                    <h4 style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Insurance Payments/Adjustments	:	 $ {!item.insurancePayments} </h4>
+                                                    <h4  style="background-color: #493266;color: #fff;margin:8px 15px;display: block;">Amount You will need to Pay : $ {!item.amountToPay}  
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </th>
+                                    </tr>
+                                    <apex:outputText style="margin-top:10px;margin:bottom:10px;" rendered="{!item.transactions.size == 0}">
+                                    	<p style="text-align:center;">
+                                            No Payments Made
+                                        </p>
+                                    </apex:outputText>
+                                    <apex:repeat value="{!item.transactions}" var="subitem" id="theRepeat">
+                                        <table style="width:100%;background-color:#f1f2f3;margin:6px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding: 2px 15px;">Transaction Date:</td>
+                                                    <td style="padding: 2px 15px;"> 
+                                                        <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}">
+                                                            <apex:param value="{!subitem.CreatedDate}" />
+                                                        </apex:outputText>
+                                                    </td>
+                                                </tr>
+                                                <tr> 
+                                                    <td style="padding: 2px 15px;">Insurance Payments:</td>
+                                                    <td style="padding: 2px 15px;">$ {!subitem.Amount_Paid__c}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </apex:repeat><br/>
+                                </tbody>
+                            </table>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </tbody>
+        </table>
+    </apex:form>
+</apex:page>

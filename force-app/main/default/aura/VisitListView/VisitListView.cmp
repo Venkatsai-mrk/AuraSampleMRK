@@ -1,0 +1,162 @@
+<aura:component controller= "VisitController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <lightning:workspaceAPI aura:id="workspace" /> 
+    <aura:attribute name="listDetails" type="Visits__c"/>
+    <aura:attribute name="Caselist" type="Case[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="recordId" type="String" access="public"/>
+    <aura:attribute name="allRecordId" type="List[]" />
+    <aura:attribute name="selectedRow" type="String"/>
+    <aura:attribute name="selectedRowId" type="String"/>
+    <aura:attribute name="openCareplan" type="boolean" default=""/>
+    <aura:attribute name="showDeleteButton" type="boolean" default="false"/>
+    <aura:attribute name="openViewCarePlanModal" type="Boolean"/>
+    <aura:attribute name="Elixir_OpenStatusEditComponent" type="Boolean"/>
+    <aura:attribute name="delButtonEnabled" type="Boolean" default="false"/>
+    <aura:attribute name="newVisit" type="Boolean" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedRowsList" type="List" />
+    <aura:attribute name="sortedBy" type="String" default="Name"/>   <!--to sort columns-->
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name = "headingTitle" type="String" Default="Care Plans"/>
+    <aura:attribute name="openNewCarePlan" type="boolean" default="false"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    
+    <aura:attribute name="showGenerateChartButton" type="boolean" default="false"/>
+    <aura:attribute name="patientChart" type="Boolean"/>
+    <aura:attribute name="genChartButtonEnabled" type="Boolean" default="false"/>
+
+    <!--Added by Anmol for LX3-8141-->
+    <aura:attribute name="showGenerateSuperbill" type="boolean" default="false"/>
+    <aura:attribute name="genSuperbillButtonEnabled" type="Boolean" default="false"/>
+    <!--End by Anmol for LX3-8141-->
+
+    <aura:attribute name="parentColumns" type="List" />
+    
+    <aura:handler event="c:CareEpisodeRefreshEvt" action="{!c.myAction}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <!---Added by Ashwini-->
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+ <aura:attribute name ="accName" type = "String"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <!--End-->
+    <div> 
+        <div class="mgl-p">
+            <div class ="mgList">   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-4">
+                        <span>
+                            <!---ADDED by Ashwini-->
+                            <ol><li>
+                                <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a> {!v.greaterSign} <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                                                              </li>
+                                                              </ol>
+                                                              <!--End-->
+                            <!-- heading -->
+                            <h5 class="slds-text-heading_medium"><b>Care Episode</b></h5> 
+                        </span>
+                    </div>
+                    <!--div class="slds-col slds-size_1-of-4">
+                            <lightning:button variant ="neutral" label="Delete" disabled = "{!v.delButtonEnabled}" onclick="{!c.deleteButton}"/>
+                        </div -->
+                    <div class="slds-col slds-size_1-of-4"></div>                     
+                </div>      
+            </div>
+            <!--List Status-->
+            <div class="slds-grid slds-m-top_xx-small slds-m-left_small">
+                <div class="slds-col slds-size_4-of-12" >
+                    <div>
+                        {! v.listDetails.length }  items . Sorted by {!v.sortedBy} 
+                        <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                            <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                        </aura:if>
+                    </div>
+                </div> 
+                
+                
+                <div class="slds-col slds-size_8-of-12 slds-m-left_small slds-m-bottom_small slds-p-right_x-large slds-text-align_right">
+                    <aura:if isTrue="{!v.showGenerateChartButton}">
+                        <lightning:button label="Generate Patient Chart" disabled = "{!v.genChartButtonEnabled}" variant="brand" title="Generate Patient Chart" onclick="{! c.handleClickChart }"/>
+                    </aura:if>
+                    <!--Added by Anmol for LX3-8141-->
+                    <aura:if isTrue="{!v.showGenerateSuperbill}">
+                        <lightning:button label="Generate Superbill" disabled = "{!v.genSuperbillButtonEnabled}" variant="brand" title="Generate Superbill" onclick="{! c.handleClickSuperbill }"/>
+                    </aura:if>
+                    <!--End by Anmol for LX3-8141-->
+                    <aura:if isTrue="{!v.showDeleteButton}">
+                        <lightning:button label="Delete Selected" disabled = "{!v.delButtonEnabled}" variant="brand" onclick="{!c.deleteButton}"/>
+                    </aura:if> 
+                    <c:CareEpisodeColumnsConfigurable/>
+                    <!--  <lightning:button variant ="neutral" label ="Generate Claim" onclick = "" class="inline-buttons left-margin btncss"/>-->
+                    <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.myAction}" aura:id ="refreshing" class="btncss"/> 
+                    <lightning:button variant ="neutral" label ="New" onclick = "{!c.openNewCarePlanModal}" class="inline-buttons left-margin btncss"/>                          
+                </div>
+            </div> 
+            <div>         
+                <!--to display datatable-->
+                <div class="slds-grid">
+                    <div aura:id="dataTable" class="slds-col">  
+                        <lightning:datatable data="{! v.listDetails }"  
+                                             class = "abc"
+                                             aura:id="myCol"
+                                             columns="{! v.mycolumns }" 
+                                             keyField="id"
+                                             hideCheckboxColumn="false"
+                                             selectedRows="{!v.selectedRows}"
+                                             onrowselection="{! c.updateSelectedText }"
+                                             onsort="{!c.updateColumnSorting}"
+                                             sortedBy="{!v.sortedBy}"  
+                                             sortedDirection="{!v.sortedDirection}"
+                                             onrowaction="{! c.handleRowAction }"
+                                             resizeColumnDisabled="false" />
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!! v.loaded }">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:if>
+        </div>  
+    </div>
+    <aura:if isTrue="{!v.newVisit}">
+        <!--c:Elixir_Visit newVisit="{!v.newVisit}" recId="{!v.recordVal}"/-->    
+        
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.patientChart}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c:PatientChart isOpen = "{!v.patientChart}" recId = "{!v.recordVal}" selectedRowId="{!v.selectedRow}" careEpisodesSelected="{!v.selectedRowsList}"></c:PatientChart>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showConfirmDialog}">
+         <div role="dialog" class="slds-modal slds-fade-in-open ">
+             <div class="slds-modal__container">
+                 <header class="slds-modal__header">
+                     <h1 class="slds-text-heading--medium">Confirmation</h1>
+                 </header>
+                 <div class="slds-modal__content slds-p-around--medium">
+                    <!-- <p class="slds-align_absolute-center">Are you sure you want to delete the record(s)?</p>-->
+                    <center style="font-weight: normal">Are you sure you want to delete the record(s)?</center>
+                 </div>
+                 <footer class="slds-modal__footer">
+                     <lightning:button variant="Neutral" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                     <lightning:button  variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                 </footer>
+                 
+             </div>
+         </div>
+         <div class="slds-backdrop slds-backdrop--open"></div>            
+     </aura:if>
+    
+    
+</aura:component>

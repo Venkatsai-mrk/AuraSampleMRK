@@ -1,0 +1,15 @@
+.THIS .slds-modal__container.edit_container {
+    min-width: 70% !important;
+    padding-bottom: 48px !important;
+}
+.THIS .edit_container header.slds-modal__header {
+    padding: 5px !important;
+}
+.THIS .edit_container footer.slds-modal__footer {
+    padding: 5px 15px !important;
+}
+.THIS .edit_container .slds-modal__content{
+    padding: 5px 15px !important;
+    min-height: 250px;
+    
+}

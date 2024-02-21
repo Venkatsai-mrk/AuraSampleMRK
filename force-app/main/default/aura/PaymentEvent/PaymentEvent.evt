@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" description="Event template">
+    
+    <aura:attribute name="firstLabel" type="String"/>
+    <aura:attribute name="secondLabel" type="String"/>
+    <aura:attribute name="firstValue" type="Decimal"/>
+    <aura:attribute name="secondValue" type="Decimal"/>
+</aura:event>

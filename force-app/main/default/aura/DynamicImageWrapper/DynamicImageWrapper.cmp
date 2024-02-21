@@ -1,0 +1,23 @@
+<aura:component>
+    <aura:attribute name="section" type="Object" default=""/>
+    <aura:attribute name="formUniqueId" type="String" access="global"/>
+    <aura:attribute name="accountId" type="String" access="global"/>
+    <aura:attribute name="formCssId" type="String" access="global"/>
+    <aura:attribute name="isStaticImageRefresh" type="Boolean" default="true"/> 
+    <aura:attribute name="isNew" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="viewMode" type="Boolean" default="true" access="global"/>
+    
+    <aura:method name="fetchDataToSend" action="{!c.getDataToSend}"></aura:method>
+
+    <aura:if isTrue="{!v.isStaticImageRefresh}">
+        <c:dynamicDrawAnnotation
+            aura:id="dynamicDrawAnnotationChild"
+            formUniqueId="{!v.formUniqueId}" 
+            accountId="{!v.accountId}"
+            formCssId="{!v.formCssId}"
+            isNew = "{!v.isNew}"
+            onimageDataStatic="{!c.getValueFromLwcStatic}"
+            onloadNewImage="{!c.inititateNewImg}"
+            viewMode="{!v.viewMode}"/>
+    </aura:if>
+</aura:component>

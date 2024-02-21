@@ -1,0 +1,155 @@
+<aura:component controller="Elixir_CarePlanController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="listDetails" type="Treatment_Plan__c[]"/>
+    <aura:attribute name="Caselist" type="Treatment_Plan__c[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="selectedRow" type="String"/>
+    <aura:attribute name="openCareplan" type="boolean" default=""/>
+    <aura:attribute name="showDeleteButton" type="boolean" default=""/>
+    <aura:attribute name="openViewCarePlanModal" type="Boolean"/>
+    <aura:attribute name="Elixir_OpenStatusEditComponent" type="Boolean"/>
+    <aura:attribute name="delButtonEnabled" type="Boolean" default="false"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="approvalLevelCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedRows" type="List" /> 
+    <aura:attribute name= "decisionTree" type="String"/>
+    <aura:attribute name="selectedRowsList" type="List" />
+    <aura:attribute name="sortedBy" type="String" default="Name"/>   <!--to sort columns-->
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="showPdfbutton" type="boolean" default="true"/>
+    <aura:attribute name="openApproval" type="boolean"/>
+    <aura:attribute name = "headingTitle" type="String" Default="Care Plans"/>
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name = "TodayDate" type="Date"/>
+    <aura:attribute name = "NextDate" type="Date"/>
+    <aura:attribute name="openNewCarePlan" type="boolean" default="false"/>
+    
+    <aura:handler name="RefreshCarePlan" event="c:RefreshCarePlan"
+                  action="{!c.handleRefresh}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+	<aura:handler event="c:FormsRefreshEvt" action="{!c.myAction}"/>
+    <aura:attribute name="carePlancolumns" type="List"/> 
+    <aura:attribute name="careplanlistDetails" type="Treatment_Plan__c[]"/>
+    <aura:handler event="force:refreshView" action="{!c.myAction}" />
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <div class="">
+        
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        
+            
+            <!--###### MODAL BOX Start######--> 
+            <section  class="cp-list_view">
+                <div>
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="">
+                        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide"/>
+                        <div class="height-100"> 
+                            <div class="cp-modal">
+                                <div class ="mgList mgList1">   
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_2-of-4">
+                                            <span>
+                                                <!-- heading -->
+                                                <h5 class="slds-text-heading_large"><b>Care Plans</b></h5> 
+                                            </span>
+                                        </div>
+                                        <!--div class="slds-col slds-size_1-of-4">
+                            <lightning:button variant ="neutral" label="Delete" disabled = "{!v.delButtonEnabled}" onclick="{!c.deleteButton}"/>
+                        </div -->
+                                        <div class="slds-col slds-size_1-of-4"></div>                     
+                                    </div>      
+                                </div>
+                                <!--List Status-->
+                                <div class="slds-grid margin-tb">
+                                    <div class="slds-col slds-size_7-of-12 pos-r">
+                                        <div class="list-details">
+                                            {! v.careplanlistDetails.length }  items . Sorted by {!v.sortedBy} 
+                                            <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                                <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div> 
+                                    <div class="slds-col slds-size_5-of-12 slds-m-left_small slds-m-bottom_small exapdf">
+                                        
+                                        <lightning:button variant ="brand"  label ="Export As PDF" onclick ="{!c.exportAsPDF}" disabled="{!v.showPdfbutton}"/>
+                                        
+                                        <aura:if isTrue="{!v.showDeleteButton}">
+                                            <lightning:button label="Delete Selected" disabled = "{!v.delButtonEnabled}" variant="brand" onclick="{!c.deleteButton}"/>
+                                        </aura:if>
+                                        <c:CarePlanColumnsConfig/>
+                                        <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.myAction}" aura:id ="refreshing" class="btncss"/> 
+                                        <lightning:button variant ="neutral" label ="New" onclick = "{!c.openNewCarePlanModal}" class="inline-buttons left-margin btncss"/>                          
+                                    </div>
+                                </div> 
+                                <div>         
+                                    <!--to display datatable-->
+                                    <div class="slds-grid">
+                                        <div aura:id="dataTable" class="slds-col care_list">  
+                                            <lightning:datatable data="{! v.careplanlistDetails }"  
+                                                                 class = "abc"
+                                                                 aura:id="myCol"
+                                                                 columns="{! v.carePlancolumns }" 
+                                                                 keyField="id"
+                                                                 hideCheckboxColumn="false"
+                                                                 selectedRows="{!v.selectedRows}"
+                                                                 onrowselection="{! c.updateSelectedText }"
+                                                                 onsort="{!c.updateColumnSorting}"
+                                                                 sortedBy="{!v.sortedBy}"  
+                                                                 sortedDirection="{!v.sortedDirection}"
+                                                                 onrowaction="{! c.handleRowAction }"
+                                                                 minColumnWidth = "30px"
+                                                                 resizeColumnDisabled="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <!--footer>
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        
+                    </footer-->
+                </div>
+            </section>
+            
+            <!--###### MODAL BOX Part END Here ######-->
+            <!--aura:if isTrue="{!v.openViewCarePlanModal}">
+                <c:Elixir_ViewCarePlan decisionTree = "{!v.decisionTree}" openViewCarePlanModal="{!v.openViewCarePlanModal}" selectedRow="{!v.selectedRow}" 
+                                       recordVal="{!v.recordVal}" countOfApprovalLevel="{!v.approvalLevelCount}"/>
+            </aura:if-->
+            <!--aura:if isTrue="{!v.Elixir_OpenStatusEditComponent}">
+                <c:Elixir_OpenStatusEditComponent  decisionTree = "{!v.decisionTree}" openApproval = "{!v.openApproval}" openViewCarePlanModal="{!v.Elixir_OpenStatusEditComponent}" selectedRow="{!v.selectedRow}" recordVal="{!v.recordVal}"/>
+            </aura:if-->
+            <!--aura:if isTrue="{!v.openNewCarePlan}">
+                <c:Elixir_CarePlan recordVal="{!v.recordVal}" openMainModal="{!v.openNewCarePlan}" />   
+            </aura:if--> 
+        
+    </div>
+    <!-- prompt for care plan deletion -->
+    <aura:if isTrue="{!v.showConfirmDialog}">
+        <div class="deletePrompt">
+        <div role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h1 class="slds-text-heading--medium">Confirmation</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <!-- <center><b>Are you sure you want to delete the record(s)?</b></center> -->
+                    <center style="font-weight: normal">Are you sure you want to delete the record(s)?</center>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                </footer>
+                
+            </div>
+        </div>
+            </div>           
+    </aura:if>
+</aura:component>

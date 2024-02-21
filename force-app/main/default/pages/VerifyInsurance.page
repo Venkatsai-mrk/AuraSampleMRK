@@ -1,0 +1,91 @@
+<apex:page extensions="InsuranceController" standardController="VOB__c" lightningStylesheets="true" sidebar="false" docType="html-5.0">
+    <script >
+    function myFunction(a){
+        sforce.one.navigateToURL('/lightning/r/VOB__c/'+a+'/view');
+    }
+    </script>
+    <script>
+        function showToast(a) {
+            sforce.one.showToast({
+                "title": "Success!",
+                "message": "Your details have been sent for verification. ",
+                "type": "success"
+            });
+             sforce.one.navigateToURL('/lightning/r/VOB__c/'+a+'/view');
+        }
+    </script>
+    
+      <apex:form >
+
+            <center>    
+                <h5 style=" font-size: 18px;"><b>Are You Sure Want to Submit For Verification?</b></h5>    
+            </center>
+                      
+            <table border="0" cellspacing="0" cellpadding="0" style="margin: 10px auto; width:500px;" >
+                <tbody>                    
+                    <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Patient First Name : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                                {!PatientData.PatientFirstName__c}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Patient Last Name : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                               {!PatientData.PatientLastName__c}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Patient Birth Date : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                                <apex:outputText value="{0, date,dd MMM yyyy}">
+                                    <apex:param value="{!PatientData.Patient_Birth_Date__c}"/>
+                                </apex:outputText></b>
+                        </td>
+                    </tr>
+                      <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Payer Name  : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                                {!PatientData.Payer_Name__c}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Member ID  : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                                {!PatientData.Member_Id__c}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 15px;width:300px;padding-left:120px">
+                            Group Number  : 
+                        </td>
+                        <td style=" font-size: 16px;">
+                            <b>
+                                {!PatientData.Group_Number__c}</b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table> 
+            <br/>
+            <center><apex:commandButton style="background-color: #ffb589;color: #ffffff; border-color: #f5650f;" action="{!accept}" onclick="showToast('{!PatientData.id}')" value="Verify" id="theButton1"/>&nbsp;&nbsp;
+              <!--  <apex:commandButton onclick="myFunction('{!PatientData.id}')" value="Cancel" id="theButton"/>-->
+            </center>
+        </apex:form>
+   
+</apex:page>

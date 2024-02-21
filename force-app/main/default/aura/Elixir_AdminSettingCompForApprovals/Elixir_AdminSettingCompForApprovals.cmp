@@ -1,0 +1,66 @@
+<aura:component controller="Elixir_AdminSettingHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="openPatientTileConfigurationscreen" type="Boolean" />
+    <aura:attribute name="openPatientInfoCardConfigurationscreen" type="Boolean" />
+    <aura:attribute name="openPrescripOrderApprovalSettings" type="Boolean" />
+    <aura:attribute name="openLabOrderApprovalSettings" type="Boolean" />
+    <aura:attribute name="openCarePlanApprovalSettings" type="Boolean" />
+    <aura:attribute name="openLocationConfigurationscreen" type="Boolean" />
+    <aura:attribute name="ApprovalFor" type="String" />
+    <aura:attribute name="profileName" type="String"/>
+    <aura:attribute name="openApprovalTask" type="Boolean" default="false" />
+    <aura:attribute name="openCareEpisode" type="Boolean" default="false" />
+    <aura:attribute name="openBulkMessage" type="Boolean" default="false" />
+    <aura:attribute name="approvalTask" type="Boolean" />
+    <aura:attribute name="careEpisodeOpen" type="Boolean" />
+    <aura:attribute name="bulkMessageOpen" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card> 
+        <div class="parentCSS">
+            <div class="parentCSS_Header slds-is-fixed">
+                <ul>
+                    <li><button class="parentCSS_1" aura:id="patientTile"  onclick="{!c.openPatientTileconfigScreen}">Patient Tile Configuration</button></li>
+                    <li><button class="parentCSS_1" aura:id="patientCard"  onclick="{!c.openPatientInfoCardConfigScreen}">Patient Card Configuration</button></li>
+                    <li><button class="parentCSS_1" aura:id="LabOrder"  onclick="{!c.handleLabOrder}">Lab Order Approval Settings</button></li>
+                    <li><button class="parentCSS_1" aura:id="prescriptionOrder"  onclick="{!c.handlePrescripOrder}">Prescription Order Approval Settings</button></li>
+                    <li><button class="parentCSS_1" aura:id="CarePlan"  onclick="{!c.handleCarePlan}">Care Plan Approval Settings</button></li>
+                    <li><button class="parentCSS_1" aura:id="Location"  onclick="{!c.openLocationConfiguration}">Location Configuration</button></li>
+                    <li><button class="parentCSS_1" aura:id="CustomSettings"  onclick="{!c.openApprovalTasks}">Approval Tasks</button></li>
+                    <li><button class="parentCSS_1" aura:id="CustomSettings"  onclick="{!c.openCareEpisodeSettings}">Care Episode Settings</button></li>
+                    <li><button class="parentCSS_1" aura:id="CustomSettings"  onclick="{!c.openBulkMessageSettings}">Bulk Message Settings</button></li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="parent_content">
+                <aura:if isTrue="{!v.openPatientTileConfigurationscreen}">
+                    <c:ElixirOEM_PatientTileConfigScreen/>         
+                </aura:if>
+                 <aura:if isTrue="{!v.openPatientInfoCardConfigurationscreen}">
+                    <c:ElixirOEM_PatientInfoCardConfigScreen profileName="{!v.profileName}"/>         
+                </aura:if>
+                <aura:if isTrue="{!v.openLabOrderApprovalSettings}">
+                    <c:Elixir_PrescriptionConfigurationApprovals ApprovalFor="{!v.ApprovalFor}" /> 
+                </aura:if>
+                <aura:if isTrue="{!v.openPrescripOrderApprovalSettings}">
+                    <c:Elixir_PrescriptionConfigurationApprovals ApprovalFor="{!v.ApprovalFor}" /> 
+                </aura:if>
+                <aura:if isTrue="{!v.openCarePlanApprovalSettings}">
+                     <c:Elixir_CarePlanApprovalSettingsScreen ApprovalFor="{!v.ApprovalFor}" /> 
+                </aura:if>
+                <aura:if isTrue="{!v.openLocationConfigurationscreen}">
+                    <c:ElixirOEM_LocationConfiguration/>         
+                </aura:if>
+                <aura:if isTrue="{!v.openApprovalTask}">
+                    <c:Elixir_ApprovalAndCareEpisodeSettings approvalTask="{!v.approvalTask}"/>         
+                </aura:if>
+                 <aura:if isTrue="{!v.openCareEpisode}">
+                    <c:Elixir_ApprovalAndCareEpisodeSettings careEpisodeOpen="{!v.careEpisodeOpen}"/>         
+                </aura:if>
+                <aura:if isTrue="{!v.openBulkMessage}">
+                    <c:Elixir_ApprovalAndCareEpisodeSettings bulkMessageOpen="{!v.bulkMessageOpen}"/>         
+                </aura:if>
+                
+            </div>
+        </div> 
+    </lightning:card>
+</aura:component>

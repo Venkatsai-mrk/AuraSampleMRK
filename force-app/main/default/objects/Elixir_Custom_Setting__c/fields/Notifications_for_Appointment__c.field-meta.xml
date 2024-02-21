@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notifications_for_Appointment__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>This will enables the  provider to send out direct messages to the patient for new appointments or any changes in existing appointment automatically so that my patients are able to get the important information in their inbox</description>
+    <externalId>false</externalId>
+    <label>Notifications for Appointment</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_custom_screen__c</fullName>
+    <description>Flags whether the event is a custom screen.</description>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Is custom screen</label>
+    <type>Checkbox</type>
+</CustomField>

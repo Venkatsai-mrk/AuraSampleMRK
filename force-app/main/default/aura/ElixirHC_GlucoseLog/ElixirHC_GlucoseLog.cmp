@@ -1,0 +1,118 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="ElixirOEM_ExternalComponentsHelper" access="global" >
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ExternalcmpData" type="Object" />
+    <!--Event handler for Add and Delete Row Event -->    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:registerEvent name="GlucoseData" type="c:GlucoseData"/>
+    <aura:attribute name="windowNotCancelled" type="Boolean" default="true"/> 
+    <!--Aura Attribute for store Allergy Object List as Array-->    
+    <aura:attribute name="glucoseList" type="Medical_Examination__c[]"/> 
+    <aura:attribute name="glucoseListCopyToSave" type="Medical_Examination__c[]"/> 
+    <aura:attribute name="InterventionValues" type="list"/> 
+    <aura:attribute name="typeCheck" type="list"/> 
+    <aura:registerEvent name="hideAllergysection" type="c:hideAllergySection"/>
+    <!-- AURA METHOD-->
+    <aura:method name="glucoseMethod" action="{!c.Save}"
+                 description="Sample method with parameters"> 
+        <aura:attribute name="formID" type="String" default="parameter 1"/> 
+        <aura:attribute name="patientID" type="String" /> 
+    </aura:method>
+    <!--END-->
+    <aura:attribute name="patientID" type="String"/> 
+    
+    
+    <!--Header Part-->        
+    
+    
+    <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small glucose_table"> 
+        <thead>
+            <tr class="slds-text-title_small">
+                <th scope="col" class="slds-p-left_none pr5 bg-white">
+                    <div class="slds-truncate">S.No</div>
+                </th>
+                <th scope="col" class="pl5 pr5 bg-white">
+                    <div class="slds-truncate" title="Reading">Intervention</div>
+                </th>
+                <th scope="col" class="pl5 pr5 bg-white">
+                    <div class="slds-truncate" title="Type of check">Type of check</div>
+                </th>
+                <th scope="col" class="pl5 pr5 bg-white">
+                    <div class="slds-truncate" title="Intervention/s">Reading</div>
+                </th>
+                <th scope="col" class="pl5 pr5 bg-white">
+                    <div class="slds-truncate" title="Note">Note</div>
+                </th>
+                
+                <th class="bg-white"></th>
+            </tr>
+        </thead>   
+        <tbody>
+            
+            <aura:iteration items="{!v.glucoseList}" var="glucoseInstance" indexVar="rowIndex">
+                <tr class="slds-text-title_caps">
+                    <td> 
+                        {!rowIndex + 1}
+                    </td>
+                    <td>
+                        <lightning:select name="" value="{!glucoseInstance.ElixirSuite__Intervention__c}">
+                            <option value="">NONE</option>
+                            <aura:iteration items="{!v.InterventionValues}" var="item">
+                                <option value="{!item}" label="{!item}">
+                                    
+                                </option>
+                            </aura:iteration>
+                            
+                        </lightning:select>
+                    </td>
+                    <td>
+                        <lightning:select name=""  value="{!glucoseInstance.ElixirSuite__Type_of_check__c}">
+                            <option value="">NONE</option>
+                            <aura:iteration items="{!v.typeCheck}" var="item">
+                                <option value="{!item}" label="{!item}">
+                                    
+                                </option>
+                            </aura:iteration>
+                            
+                        </lightning:select>
+                    </td>
+                    <td>
+                        <ui:inputPhone class="slds-input" value="{!glucoseInstance.ElixirSuite__Glucose_Reading__c}"/>
+                    </td>
+                    <td>
+                        <ui:inputPhone class="slds-input" value="{!glucoseInstance.ElixirSuite__Note__c}"/>
+                    </td>
+                    <td class="slds-text-align_center">
+                        <aura:if isTrue="{!rowIndex == 0}">
+                            <aura:if isTrue="{!lessthanorequal(v.glucoseList.length,9)}">
+                                <a onclick="{!c.addNewRow}">
+                                    <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                    <span class="slds-assistive-text">Add Icon</span>
+                                </a>
+                                <aura:set attribute="else">
+                                    <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                </aura:set>
+                            </aura:if>   
+                            
+                            <aura:set attribute="else">
+                                <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                    <span class="slds-assistive-text">Delete Icon</span>
+                                </a>
+                            </aura:set> 
+                        </aura:if>
+                    </td> 
+                </tr>
+                
+                
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    <!--Save Button which is call Save js function on click --> 
+    <button class="slds-button slds-button_brand slds-m-right_medium" onclick="{!c.Cancel}">Cancel</button>
+    <button class="slds-button slds-button_brand slds-m-right_medium" onclick="{!c.addGlucoseToMainCompoennt}">Save</button>
+</aura:component>

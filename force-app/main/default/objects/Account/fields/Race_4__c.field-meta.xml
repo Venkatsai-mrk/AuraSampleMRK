@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Race_4__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to associate patient with the record object, which stores the concept code of Race.</description>
+    <externalId>false</externalId>
+    <label>Race 4</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Master_Object__c.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Race</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Master_Object__c</referenceTo>
+    <relationshipLabel>Accounts (Race 4)</relationshipLabel>
+    <relationshipName>Accounts3</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

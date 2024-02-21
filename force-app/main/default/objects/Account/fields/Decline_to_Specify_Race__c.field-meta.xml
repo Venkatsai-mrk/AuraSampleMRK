@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Decline_to_Specify_Race__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Whenever user don&apos;t have Race</description>
+    <externalId>false</externalId>
+    <label>Decline to Specify</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

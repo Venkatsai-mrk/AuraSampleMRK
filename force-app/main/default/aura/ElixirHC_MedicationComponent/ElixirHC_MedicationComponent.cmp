@@ -1,0 +1,179 @@
+<aura:component controller="MedicationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride"
+                access="global">
+    
+    <aura:attribute name="backPage" type="Boolean" /><!--Nikhil-->
+    
+    
+    <aura:registerEvent name="HideMedicationComponent" type="c:HideMedicationComponent"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="change" value="{!v.isOpen}" action="{!c.cancel}"/>
+    <aura:attribute name="orgWideValidNamespace" type="String" />
+
+    <!-- Added by Anmol for LX3-5770 -->
+    <aura:attribute name="jsonFinal" type="String[]"/>
+    <aura:attribute name="isOpenMed" type="Boolean" default="true" /> 
+    <aura:attribute name="column" type="Object"/> 
+    <aura:attribute name="PreTable" type="Boolean" default="false"/>
+    <aura:attribute name="addPresc" type="Boolean" />
+    <!-- End by Anmol for LX3-5770 -->
+
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="AllData" type="sObject"/>
+    <aura:attribute name="issearching" type="Boolean"/>
+    <aura:attribute name="ShowFooter" type="Boolean" default="true"/>
+    <aura:attribute name="searchKeyword" type="String"/>
+    <aura:attribute name="isOpen" type="Boolean" />
+    <aura:attribute name="DisplayButton" type="Boolean" default="false" />
+    <aura:attribute name="ShowSearchBar" type="Boolean" default="true"/>
+    <aura:attribute name="dataForReviewOrder" type="List" />
+    <aura:attribute name="openReviewOrder" type="Boolean" default="false"/>
+    <aura:attribute name="data" type="sObject"/>
+    <aura:attribute name="RouteForComponent" type="String"/>
+    <aura:attribute name="openUpdateMedication" type="Boolean"/>
+    <aura:attribute name="AlertScreen" type="Boolean" default="true" />   
+    <aura:attribute name="Message" type="boolean" default="false"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/>
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0"/>
+    <!--aura:attribute name="SelectedOrders" type="HealthCloudGA__EhrMedicationPrescription__c[]"/>
+    <aura:attribute name="selectedRowsForTaper" type="HealthCloudGA__EhrMedicationPrescription__c[]"/-->
+    <aura:attribute name="selectedRows" type="List"/>
+    <aura:attribute name="selected" type="List"/>
+    <aura:attribute name="recordValue" type="String"/>
+    <aura:attribute name="ShowButton" type="Boolean" default="true"/>
+    <aura:attribute name="ShowCustomMedication" type="Boolean" default="true"/>
+    <aura:attribute name="openModal" type="boolean" default="false"/>
+    <aura:attribute name="selTabId" type="String"/>
+    <aura:attribute name="dataForTaper" type="List"/>
+    <aura:attribute name="dataForPRN" type="List"/>
+    <aura:attribute name="dataForActionOrder" type="List"/>
+    <aura:attribute name="showTabs" type="Boolean" default="false"/>
+    <aura:attribute name="showCustomMedicationTab" type="Boolean" default="true"/>
+    <aura:attribute name="bufferPRNLst" type="List"/>
+    <aura:attribute name="bufferTaperLst" type="List"/>
+    <aura:attribute name="bufferActionOrderLst" type="List"/>
+    <aura:handler name="HandleBackInMedicaion" event="c:HandleBackInMedicaion"
+                  action="{!c.handleHideCustomMedication}"/>
+    <aura:registerEvent name="appEvent" type="c:Elixir_RefreshViewsGenericAppEvt"/>    
+    <!--lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />-->
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit }"/>
+    <div class="auto-h" aura:id="exampleModal">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <header class="slds-modal__header slds-text-heading_large">Medications
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.cancel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                </header>
+                <div class="slds-modal__content slds-p-left_medium slds-p-right_medium slds-p-bottom_medium tab-p0 slds-p-top_small" id=" modal-content-id-1">
+                    <!--aura:if isTrue="{!v.AlertScreen}">
+                        <c:Elixir_AllergiesMedicalPopup AlertScreen="{!v.AlertScreen}" accId="{!v.recordValue}" />
+                    </aura:if-->
+                    <aura:if isTrue="{!v.ShowSearchBar}">
+                        <lightning:layout>
+                            <lightning:layoutItem size="9"></lightning:layoutItem>
+                            <lightning:layoutItem size="3">
+                                <lightning:input 
+                                                 
+                                                 aura:id="searchField"
+                                                 value="{!v.searchKeyword}"
+                                                 name="searchKnowledgeInput" 
+                                                 label="" type="search" 
+                                                 placeholder="Search"
+                                                 isLoading="{!v.issearching }"
+                                                 onchange="{!c.Search}"
+                                                 
+                                                 />
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </aura:if>
+                    <!--   <input type="text" class="form-control" onkeyup="{!c.searchKeyChange}"
+                  placeholder="Search"/> -->
+                    
+                    <lightning:tabset  selectedTabId="{!v.selTabId}" class="tabcls">
+                        <!--lightning:tab label="PRN" id="prn" class="" onactive="{!c.onPrnTabActive}"-->
+                            <!-- the container element determine the height of the datatable -->
+                            <!--div class="tabwitdth height300">
+
+                                <lightning:datatable class="tabwitdth" 
+                                                     aura:id="PrescriptionTable"
+                                                     columns="{! v.columns }"
+                                                     min-column-width="161px"
+                                                     data="{! v.dataForPRN }"
+                                                     keyField="Id"
+                                                     onrowselection="{! c.updateSelectedText }"
+                                                     selectedRows="{!v.selectedRows}"         		/>
+                            </div>
+                        </lightning:tab-->
+                        <!--lightning:tab label="TAPERS" id="taper" onactive="{!c.onTapersTabActive}" >
+                            <div class="tabwitdth height300">
+
+                                <lightning:datatable class="tabwitdth"
+                                                     columns="{! v.columns }"
+                                                     data="{! v.dataForTaper }"
+                                                     min-column-width="161px"
+                                                     keyField="Id"
+
+                                                     onrowselection="{! c.updateSelectedText }"
+                                                     selectedRows="{!v.selectedRows}"
+                                                     />
+                            </div>
+                        </lightning:tab-->
+
+                        <!--lightning:tab label="ACTION ORDER" id="Action Order" onactive="{!c.onActionOrderTabActive}" >
+                            <div class="tabwitdth height300">
+
+                                <lightning:datatable class="tabwitdth"
+                                                     columns="{! v.columns }"
+                                                     data="{! v.dataForActionOrder }"
+                                                     min-column-width="161px"
+                                                     keyField="Id"
+
+                                                     onrowselection="{! c.updateSelectedText }"
+                                                     selectedRows="{!v.selectedRows}"
+                                                     />
+                            </div>
+                        </lightning:tab-->
+                        <aura:if isTrue="{!v.showCustomMedicationTab}">
+                            <lightning:tab label="CUSTOM MEDICATION" id="new medication" onactive="{!c.onNewMedicationActive}">
+                                <aura:if isTrue="{!v.ShowCustomMedication}">
+                                    <c:ElixirHC_NewMedicationRecord isOpen="{!v.isOpen}" RecId="{!v.recordValue}" orgWideValidNamespace="{!v.orgWideValidNamespace}"/>
+                                </aura:if>
+                            </lightning:tab>
+                        </aura:if>
+                    </lightning:tabset>
+                    
+                    
+                </div>
+                
+                <footer class="slds-modal__footer slds-text-align_center buttonRound">
+                    <aura:if isTrue="{!v.ShowFooter}">
+                        <lightning:button class="slds-button slds-button_neutral" onclick="{!c.cancel}">Close</lightning:button>
+                        <lightning:button class="slds-button slds-button_brand" onclick="{!c.handleReviewOrder}">Review Order</lightning:button>
+                    </aura:if>
+                    <!-- <aura:if isTrue="{!v.ShowButton}">
+                     <lightning:button class="slds-button slds-button_brand" onclick="{! c.handleSaveEdition }" type="submit">Save</lightning:button>
+                         </aura:if>-->
+                </footer>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <!-- Updated by Anmol for LX3-5770 -->
+    <aura:if isTrue="{!v.openReviewOrder}">
+        <span>
+            <c:ElixirHC_SelectedMedicationRecords isOpen="{!v.openReviewOrder}" SelectedRecords="{!v.selected}" 
+                                                  RouteForComponent = "{!v.RouteForComponent}" RecId="{!v.recordValue}"
+                                                  openUpdateMedication = "{!v.openUpdateMedication}"
+                                                  orgWideValidNamespace = "{!v.orgWideValidNamespace}"
+                                                  jsonFinal = "{!v.jsonFinal}" isOpenMed="{!v.isOpenMed}" PreTable="{!v.PreTable}" column="{!v.column}" addPresc="{!v.addPresc}"/>
+        </span>
+    </aura:if>
+    <!-- End by Anmol for LX3-5770 -->
+</aura:component>

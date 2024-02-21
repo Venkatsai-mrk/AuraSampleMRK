@@ -1,0 +1,36 @@
+.THIS .parent_list_items{
+    width:100%;
+}
+.THIS .list_items{
+    display:inline-block;
+    width:50%;
+    margin:10px 0;
+}
+.THIS .filecard figure .slds-file__title{
+    display:none;
+}
+.THIS .filecard .slds-file{
+    border:none;
+}
+.THIS .remove_btn .slds-button{
+    display:block;
+    box-shadow:none;
+}
+.THIS.file_upload label{
+    width:unset!important;
+}
+.THIS.file_upload .slds-form-element__label{
+    font-weight:700;
+}
+.THIS .filecard .forceContentFileCard{
+    width:unset !important;
+}
+.THIS .list_items{
+    padding: 0 15px;
+}
+.THIS .filecard img{
+    width:100%;
+}
+.THIS .false_width{
+    width:10%;
+}

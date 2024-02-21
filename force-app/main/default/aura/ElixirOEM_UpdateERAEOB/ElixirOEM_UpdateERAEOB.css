@@ -1,0 +1,159 @@
+.THIS body, .THIS .slds-form-element__label, .THIS label {
+    font-size: 12px;
+}
+.THIS.form_notes-mockup .slds-modal__header {
+    background-color: #493266;
+    color: #fff;
+    padding: 10px;
+}
+.THIS .e-employer label.slds-form-element__label.slds-no-flex {
+    display: none !important;
+}
+.THIS .underline {
+    margin: 15px 0;
+}
+.THIS .slds-modal__container.parentMockup {
+    width: 80%;
+    max-width: 80%;
+}
+.THIS .era_table th, .THIS .era_table td {
+    font-size: 12px;
+    white-space: normal !important;
+    border: 1px solid #ccc;
+    padding: 2px;
+    position: inherit;
+}
+.THIS .era_table td {
+    text-align: center;
+}
+.THIS .era_table th:last-child, .THIS .era_table td:last-child {
+    width: 90px;
+    padding: 5px;
+    text-align: center
+}
+.THIS .era_table tbody tr td:last-child .slds-button {
+    padding: 0px 5px;
+    height: 18px;
+    width: 18px;
+    color:#fff;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .era_table tbody tr td:last-child .slds-button:last-child {
+    /*background-color: #fa0202;
+    border: 1px solid #f00;*/
+    color: #fff;
+    font-weight: 700;
+}
+/*.THIS .era_table tbody tr td:last-child .slds-button,
+.THIS .era_table tbody tr td:last-child .slds-button:last-child {
+width: max-content;
+}*/
+.THIS .attach_claims{
+    background-color : #493266;
+    color: #fff;
+    border: 1px solid #493266;
+}
+.THIS .era_table tbody tr td .slds-form-element__label {
+    display:none;
+}
+.THIS .era_table tbody tr td .slds-input {
+    padding: 0 5px;
+}
+.THIS .attach_claim {
+    border: 1px solid #493266;
+}
+.THIS .attach_claim-head {
+    background-color: #493266;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+}
+.THIS .attach_table {
+    width: calc(100% - 24px);
+    margin: 0 auto;
+}
+.THIS .attach_table th, .THIS .attach_table td {
+    font-size: 12px;
+    white-space: normal !important;
+    border: 1px solid #ccc;
+    padding: 3px 10px;
+    position: inherit;
+}
+.THIS .attach_table th {
+    padding: 10px;
+}
+.THIS .attach_table  td:last-child {
+    text-align: center;
+}
+.THIS .attach_table tbody tr td .slds-form-element__label {
+    display:none;
+} 
+/*.THIS .attach_table .slds-button {
+background-color: #493266;
+border: 1px solid #493266;
+color: #fff;
+height: 30px;
+}*/
+.THIS .attach_table .pending td, .THIS .attach_table .pending:hover td {
+    background-color: #f57979;
+}
+.THIS .search_payor {
+    
+}
+.THIS .era-btns {
+    text-align: center;
+    width: 108px !important;
+}
+.THIS .elemtRed td, .THIS .elemtRed:hover td{ 
+    background-color: #f57979 !important;
+}
+.THIS .era_table .slds-input[type="text"]:disabled {
+    background: #f1f2f3 !important;
+}
+/*.THIS .exitColor .slds-button{
+background-color: #fff;
+}*/
+.THIS .era_table td span.slds-checkbox_faux {
+    margin-right: 0 !important;
+}
+.THIS .era-btns .slds-button .slds-button__icon {
+    fill : #493266 !important;
+    height: 20px;
+    width: 20px;
+}
+.THIS .era-btns .slds-button:nth-child(2) .slds-button__icon {
+    fill : #ff0000 !important;
+}
+.THIS .era-btns .slds-button:nth-child(2) {
+    margin: 0 10px;
+}
+.THIS .era_table thead{
+    position: sticky;
+    top:0;
+    width:100%;
+    left:0;
+    z-index: 5;
+}
+.THIS .objectMatchingInfo .slds-modal__header{
+    background-color: #493266;
+}
+.THIS .objectMatchingInfo .swap_footer{
+    background-color: #493266;
+}
+/* chnages */
+.THIS .chnageheight1{
+    height:5rem;width:30rem;
+}
+.THIS .chnagehwidth{
+    max-height:400px;width:100%;
+}
+.THIS .changeon88{
+    width: 200px; white-space: nowrap; overflow: hidden;
+}

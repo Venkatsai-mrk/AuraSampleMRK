@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomText1__c</fullName>
+    <description>NewCrop Certification: This field is used to store doctor IDs that are related to nurse.</description>
+    <externalId>false</externalId>
+    <label>CustomText1</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

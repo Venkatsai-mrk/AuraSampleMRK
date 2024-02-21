@@ -1,0 +1,135 @@
+<aura:component controller="Approval_CareEpisodeSettings" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="settings" type="Elixir_Custom_Setting__c" />
+    <aura:attribute name="approvalTask" type="Boolean" default="false" />
+    <aura:attribute name="careEpisodeOpen" type="Boolean" default="false" />
+    <aura:attribute name="bulkMessageOpen" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="helpText" type="String" default="(In days and hours, in the format of 1D, 2D, 5H, 10H)"/>
+    
+    <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+        <aura:if isTrue="{!v.approvalTask}" > 
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Approval Tasks Settings</b></h2><br/>
+            
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Enable tasks for approvers" variant="label-inline" checked="{!v.settings.ElixirSuite__Enable_Tasks_for_approvers__c}" />
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Enable email for approvers"  variant="label-inline" checked="{!v.settings.ElixirSuite__Enable_email_for_Approvers__c}" />
+                    
+                </div>
+            </div>
+            
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.careEpisodeOpen}" > 
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Care Episode Settings</b></h2><br/>
+            
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Care episode location mandatory" variant="label-inline" name="locationMandatory" checked="{!v.settings.ElixirSuite__Care_episode_location_mandatory__c}" />
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Care episode" name="careEpisode" variant="label-inline" checked="{!v.settings.ElixirSuite__CareEpisode__c}" />
+                    
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Create claim for care episode" variant="label-inline"  name="createClaim" checked="{!v.settings.ElixirSuite__Create_Claim_For_Care_Episode__c}" />
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Lock forms on closure of a care episode" variant="label-inline" name="lockForms" checked="{!v.settings.ElixirSuite__Lock_forms_on_closure_of_a_care_episode__c}" />
+                    
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Care episode update on medical coding" variant="label-inline" name="updateOnCoding" checked="{!v.settings.ElixirSuite__Care_Episode_Update_on_Medical_Coding__c}" />
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Enable multiple active care episode" variant="label-inline" name="enableMultipleEpisodes" checked="{!v.settings.ElixirSuite__Enable_Multiple_Active_Care_Episode__c}" />
+                    
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:textarea label="Default active care episode filter" name="activeEpisodeFilter" variant="label-inline" value="{!v.settings.ElixirSuite__Default_Active_Care_Episode_Filter__c}" />
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Care episode based filtering for notes" variant="label-inline"  checked="{!v.settings.ElixirSuite__Care_Episode_based_filtering_for_Notes__c}" />
+                    
+                </div>
+                
+            </div>
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.bulkMessageOpen}" > 
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Bulk Message Settings</b></h2><br/>
+            
+            
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Notification for manual lab" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_manual_lab__c}" />
+                </div>
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="checkbox" label="Notification for elab" variant="label-inline" checked="{!v.settings.ElixirSuite__Notifications_for_eLab__c}" />
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Notification for new appointment" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_New_Appointment__c}" />
+                </div>
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="checkbox" label="Notification for appointment reminder" variant="label-inline" checked="{!v.settings.ElixirSuite__Notifications_for_Appointment__c}" />
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Notification for new form" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_New_Form__c}" />
+                </div>
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="checkbox" label="Notification for form reminder" variant="label-inline" checked="{!v.settings.ElixirSuite__Notifications_for_Form__c}" />
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="checkbox" label="Notification for visit summaries" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_visit_summaries__c}" />
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Notification for visit notes" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_visit_notes__c}" />
+                </div>
+                
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="checkbox" label="Notification for payment reminder" variant="label-inline" checked="{!v.settings.ElixirSuite__Notification_for_Payment__c}" />
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="number"  label="Payment reminder interval" fieldLevelHelp="(in days)"  variant="label-inline" value="{!v.settings.ElixirSuite__Payment_reminder_interval__c}" class="custom-input" />
+                    
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="text" label="Appointment reminder interval" fieldLevelHelp="{!v.helpText}" variant="label-inline" value="{!v.settings.ElixirSuite__Appointment_Interval__c}" class="custom-input custom-input-with-help" />
+                </div>
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning:input type="number" label="Form reminder interval"  fieldLevelHelp="(in hours)" variant="label-inline" value="{!v.settings.ElixirSuite__Form_reminder_Interval__c}" class="custom-input" />
+                </div>
+            </div>
+            
+        </aura:if>
+        
+        
+        <lightning:button variant="brand" label="Save" onclick="{!c.saveCustomSettings}" 
+                          class="slds-m-top_medium slds-align_absolute-center"
+                          />
+    </div>
+</aura:component>

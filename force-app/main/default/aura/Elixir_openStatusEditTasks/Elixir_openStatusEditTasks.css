@@ -1,0 +1,31 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;
+}
+.THIS .right-side_bar1 svg{
+   height: 13px !important;
+   width:13px !important;
+}
+.THIS .c-point {
+    cursor: pointer;
+}
+@media (max-width: 576px) {
+ 	.THIS .third_accordian .slds-icon-utility-food-and-drink {
+        margin-bottom: 100%;
+    }   
+    .THIS .slds-page-header.c-point {
+        padding: 10px 0 5px 5px;
+    }
+    .THIS .right-side_bar .slds-input {
+        width: 90px;
+        padding: 0 0px 0 0;
+        margin-right: 5px;
+    }
+}
+/* changes */
+.THIS .chnagemargin{
+    margin-top:10px;
+
+}

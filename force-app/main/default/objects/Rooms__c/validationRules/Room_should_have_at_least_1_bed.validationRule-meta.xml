@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Room_should_have_at_least_1_bed</fullName>
+    <active>true</active>
+    <description>Room should have at least 1 bed</description>
+    <errorConditionFormula>AND( PRIORVALUE( Total_Beds__c )&gt; Total_Beds__c , 
+Total_Beds__c  &lt; 1)</errorConditionFormula>
+    <errorMessage>A room should have at least one bed</errorMessage>
+</ValidationRule>

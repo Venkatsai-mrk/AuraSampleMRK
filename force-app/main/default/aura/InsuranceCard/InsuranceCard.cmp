@@ -1,0 +1,193 @@
+<aura:component controller="PatientDetailLedger" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="secondCall" type="Boolean"/>
+    <aura:attribute name="vobInfo" type="VOB__c"/>  
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    <aura:attribute name="insuranceOptions" type="List" default="[]"/>
+    <aura:attribute name="autoAccdpayerNameOptions" type="List" default="[]"/>
+    <aura:attribute name="policyNumberOptions" type="List" default="[]"/>
+    <aura:attribute name="idPairMap" type="Object"/>
+    <aura:attribute name="isResult" type="Boolean" default="false"/>
+    <aura:attribute name="selectedValue" type="string" />
+    <aura:attribute name="selectedValue1" type="string" />
+    <aura:attribute name="selectedValue2" type="string" />
+    <aura:attribute name="insuranceLabelName" type="String" default="Insurance Details"/>
+    <aura:attribute name="srcId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{! c.init }"/>
+    <aura:handler name="IntegCmpEvent" event="c:VobIntegrationEvent" action="{!c.init}"/>
+    
+        <div class="demo-only slds-grid patient-ac slds-border_top slds-border_left slds-border_right slds-border_bottom">
+            <div aura:id="myDiv" class="rcm ">
+                <div class=" slds-grid slds-gutters slds-p-bottom_small">
+                    <div class="slds-col slds-size_10-of-12 "><span class="purple-color changefontweight" >{!v.insuranceLabelName}</span></div>
+                    <div class="slds-col slds-size_2-of-12 ">
+                        <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.init}"/> 
+                    </div>
+                </div>
+                <b></b>
+                <div class=" slds-grid slds-gutters ">
+                    <aura:if isTrue="{!not(empty(v.insuranceOptions))}">
+                        <table class="slds-box_small"><tr>
+                            <td class="slds-p-around_x-small">Type Of Insurance:</td> 
+                            <td class="purple-color slds-col slds-size_10-of-12"><b>
+                                <lightning:select name="colorId"  value="{!v.selectedValue}" onchange="{!c.fetchInsuranceDetails}">
+                                    <aura:iteration items="{!v.insuranceOptions}" var="option">
+                                        <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                                    </aura:iteration>
+                                </lightning:select></b>
+                            </td>    
+                            </tr>
+                        </table>
+                        <aura:set attribute="else">
+                            <br></br>
+                            <p class="slds-p-around_x-small"><b>No Insurance Details defined for the user</b></p>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <aura:if isTrue="{!(v.selectedValue == 'Primary Insurance')}">
+                    <aura:if isTrue="{!not(empty(v.vobInfo))}">
+                        <div class=" slds-grid slds-gutters ">
+                            <table class="slds-box_small" >
+                                <tr >
+                                    <td class="slds-p-around_x-small">Payer Name:</td>
+                                    <td class="purple-color slds-col slds-size_10-of-12"><b>
+                                        <lightning:select name="colorId"  value="{!v.selectedValue1}" onchange="{!c.handelPayerName}">
+                                            <aura:iteration items="{!v.autoAccdpayerNameOptions}" var="option">
+                                                <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Insurance Id Number:</td>
+                                    <aura:if isTrue="{!v.policyNumberOptions.length > 1}" >
+                                        <td class="purple-color slds-col slds-size_10-of-12"><b>
+                                            <lightning:select name="colorId"  value="{!v.selectedValue2}" onchange="{!c.handelPolicyNo}">
+                                                <aura:iteration items="{!v.policyNumberOptions}" var="option">
+                                                    <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                                                </aura:iteration>
+                                            </lightning:select></b></td>
+                                        <aura:set attribute="else">
+                                            <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.selectedValue2}</span></b></td>   
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Group Number:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Group_Number__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Status:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Status__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Last Verified Date:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Last_Verified_Date__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Verification Status:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><aura:if isTrue="{!v.vobInfo.ElixirSuite__VOB_Verification_Status__c == 'Approved'}">
+                                        <b class="back-col-na"> Approved</b>
+                                        <aura:set attribute="else">
+                                            <b class="back-col">Not Approved</b> 
+                                        </aura:set>
+                                        </aura:if></td>
+                                </tr>
+                                    
+                                    <tr>
+                                        <td class="slds-p-around_x-small"></td> 
+                                        <td class="slds-col slds-size_12-of-12 ">
+                                            <button class="verify-btn" 
+                                                    onclick="{! c.VfpageCall }" 
+                                                    name="{!v.vobInfo.Id}"
+                                                    id="{!v.vobInfo.Id}"
+                                                    >
+                                                Verify
+                                            </button></td>
+                                    </tr>
+                            </table>
+                        </div>
+                        <aura:set attribute="else">
+                            <br></br>
+                            <p><b>No Insurance Details defined for the user</b></p>
+                        </aura:set>
+                    </aura:if>    
+                </aura:if>
+                <aura:if isTrue="{!(v.selectedValue == 'Secondary Insurance')}">
+                    <aura:if isTrue="{!not(empty(v.vobInfo))}">
+                        <div class=" slds-grid slds-gutters ">
+                            <table class="slds-box_small">
+                                <tr >
+                                    <td class="slds-p-around_x-small">Payer Name:</td>
+                                    <td class="purple-color slds-col slds-size_10-of-12"><b>
+                                        <lightning:select name="colorId"  value="{!v.selectedValue1}" onchange="{!c.handelPayerName}">
+                                            <aura:iteration items="{!v.autoAccdpayerNameOptions}" var="option">
+                                                <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                                            </aura:iteration>
+                                        </lightning:select></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Insurance Id Number:</td>
+                                    <aura:if isTrue="{!v.policyNumberOptions.length > 1}" >
+                                        <td class="purple-color slds-col slds-size_10-of-12"><b>
+                                            <lightning:select name="colorId"  value="{!v.selectedValue2}" onchange="{!c.handelPolicyNo}">
+                                                <aura:iteration items="{!v.policyNumberOptions}" var="option">
+                                                    <option text="{!option.label}" value="{!option.id}" selected="{!option.selected}"/>
+                                                </aura:iteration>
+                                            </lightning:select></b></td>
+                                        <aura:set attribute="else">
+                                            <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.selectedValue2}</span></b></td>   
+                                        </aura:set>
+                                    </aura:if>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Group Number:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Group_Number__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Status:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Status__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Last Verified Date:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><b><span class="purple-color slds-p-around_xx-small">{!v.vobInfo.ElixirSuite__Last_Verified_Date__c}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-p-around_x-small">Verification Status:</td>
+                                    <td class="slds-col slds-size_12-of-12 "><aura:if isTrue="{!v.vobInfo.ElixirSuite__VOB_Verification_Status__c == 'Approved'}">
+                                        <b class="back-col-na"> Approved</b>
+                                        <aura:set attribute="else">
+                                            <b class="back-col">Not Approved</b> 
+                                        </aura:set>
+                                        </aura:if></td>
+                                </tr>    
+                                    <tr>
+                                        <td class="slds-p-around_x-small"></td> 
+                                        <td class="slds-col slds-size_12-of-12 ">
+                                            <button class="verify-btn" 
+                                                    onclick="{! c.VfpageCall }" 
+                                                    name="{!v.vobInfo.Id}"
+                                                    id="{!v.vobInfo.Id}"
+                                                    >
+                                                Verify
+                                            </button></td>
+                                    </tr>
+                            </table>
+                        </div>
+                        <aura:set attribute="else">
+                            <br></br>
+                            <p><b>No Insurance Details defined for the user</b></p>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+            </div>
+        </div>   
+    
+    <aura:if isTrue="{!v.isResult}">
+        <c:VOBIntegration recordId="{!v.srcId}" isResult="{!v.isResult}"></c:VOBIntegration>
+    </aura:if>
+</aura:component>

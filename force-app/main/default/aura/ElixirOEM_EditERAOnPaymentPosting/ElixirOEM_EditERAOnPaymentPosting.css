@@ -1,0 +1,54 @@
+.THIS .slds-modal__header.attach_claim-head {
+    background-color: #493266;
+    color: #fff;
+}
+.THIS .patient_name-claim label.slds-form-element__label.slds-no-flex{
+    display: none;
+}
+.THIS .theme_backgroundColor {
+    background-color: #493266;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+
+}
+.THIS .slds-modal__container {
+    width: 80% !important;
+    min-width: 80% !important;
+}
+.THIS .eraline_table thead th{
+    background-color: #f1f2f3;
+}
+.THIS .actiontakenClass label.slds-form-element__label {
+    display: none;
+}
+.THIS .my-class-red{
+    background-color: #f5696f;
+}
+.THIS .my-class-grey{
+    background-color: #fff;
+}
+.THIS .eraline_table tbody tr:hover td{
+    background-color: #fff !important;
+}
+.THIS .eraline_table tbody tr.my-class-red:hover td{
+    background-color: #f5696f !important;
+}
+.THIS .eraline_table tbody tr td:last-child .slds-button:last-child{
+    background-color: #013220;
+}
+.THIS .eraline_table tbody tr td:last-child .slds-button:last-child:hover{
+    background-color: #006400 ;
+}
+.THIS .eraline_table tbody tr td:last-child .slds-button:nth-child(2){
+     background-color: #8B0000;
+}
+.THIS .eraline_table tbody tr td:last-child .slds-button:nth-child(2):hover{
+     background-color: #AA4A44;
+}
+.THIS .actiontakenClass .slds-dropdown.slds-dropdown_fluid{
+    height: 120px;
+}
+.THIS .slds-input[disabled] {
+    background-color: #f1f2f3!important;
+}

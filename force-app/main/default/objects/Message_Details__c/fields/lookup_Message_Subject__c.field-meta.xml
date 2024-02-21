@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>lookup_Message_Subject__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to associate Message Subject with the Message Subject.</description>
+    <externalId>false</externalId>
+    <label>Message Subject</label>
+    <referenceTo>Message_Subject__c</referenceTo>
+    <relationshipLabel>Message Details (Message Subject)</relationshipLabel>
+    <relationshipName>Message_Details_lookup</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

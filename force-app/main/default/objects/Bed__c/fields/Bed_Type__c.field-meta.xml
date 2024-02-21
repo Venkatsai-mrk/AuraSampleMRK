@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bed_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Bed Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Single Bed</fullName>
+                <default>false</default>
+                <label>Single Bed</label>
+            </value>
+            <value>
+                <fullName>Double Bed</fullName>
+                <default>false</default>
+                <label>Double Bed</label>
+            </value>
+            <value>
+                <fullName>King Bed</fullName>
+                <default>false</default>
+                <label>King Bed</label>
+            </value>
+            <value>
+                <fullName>Queen Bed</fullName>
+                <default>false</default>
+                <label>Queen Bed</label>
+            </value>
+            <value>
+                <fullName>Off-Set Queens</fullName>
+                <default>false</default>
+                <label>Off-Set Queens</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

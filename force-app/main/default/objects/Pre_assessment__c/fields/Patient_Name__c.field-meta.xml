@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Name__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to record the full name of the patient.</description>
+    <externalId>false</externalId>
+    <label>Patient Name</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Pre Assessments (Patient Name)</relationshipLabel>
+    <relationshipName>Pre_assessments1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

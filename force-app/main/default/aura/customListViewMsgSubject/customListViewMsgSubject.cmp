@@ -1,0 +1,144 @@
+<aura:component controller="customListViewMsgSubjectController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Inbox', 'value': 'Inbox'},
+                                                        {'label': 'Outbox', 'value': 'Outbox'}
+                                                        ]"/>
+    <aura:attribute name="data" type="List" />
+     <aura:attribute name="Originaldata" type="List"/>
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:attribute name="accName" type="String" default="Account Name"/>
+    <aura:attribute name="checkTableSize" type="boolean" default="false"/>
+    <aura:attribute name="checkTableSizeZero" type="boolean" default="false"/>
+    <aura:attribute name="newMessage" type="boolean" default="false"/>
+    <aura:attribute name="filterVal" type="String" default="Inbox"/>
+    <aura:attribute name="searchResult" type="List" />
+    <aura:attribute name="searchKeyword" type="String" />
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:handler event="c:RefreshMessages" action="{!c.init}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+     <!--- enableInfiniteLoading  -->
+   <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="initialRows" type="Integer" default="10"/>
+    <aura:attribute name="rowsToLoad" type="Integer" default="5"/>
+    <aura:attribute name="totalNumberOfRows" type="Integer" default="0"/>
+    <aura:attribute name="loadMoreStatus" type="String" default="Loading .... "/>
+    <aura:attribute name="showRowNumberColumn" type="Boolean" default="false"/>
+    <aura:attribute name="rowNumberOffset" type="Integer" default="0"/>
+    <aura:attribute name="rowsToAdd" type="Integer" default="5"/>
+    <aura:attribute name="currentCount" type="Integer" default="0"/>
+    
+    <aura:attribute name="patientID" type="String" default=""/>
+    <aura:attribute name = "headingTitle" type="String" default="Message Center"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <div class="parentCSS slds-is-relative">
+        <div class="childCSS">
+            <div class ="mgList slds-p-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_4-of-12">
+                        <ol><li>
+                            <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a>&nbsp;{!v.greaterSign}&nbsp;<a href="javascript:void(0)"
+                                                                                                                                 onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                            </li>
+                        </ol>
+                        <span>
+                            <!-- heading -->
+                            <h5 class="headingCSS"><b>{!v.headingTitle}</b></h5> 
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 slds-p-top_large slds-text-align_right">
+                      <!--  <lightning:button label="All Messages" variant="neutral" onclick="{!c.allMsg}" class="inline-buttons btncss"/>
+                        <lightning:button label="Archived Messages" variant="neutral" onclick="{!c.archMsg}" class="inline-buttons  btncss"/>
+                        <lightning:button label="Bookmarked Messages" variant="neutral" onclick="{!c.bookmarkMsg}" class="inline-buttons  btncss"/>-->
+                         <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.refreshMethod}" aura:id ="refreshing" /> 
+                        <lightning:button label="New Message" variant="neutral" onclick="{!c.newMessage}" class="inline-buttons btncss"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_medium">
+                <div class="message_center">
+                	<div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <div class="slds-grid all-form_nav inline" >
+                               
+                                <div class="slds-col slds-size_6-of-12 slds-m-top_small ">
+                                    <span class="radio-h">
+                                     <lightning:select aura:id="select" name="select" label="Filter View" onchange="{! c.onSelectChange }">
+                                            <option value="All">All</option>
+                                            <option value="Archive"> Archive</option>
+                                            <option value="Bookmark"> Bookmark</option>
+                                            <option value="Inbox">Inbox</option>
+                                             <option value="Outbox">Outbox</option>
+                                            </lightning:select>
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-m-top_small ">
+                                    <!--   <lightning:input value="{!v.searchKeyword}"
+                                                     placeholder="Search Message Subject.."
+                                                     aura:id="searchField"
+                                                     label="Search"
+                                                     onblur="{!c.onChange1}"
+                                                     />-->
+                                    <div onkeyup="{! c.handleKeyUp }">
+                                        <lightning:input
+                                                         aura:id="searchField"
+                                                         placeholder="Search Message Subject.."
+                                                         value="{!v.searchKeyword}"
+                                                         label="Search"
+                                                         type="search"
+                                                         onblur="{!c.onChange1}"
+                                                         />
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            
+                            <div class="slds-grid all-form_nav slds-m-top_large">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <!--to display list of saved forms in datatable-->
+                                     <div class="changeheight" >
+                                 <lightning:datatable keyField="id"
+                                                         showRowNumberColumn="true"
+                                                         rowNumberOffset="0"
+                                                         loadMoreOffset="{! v.loadMoreOffset }"
+                                                         enableInfiniteLoading="{! v.enableInfiniteLoading}"
+                                                         onloadmore="{! c.loadMoreData }"
+                                                         columns="{!v.columns}"
+                                                         data="{!v.data}"
+                                                         hideCheckboxColumn="true"
+                                                         defaultSortDirection="{!v.defaultSortDirection}"
+                                                         onrowaction="{!c.viewRecord}"
+                                                         sortedBy="{!v.sortBy}"
+                                                      	 sortedDirection="{!v.sortDirection}"
+                                                         onsort="{!c.handleSort}">
+                                    </lightning:datatable>
+                                      <!--  <lightning:datatable keyField="id"
+                                                         columns="{!v.columns}"
+                                                         showRowNumberColumn="true"
+                                                         data="{!v.data}"
+                                                         hideCheckboxColumn="true"
+                                                         defaultSortDirection="{!v.defaultSortDirection}"
+                                                         onrowaction="{!c.viewRecord}"
+                                                         sortedBy="{!v.sortBy}"
+                                                         sortedDirection="{!v.sortDirection}"
+                                                         onsort="{!c.handleSort}">
+                                    </lightning:datatable>-->
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    <aura:if isTrue="{!v.newMessage}">
+        <c:ComposeMsgCmp patientID="{!v.patientID}" showModal="{!v.newMessage}"/>
+    </aura:if>
+</aura:component>

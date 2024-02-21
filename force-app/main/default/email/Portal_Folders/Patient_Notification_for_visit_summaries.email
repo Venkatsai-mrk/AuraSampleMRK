@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>Hello {!Account.Name},</p>
+    <p>{!Organization.Name} has shared  the visit summary related to your recent visit.</p>
+    <p>Please login into your portal {Patientportallink} to review the visit summary.</p>
+    <p>Please get in touch with us for any queries.</p>
+    <p>Regards,<br>{!Organization.Name}</p>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>History_of_Sleep_Apnea_or_use_a_CPAP_Mac__c</fullName>
+    <description>This field is used to inquire about the patient&apos;s history of sleep apnea and CPAP machine usage.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>History of Sleep Apnea or use a CPAP Machine?</inlineHelpText>
+    <label>History of Sleep Apnea/Use CPAP Machine?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

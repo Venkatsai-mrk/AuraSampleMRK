@@ -1,0 +1,35 @@
+<aura:component controller="VOBIntegrationController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:lightningQuickAction"    access="global" >
+    <aura:attribute name="VOB" type="VOB__c"/>
+    <aura:attribute name="Result" type="Result__c"/>
+    <aura:attribute name="recordId" type="String" access="global"/>
+    <aura:attribute name="patRelCode" type="String"/>
+    <aura:attribute name="benefitTypeCode" type="String"/>
+    <aura:attribute name='plannedStartDate' type="Date"/>
+    <aura:attribute name='plannedEndDate' type="Date"/>
+    <aura:attribute name='verifiedDate' type="Date"/>
+    <aura:attribute name='DateOfBirth' type="Date"/>
+    <aura:attribute name='LastUpdatedDate' type="Date"/>
+    <aura:attribute name='objectMatchingInfo' type="Boolean"/>
+    <aura:attribute name='isButtonClick' type="Boolean"/>
+    <aura:attribute name='verifiedTime' type="Integer"/>
+    <aura:attribute name='IntegrationOpen' type="Boolean"/>
+    <aura:attribute name="checkResult" type="Boolean"/>
+    <aura:attribute name="loaded" type="Boolean"/>
+    <aura:attribute name='isDetailButton' type="Boolean"/>
+    <aura:registerEvent name="IntegCmpEvent" type="c:VobIntegrationEvent" />
+    <lightning:navigation aura:id="navigationService" />
+    <aura:attribute name="v.isInitialized" type="Boolean" default="false" />
+    <aura:attribute name="appType" type="String"/>
+    <aura:attribute name="isResult" type="Boolean" default="false"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:registerEvent name="FiringSelectedId" type="c:FiringSelectedId" />
+    <div>
+        
+        
+        <aura:if isTrue="{!! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    </div>
+</aura:component>

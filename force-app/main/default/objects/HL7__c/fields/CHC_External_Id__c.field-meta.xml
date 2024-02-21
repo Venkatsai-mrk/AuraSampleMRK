@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CHC_External_Id__c</fullName>
+    <description>This field used for CHC LabOrder for Hl7 Result
+
+Clinical Report Id + Placer Id + Lab OrderId</description>
+    <externalId>true</externalId>
+    <label>CHC External Id</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

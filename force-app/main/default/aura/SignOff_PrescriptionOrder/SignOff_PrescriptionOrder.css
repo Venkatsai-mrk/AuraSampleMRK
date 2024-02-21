@@ -1,0 +1,68 @@
+.THIS.atendees_table {
+    height: 260px;
+    overflow-y:scroll;
+}
+.THIS .myCheckbox{
+  display: inline-block;
+  float: left;
+}
+.THIS .atendees_table {
+    width: 100%;
+}
+.THIS .atendees_table thead tr th {
+    padding: 5px 8px;
+    background-color: #ccc;
+}
+.THIS .atendees_table thead tr th:first-child {
+    padding-left:12%;
+}
+.THIS .atendees_table thead tr th:last-child {
+    padding-right:12%;
+    text-align: right;
+}
+.THIS .atendees_table tr td {
+    border-bottom: 1px solid #ccc;
+}
+.THIS .atendees_table tr td:first-child {
+    padding-left:12%;
+}
+.THIS .atendees_table tr td:last-child {
+    padding-left:calc(28% + 20px);
+    text-align: right;
+}
+.THIS .border-none {
+    border: none; 
+    margin-bottom:20px;
+}
+@media(max-width: 576px) {
+   .THIS .atendees_table thead tr th:first-child {
+    	padding-left:2%;
+    }
+    .THIS .atendees_table thead tr th:last-child {
+        padding-right:2%;
+        text-align: right;
+    }
+    .THIS .atendees_table tr td {
+        border-bottom: 1px solid #ccc;
+    }
+    .THIS .atendees_table tr td:first-child {
+        padding-left:2%;
+    }
+    .THIS .atendees_table tr td:last-child {
+        padding-left:calc(28% + 40px);
+        text-align: right;
+    }
+    .THIS.atendees_table {
+        height: auto;
+        max-height: 200px;
+        overflow-y:scroll;
+    }
+    .THIS.slds-modal__content {
+        min-height: calc(100% - 120px) !important;
+        overflow-y: scroll !important;
+    }
+    .THIS.otpBox{
+        width : 50% !important ;
+        max-width : 50% !important ; 
+    }
+}

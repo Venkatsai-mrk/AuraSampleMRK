@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Administration_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Administration Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Taken</fullName>
+                <default>false</default>
+                <label>Taken</label>
+            </value>
+            <value>
+                <fullName>Not taken</fullName>
+                <default>false</default>
+                <label>Not taken</label>
+            </value>
+            <value>
+                <fullName>Refused</fullName>
+                <default>false</default>
+                <label>Refused</label>
+            </value>
+            <value>
+                <fullName>Refused &amp; Destroyed</fullName>
+                <default>false</default>
+                <label>Refused &amp; Destroyed</label>
+            </value>
+            <value>
+                <fullName>Not required</fullName>
+                <default>false</default>
+                <label>Not required</label>
+            </value>
+            <value>
+                <fullName>Made available</fullName>
+                <default>false</default>
+                <label>Made available</label>
+            </value>
+            <value>
+                <fullName>Hospitalized</fullName>
+                <default>false</default>
+                <label>Hospitalized</label>
+            </value>
+            <value>
+                <fullName>Social Leave</fullName>
+                <default>false</default>
+                <label>Social Leave</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,82 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;   
+}
+.THIS .spaceEdit{
+margin-left:10px;
+}
+.THIS.accordian_header {
+    float: left;
+    width: 100%;
+}
+.THIS.accordian_header .chevron_btn {
+    margin-top: 15px;
+}
+.THIS .editStyle textarea{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+.THIS button.slds-button.slds-button_neutral.btncss.colorChange {
+    background:#466bac;
+    border:1px solid #466bac;
+}
+.THIS .c-point {
+    cursor: pointer;
+}
+.THIS .pl-35 {
+    padding-left: 35px;
+}
+@media (max-width: 1200px) {
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 992px) {
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .elx-des {
+        margin-top: 30px;
+    }
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_10-of-12{
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .elx-des {
+        margin-top: 30px;
+    }
+    .THIS .slds-page-header.c-point {
+        padding-right: 5px !important;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks {
+        display: block;
+    }
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_2-of-12, 
+    .THIS .slds-grid.slds-gutters.ElixirSuiteElixir_AddNotesTasks .slds-size_10-of-12{
+        width: 100%;
+    }
+}

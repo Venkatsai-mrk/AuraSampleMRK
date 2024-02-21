@@ -1,0 +1,35 @@
+<!--
+Name : tableForLabOrder
+Author : Sachin Tiwari
+Description : LWC component to show grid , detail-screen, New Lab Order form
+Created Date : 06-DEC-2021
+-->
+
+<template>
+   
+    <template if:false = {recordId}>
+    <!--Lwc component for LabOrder grid-->
+    
+    <c-grid-component patientaccountid={rId}></c-grid-component>
+
+    </template>
+    
+    <template if:true = {recordId}>
+         <lightning-layout multiple-rows >
+            
+            
+            <lightning-layout-item size="12">
+                <!--Displaying the labOrderDetailScreen-->
+               
+               <c-lab-order-detail-screen rid = {recordId}></c-lab-order-detail-screen>
+            
+            </lightning-layout-item>
+
+           
+               
+        </lightning-layout>
+    </template>
+
+
+
+</template>

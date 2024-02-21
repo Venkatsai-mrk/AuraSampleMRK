@@ -1,0 +1,164 @@
+<aura:component controller="PatientImmunizationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="userInfo" type="user"/> 
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="accId" type="string" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="VaccineList" type="List" />
+    <aura:attribute name="vaccineSeriesOptions" type="List" />
+    <aura:attribute name="routeOptions" type="List" />
+    <aura:attribute name="vaccineSiteOptions" type="List" />
+    <aura:attribute name="statusOptions" type="List" />
+    <aura:attribute name="userOptions" type="List"/>
+    <aura:attribute name="selectedRouteRecord" type="Object" default="" description="selected Route Record Details" />
+    <aura:attribute name="url" type="String"/>
+    <aura:handler event="c:RefreshPageEvent" action="{!c.init}"/>
+    
+    
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title slds-text-align_center">New Vaccination Record</h1>
+    </div>
+        <table class="slds-table slds-table_bordered vaccineTable" > 
+            
+            <thead>
+                <tr class="slds-text-title_caps">
+                    
+                    <th scope="col">
+                        <div class="slds-truncate " title="Examination Type">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Sub Type">Code</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Start Time">Vaccine Series</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="End Time">Route</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Frequency"> Vaccine Site</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Notes">Status</div>
+                    </th>
+                     <th scope="col">
+                        <div class="slds-truncate " title="Notes">Notes</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Notes">Administered/Planned On</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Notes">Administration By</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate"></div>
+                    </th>
+                    
+                </tr>
+            </thead>   
+            <tbody> 
+                
+                <aura:iteration items="{!v.VaccineList}" var="vaccineInstance" indexVar="rowIndex">
+                  
+                    <tr class="slds-text-title_caps">
+                        <td class="SelectClass Method">
+                           <c:VaccineLookupComponent objectAPIName="ElixirSuite__Vaccine__c" selectedRecord="{!vaccineInstance.Vaccine}" VaccineList="{!v.VaccineList}" index="{!rowIndex}"/>
+                        </td>
+                        <td class="SelectClass Method">
+                           <lightning:input  type="text" class="slds-m-top_xx-small"  value="{!vaccineInstance.CvxCode}"/>
+                        </td>
+                        <td class="SelectClass Method">
+                           <lightning:select  name="select" value="{!vaccineInstance.VaccineSeries}" >
+                                
+                                <aura:iteration items="{!v.vaccineSeriesOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        <td class="SelectClass Method">
+                          <!-- <lightning:select  name="select" value="{!vaccineInstance.Route}" >
+                                
+                                <aura:iteration items="{!v.routeOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>-->
+                            <c:lookupComponent
+                                              objectName="ElixirSuite__Master_Object__c"
+                                              fieldName="Name"
+                                              value="{!vaccineInstance.Route}"
+                                              disabled="{!v.AllFlag}"
+                                              filterClause="{! 'RecordType.DeveloperName=\'Route\'' }"
+                                              selectedRecord = "{!v.selectedRouteRecord}"
+                                              />
+                        </td>
+                        
+                        <td class="SelectClass Method">
+                           <lightning:select  name="select" value="{!vaccineInstance.VaccineSite}" >
+                                
+                                <aura:iteration items="{!v.vaccineSiteOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        <td class="SelectClass Method">
+                           <lightning:select  name="select" value="{!vaccineInstance.status}" >
+                                
+                                <aura:iteration items="{!v.statusOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                         <td class="SelectClass Method">
+                            <lightning:textarea  value="{!vaccineInstance.Notes}"/>
+                        </td>
+                        <td class="SelectClass">
+                            <lightning:input   class="slds-m-top_xx-small" type="date" value = "{!vaccineInstance.AdministratioDate}" />
+                        </td>
+                        
+                        <td class = "SelectClass Method">
+                            
+                            <lightning:select  name="select" value="{!vaccineInstance.AdministrationBy}" >
+                                
+                                <aura:iteration items="{!v.userOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                        </td> 
+                        
+                       
+                        <td>
+                            <aura:if isTrue="{!rowIndex == 0}">
+                                <aura:if isTrue="{!lessthanorequal(v.VaccineList.length,10)}">
+                                    <a onclick="{!c.addNewRow}">
+                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                        <span class="slds-assistive-text">Add Icon</span>
+                                    </a>
+                                    <aura:set attribute="else">
+                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                    </aura:set>
+                                </aura:if>   
+                                
+                                <aura:set attribute="else">
+                                    <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>
+                                </aura:set> 
+                            </aura:if>
+                        </td> 
+                    </tr>
+                    
+                    
+                </aura:iteration>
+            </tbody>
+        </table>
+        <br/>
+    <div class="slds-align_absolute-center changeheight " aura:id="buttonclass" >
+                <button class="slds-button slds-button_brand" onclick="{!c.handleCancel}">Cancel</button> 
+<button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>  
+        
+    </div>
+
+</aura:component>

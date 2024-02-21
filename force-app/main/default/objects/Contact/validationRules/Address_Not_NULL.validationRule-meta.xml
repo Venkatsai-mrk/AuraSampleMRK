@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address_Not_NULL</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF(  MailingStreet =null || MailingStreet =&apos;&apos;|| MailingCity = null ||MailingCity = &apos;&apos;|| MailingState=null ||MailingState=&apos;&apos;|| MailingPostalCode = null || MailingPostalCode = &apos;&apos; || MailingCountry = null || MailingCountry=&apos;&apos; , true, false) &amp;&amp;  ISPICKVAL(ElixirSuite__Type__c, &apos;Guarantor&apos;)</errorConditionFormula>
+    <errorMessage>Address fields should not be Empty</errorMessage>
+</ValidationRule>

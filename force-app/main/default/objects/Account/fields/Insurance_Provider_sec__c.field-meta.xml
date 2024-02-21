@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Provider_sec__c</fullName>
+    <externalId>false</externalId>
+    <label>Insurance Provider</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aetna</fullName>
+                <default>false</default>
+                <label>Aetna</label>
+            </value>
+            <value>
+                <fullName>Ambetter</fullName>
+                <default>false</default>
+                <label>Ambetter</label>
+            </value>
+            <value>
+                <fullName>AmeriGroup</fullName>
+                <default>false</default>
+                <label>AmeriGroup</label>
+            </value>
+            <value>
+                <fullName>AmeriHealth</fullName>
+                <default>false</default>
+                <label>AmeriHealth</label>
+            </value>
+            <value>
+                <fullName>Anthem</fullName>
+                <default>false</default>
+                <label>Anthem</label>
+            </value>
+            <value>
+                <fullName>Avmed</fullName>
+                <default>false</default>
+                <label>Avmed</label>
+            </value>
+            <value>
+                <fullName>BCBS</fullName>
+                <default>false</default>
+                <label>BCBS</label>
+            </value>
+            <value>
+                <fullName>Beacon/Value Options</fullName>
+                <default>false</default>
+                <label>Beacon/Value Options</label>
+            </value>
+            <value>
+                <fullName>Carefirst</fullName>
+                <default>false</default>
+                <label>Carefirst</label>
+            </value>
+            <value>
+                <fullName>Cigna</fullName>
+                <default>false</default>
+                <label>Cigna</label>
+            </value>
+            <value>
+                <fullName>ConnectiCare</fullName>
+                <default>false</default>
+                <label>ConnectiCare</label>
+            </value>
+            <value>
+                <fullName>Conventry</fullName>
+                <default>false</default>
+                <label>Conventry</label>
+            </value>
+            <value>
+                <fullName>Empire BCBS</fullName>
+                <default>false</default>
+                <label>Empire BCBS</label>
+            </value>
+            <value>
+                <fullName>Federal BCBS</fullName>
+                <default>false</default>
+                <label>Federal BCBS</label>
+            </value>
+            <value>
+                <fullName>Florida BCBS</fullName>
+                <default>false</default>
+                <label>Florida BCBS</label>
+            </value>
+            <value>
+                <fullName>GEHA</fullName>
+                <default>false</default>
+                <label>GEHA</label>
+            </value>
+            <value>
+                <fullName>GHI</fullName>
+                <default>false</default>
+                <label>GHI</label>
+            </value>
+            <value>
+                <fullName>Harvard Pilgrim</fullName>
+                <default>false</default>
+                <label>Harvard Pilgrim</label>
+            </value>
+            <value>
+                <fullName>Health Net</fullName>
+                <default>false</default>
+                <label>Health Net</label>
+            </value>
+            <value>
+                <fullName>Highmark</fullName>
+                <default>false</default>
+                <label>Highmark</label>
+            </value>
+            <value>
+                <fullName>Humana</fullName>
+                <default>false</default>
+                <label>Humana</label>
+            </value>
+            <value>
+                <fullName>Magellan</fullName>
+                <default>false</default>
+                <label>Magellan</label>
+            </value>
+            <value>
+                <fullName>Magna Care</fullName>
+                <default>false</default>
+                <label>Magna Care</label>
+            </value>
+            <value>
+                <fullName>Med Mutual</fullName>
+                <default>false</default>
+                <label>Med Mutual</label>
+            </value>
+            <value>
+                <fullName>MHNet</fullName>
+                <default>false</default>
+                <label>MHNet</label>
+            </value>
+            <value>
+                <fullName>Multiplan</fullName>
+                <default>false</default>
+                <label>Multiplan</label>
+            </value>
+            <value>
+                <fullName>New Directions</fullName>
+                <default>false</default>
+                <label>New Directions</label>
+            </value>
+            <value>
+                <fullName>Optum</fullName>
+                <default>false</default>
+                <label>Optum</label>
+            </value>
+            <value>
+                <fullName>Qualcare</fullName>
+                <default>false</default>
+                <label>Qualcare</label>
+            </value>
+            <value>
+                <fullName>The Empire Plan (NYSHIP)</fullName>
+                <default>false</default>
+                <label>The Empire Plan (NYSHIP)</label>
+            </value>
+            <value>
+                <fullName>Tufts</fullName>
+                <default>false</default>
+                <label>Tufts</label>
+            </value>
+            <value>
+                <fullName>UMR</fullName>
+                <default>false</default>
+                <label>UMR</label>
+            </value>
+            <value>
+                <fullName>United Healthcare</fullName>
+                <default>false</default>
+                <label>United Healthcare</label>
+            </value>
+            <value>
+                <fullName>United Healthcare Oxford</fullName>
+                <default>false</default>
+                <label>United Healthcare Oxford</label>
+            </value>
+            <value>
+                <fullName>UPMC</fullName>
+                <default>false</default>
+                <label>UPMC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

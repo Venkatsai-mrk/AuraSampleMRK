@@ -1,0 +1,319 @@
+.THIS .table-body-row label{
+    display: none;
+}
+.THIS .jk .slds-form-element__label {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 22px;
+}
+.THIS .tier-one td {
+  background-color: #FBE3D7 !important;
+}
+.THIS .tier-one:hover td{
+  background-color: #FBE3D7 !important; 
+}
+.THIS .tier-two td {
+  background-color: #FDF7C3 !important;
+}
+.THIS .tier-two:hover td{
+  background-color: #FDF7C3 !important;
+  
+}
+.THIS .inputclass .slds-grow{
+    margin-right: 26px;
+}
+.THIS .afterJJ span{
+    height: 15px;
+    width: 15px;
+    float: left;
+    border: 1px solid; 
+    display: inline-block;
+    margin: 3px 10px 0 0;
+}
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.THIS .con{
+        width : 100% !important ;
+        max-width:100% !important;
+        }
+.THIS .level{
+        max-width : 100% !important;
+        width : 95% !important ;
+        max-height : 100% !important ;
+        height :100% !important ;
+        }
+.THIS .jk .slds-radio label.slds-radio__label {
+    display: inline-block;
+}
+.THIS .jk.slds-form-element {
+    float: left;
+}
+
+.THIS .pos{
+    float:right ;
+}
+.THIS .parentJJ {
+    width: 125px;
+    align-items: right;
+    text-align: left;
+    line-height: 23px;
+    font-size: 11px;
+    float: right;
+}
+.THIS .jj{
+     float: right;
+    margin-top: 0px ;
+    margin-right: 8px;
+}
+.THIS .taperSave{
+     float: right;
+    margin-top: 79px ;
+    margin-right: 8px;
+    background-color: #d3ead3 !important;
+}
+.THIS .PRNSave{
+     float: right;
+    margin-top: 79px ;
+    margin-right: 8px;
+    
+}
+.THIS .table-body-row th{
+    background: #a8c6d0;
+    text-transform: uppercase;
+}
+
+.THIS .btn-icon-inactive{
+    background-color: lightgrey;
+}
+
+.THIS .btn-icon-inactive button{
+    color: darkgrey;
+}
+.THIS.customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
+}
+ 
+.THIS .btn-icon-unsaved{
+    background-color: orange;
+}
+.THIS .con_tent{
+    margin-top: 23px;
+    box-shadow: 0px 0px 1px 0px #ccc;
+}
+
+.THIS .sample-heading{
+    color : black;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.THIS .background-class{
+    background:white;	
+}
+
+.THIS .invertButton{
+    transform: rotate(180deg);
+}
+
+.THIS .helpText{
+    width: .75rem;
+    height: 0.60rem;
+}
+
+.THIS .slds-form-element__icon{
+}
+.THIS .medication_tab .slds-tabs_default__nav {
+    padding: 0 0 10px 0;
+    border-width: 0 0 0 0;
+    border-style: none;
+    border: 0;
+    z-index: 1; 
+    background-color:#fff;
+    width: 100%;
+}
+.THIS .abc {
+    width: 100%;
+    padding-bottom: 10px;
+}
+.THIS .slds-input[readonly]:focus {
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+.THIS .pateint_info .slds-form-element__help {
+    top: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+    border: none;
+    box-shadow: none;
+}
+.THIS .footercls .slds-form-element__help {
+    text-align: initial;
+}
+.THIS .datetime_class legend{
+}
+.THIS .datetime_class .slds-form-element__row .slds-form-element label{
+    display :none;
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+
+.THIS .con{
+    width : 100% !important ;
+    max-width:100% !important;
+}
+.THIS .slds-tabs_default__content{
+    
+    height:450px;
+    margin-top: 23px;
+    box-shadow: 0px 0px 1px 0px #ccc;
+}
+.THIS .level{
+    max-width : 100% !important;
+    width : 95% !important ;
+    max-height : 100% !important ;
+    height :100% !important ;
+}
+.THIS .slds-table th {
+    background: #a8c6d0 !important;
+    text-transform: uppercase;
+    padding: 15px 0 !important;
+}
+.THIS .slds-table tbody td {
+    background-color: #fbfbfb;
+    padding: 5px 5px ;
+    border-bottom: 1px solid #f1f2f3;
+}
+.THIS .search_key {
+    width:240px !important;
+    display:inline-flex;
+    margin-top:0px;
+}
+.THIS .taper {
+    font-size: 15px; 
+    text-align: center;
+}
+.THIS .afterJJ span {
+    background-color:#FDF7C3
+}
+.THIS .table-body-row th {
+    border-left:solid 1px lightgrey;
+    text-align: center
+}
+.THIS .d-flex {
+    display: flex;
+}
+.THIS .ws-nor {
+    white-space:normal;
+}
+.THIS .m-name {
+    color:indianred ;
+    width: 250px; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    text-align:center
+}
+.THIS .no-prn {
+    font-size: 15px; 
+    text-align: center;
+}
+.THIS .mt-6 {
+    margin-top:0px;
+}
+.THIS .custom-modal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.THIS .custom-modal-c1 {
+    max-width: 50% !important; 
+    width:40% !important;
+    margin-left:500px;
+    margin-top:300px;
+    border:grey; 
+    border-width:2px; 
+    border-style:solid;
+}
+.THIS .parentJJ {
+    width: 100%;
+} 
+.THIS .afterJJ {
+    float: right;
+    margin-left: 15px;
+}
+.THIS .d-flex .slds-form-element {
+        width:100%;
+    }
+.THIS .slds-table th.tableColumnPadd {
+    padding: 0 15px !important;
+}
+.THIS .ws-nor .slds-input {
+    text-align:center;
+}
+@media (max-width: 767px) {
+    .THIS .level{
+        max-width : 100% !important;
+        width : 88% !important ;
+    }
+    .THIS .d-flex {
+        display: block;
+    }
+    .THIS .mobile-grid {
+        display: block;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12, .THIS .mobile-grid .slds-size_4-of-12 {
+        width: 100%;
+    }
+    .THIS .mobile-grid .slds-size_4-of-12  {
+        padding-right: 34px;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12 .slds-grid {
+        display: block;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12 .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+}
+@media (max-width: 767px) {
+ 	.THIS .slds-section__content {
+        overflow-x: scroll !important;
+    }   
+}
+@media (max-width: 576px) {
+    .THIS .level{
+        max-width : 100% !important;
+        width : 88% !important ;
+    }
+    .THIS .d-flex {
+        display: block;
+    }
+    .THIS .mobile-grid {
+        display: block;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12, .THIS .mobile-grid .slds-size_4-of-12 {
+        width: 100%;
+    }
+    .THIS .mobile-grid .slds-size_4-of-12  {
+        padding-right: 34px;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12 .slds-grid {
+        display: block;
+    }
+    .THIS .mobile-grid .slds-size_8-of-12 .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+    .THIS .slds-section__content {
+        overflow-x: scroll !important;
+    }
+}
+.THIS .myCustomClass input { 
+    text-align: center;
+}

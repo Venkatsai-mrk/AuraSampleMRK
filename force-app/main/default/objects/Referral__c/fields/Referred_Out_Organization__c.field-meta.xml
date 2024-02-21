@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Referred_Out_Organization__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is a lookup to the Referral Partner Account</description>
+    <externalId>false</externalId>
+    <label>Referred Out Organization</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Referral</relationshipLabel>
+    <relationshipName>Referral</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,4 @@
+<aura:event type="Component" description="Event template" >
+    <aura:attribute name="goal" type="Object"/>
+    <aura:attribute name="index" type="String"/>
+</aura:event>

@@ -1,0 +1,758 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;
+}
+.THIS .tabcls .slds-tabs_default__nav li{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.THIS .slds-modal__close {
+   /* position: absolute;*/
+    right: 0px;
+    color: #fff;
+    z-index: 1;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.9);
+   
+}
+.THIS .headercls{
+    color:#000;
+    background-color:#fafafa;
+    padding: 8px 15px 0;
+}
+.THIS .headercls h3{
+    font-size:28px;
+   
+}
+.THIS .headercls h5{
+    font-size:14px;  
+}
+.THIS .headercls .pateint_info {
+    text-align: left;
+}
+.THIS .headercls .due_date{
+    float:right;
+    text-align:right;
+    width:100%;
+}
+.THIS .headercls .due_date span { 
+	font-size: 14px;
+}
+.THIS .headercls .due_date .slds-select_container .slds-select {
+    font-size: 12px;
+    width: 100px;
+    padding: 0 0 0 5px;
+    min-height: 25px;
+    height: 25px;
+}
+.THIS .headercls .slds-dropdown-trigger {
+    display: block;
+}
+.THIS .headercls .slds-form-element {
+    position: relative;
+}
+.THIS .headercls .slds-form-element__label {
+   /* position: absolute;*/
+    right: 100px;
+    top: 8px;
+    font-weight: 700;
+    font-size: 12px;
+    display: none;
+}
+.THIS .care-plane_name1 .slds-textarea{
+    font-size : large;
+    height: 95px;
+    width: 90%;
+    margin-top:5px;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: menulist;
+    border: none;
+}
+.THIS .care-plane_name1 .slds-textarea:focus{
+    border:none;
+    box-shadow : none;
+}
+.THIS .care-plane_name1 .slds-textarea::placeholder {
+    padding-top: 24px;
+    text-align : center;
+}
+.THIS .care-plane_name1 .slds-textarea[disabled] {
+    background-color: transparent;
+    border: none;
+}
+.THIS .headercls .slds-form-element__label span {
+    font-size: 12px;
+}
+.THIS .headercls .slds-input {
+    width: 100px;
+    padding:5px 0;
+    color: #666;
+    line-height: 0;
+    height: 10px;
+    min-height: 24px;
+    background: transparent;
+    right: 0;
+    top: 5px;
+    border: none;
+}
+.THIS .headercls .slds-input:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .headercls .slds-select_container:before {
+    top: calc((1.75rem / 2) - 2px);
+}
+.THIS .headercls .slds-input__icon {
+    top: 9px;
+    right: 5px;
+}
+.THIS .add-problems_btn  {
+    margin-bottom: 15px;
+}
+.THIS .add-problems_btn .slds-size_4-of-12  {
+    text-align: right;
+    padding-right: 66px;
+}
+.THIS .add-problems_btn h3 {
+    margin-top: 6px;
+    font-size: 18px;
+}
+.THIS .add-problems_btn .btncss {
+    background-color: #c2403b;
+    border: 1px solid #ccc;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+   /* margin-bottom: -34px;*/
+    transition: all 500ms;
+}
+.THIS .add-problems_btn .btncss:hover {
+    background-color: #fff;
+    border: 1px solid #c2403b;
+    color: #c2403b;
+    transition: all 500ms;
+}
+.THIS .add-problems_btn .btncss .slds-button__icon {
+    height: 16px !important;
+    width: 13px !important;
+    margin-right: 5px !important;
+    margin-bottom: 1px !important;
+}
+
+
+.THIS .down-line {
+    width: 2px;
+    height: 30px;
+    background: #c2403b;
+    float: left;
+    margin-top: 0px;
+    margin-left: 76px;
+} 
+.THIS .down-line:last-child {
+    display: none;
+}
+.THIS.slds-modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.THIS .accordian-parant .slds-modal__content {
+    min-height: 70%;
+}
+.THIS .footercls {
+    text-align: center;
+}
+.THIS .accordian-parant .slds-card__header{
+    display: none;
+}
+.THIS .accordian-parant .slds-card__body{
+    margin-top: 0;
+}
+.THIS .add-problem_modal{
+    margin-left: 60px;
+    width: 90%;
+    height: 100%;
+}
+.THIS .add-problem_modal footer{
+  	background-color: #fafafa;
+    text-align:center;
+    padding: 10px;
+}
+.THIS .add-problem_modal .headercls{
+  	background-color: #fafafa;
+    text-align:center;
+    padding: 14px;
+}
+.THIS .add-problem_modal .headercls h5{
+  	font-size : 16px;
+}
+.THIS .add-problem_modal lightning-dual-listbox{
+ 	margin-left: 6%;
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive{
+    width: 43%;
+    min-width: 43%;
+    height: 350px;   
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive .slds-dueling-list__options {
+    width: auto;
+    max-width: 100%;
+    height: 90%;
+    
+} 
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive:first-child{
+    background-color: #fafafa
+}
+.THIS .add-problem_modal .slds-p-around--medium{
+    background-color : #ffffff;
+}
+.THIS .add-problem_modal .slds-dueling-list .slds-dueling-list__column:nth-child(even){
+    padding-top: 104px;
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive #source-list-label-201{
+    display : none;
+}
+.THIS .add-problem_modal lightning-input .slds-form-element__control{ 
+    margin-left: 10px;
+}
+/*.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive #selected-list-label-201{
+    display : none;
+}*/
+.THIS .add-problem_modal lightning-input .slds-form-element__control input{
+    height: 40px;
+}
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;
+    
+}
+.THIS .tabcls .slds-tabs_default__nav li{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.THIS .headercls{
+    color:#000;
+    background-color:#fafafa;
+    padding: 8px 15px 0;
+}
+.THIS .headercls h3{
+    font-size:28px;
+   
+}
+.THIS .headercls h5{
+    font-size:14px;  
+}
+.THIS .headercls .pateint_info {
+    text-align: left;
+}
+.THIS .headercls .due_date{
+    float:right;
+    text-align:right;
+    width:100%;
+}
+.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+.THIS .datetime_class .slds-form-element__control {
+    clear: right;
+}
+.THIS .datetime_class .slds-form-element__row .slds-form-element label{
+    display :none;
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+/*.THIS .datetime_class lightning-datetimepicker button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top:-1px;
+}*/
+.THIS .headercls .due_date span { 
+	font-size: 14px;
+}
+.THIS .headercls .due_date .slds-select_container .slds-select {
+    font-size: 12px;
+    width: 100px;
+    padding: 0 0 0 5px;
+    min-height: 25px;
+    height: 25px;
+}
+.THIS .headercls .slds-dropdown-trigger {
+    display: block;
+}
+.THIS .headercls .slds-form-element {
+    position: relative;
+}
+.THIS .headercls .slds-form-element__label {
+   /* position: absolute;*/
+    right: 100px;
+    top: 8px;
+    font-weight: 700;
+    font-size: 12px;
+    display:none;
+}
+.THIS .headercls .slds-form-element__label span {
+    font-size: 12px;
+}
+.THIS .headercls .slds-input {
+    width: 80px;
+    padding:5px 0;
+    color: #000;
+    line-height: 0;
+    height: 10px;
+    min-height: 15px;
+    background: transparent;
+    right: 0;
+    top: 5px;
+    border: none;
+    font-weight: 400;
+}
+.THIS .headercls .slds-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+   	color: #000;
+}
+.THIS .headercls .slds-input:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .headercls .slds-select_container:before {
+    top: calc((1.75rem / 2) - 2px);
+}
+.THIS .headercls .slds-input__icon {
+    top: 9px;
+    right: 5px;
+}
+.THIS .add-problems_btn  {
+    margin-bottom: 15px;
+}
+.THIS .add-problems_btn .slds-size_4-of-12  {
+    text-align: right;
+    padding-right: 66px;
+}
+.THIS .add-problems_btn h3 {
+    margin-top: 6px;
+    font-size: 18px;
+}
+.THIS .add-problems_btn .btncss {
+    background-color: #c2403b;
+    border: 1px solid #ccc;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+   /* margin-bottom: -34px;*/
+    transition: all 500ms;
+}
+.THIS .add-problems_btn .btncss:hover {
+    background-color: #fff;
+    border: 1px solid #c2403b;
+    color: #c2403b;
+    transition: all 500ms;
+}
+.THIS .add-problems_btn .btncss .slds-button__icon {
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
+}
+.THIS .down-line {
+    width: 2px;
+    height: 30px;
+    background: #c2403b;
+    float: left;
+    margin-top: 0px;
+    margin-left: 76px;
+} 
+.THIS .down-line:last-child {
+    display: none;
+}
+.THIS.slds-modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.THIS .footercls {
+    text-align: center;
+    padding: 0 15px;
+    border-top: 2px solid #eee;
+}
+.THIS .accordian-parant .slds-card__header{
+    display: none;
+}
+.THIS .accordian-parant .slds-card__body{
+    margin-top: 0;
+}
+.THIS .add-problem_modal{
+    margin-left: 60px;
+    width: 90%;
+    height: 100%;
+}
+.THIS .add-problem_modal footer{
+  	background-color: #fafafa;
+    text-align:center;
+    padding: 10px;
+}
+.THIS .add-problem_modal .headercls{
+  	background-color: #fafafa;
+    text-align:center;
+    padding: 14px;
+}
+.THIS .headercls h5{
+  	font-size : 13px;
+    font-weight: 500;
+    margin: 0 0 6px;
+}
+.THIS .headercls h5 a {
+    color: #006cc9;
+}
+.THIS .headercls h5 span{
+    font-weight: 400;
+}
+.THIS .headercls h5 i {
+    float: right;
+    font-style: normal;
+}
+.THIS .headercls h5 .slds-required {
+    display: none;
+}
+.THIS .pateint_info .slds-input__icon {
+    display: none;
+}
+.THIS .add-problem_modal lightning-dual-listbox{
+ 	margin-left: 6%;
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive{
+    width: 43%;
+    min-width: 43%;
+    height: 350px;   
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive .slds-dueling-list__options {
+    width: auto;
+    max-width: 100%;
+    height: 90%;
+    
+} 
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive:first-child{
+    background-color: #fafafa
+}
+.THIS .add-problem_modal .slds-p-around--medium{
+    background-color : #ffffff;
+}
+.THIS .add-problem_modal .slds-dueling-list .slds-dueling-list__column:nth-child(even){
+    padding-top: 104px;
+}
+.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive #source-list-label-201{
+    display : none;
+}
+.THIS .add-problem_modal lightning-input .slds-form-element__control{ 
+    margin-left: 10px;
+}
+/*.THIS .add-problem_modal lightning-dual-listbox .slds-dueling-list__column_responsive #selected-list-label-201{
+    display : none;
+}*/
+.THIS .add-problem_modal lightning-input .slds-form-element__control input{
+    height: 40px;
+}
+.THIS .add-problems_btn h3 {
+    background-color: transparent;
+}
+.THIS .care-plane_name {
+    height: 104px;
+    width: 300px;
+    border: 1px solid #fff;
+    z-index: 1;
+    box-shadow: 0 0 4px #ccc;
+    margin: 0 auto;
+    position: relative;
+    background-color: #fff;
+}
+.THIS .care-plane_name .slds-input {
+    width: 100%;
+    margin: 0;
+    height: 117px;
+    font-size: 20px;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+}
+.THIS .care-plane_name .slds-input::placeholder {
+    color: #000
+}
+.THIS .care-plane_name .slds-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #000;
+}
+
+.THIS .care-plane_name .slds-input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #000;
+}
+.THIS .care-plane_name1 .slds-button {
+    padding: 0;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+   /* right: -15px;
+    position: absolute;*/
+    float: right;
+}
+.THIS .care-plane_name1 .slds-button .slds-button__icon {
+    margin: 0 0 5px 0;
+    fill: #aaa;
+}
+.THIS .pateint_info .slds-form-element__help {
+   /* position: absolute;*/
+    /* right: -2px; */
+    top: 12px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+  /*  border: none; */
+    box-shadow: none;
+}
+.THIS .header_select .slds-select_container{
+    width : 150px;
+}
+.THIS .header_select .slds-select_container select{
+    height : 26px;
+}
+.THIS .header_select .slds-select_container:after{
+    top: 6px;
+}
+.THIS .therapist_sign {
+    display: block;
+    float: left;
+    width: calc(100% - 50px);
+    margin: 15px 0 0 50px;
+    padding: 10px 0 0;
+}
+.THIS .therapist_sign p:first-child {
+    margin-bottom: 10px;
+    color: #333;
+}
+.THIS .therapist_sign p span {
+    color:#006cc9;
+}
+.THIS .backgroundBlack{
+    background-color: #000;
+}
+.THIS .hideFile .slds-image_card, .THIS .hideFile .slds-image--card, 
+.THIS .hideFile .slds-file_card, .THIS .hideFile .slds-file--card{
+    background: transparent;
+    border: none;
+}
+.THIS .hideFile .forceContentFileCard {
+    width: 180px !important;
+}
+.THIS .hideFile img {
+    width: 180px;
+    margin-left: 10px;
+}
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__figure:hover:before, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__figure:focus:before, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__crop:hover:before, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__crop:focus:before,
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__figure:hover:before,
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__figure:focus:before,
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__crop:hover:before, 
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__crop:focus:before, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__figure:hover:after,
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__figure:focus:after, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__crop:hover:after, 
+.THIS .hideFile .slds-image:not(.slds-file_loading) .slds-file__crop:focus:after, 
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__figure:hover:after, 
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__figure:focus:after, 
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__crop:hover:after, 
+.THIS .hideFile .slds-file:not(.slds-file_loading) .slds-file__crop:focus:after {
+    display: none;
+}
+.THIS .hideFile .slds-file__crop {
+    cursor: auto;
+}
+.THIS .slds-modal__container{
+    max-width: 100% !important;
+    width:90% !important;
+}
+.THIS .color_006cc9 {
+    color: #000;
+}
+.THIS section.slds-modal.slds-fade-in-open.sectioncss {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS.careplan_modal {
+    background-color: #fff;
+}
+.THIS article.slds-card {
+    border: none;
+    box-shadow: none;
+}
+.THIS .add-problems_btn .slds-textarea {
+    height: 100px;
+}
+@media (max-width: 1100px) {
+    .THIS .accordian-parant .slds-modal__content {
+        min-height: 50%;
+        height: 50%;
+    }
+    .THIS .footer_mobile-grid {
+        display: flex;
+    }
+    .THIS .slds-modal__footer .slds-button+.slds-button {
+        margin-left: 0;
+        margin-top: 10px;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid {
+        display: block;
+    }
+    .THIS .footer_mobile-grid .slds-size_4-of-12 {
+        width: 15%;
+    } 
+    .THIS .footer_mobile-grid .slds-size_8-of-12 {
+        width: 80%;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+}
+@media (max-width: 992px) {
+    .THIS .head-mobile_grid {
+        display: block;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12 {
+        width: 100%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(2) {
+        float: left;
+        width: 49%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(3) {
+        width: 49%;
+        float: right;
+    } 
+    .THIS .care-plane_name {
+        width: 100%;
+        height: 66px;
+    }
+    .THIS .care-plane_name1 textarea {
+        height: 66px;
+        margin: 0;
+    }
+    .THIS .accordian-parant .slds-modal__content {
+        min-height: 45%;
+        height: 45%;
+    }
+    .THIS .footer_mobile-grid {
+        display: flex;
+    }
+    .THIS .slds-modal__footer .slds-button+.slds-button {
+        margin-left: 0;
+        margin-top: 10px;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid {
+        display: block;
+    }
+    .THIS .footer_mobile-grid .slds-size_4-of-12 {
+        width: 20%;
+    } 
+    .THIS .footer_mobile-grid .slds-size_8-of-12 {
+        width: 80%;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+
+}
+@media (max-width: 767px) {
+    .THIS .head-mobile_grid {
+        display: block;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12 {
+        width: 100%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(2) {
+        float: left;
+        width: 49%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(3) {
+        width: 49%;
+        float: right;
+    } 
+    .THIS .care-plane_name {
+        width: 100%;
+        height: 66px;
+    }
+    .THIS .care-plane_name1 textarea {
+        height: 66px;
+        margin: 0;
+    }
+    .THIS .accordian-parant .slds-modal__content {
+        min-height: 45%;
+        height: 45%;
+    }
+    .THIS .footer_mobile-grid {
+        display: flex;
+    }
+    .THIS .slds-modal__footer .slds-button+.slds-button {
+        margin-left: 0;
+        margin-top: 10px;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid {
+        display: block;
+    }
+    .THIS .footer_mobile-grid .slds-size_4-of-12 {
+        width: 20%;
+    } 
+    .THIS .footer_mobile-grid .slds-size_8-of-12 {
+        width: 80%;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+
+}
+@media (max-width: 576px) {
+    .THIS .head-mobile_grid {
+        display: block;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12 {
+        width: 100%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(2) {
+        float: left;
+        width: 49%;
+    }
+    .THIS .head-mobile_grid .slds-size_4-of-12:nth-child(3) {
+        width: 49%;
+        float: right;
+    } 
+    .THIS .care-plane_name {
+        width: 100%;
+    }
+    .THIS .accordian-parant .slds-modal__content {
+        min-height: 35%;
+        height: 35%;
+    }
+    .THIS .footer_mobile-grid {
+        display: flex;
+    }
+    .THIS .slds-modal__footer .slds-button+.slds-button {
+        margin-left: 0;
+        margin-top: 10px;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid {
+        display: block;
+    }
+    .THIS .footer_mobile-grid .slds-size_4-of-12 {
+        width: 20%;
+    } 
+    .THIS .footer_mobile-grid .slds-size_8-of-12 {
+        width: 80%;
+	}
+    .THIS .footer_mobile-grid .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    } 
+    .THIS .care-plane_name1 .slds-textarea {
+        height: 58px;  
+    } 
+}

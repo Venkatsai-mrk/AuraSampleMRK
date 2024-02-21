@@ -1,0 +1,87 @@
+th {
+    text-align: center;
+    color:#333;
+}
+
+.trHeader{
+background:lightgrey;
+font-size:medium;
+}
+
+table{
+    
+    font-weight:normal ;
+    text-align: center;
+    
+    border-collapse: collapse;
+}
+tr{
+    border-collapse: collapse;
+}
+
+td {
+    text-align: center;
+    border-collapse: collapse;
+}
+
+
+.tdClassImg{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.labels{
+    padding: 6px;
+    font-size:medium;
+}
+
+.layout{
+    height:100%;
+    width:100%;
+    background-color:white;
+    font-size:15px;
+    font-weight:normal;
+}
+
+.tabset{
+    background-color:white;
+    font-size:15px;
+}
+.lab-o_details-form {
+    width: 100%;
+    padding: 0 60px;
+    font-weight: 600;
+}
+.slds-box.print {
+    background-color: rgb(243, 242, 242);
+}
+
+.normalFont{
+    font-weight: Normal;
+}
+
+.smallFont{
+    font-size:small;
+}
+
+.detailLightningButton{
+    padding: 10px 40px 10px 10px;
+    text-align:center;
+    font-weight:normal;
+    font-size:medium
+}
+
+.saveButton{
+    padding-right:  3px;
+    font-weight:normal;
+}
+.design {
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
+    right: 89px;
+    top: 76px;
+    padding: 10px;
+    width: 298px;
+    box-shadow: 0px 0px 6px 0px #ccc;
+}

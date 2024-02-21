@@ -1,0 +1,241 @@
+.THIS .remove_label .slds-form-element__label {
+	display: none;
+}
+.THIS span.slds-radio {
+    float: left;
+    margin-right: 70px;
+}
+.THIS .slds-grid_align-end
+{
+    justify-content: right !important; 
+}
+.THIS .payment-list {
+    width: 90%;
+    margin: 0 auto;
+}
+.THIS .cardlist {
+    width: 40%;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+.THIS .iconColor svg {
+    fill : purple;
+}
+.THIS .iconColor {
+   background-color:white !important;
+}
+.THIS .slds-scrollable_y {
+        overflow-y: inherit;
+}
+.THIS .payment-list h2 {
+    color: #000;
+    font-weight: 700;
+    font-size: 28px;
+}
+.THIS .first-cart {
+    background-color : #f1f2f3;
+    box-shadow: 0px 0px 3px 0px #ccc;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+.THIS .first-cart .slds-grid {
+    margin-bottom: 10px;
+}
+.THIS .first-cart .slds-grid:last-child {
+    margin-bottom: 0px;
+}
+.THIS .first-cart div#listbox-id-1 {
+    height: 105px;
+}
+.THIS .second-cart {
+    background-color : #f1f2f3;
+    box-shadow: 0px 0px 3px 0px #ccc;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+.THIS .second-cart .slds-grid {
+    margin-bottom: 10px;
+}
+.THIS .second-cart .slds-grid:last-child {
+    margin-bottom: 0px;
+}
+/*.THIS .uiCheckboxCss
+{
+    float: right;
+}*/
+.THIS .slds-modal__container{ 
+    max-width: 100% !important; 
+    width:97% !important; 
+}
+.THIS .slds-table th, .THIS .slds-table td {
+    padding: 4px 8px !important;
+    white-space: nowrap;
+    position: relative;
+}
+.THIS .no-record {
+    font-size:15px;
+    color:red;
+}
+.THIS .payment-table thead th {
+    border-left: 1px solid lightgrey; 
+    border-right: 1px solid lightgrey;
+}
+.THIS .payment-table thead th:first-child {
+    border: none;
+}
+.THIS .payment-table thead th:nth-child(2) {
+    border-left: none;
+}
+.THIS .payment-table thead th:last-child {
+    border-right: none;
+}
+.THIS .ml-75 {
+    margin-left: 70%;
+}
+.THIS .byProcTableCss .th
+{
+    width:100px; 
+    word-wrap:break-word;
+}
+.THIS lightning-icon.slds-icon.slds-icon_small.slds-icon-text-default.slds-icon-custom-custom47.slds-icon_container {
+    display:none;
+}
+.THIS table.slds-table.slds-table_header-fixed.slds-table_bordered.slds-table_edit.slds-table_resizable-cols thead th {
+    height: 30px;
+}
+.THIS .pvt-container {
+    width: 90%;
+    margin: 0 auto;
+}
+.THIS .pvt-pay {
+    width: 250px;
+    margin-left: 5%;
+}
+.THIS .pvt-pay .slds-select {
+    background-color :  #493266;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+.THIS .btn {
+   color: white;
+   background-color: #493266;
+}
+.THIS .colPayHeader {
+   color: white;
+   background-color: #493266;
+    padding: 12px;
+}
+
+.THIS .pvt-pay .slds-select_container:before {
+    display : none;
+}
+.THIS .pvt-pay .slds-select_container:after {
+    width: 0;
+  	height: 0;
+  	border: 8px solid transparent;
+  	border-bottom: 0;
+  	border-top: 15px solid #fff;
+}
+.THIS .pvt-pay .slds-select:focus, 
+.THIS .pvt-pay .slds-select:active {
+    box-shadow: none;
+    outline : 0;
+    border: 1px solid #1798c1;
+}
+.THIS .pvt-box {
+    background-color: #f1f2f3;
+    box-shadow: 0 0 3px 0 #ccc;
+    padding: 10px 15px;
+    margin: 10px auto 15px;
+}
+.THIS .slds-card__header.slds-grid {
+    display: none;
+}
+.THIS .slds-card__body {
+    margin-bottom: 0;
+}
+@media(max-width: 1200px) {
+    .THIS .ml-80 {
+        margin-left: 60%;
+    }
+}
+@media(max-width: 767px) {
+	.THIS .payment-list {
+        width: 80%;
+    } 
+    .THIS .mobile-li1 {
+        width: 100%;
+    }
+    .THIS .mobile-li1 .slds-size_4-of-12, .THIS .mobile-li1 .slds-size_8-of-12 {
+        width: 50%;
+    } 
+    .THIS .mobile-li2 {
+        display: block;
+    }
+    .THIS .mobile-li2 .slds-size_6-of-12 {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .THIS .mobile-li2 .slds-size_6-of-12 .slds-size_4-of-12, 
+    .THIS .mobile-li2 .slds-size_6-of-12 .slds-size_8-of-12 {
+        width: 50%;
+    }
+    .THIS .ml-80 {
+        margin-left: 52%;
+    }
+} 
+@media(max-width: 576px) {
+	.THIS .payment-list {
+        width: 90%;
+    }  
+    .THIS .slds-modal__container{  
+        width:86% !important; 
+    }
+    .THIS .ml-80 {
+        margin-left: 32%;
+    }
+}
+.THIS .byProcTableCss .slds-table tbody td {
+    padding-left: 16px!important;
+}
+.THIS .byProcTableCss .slds-table tbody td .slds-grid{
+   
+    justify-content: flex-start;
+}
+/*changes */
+.THIS .changescroll{
+    height:100%;
+}
+.THIS .pay_cls{
+    font-size: 32px;
+    font-weight: 600;
+    color: #020903
+}
+.THIS .pay_info{
+    text-align:center;
+}
+.THIS .pay_disclaimer{
+    font-size:16px;
+}
+.THIS .terminal_footer{
+    background : none;
+    border : none;
+}
+.THIS .slds-form-element_other{
+    margin-left: 25%;
+    width :630px;
+}
+.THIS .picklist_values{
+    margin-left: 25%;
+    width :630px;
+}
+.THIS .changeNew{
+    margin-left:25%;
+}
+.THIS .changeDis{
+    display: block;
+}
+.THIS .change386{
+    font-size:15px;
+}

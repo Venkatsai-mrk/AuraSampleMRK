@@ -1,0 +1,160 @@
+.THIS .remove_label .slds-form-element__label {
+	display: none;
+}
+.THIS span.slds-radio {
+    float: left;
+    margin-right: 70px;
+}
+.THIS .payment-list {
+    width: 90%;
+    margin: 0 auto;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: #0176D3;
+   background-color: white;
+    padding: 0px 10px 0px 10px; 
+}
+.THIS .payment-list h2 {
+    color: #000;
+    font-weight: 700;
+    font-size: 28px;
+}
+.THIS .first-cart {
+    background-color : #f1f2f3;
+    box-shadow: 0px 0px 3px 0px #ccc;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+.THIS .first-cart .slds-grid {
+    margin-bottom: 10px;
+}
+.THIS .first-cart .slds-grid:last-child {
+    margin-bottom: 0px;
+}
+.THIS .first-cart div#listbox-id-1 {
+    height: 105px;
+}
+.THIS .second-cart {
+    background-color : #f1f2f3;
+    box-shadow: 0px 0px 3px 0px #ccc;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+.THIS .second-cart .slds-grid {
+    margin-bottom: 10px;
+}
+.THIS .second-cart .slds-grid:last-child {
+    margin-bottom: 0px;
+}
+/*.THIS .uiCheckboxCss
+{
+    float: right;
+}*/
+.THIS .slds-modal__container{ 
+    max-width: 100% !important; 
+    width:97% !important; 
+}
+.THIS .slds-table th, .THIS .slds-table td {
+    padding: 4px 8px !important;
+    white-space: nowrap;
+    position: relative;
+}
+.THIS .no-record {
+    font-size:15px;
+    color:red;
+}
+.THIS .payment-table thead th {
+    border-left: 1px solid lightgrey; 
+    border-right: 1px solid lightgrey;
+}
+.THIS .payment-table thead th:first-child {
+    border: none;
+}
+.THIS .payment-table thead th:nth-child(2) {
+    border-left: none;
+}
+.THIS .payment-table thead th:last-child {
+    border-right: none;
+}
+.THIS .ml-80 {
+    margin-left: 75%;
+}
+.THIS .byProcTableCss .th
+{
+    width:100px; 
+    word-wrap:break-word;
+}
+.THIS lightning-icon.slds-icon.slds-icon_small.slds-icon-text-default.slds-icon-custom-custom47.slds-icon_container {
+    display:none;
+}
+.THIS table.slds-table.slds-table_header-fixed.slds-table_bordered.slds-table_edit.slds-table_resizable-cols thead th {
+    height: 30px;
+}
+.THIS .dos-box .slds-form-element__label {
+    display : none;
+}
+.THIS .dos-box .slds-col.slds-size_1-of-12, .THIS .dos-box .slds-col.slds-size_2-of-12,
+.THIS .dos-box .slds-col.slds-size_4-of-12{
+    margin: 10px 0;
+}
+.THIS .pay-table .slds-grid_align-end, .THIS .pay-table .slds-grid--align-end {
+    justify-content: flex-start;
+    padding-left: 10px;
+}
+.THIS .pay-table .slds-th__action.slds-th__action_form.slds-cell-fixed {
+    padding-left: 0;
+}
+.THIS .myWidth {
+    max-width: 50%!important;
+}
+.THIS .amt_allocate .slds-form-element__static.slds-form-element__label {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 7px;
+}
+.THIS .amt_allocate .slds-input {
+    height: 60px;
+    font-size: 24px;
+}
+@media(max-width: 1200px) {
+    .THIS .ml-80 {
+        margin-left: 60%;
+    }
+}
+@media(max-width: 767px) {
+	.THIS .payment-list {
+        width: 80%;
+    } 
+    .THIS .mobile-li1 {
+        width: 100%;
+    }
+    .THIS .mobile-li1 .slds-size_4-of-12, .THIS .mobile-li1 .slds-size_8-of-12 {
+        width: 50%;
+    } 
+    .THIS .mobile-li2 {
+        display: block;
+    }
+    .THIS .mobile-li2 .slds-size_6-of-12 {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .THIS .mobile-li2 .slds-size_6-of-12 .slds-size_4-of-12, 
+    .THIS .mobile-li2 .slds-size_6-of-12 .slds-size_8-of-12 {
+        width: 50%;
+    }
+    .THIS .ml-80 {
+        margin-left: 52%;
+    }
+} 
+@media(max-width: 576px) {
+	.THIS .payment-list {
+        width: 90%;
+    }  
+    .THIS .slds-modal__container{  
+        width:86% !important; 
+    }
+    .THIS .ml-80 {
+        margin-left: 32%;
+    }
+}

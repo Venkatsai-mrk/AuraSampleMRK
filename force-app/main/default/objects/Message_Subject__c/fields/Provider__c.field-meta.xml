@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provider__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to associate provider with the Message Subject.</description>
+    <externalId>false</externalId>
+    <label>Provider</label>
+    <referenceTo>Provider__c</referenceTo>
+    <relationshipLabel>Message Subjects</relationshipLabel>
+    <relationshipName>Message_Subjects</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

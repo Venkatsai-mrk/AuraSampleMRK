@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="medicationList" type="Object" description="Data of the newly added medication"/>
+</aura:event>

@@ -1,0 +1,16 @@
+.div1 {
+    padding:5px;
+}
+.searchBox {
+    padding-left: 15px;
+}
+.searchButtonDiv {
+    padding-top:12px;
+}
+.searchButton {
+    position:relative;
+    top:15px;
+}
+.addRowButton {
+    margin: 10px;
+}

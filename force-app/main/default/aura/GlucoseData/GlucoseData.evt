@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template" >
+  <aura:attribute name="glucoseData" type="Medical_Examination__c[]"
+               /> 
+    
+</aura:event>

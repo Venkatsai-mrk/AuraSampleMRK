@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Group__c</fullName>
+    <description>Identifies the account group linked to the criteria assignment.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Group</label>
+    <referenceTo>Account_Group__c</referenceTo>
+    <relationshipLabel>Criteria Assignments</relationshipLabel>
+    <relationshipName>Criteria_Assignments</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

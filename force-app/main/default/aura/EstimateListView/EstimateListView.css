@@ -1,0 +1,134 @@
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.THIS .remove_label .slds-form-element__label {
+    display: none;
+}
+.THIS .slds-grid_align-end
+{
+    justify-content: left !important; 
+}
+.THIS .slds-modal__header{
+    background-color: rgb(243, 242, 242);
+}
+.THIS .widthForAll .slds-radio [type=radio]+.slds-radio__label .slds-radio_faux {
+    border: 1px solid #000;    
+}
+
+.THIS .widthForAll label.slds-radio__label {
+    margin: 10px 0;
+    display: block;
+}
+.THIS .table-test thead th span {
+    background-color: #493266;
+    color: white
+}
+.THIS .buttonRound .slds-button {
+    border-radius:25px;
+    min-width:100px;
+    font-size: 14px;
+}
+.THIS .slds-modal__footer {
+    text-align:center;
+}
+.THIS svg.slds-icon.slds-icon-text-default.slds-icon_x-small{
+    fill:red;
+}
+.THIS .slds-datepicker__filter.slds-grid{
+    background: #ba69c8;
+}
+.THIS lightning-calendar .slds-align-middle{
+    color:white;
+    text-transform: uppercase!important;
+}
+.THIS lightning-calendar button.slds-button.slds-button_icon.slds-button_icon-container{
+    background: white;
+    border-radius: 23px;
+    height: 20px;
+    border: 1px solid;
+    width: 20px;
+}
+.THIS .slds-text-link {
+    color: #d4a4dd;
+}
+.THIS .slds-datepicker tbody>tr>td.slds-is-selected>.slds-day{
+    color:white;
+    background-color:#ba69c8;
+    border-radius:5px !important;
+}
+.THIS .slds-is-today>.slds-day{
+    background-color:#f7edf8 !important;
+    border: 1px solid #ba69c8;
+    color:#ba69c8;
+    border-radius:5px !important;
+}
+.THIS .pr {
+    position:relative;
+}
+.THIS .color-r {
+    color: #f00;
+}
+.THIS .slds-has-focus.slds-is-resizable .THIS .slds-th__action, 
+.THIS .slds-has-focus.slds-is-resizable .THIS .slds-th__action:focus, 
+.THIS .slds-has-focus.slds-is-resizable .THIS .slds-th__action:hover, 
+.THIS .slds-has-focus.slds-is-resizable .THIS .slds-th__action:focus:hover, 
+.THIS .slds-is-resizable .THIS .slds-th__action:focus, 
+.THIS .slds-is-resizable .THIS .slds-th__action:focus:hover {
+    background-color: #493266 !important;
+}
+.THIS lightning-menu-item.slds-dropdown__item a {
+    padding: 0;
+    background-color: #493266 !important;
+    display: block;
+}
+.THIS .table-test thead th span, .THIS .table-test thead th span:focus, 
+.THIS .table-test thead th span:hover, .THIS .slds-cell-fixed.slds-has-button-menu:focus,
+.THIS .slds-cell-fixed.slds-has-button-menu:hover, .THIS .slds-cell-fixed.slds-has-button-menu{
+    background-color : #f3f3f3;
+    color : #444444;
+}
+.THIS .slds-dropdown.slds-dropdown_left {
+    padding: 0;
+}
+.THIS .clear_filters {
+    margin-left: 10px;
+}
+.THIS .apply-btn {
+    border-radius: 5px;
+    color: white;
+    background-color: #0176D3;
+    width: 70px;
+    height: 30px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 1px 1px 5px 0px #666675;
+    margin-top: 20px;
+}
+.THIS.w-100, .THIS .w-100 {
+    width: 100%;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .data-table-100 {
+    width: 100%;
+}
+.THIS .db {
+    display: block;
+}
+@media (max-width: 576px) {
+    .THIS .mobile-grid {
+        /*display: block;*/
+    }
+    .THIS .mobile-grid .slds-size_9-of-12 {
+        width: 90%;
+    }
+    .THIS .mobile-grid .slds-size_3-of-12 {
+        width: 10%;
+    }
+}

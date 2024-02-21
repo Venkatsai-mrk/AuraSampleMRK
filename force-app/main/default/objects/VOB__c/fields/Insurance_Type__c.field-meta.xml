@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Type__c</fullName>
+    <description>The type of insurance coverage, such as Medicare, Medicaid, Tricare, CHAMPVA, Group Health Plan, etc..</description>
+    <externalId>false</externalId>
+    <label>Insurance Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MA</fullName>
+                <default>false</default>
+                <label>Medicare Part A</label>
+            </value>
+            <value>
+                <fullName>MB</fullName>
+                <default>false</default>
+                <label>Medicare Part B</label>
+            </value>
+            <value>
+                <fullName>WC</fullName>
+                <default>false</default>
+                <label>Workers&apos; Compensation Health Claim</label>
+            </value>
+            <value>
+                <fullName>11</fullName>
+                <default>false</default>
+                <label>Other Non-Federal Programs</label>
+            </value>
+            <value>
+                <fullName>12</fullName>
+                <default>false</default>
+                <label>Preferred Provider Organization (PPO)</label>
+            </value>
+            <value>
+                <fullName>13</fullName>
+                <default>false</default>
+                <label>Point of Service (POS)</label>
+            </value>
+            <value>
+                <fullName>14</fullName>
+                <default>false</default>
+                <label>Exclusive Provider Organization (EPO)</label>
+            </value>
+            <value>
+                <fullName>15</fullName>
+                <default>false</default>
+                <label>Indemnity Insurance</label>
+            </value>
+            <value>
+                <fullName>16</fullName>
+                <default>false</default>
+                <label>Health Maintenance Organization (HMO) Medicare Risk</label>
+            </value>
+            <value>
+                <fullName>17</fullName>
+                <default>false</default>
+                <label>Dental Maintenance Organization</label>
+            </value>
+            <value>
+                <fullName>AM</fullName>
+                <default>false</default>
+                <label>Automobile Medical</label>
+            </value>
+            <value>
+                <fullName>BL</fullName>
+                <default>false</default>
+                <label>Blue Cross/Blue Shield</label>
+            </value>
+            <value>
+                <fullName>CH</fullName>
+                <default>false</default>
+                <label>Champus</label>
+            </value>
+            <value>
+                <fullName>CI</fullName>
+                <default>false</default>
+                <label>Commercial Insurance Co.</label>
+            </value>
+            <value>
+                <fullName>DS</fullName>
+                <default>false</default>
+                <label>Disability</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>Federal Employees Program</label>
+            </value>
+            <value>
+                <fullName>HM</fullName>
+                <default>false</default>
+                <label>Health Maintenance Organization</label>
+            </value>
+            <value>
+                <fullName>LM</fullName>
+                <default>false</default>
+                <label>Liability Medical</label>
+            </value>
+            <value>
+                <fullName>MC</fullName>
+                <default>false</default>
+                <label>Medicaid</label>
+            </value>
+            <value>
+                <fullName>TV</fullName>
+                <default>false</default>
+                <label>Title V</label>
+            </value>
+            <value>
+                <fullName>VA</fullName>
+                <default>false</default>
+                <label>Veteran Administration Plan</label>
+            </value>
+            <value>
+                <fullName>ZZ</fullName>
+                <default>false</default>
+                <label>Mutually Defined</label>
+            </value>
+            <value>
+                <fullName>OF</fullName>
+                <default>false</default>
+                <label>Other Federal Program</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

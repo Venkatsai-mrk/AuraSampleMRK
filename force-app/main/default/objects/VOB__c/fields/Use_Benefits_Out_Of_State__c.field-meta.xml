@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Use_Benefits_Out_Of_State__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Can the patient use these benefits out of state? Any restrictions?</inlineHelpText>
+    <label>Can use bnfts out of state?Restrictions?</label>
+    <length>250</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

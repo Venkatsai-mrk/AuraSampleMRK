@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Patient Notification for visit summaries</name>
+    <style>none</style>
+    <subject>{!Organization.Name} has shared Visit Summary on Portal</subject>
+    <textOnly>Hello {!Account.Name},
+
+{!Organization.Name} has shared  the visit summary related to your recent visit.
+
+Please login into your portal {Patientportallink} to review the visit summary.
+
+Please get in touch with us for any queries.
+
+Regards,
+{!Organization.Name}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

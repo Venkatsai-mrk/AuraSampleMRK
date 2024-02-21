@@ -1,0 +1,126 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="ElixirHC_UAListViewController">
+    <lightning:workspaceAPI aura:id="workspace" /> 
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name ="patientID" type = "String"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedUARecords" type="List" />
+    <aura:attribute name="showDeleteButton" type="Boolean" default="false"/>
+    <aura:attribute name="isEnabledEditButton" type="Boolean" default="false"/>
+    <aura:attribute name="sortedBy" type="String" default="Name"/> 
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="openNewForm" type="Boolean" default="false"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/>
+    <aura:attribute name ="editScreenDisabled" type="boolean" default="false"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="handleReviewButtonAsInitial" type="Boolean" default="false"/>
+    <aura:attribute name="handleReviewButtonAsConcurrent" type="Boolean" default="false"/>
+    <aura:attribute name="showLastReviewInfo" type="Boolean"/>
+    <aura:attribute name="openUtilizationReview" type="Boolean" default="false"/>
+    <aura:attribute name="deletionAbility" type="Boolean" default="false"/>
+    <aura:attribute name="showUA" type="Boolean" default="false"/>
+    <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
+    <aura:attribute name ="nameSpace" type = "String"/>
+	 <aura:registerEvent name="LandingPage" type="c:LandingPage" /> 
+    
+    <aura:handler name="RefreshUAListView" event="c:RefreshUAListView" action="{!c.doInit}"/>
+    <aura:registerEvent name="RefreshUAListView" type="c:RefreshUAListView" /> 
+    
+    <!-- Nikihl LX3-5932-->
+     <aura:attribute name="careModal" type="boolean" default="false"/>
+     <aura:attribute name ="heading" type = "String" default="Urine Analysis"/>
+     <aura:attribute name="CreateSampleUA" type="boolean" default="false"/>
+    <!-- end-->    
+    
+    <div>           
+        <div class="mg-p-list">            
+            <!--List Status-->
+            <div class="slds-grid slds-m-top_xx-small slds-m-left_small">
+                <div class="slds-col slds-size_7-of-12 pr ">
+                    <div>
+                        {! v.data.length }  items . Sorted by {!v.sortedBy} 
+                        <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                            <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                        </aura:if>
+                    </div>
+                </div> 
+                
+                <div class="slds-col slds-size_5-of-12 slds-m-left_small slds-m-bottom_small showdel-btn">
+                    
+                    <aura:if isTrue="{!v.showDeleteButton}">
+                        <lightning:button label="Delete Selected"  variant="brand" onclick="{!c.deleteSelectedRows}" disabled="{!v.deletionAbility}"/>
+                        <lightning:button label="Send To Lab"  variant="brand" onclick="{!c.sendToLab}"/>
+                    </aura:if>
+                    <lightning:button label="New" title="New" onclick="{!c.createUA}"/>                       
+                    <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class="inline-buttons left-margin"/> 
+                </div>
+                 <!-- Nikhil -->
+                 <aura:if isTrue="{!v.careModal}" >                      
+                    <c:CareEpisodeShowPrompt showPrompt="{!v.careModal}" patientId="{!v.patientID}" heading="{!v.heading}"></c:CareEpisodeShowPrompt>    	      
+                 </aura:if>   
+                
+                <aura:if isTrue="{!v.CreateSampleUA}">
+                    <c:ElixirHC_CreateSampleUA accountId="{!v.patientID}" popFlag="{!v.CreateSampleUA}" openModal="{!v.CreateSampleUA}"/>
+                </aura:if>   
+                
+                <!-- END -->
+                    <aura:if isTrue="{!v.editScreen}">
+                    <c:ElixirHC_SampleAnalysis accountId="{!v.patientID}" openModal="{!v.editScreen}" physicalSampleDetail="{!v.RowId}"/>
+                </aura:if>
+                
+                <!--aura:if isTrue="{!v.showUA}">
+                    <c:ElixirHC_SampleAnalysis accountId="{!v.patientID}" openModal="{!v.showUA}" physicalSampleDetail="{!v.RowId}"></c:ElixirHC_SampleAnalysis>
+                </aura:if-->
+                
+                
+            </div> 
+            <div>         
+                <!--to display datatable-->
+                <div class="slds-grid">
+                    <div aura:id="dataTable" class="slds-col">
+                        
+                        <lightning:datatable data="{!v.data }"  
+                                             class = "abc"
+                                             aura:id="myCol"
+                                             columns="{!v.mycolumns }" 
+                                             keyField="Id"
+                                             selectedRows="{!v.selectedRows}"
+                                             hideCheckboxColumn="false"                                                                                                
+                                             onrowaction="{!c.handleRowAction }"
+                                             onrowselection="{!c.selectedRows}"
+                                             resizeColumnDisabled="false" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <aura:if isTrue="{!v.IsSpinner}">
+                        <lightning:spinner variant="brand"  size="large" />
+                    </aura:if>
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this item?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,158 @@
+.THIS .slds-card__header
+{
+    /*background: lightgrey;*/
+}
+.THIS.customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
+}
+.THIS .gridCls{
+    padding: 0px 0px 0px 10px !important; 
+    background: #f8f5f5; 
+    border: solid 1px grey; 
+    line-height: 2rem;
+}
+.THIS .head2{
+    text-align:center;
+    margin: 0 390px;
+}
+.THIS .gridCls2{
+    padding: 0px 0px 0px 10px !important; 
+    /*background: lightgrey; */
+    border: solid 1px grey; 
+    line-height: 1.2rem;
+}
+.THIS .slds-textarea {
+    height: 30px!important;
+}
+.THIS .care-plane_name{
+    background : #f8f5f5;
+}
+.THIS .care-plane_name1 .slds-textarea{
+    font-size : large;
+    height: 60px!important;
+    text-align: center !important;
+    /*width: 100%;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: menulist;*/
+    border: none;
+    /*background : lightgrey;*/
+}
+.THIS .care-plane_name1 .slds-textarea:focus{
+    border:none;
+    box-shadow : none;
+}
+.THIS .care-plane_name1 .slds-textarea::placeholder {
+    padding-top: 24px;
+    text-align : center;
+}
+.THIS .care-plane_name1 .slds-textarea[disabled] {
+    background-color: transparent;
+    border: none;
+}
+.THIS .slds-checkbox_toggle [type=checkbox]+.slds-checkbox_faux_container{
+    display: flex;
+}
+.THIS .slds-modal__container .modal1{
+    min-width: 95% !important;
+    width: 95% !important;
+}
+.THIS .slds-button-group {
+    margin-right:10px;
+}
+.THIS .handlerForStatic button.slds-button.slds-button_icon.slds-button_icon-border {
+    margin: 0 5px;
+    height: 35px;
+    min-width: 50px;
+}
+.THIS .handlerForStatic .slds-button {
+    height: 35px !important;
+    line-height: 12px;
+    min-width: 50px !important;
+}
+.THIS .slds-file-selector.slds-file-selector_files{
+    margin: 0 auto;
+}
+.THIS button.slds-button.slds-button_icon.slds-button_icon-border {
+    margin: 0 10px;
+    height: 35px;
+    width: 50px;
+}
+.THIS .chinuButton .slds-button_first {
+    height: 36px;
+}
+.THIS .embedLWC{
+    text-align:center;
+}
+.THIS .embedLWCNonStatic {
+    text-align:center;
+}
+.THIS p.slds-p-horizontal_small{
+    width: 700px;
+    margin: 0 auto;
+}
+.THIS .slds-form-element__control{
+    margin: 0 auto;
+}
+.THIS .head2{
+    text-align:center;
+    margin: 0 390px;
+}
+@media only screen and (max-width: 1000px) {
+    .THIS .multipleTable {
+        width: 770px;
+        margin: 0;
+    }
+}
+.THIS .slds-modal__container{
+    padding-left:10px;
+    padding-right:10px;
+    min-width:40%;
+    width:40%;
+}
+@media (max-width: 1000px) {
+    .THIS .slds-modal__container {
+        max-width: 90%!important;
+        width: 90%!important;
+    }
+}
+.THIS .headingTextAreaCss
+{
+    border: solid 1px #f8f5f5;
+    background: white;
+    border-radius: 0.5rem;
+}
+.THIS .editBttnCss
+{
+    top: 1rem;
+    background: transparent;
+    border: transparent;
+}
+.THIS .slds-select_container {
+    min-width: 160px;
+}
+.THIS .rejection_area textarea{
+    height: 100px!important;
+    width: 500px;
+    margin: 0px 10px 10px 50px;
+}
+.THIS .myButtomCSS button.slds-button.slds-button_icon.slds-button_icon-border.slds-button_first {
+    border-radius: 50%;
+    height: 45px !important;
+    width: 40px;
+    padding: 0;
+    margin-top: 0px;/*-5px;*/
+    background-color: var(--sds-c-icon-color-background,#00c6b7);
+            
+        }
+        .THIS .myButtomCSS button.slds-button.slds-button_icon.slds-button_icon-border.slds-button_first .slds-button__icon{
+            fill: #fff;
+            height: 20px;
+            width: 20px;
+        }
+        .THIS .cssForClearCanvas button.slds-button {
+            float: right;
+            border: 1px solid;
+            margin-top: 28px;
+            margin-right: 51px;
+        }

@@ -1,0 +1,237 @@
+<aura:component controller="MedicationListViewApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+   
+    <lightning:workspaceAPI aura:id="workspace" /> 
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name="orgWideValidNamespace" type="String" />
+    <aura:attribute name= "PresId" type="String"/>
+    <aura:attribute name= "OrderID" type="String"/>
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="showDeleteButton" type="boolean" default="false"/>    
+    <aura:attribute name="enableExportAsPdf" type="boolean" default="false"/>
+    <aura:attribute name="Prescription" type="boolean" default="true"/>
+    <aura:attribute name="Medication" type="boolean" default="false"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/> 
+    <aura:handler name="change" value="{!v.openMedicationModal}" action="{!c.init}"/>
+    <aura:handler value="{!this}" name="init" action="{!c.init}"/>
+    <aura:attribute name="OrderlistDetails" type="Prescription_Order__c[]"/>
+    <aura:attribute name="listDetails" type="Prescription_Order__c[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="Orderscolumns" type="List"/> 
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name="vForms" type="Boolean" default="false"/>
+    <aura:attribute name ="patientID" type = "Id"/>
+    <aura:attribute name ="recId" type = "Id"/>
+    <aura:attribute name = "result" type = "String"/>
+    <aura:attribute name ="emailAddress" type="String"/>
+    <aura:attribute name ="openingMode" type="String"/>
+    <aura:attribute name ="orderName" type="String"/>
+    <aura:attribute name="sortedBy" type="String" default="Name"/>   <!--to sort columns-->
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="timeMessage" type="String"/>
+    <aura:attribute name = "vfCode" type="String"/>
+    <aura:attribute name = "allCode" type="String"/>
+    <aura:attribute name = "SelectedRec" type="String"/>
+    <aura:attribute name = "SelectedOrderRec" type="String"/>
+    <aura:attribute name = "dynamicLabel" type="String"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedOrders" type="Prescription_Order__c[]" /> 
+    <aura:attribute name="selectedMedications" type="List" />
+    <aura:attribute name="selectedMedicationRecords" type="List" /> 
+    <aura:attribute name = "openMedicationModal" type="boolean" default="false"/>
+    <aura:attribute name = "EditPrescriptionOrder" type="boolean" default="false"/>
+    <aura:attribute name = "editScreenDisabled" type="boolean" default="false"/>
+    <aura:handler event="c:RefreshViewEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:attribute name="AlertScreen" type="boolean"/>   
+    <aura:handler event="c:FormsRefreshEvt" action="{!c.init}"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="ViewPrescriptions" type="boolean" default="false"/>
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Prescription', 'value': 'Prescription'},
+                                                        {'label': 'Medication', 'value': 'Medication'}
+                                                        ]"/>
+    <aura:attribute name="value" type="String" default="Prescription"/>
+    <aura:attribute name="heading" type="String" default="Prescription"/>
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:attribute name ="accName" type = "String"/>
+    
+     <!-- Nikihl LX3-5932-->
+     <aura:attribute name="careModal" type="boolean" default="false"/>
+      <aura:attribute name="medicationListView" type="boolean" />
+     <!-- end-->
+    
+    <div class="height100">
+        <aura:if isTrue="{!v.isOpen}">
+            <div class="mgList-p">
+                <div class ="mgList mgList1">   
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-4">
+                            <!--Added by Ashwini-->
+                            <ol><li>
+                                <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a> {!v.greaterSign} <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                                                              </li>
+                                                              </ol>
+                                                              <!--End-->
+                            <span>
+                                <!-- heading -->
+                                <h5 class="font-20"><b>{!v.heading}</b></h5> 
+                                <!--Radio buttons for navigating to medication and prescriotion list-->   
+                                <lightning:radioGroup name="radioButtonGroup"
+                                                      options="{! v.options }"
+                                                      value="{! v.value }"
+                                                      type="radio"
+                                                      onchange="{! c.handleChange }"
+                                                      />
+                            </span>  
+                        </div>
+                        <div class="slds-col slds-size_1-of-4"></div>
+                        <div class="slds-col slds-size_1-of-4"></div>
+                        
+                    </div>      
+                </div>
+                
+                <!--List Status-->
+                <aura:if isTrue="{!v.Medication}">
+                    <div class="slds-grid medication-grid">
+                        <div class="slds-col slds-size_7-of-12">
+                            <div class="medication-cell">
+                                {! v.listDetails.length }  items . Sorted by {!v.sortedBy} 
+                                <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                    <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                                </aura:if>
+                            </div>
+                        </div> 
+                        
+                        <div class="slds-col slds-size_5-of-12 slds-m-left_small slds-m-bottom_small medi-btn">
+                            <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.init}" aura:id ="refreshing" class="btncss"/> 
+                            <lightning:button variant ="neutral" label ="New" onclick = "{!c.New}" class="inline-buttons left-margin btncss"/>                         
+                            
+                        </div>
+                    </div> 
+                    <div>         
+                        <!--to display datatable-->
+                        <div class="slds-grid">
+                            <div aura:id="dataTable" class="slds-col">                                
+                                <lightning:datatable data="{! v.listDetails }"  
+                                                     class = "abc"
+                                                     aura:id="myCol"
+                                                     columns="{! v.mycolumns }" 
+                                                     keyField="id"
+                                                     hideCheckboxColumn="true"
+                                                     onsort="{!c.updateColumnSorting}"
+                                                     sortedBy="{!v.sortedBy}"  
+                                                     sortedDirection="{!v.sortedDirection}"
+                                                     onrowaction="{! c.handleRowAction }"
+                                                     selectedRows="{!v.selectedMedications}"
+                                                     onrowselection="{!c.selectedRowsForMedication}"
+                                                     resizeColumnDisabled="false" />
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.Prescription}">
+                    <div class="slds-grid prescription">
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="pres-child">
+                                {! v.OrderlistDetails.length }  items . Sorted by {!v.sortedBy} 
+                                <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                    <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                                </aura:if>
+                            </div>
+                        </div> 
+                        
+                        <div class="slds-col slds-size_8-of-12 slds-m-left_small slds-m-bottom_small">                            
+                            <aura:if isTrue="{!v.enableExportAsPdf}">
+                                <lightning:button label="Export As PDF"  variant="brand" onclick="{!c.exportAsPDF}"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.showDeleteButton}">
+                                <lightning:button label="Delete Selected"  variant="brand" onclick="{!c.deleteSelectedRows}"/>
+                                <!--lightning:button label="Send to Surescript"  variant="brand" onclick="{!c.sureScript}"/-->
+                            </aura:if>
+                            <c:PrescriptionColumnsConfig/>
+                            <lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.init}" aura:id ="refreshing" class="btncss"/>                             
+                            <lightning:button variant ="neutral" label ="New" onclick = "{!c.New}" class="inline-buttons left-margin btncss"/>                                                     
+                        </div>
+                    </div> 
+                    <div>         
+                        <!--to display datatable-->
+                        <div class="slds-grid">
+                            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                            <div aura:id="dataTable" class="slds-col">                                
+                                <lightning:datatable data="{! v.OrderlistDetails }"  
+                                                     class = "abc1"
+                                                     aura:id="myCol1"
+                                                     columns="{! v.Orderscolumns }" 
+                                                     keyField="id"
+                                                     hideCheckboxColumn="false"
+                                                     selectedRows="{!v.selectedRows}"
+                                                     onrowselection="{!c.selectedRows}"
+                                                     onrowaction="{! c.handleRowAction1 }"
+                                                     resizeColumnDisabled="false" />
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.editScreen}">
+            <c:EditMedication viewflag="true" OpenPopUp="{!v.editScreen}" recordId="{!v.PresId}" SelectedRec="{!v.SelectedRec}"/>
+        </aura:if>
+        <!--aura:if isTrue="{!v.editScreenDisabled}">
+            <c:EditMedication viewflag="true" OpenPopUp="{!v.editScreen}" recordId="{!v.PresId}" SelectedRec="{!v.SelectedRec}"/>
+        </aura:if-->
+        
+        
+         <!-- Nikhil -->
+         <aura:if isTrue="{!v.careModal}" >                      
+            <c:CareEpisodeShowPrompt showPrompt="{!v.careModal}" patientId="{!v.recordVal}" heading="{!v.heading}"></c:CareEpisodeShowPrompt>    	      
+        </aura:if>   
+         
+        
+         
+        <aura:if isTrue="{!v.medicationListView}">            
+            <c:ElixirHC_MedicationComponent isOpen = "{!v.medicationListView}" recordValue="{!v.recordVal}"  orgWideValidNamespace = "{!v.orgWideValidNamespace}" backPage="{!v.medicationListView}"/>             
+        </aura:if>
+       <!--  END      --> 
+        
+        
+        <aura:if isTrue="{!v.EditPrescriptionOrder}">
+            <!--c:ElixirHC_EditPrescriptionOrder OrderID ="{!v.OrderID}" isOpen = "{!v.EditPrescriptionOrder}" recordValue="{!v.recordVal}" /-->  
+            <c:Elixir_ViewPrescriptionsOrder OrderID ="{!v.OrderID}" AddPrescription="true" viewflag="false" 
+                                             recordId="{!v.recordVal}" isModalOpen ="{!v.EditPrescriptionOrder}"
+                                             openingMode= "{!v.openingMode}" dynamicLabel = "{!v.dynamicLabel}"
+                                             orderName = "{!v.orderName}"
+                                             orgWideValidNamespace = "{!v.orgWideValidNamespace}"/>
+            
+        </aura:if>
+        <aura:if isTrue="{!v.ViewPrescriptions}">
+            <c:Elixir_ViewPrescriptionsOrder OrderID ="{!v.OrderID}" viewflag="true" recordId="{!v.recordVal}" 
+                                             isModalOpen ="{!v.ViewPrescriptions}" openingMode= "{!v.openingMode}"
+                                             orderName = "{!v.orderName}" dynamicLabel = "{!v.dynamicLabel}"
+                                             orgWideValidNamespace = "{!v.orgWideValidNamespace}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this item?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+    </div>
+    
+</aura:component>

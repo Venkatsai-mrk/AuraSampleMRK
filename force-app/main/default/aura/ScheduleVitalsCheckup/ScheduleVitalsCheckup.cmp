@@ -1,0 +1,158 @@
+<aura:component controller="scheduleVitalsCheckupApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="userInfo" type="user"/> 
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="accId" type="string" />
+    
+    <aura:attribute name="selectedTest" type="String"/>
+    <aura:attribute name="selectedFrequency" type="String"/>
+    <aura:attribute name="selectedmedicaltype" type="String"/>
+    <aura:attribute name="duedate" type="Date"/>
+    <aura:attribute name="startDateTime" type="DateTime"/>
+    <aura:attribute name="endDateTime" type="DateTime"/>
+    <aura:attribute name="note" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="MedicalExamList" type="List" />
+    <aura:attribute name="frequencyOptions" type="List" />
+    <aura:attribute name="ExaminationTypeOptions" type="List" />
+    <aura:attribute name="SubTypeOptions" type="List" />
+    <aura:attribute name="userOptions" type="List"/>
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="valueRec" type="String"/>
+    <aura:handler name="ScheduleExamEvent" event="c:ScheduleExamEvent" action="{!c.handleComponentEvent}"/>
+    
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title slds-text-align_center
+                   
+                   ">Schedule Medical Checkup Examination</h1>
+    </div>
+    
+    <table class="slds-table slds-table_bordered examTable"> 
+        
+        <thead>
+            <tr class="slds-text-title_caps">
+                
+                <th scope="col" class="abc">
+                    <div class="slds-truncate " title="Examination Type">Examination Type</div>
+                </th>
+                <!-- <th scope="col">
+                        <div class="slds-truncate " title="Sub Type">Sub Type</div>
+                    </th>-->
+                <th scope="col">
+                    <div class="slds-truncate " title="Start Time">Start Date &amp; Time</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="End Time">End Date &amp; Time</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Frequency">Frequency</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Notes">Notes</div>
+                </th>
+                
+                <th scope="col">
+                    <div class="slds-truncate " title="Assignee">Assignee</div>
+                </th>
+                
+                <th scope="col">
+                    <div class="slds-truncate"></div>
+                </th>
+                
+            </tr>
+        </thead>   
+        <tbody> 
+            
+            <aura:iteration items="{!v.MedicalExamList}" var="examInstance" indexVar="rowIndex">
+                
+                <tr class="slds-text-title_caps">
+                    
+                    <td class="SelectClass Method">
+                        <c:ExamLookupComponent label=" "
+                                               objectName="ElixirSuite__Schedule_Medical_Examination__mdt" 
+                                               fieldName="ElixirSuite__Name__c"
+                                               selectedRec = "{!examInstance.ExaminationType}"
+                                               indexVal = "{!rowIndex}"
+                                               />
+                        <!-- <lightning:select  name="{!rowIndex}" aura:id="{!rowIndex}" value="{!examInstance.ExaminationType}" onchange="{!c.setSubType_onExamTypeChange}">
+                                
+                                <aura:iteration items="{!v.ExaminationTypeOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>-->
+                    </td>
+                    <!-- <td class="SelectClass Method">
+                            <lightning:select  name="select"  value="{!examInstance.SubType}" disabled="{!examInstance.subtypedisable}">
+
+                                <aura:iteration items="{!examInstance.subTypeOptions}" var="item">
+                                    <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>-->
+                    
+                    <td class="SelectClass">
+                        <lightning:input   class="slds-m-top_xx-small" type="datetime" value = "{!examInstance.StartTime}" disabled="{!examInstance.starttimedisable}"/>
+                    </td>
+                    <td class = "SelectClass">
+                        <lightning:input  class="slds-m-top_xx-small" type="datetime" value = "{!examInstance.EndTime}"/>
+                    </td> 
+                    
+                    <td class="SelectClass Method">
+                        <lightning:select  name="select" value="{!examInstance.Frequency}" disabled="{!examInstance.frequencydisable}">
+                            
+                            <aura:iteration items="{!v.frequencyOptions}" var="item">
+                                <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </td>
+                    
+                    <td class = "SelectClass Method">
+                        <lightning:input label="" placeholder="" type="text" value="{!examInstance.Notes}"/>
+                    </td> 
+                    <td class = "SelectClass Method">
+                        
+                        <lightning:select  name="select" value="{!examInstance.Assignee}" >
+                            
+                            <aura:iteration items="{!v.userOptions}" var="item">
+                                <option text="{!item.label}" value="{!item.value}" title="{!item.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                        
+                    </td> 
+                    
+                    
+                    <td>
+                        <aura:if isTrue="{!rowIndex == 0}">
+                            <aura:if isTrue="{!lessthanorequal(v.MedicalExamList.length,10)}">
+                                <a onclick="{!c.addNewRow}">
+                                    <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                    <span class="slds-assistive-text">Add Icon</span>
+                                </a>
+                                <aura:set attribute="else">
+                                    <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                </aura:set>
+                            </aura:if>   
+                            
+                            <aura:set attribute="else">
+                                <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                    <span class="slds-assistive-text">Delete Icon</span>
+                                </a>
+                            </aura:set> 
+                        </aura:if>
+                    </td> 
+                </tr>
+                
+                
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    
+    <div class="slds-float_right " aura:id="buttonclass" >
+        <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>  
+        <button class="slds-button slds-button_brand" onclick="{!c.handleCancel}">Cancel</button> 
+    </div>
+    
+</aura:component>

@@ -1,0 +1,190 @@
+<aura:component controller="scheduleAppointmentAuraController" 
+implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:lightningQuickAction"  
+              access="global" >
+    
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="data" type="List" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:attribute name="accName" type="String" default="Account Name"/>
+    <aura:attribute name = "headingTitle" type="String" default="Schedule Appointment"/>
+    <aura:attribute name = "filterValue" type="String" default="existing"/>
+    <aura:attribute name="recordsAvailable" type="boolean" default="false"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="isLastPage" type="Boolean" default="false"/>
+    <aura:attribute name="isShowAvail" type="Boolean" default="true"/>
+    <aura:attribute name="dataSize" type="Integer" default="0"/>
+    <aura:attribute name="genderOptions" type="String[]" default="None"/>
+    <aura:attribute name="parentData" type="Object"/>
+    <aura:attribute name="searchKeyword" type="String"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="prevFilterValue" type="List" default="[]"/>
+    <aura:attribute name="specialityId" type="String" default=""/>
+    <aura:attribute name="locationId" type="String" default=""/>
+    <aura:attribute name="genderVal" type="String" default=""/>
+    <aura:attribute name="filterVal" type="String" default=""/>
+    <aura:attribute name="showAvail" type="Boolean" default="false"/>
+    <aura:attribute name="practionerName" type="String" default=""/>
+    <aura:attribute name="locationName" type="String" default=""/>
+    <aura:attribute name="practionerId" type="String" default=""/>
+    <aura:attribute name="startDateVal" type="Date"/>
+    <aura:attribute name="specialityName" type="String" default=""/>
+    <aura:attribute name="sortedBy" type="String" default="NextAvailSlot"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="appointmentList" type="list"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler event="c:LookUpEvent" action="{!c.selectedRecord}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="currentPageRecords" type="Integer" />
+    <aura:attribute name="route" type="String" default=""/>
+    <aura:attribute name="selectGenderValue" type="String" default=""/>
+    <aura:if isTrue="{!v.showAvail}">
+
+    <c:showAvailabilityAppointment  pracName="{!v.practionerName}" 
+                                    locName="{!v.locationName}" 
+                                    pracId="{!v.practionerId}" 
+                                    locId="{!v.locationId}" 
+                                    startDate="{!v.startDateVal}" 
+                                    accId="{!v.recordId}"
+                                    specName = "{!v.specialityName}"
+                                    route ="{!v.route}"/>
+    
+    <aura:set attribute="else">
+    <div class="parentCSS slds-is-relative">
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+        <div class="childCSS">
+            
+            <div class ="mgList slds-p-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_4-of-12">
+                        
+                        <span>
+                            <!-- heading -->
+                            <h5 class="headingCSS"><b>{!v.headingTitle}</b></h5> 
+                        </span>
+                        
+                        <ol><li>
+                            <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a>&nbsp;{!v.greaterSign}&nbsp;
+                            <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                            </li>
+                        </ol>
+                        
+                    </div>
+                    <br></br>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-gutters gridClass">
+                <div class="slds-col">
+                    <label class="slds-form-element__label">
+                        <span>{!$Label.c.AppointmentSpeciality}</span>
+                    </label>
+                    <!--h3>Select Specialty</h3-->
+                    <c:lookupComponent
+                                       objectName="ElixirSuite__Specialty__c"
+                                       fieldName="ElixirSuite__Specialty_Name__c"
+                                       filterClause = "ElixirSuite__Specialty_Name__c!=null"
+                                       placeholder = "Search Specialty.."/>
+                </div>
+                
+                <div class="slds-col">
+                    <label class="slds-form-element__label">
+                        <span>{!$Label.c.AppointmentLocation}</span>
+                    </label>
+                    <!--h3>Select Location</h3-->
+                    <c:lookupComponent
+                                       objectName="ElixirSuite__Provider__c"
+                                       fieldName="Name"
+                                       filterClause = "RecordType.DeveloperName='Template_Provider'"
+                                       placeholder = "Search Location.."/><!---->
+                </div>
+                <div class="slds-col">
+                    <!--h3>Select Gender</h3-->
+                    <lightning:select aura:id="genselect" value ="{!v.selectGenderValue}" name="selectGender" label="Gender" onchange="{! c.onGenderChange }">
+                        <aura:iteration items="{!v.genderOptions}" var="opt">
+                            <option text="{!opt}"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+                
+                <div class="slds-col">
+                    <!--h3>Select Filter</h3-->
+                    <lightning:select aura:id="select" name="selectFilter" label="{!$Label.c.AppointmentFilter}" onchange="{! c.onFilterChange }">
+                        <option value="existing">Existing Care Team</option>
+                        <option value="all">All Practitioners</option>
+                    </lightning:select>
+                </div>
+                
+                
+                <div class="slds-col">
+                    <lightning:input    placeholder="Search Practitioner.."
+                                     aura:id="searchField"
+                                     label="Practitioner"
+                                     value="{!v.searchKeyword}"
+                                     onchange="{!c.fetchFilteredList}"/>
+                </div>
+                
+            </div>
+            <br></br>
+            
+            
+            <aura:if isTrue="{!v.recordsAvailable}">
+                <div class="tableClass">
+                    <lightning:datatable
+                                         keyField="id"
+                                         data="{! v.data }"
+                                         columns="{! v.columns }"
+                                         onrowaction="{!c.viewRecord}"
+                                         hideCheckboxColumn="true"
+                                         wrapTextMaxLines="2"
+                                         onsort="{!c.updateColumnSorting}"
+                                         sortedBy="{!v.sortedBy}"  
+                                         sortedDirection="{!v.sortedDirection}"/>
+                </div>
+                
+                <br></br>
+                
+                <div class="slds-float_right gridClass">            
+                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                      onclick="{!c.handlePrev}" disabled="{!v.pageNumber == 1}" />
+                    <span class="slds-p-horizontal_small">Page {!v.pageNumber} of {!v.totalPages}</span>
+                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                      disabled="{!v.pageNumber == v.totalPages}" onclick="{!c.handleNext}"/>
+                     <lightning:button label="Back" iconName="" iconPosition="right"
+                                       onclick="{!c.handleBack}"/>
+                </div>
+                
+                
+                
+                
+                
+                
+                <aura:set attribute="else">
+                    <div class="slds-align_absolute-center noRecordClass">
+                        <!-- No records available; -->
+                        <div class="slds-illustration slds-illustration_large" aria-hidden="true">
+                            <img src="/img/chatter/OpenRoad.svg" class="slds-illustration__svg" alt=""/>
+                            <div class="slds-text-color_weak">
+                                <h3 class="slds-text-heading_medium">No results found yet…</h3>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="slds-float_right slds-m-top_x-large slds-m-right_small"> 
+                    <lightning:button label="Back" iconName="" iconPosition="right"
+                                       onclick="{!c.handleBack}"/>
+                    </div>
+                </aura:set>
+            </aura:if>
+            
+            
+            
+            
+        </div>
+    </div>
+</aura:set>
+</aura:if>
+    
+    
+</aura:component>

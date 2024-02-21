@@ -1,0 +1,199 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="Elixir_FormApexController"  access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="problemDiagnosesData" type="c:problemDiagnosesData"/>
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <aura:attribute name="showRelatedDiagnoses" type="Boolean"/>
+    <aura:attribute name="searchKeyword" type="String"/>
+    <aura:attribute name="relatedDiagnoses" type="list" default="{'abc','def', 'lol'}"/>
+    <aura:attribute name="section" type="String"/>  
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="allOptions" type="List"/>
+    <aura:attribute name="valuesSelectedForDaignoses" type="List"/>
+    <aura:attribute name="allDataDaignoses" type="List"/>
+    <aura:attribute name="openAddDaignoses" type="Boolean"/>
+    <aura:attribute name="isSearchbarVisible" type="Boolean" default="true"/>
+    <aura:attribute name="value" type="List" default="option1"/>
+    <aura:attribute name="optionsForDaignoses" type="List" default="[]"/>
+    <aura:attribute name="InterventionValues" type="list"/>
+    <aura:attribute name="iterationIndex" type="String"/>
+    <aura:attribute name="activeTab" type="String"/>
+    <aura:attribute name="existingProblems" type="Object"/>
+    <aura:attribute name="mapOfDiagnoses" type="Object"/>
+    <aura:attribute name="templateProblems" type="list"/>
+    <aura:attribute name="NewProblemRecordsList" type="List"/>
+    <aura:attribute name="typeCheck" type="list"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:attribute name="IsSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="selectedValues" type="List"/>
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    
+    <div class="pd1" aura:id="text">
+        
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss InsideDiv">
+            <div class="slds-modal__container"> 
+                
+                <header class="slds-modal__header headercls">
+                    <lightning:buttonIcon iconName="utility:close" onclick='{!c.handleConfirmDialogCancel}' alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">SELECT PROBLEM(s)</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                    <!--aura:if isTrue="{!v.isSearchbarVisible}">
+                        <div class="problems_accordian">
+                            <lightning:layout>
+                                <lightning:layoutItem size="9"></lightning:layoutItem>
+                                <lightning:layoutItem size="3">
+                                    <lightning:input 
+                                                     aura:id="searchField"
+                                                     value="{!v.searchKeyword}"
+                                                     name="searchKnowledgeInput" 
+                                                     label="" type="search" 
+                                                     placeholder="Search Problem"
+                                                     isLoading="{!v.issearching}"
+                                                     onchange="{!c.Search}"
+                                                     />
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </aura:if-->
+                    <div class="problem_adding slds-is-absolute">
+                        <aura:if isTrue="{!v.IsSpinner}">
+                            <lightning:spinner variant="brand"  size="large" />
+                        </aura:if>
+                        
+                        <lightning:tabset selectedTabId="ExistingProblem">
+                            <lightning:tab label="Add problem from template" id="ExistingProblem" onactive="{!c.onAddProblemFromTemplteTabActive}">
+                                <aura:iteration items="{!v.templateProblems }" var="problemRec" indexVar="problemIdx">
+                                    
+                                    <c:ElixirHC_AllProblemsOnForm problemId="{!problemRec.Id}" problemIndex="{!problemIdx}"
+                                                                  problem="{!problemRec}" problemsList="{!v.options}" CustomProblemToDel="{!v.CustomProblemToDel}"/>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab label="Add New Problem" id="NewProblem" onactive="{!c.onAddNewProblemTabActive}">
+                                
+                                <div class="problems_accordian">
+                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer p-dignosis_table">
+                                        <thead>
+                                            <tr class="slds-text-title_caps">
+                                                <th scope="col">
+                                                    <div class="slds-truncate">S.No</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Reading">Problem Name</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Type of check">Problem Description</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Intervention/s">Select Diagnoses</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="Note">Notes</div>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.NewProblemRecordsList}" var="newProblemInstance" indexVar="rowIndex">
+                                                <tr class="slds-text-title_caps">
+                                                    <td> 
+                                                        {!rowIndex + 1}
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" required="true"  aura:id="URFiledsValid" name="{!rowIndex}" value="{!newProblemInstance.ElixirSuite__Problem_Name__c}" onblur="{!c.handleProblemNameChange}" />
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="{!rowIndex}" value="{!newProblemInstance.ElixirSuite__Description__c}" onblur="{!c.handleDescriptionUpdate}"/>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <lightning:button variant="base" label="Add Diagnosis"  name="{!rowIndex}" onclick="{! c.handleAddDaignoses }"/>
+                                                        <aura:iteration items="{!newProblemInstance.relatedDiagnoses}" var="itemDaignoses">
+                                                            
+                                                            
+                                                            <lightning:pill label="{!itemDaignoses.ElixirSuite__Diagnosis_Code_and_Name__c}" >
+                                                                <aura:set attribute="media">
+                                                                    <lightning:icon iconName="custom:custom86"  alternativeText="Diagnoses"/>
+                                                                </aura:set>
+                                                            </lightning:pill>
+                                                        </aura:iteration>
+                                                        <aura:if isTrue="{!v.openAddDaignoses}">
+                                                            <div class="pd1" aura:id="text">
+                                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss Popupbackground">
+                                                                    <div class="slds-modal__container AddNewProblem">
+                                                                        <header class="slds-modal__header headercls">
+                                                                            <lightning:buttonIcon iconName="utility:close" onclick='{!c.handleConfirmDialogCancel}' alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                                                                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">SELECT DIAGNOSES</h2>
+                                                                        </header>
+                                                                        <div class="slds-modal__content slds-p-around_medium AddNewProblemBody allowDisplay" id="modal-content-id-1">
+                                                                            <lightning:dualListbox
+                                                                                                   sourceLabel="Available"
+                                                                                                   selectedLabel="Selected"
+                                                                                                   values="{!v.valuesSelectedForDaignoses}"
+                                                                                                   options="{!v.optionsForDaignoses}"                                                           
+                                                                                                   onchange="{! c.handleChangeMultiSelectDiagnoses }"/>
+                                                                        </div>
+                                                                        <footer class="slds-modal__footer buttonRound">
+                                                                            <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleConfirmDialogCancelForAddDiagnosesPopup}'/>
+                                                                            <lightning:button variant="brand" name='{!rowIndex}' label='Add Diagnoses' onclick='{!c.handleConfirmDialogAdd}'/>
+                                                                        </footer>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                        </aura:if>
+                                                    </td>
+                                                    <td>                  
+                                                        <lightning:input type="text" name="{!rowIndex}" onblur="{!c.handleNotes}" value="{!newProblemInstance.relatedNotes[0].ElixirSuite__Notes__c}"/>
+                                                    </td>
+                                                    
+                                                    
+                                                    <td>
+                                                        <aura:if isTrue="{!rowIndex == 0}">
+                                                            <aura:if isTrue="{!lessthanorequal(v.NewProblemRecordsList.length,10)}">
+                                                                <a onclick="{!c.addNewRow}">
+                                                                    <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                    <span class="slds-assistive-text">Add Icon</span>
+                                                                </a>
+                                                                <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                                    <span class="slds-assistive-text">Delete Icon</span>
+                                                                </a>
+                                                                <aura:set attribute="else">
+                                                                    <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />
+                                                                </aura:set>
+                                                            </aura:if>
+                                                            <aura:set attribute="else">
+                                                                
+                                                                <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                                    <span class="slds-assistive-text">Delete Icon</span>
+                                                                </a>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <!--Save Button which is call Save js function on click --> 
+                                </div>
+                            </lightning:tab>
+                        </lightning:tabset>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer buttonRound slds-text-align--center">
+                    <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleConfirmDialogCancel}'/>
+                    <lightning:button variant="brand" name='Next' label='Next' onclick='{!c.handleConfirmDialogNext}'/>
+                </footer>
+            </div>
+        </section>
+    </div>
+</aura:component>

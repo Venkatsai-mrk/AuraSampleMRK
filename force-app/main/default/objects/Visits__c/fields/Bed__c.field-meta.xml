@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bed__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Represents physical space where a significant portion of a patient&apos;s care episode takes place.</description>
+    <externalId>false</externalId>
+    <label>Bed ID</label>
+    <referenceTo>Bed__c</referenceTo>
+    <relationshipLabel>Visits</relationshipLabel>
+    <relationshipName>Visits</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

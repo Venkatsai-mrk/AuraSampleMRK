@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>City_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISPICKVAL( Relationship__c ,&apos;18&apos;)|| Use_Same_Address_As_Patient__c =true,false ,IF(  City__c =null ||  City__c =&apos;&apos; , true, false))</errorConditionFormula>
+    <errorDisplayField>City__c</errorDisplayField>
+    <errorMessage>This field is mandatory.</errorMessage>
+</ValidationRule>

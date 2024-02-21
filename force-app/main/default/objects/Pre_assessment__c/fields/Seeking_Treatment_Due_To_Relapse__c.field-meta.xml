@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Seeking_Treatment_Due_To_Relapse__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is used to indicate whether the patient is seeking treatment as a result of a relapse.</description>
+    <externalId>false</externalId>
+    <label>Seeking treatment due to relapse?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

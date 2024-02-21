@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to record the full name of the patient.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If You Choose Patient Name than &quot;DOB,Subscriber DOB,Phone,Policy Subscriber Name&quot; will auto fill after save of record</inlineHelpText>
+    <label>Name of Patient</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Pre Assessments</relationshipLabel>
+    <relationshipName>Pre_assessments</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

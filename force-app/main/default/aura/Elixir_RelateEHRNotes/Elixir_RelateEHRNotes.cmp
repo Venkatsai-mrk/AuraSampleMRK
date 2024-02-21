@@ -1,0 +1,55 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!-- Define attributes -->
+    <aura:attribute name="availableNotes" type="List" default="[]"/>
+    
+    <aura:attribute name="selectedNotes" type="List" default="[]"/>
+    <aura:attribute name="relateEHRNotes" type="Boolean" default="false"/>
+    <aura:attribute name="allRelateNote" type="List"/>
+	<aura:attribute name="selectedValues" type="List" default="[]" />
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="allOptions" type="List"/>
+    <aura:attribute name="mapOfGoals" type="Object"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="EHRNotesEvent" type="c:EHRNotesEvent"/>
+    <aura:attribute name="selectedFormNames" type="List" default="[]" />
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss ag-template">
+        <div class="add-problem_modal">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header headercls slds-text-heading_large"> 
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeAllNotesModal }"
+
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close backgroundBlurr"/>
+                    <h5><b>Relate Notes</b></h5>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1" aura:id="goalSection"> 
+                    <div class="add_problem-temp">
+                        <!--lightning:dualListBox
+                                               name="contactDualListBox"
+                                               sourceLabel="Available Notes"
+                                               selectedLabel="Selected Notes"
+                                               options="{! v.options }"
+                                               value="{! v.selectedValues }"
+                                               onchange="{! c.handleDualListBoxChange }"/-->
+                        <lightning:dualListbox name="formNames"
+                                           label="Select Form Names"
+                                           sourceLabel="Available"
+                                           selectedLabel="Selected"
+                                           options="{!v.options}"
+                                           value="{!v.selectedValues}"
+                                           onchange="{!c.handleFormSelection}"/>
+                    </div>
+                </div>
+                <footer>
+                    <lightning:button label="Cancel" title="Neutral action" variant="Neutral" onclick="{!c.closeAllNotesModal }"/>
+                    <lightning:button label="Add" title="Neutral action" variant="Brand" onclick="{!c.save }" disabled="{!v.addButton}"/>
+                </footer>
+            </div>
+        </div>
+    </section>   
+    
+</aura:component>

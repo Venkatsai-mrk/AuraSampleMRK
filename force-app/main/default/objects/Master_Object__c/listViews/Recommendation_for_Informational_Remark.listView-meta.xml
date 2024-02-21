@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recommendation_for_Informational_Remark</fullName>
+    <columns>ElixirSuite_Informational_Remark_Codes__c</columns>
+    <columns>ElixirSuite_Recommendation__c</columns>
+    <columns>ElixirSuite_Assign_To__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Master_Object__c.ElixirSuite_Informational_Remark_Codes</value>
+    </filters>
+    <label>Recommendation for Informational Remark</label>
+</ListView>

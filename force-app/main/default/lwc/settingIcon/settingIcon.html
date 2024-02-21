@@ -1,0 +1,31 @@
+<template>
+    <template if:true={showSettingModel}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open slds-float_center">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                        <!-- <lightning-button-icon class="slds-modal__close" style="" title="Close" icon-name="utility:close" icon-class="slds-button_icon-inverse" onclick={handleDialogClose}></lightning-button-icon>-->
+                        <h2 class="slds-text-heading_medium" style="font-weight:normal;padding-left: 2px;font-size:20px;text-align:left">Select fields to display</h2>  
+                </header>
+                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="9" padding="around-small">
+                    <lightning-dual-listbox name="fields"
+                                    label="Select Fields"
+                                    source-label="Fields"
+                                    selected-label="Fields"
+                                    onchange={handleFieldChange}
+                                    value ={selectedField}
+                                    options={fieldOptions}
+                                    class="testError">
+                        </lightning-dual-listbox>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <footer class="slds-modal__footer">
+        <lightning-button variant="neutral" style="padding: 10px;" label="Cancel" title="Cancel and Go Back" onclick={handleClear} class="slds-float_left"></lightning-button>
+        </footer>
+    </div>
+    </section>
+
+    </template>
+</template>

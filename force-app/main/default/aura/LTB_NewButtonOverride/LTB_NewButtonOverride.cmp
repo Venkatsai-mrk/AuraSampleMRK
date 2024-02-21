@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,lightning:isUrlAddressable,force:lightningQuickAction" access="global">
+	<aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+    
+    <aura:attribute name="message" type="String" default="Close Not Clicked"/>
+    <lightning:workspaceAPI aura:id="workspace"/> 
+    
+    <c:labTestBundle labRecordId="{!v.recordId}" oncloseclicked="{!c.handleFilterChange}"></c:labTestBundle> 
+    
+</aura:component>

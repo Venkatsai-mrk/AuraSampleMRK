@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attribute_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Attribute Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Diagnosis Code</fullName>
+                <default>false</default>
+                <label>Diagnosis Code</label>
+            </value>
+            <value>
+                <fullName>Procedure Code</fullName>
+                <default>false</default>
+                <label>Procedure Code</label>
+            </value>
+            <value>
+                <fullName>Location</fullName>
+                <default>false</default>
+                <label>Location</label>
+            </value>
+            <value>
+                <fullName>LOC</fullName>
+                <default>false</default>
+                <label>LOC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

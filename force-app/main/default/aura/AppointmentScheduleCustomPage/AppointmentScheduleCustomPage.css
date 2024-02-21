@@ -1,0 +1,9 @@
+.THIS .edit_container{
+    margin: 0 auto;
+    width: 70%;
+    max-width: 60rem;
+    min-width: 20rem;
+}
+.THIS .equipClass{
+    height:100px;
+}

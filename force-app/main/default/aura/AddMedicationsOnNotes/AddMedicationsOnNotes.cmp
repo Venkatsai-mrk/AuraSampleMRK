@@ -1,0 +1,125 @@
+<aura:component controller="AddMedicationsOnNotesController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="addMedicationList" type="Boolean" default="false"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="medicationList" type="Prescription_Order__c[]"/>
+    <aura:attribute name="CurrentUserDetails" type="User"/>
+    <aura:attribute name="picklistValues" type="String" />
+    <aura:attribute name="statusList" type="list"/>
+    <aura:attribute name="directionPickList" type="list"/>
+    <aura:registerEvent name="AddMedicationEventOnNotes" type="c:AddMedicationEventOnNotes"/>
+    <aura:attribute name="notesSpecificData" type="Object"/>
+    <aura:attribute name="formUniqueId" type="String"/>
+    
+    <aura:if isTrue="{!v.addMedicationList}">
+        <!--Table Part-->           
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small p_table"> 
+            <thead>
+                <tr class="slds-text-title_small">
+                    <th scope="col" class="slds-p-left_none pr5 bg-white">
+                        <div class="slds-truncate">S.No</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Medication Name">Medication Name</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-100">
+                        <div class="slds-truncate" title="Strength">Strength</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Status">Status</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Direction">Directions</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Start Date">Start Date</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="End Date">End Date</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Notes">Notes</div>
+                    </th>
+                    <th scope="col" colspan="2" class="pl5 pr5 bg-white w-128">
+                        <div class="slds-truncate" title="Prescribed by">Prescribed by</div>
+                    </th>
+                </tr>
+            </thead>   
+            <tbody>
+                
+                <aura:iteration items="{!v.medicationList}" var="medicationInstance" indexVar="rowIndex">
+                    <tr>
+                        <td> 
+                            {!rowIndex + 1}
+                        </td>
+                        <td class="search_bar">
+                            
+                            <c:lookupComponent
+                                               objectName="ElixirSuite__Master_Object__c"
+                                               fieldName="Name"
+                                               value="{!medicationInstance.MedicationName}"
+                                               filterClause = "RecordType.DeveloperName='Medication'"
+placeholder="Search Medication Name"
+                                               />
+                            
+                        </td>
+                        <td>
+                            <lightning:input type="text" name="{!rowIndex}" value="{!medicationInstance.Strength}" placeholder=" Strength" class="small-placeholder-text"/>
+                        </td>
+                        
+                        <td>
+                            <lightning:select name="" label="" onchange="" value="{!medicationInstance.Status}" class="customFont">
+                                <option value="">NONE</option>
+                                <aura:iteration items="{!v.statusList}" var="item">
+                                    <option value="{!item.label}" label="{!item.label}">                                               
+                                    </option> 
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        <td>
+                            
+                             <lightning:input type="text" name="{!rowIndex}" value="{!medicationInstance.Direction}" placeholder="Direction" class="small-placeholder-text"/>
+                        </td>
+                        <td class="calender">
+                            <lightning:input type="date" name="{!rowIndex}" value="{!medicationInstance.StartDate}"/>
+                        </td>
+                        <td class="calender">
+                            <lightning:input type="date" name="{!rowIndex}" value="{!medicationInstance.EndDate}"/>
+                        </td>
+                        <td>
+                            <lightning:textarea name="{!rowIndex}" value="{!medicationInstance.Notes}"/>
+                        </td>
+                        <td>
+                            {!v.CurrentUserDetails.Name}
+                        </td>
+                        <td class="slds-text-align_center pr_5">
+                            <aura:if isTrue="{!rowIndex == 0}">
+                                <aura:if isTrue="{!lessthanorequal(v.medicationList.length,9)}">
+                                    <a onclick="{!c.addNewRow}">
+                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                        <span class="slds-assistive-text">Add Icon</span>
+                                    </a>
+                                    <aura:set attribute="else">
+                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                    </aura:set>
+                                </aura:if>   
+                                
+                                <aura:set attribute="else">
+                                    <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>
+                                </aura:set> 
+                            </aura:if>
+                        </td> 
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        <br/>
+        <div class="slds-text-align_right slds-m-bottom_small">
+            <button class="slds-button slds-button_neutral" onclick="{!c.cancelMedication}">Cancel</button>
+            <button class="slds-button slds-button_brand problem_button" onclick="{!c.addMedication}">Add</button>
+        </div>
+    </aura:if>
+</aura:component>

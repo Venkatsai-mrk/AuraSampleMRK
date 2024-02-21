@@ -1,0 +1,38 @@
+.THIS.allergyCls {
+    padding: 15px 15px;
+    line-height: 8px;
+    background-color: #ffffff;
+}
+.THIS.allergyCls .slds-button__icon {
+    color: #00a1e0;
+}
+
+ .THIS .list_modal.slds-modal__container{
+     width:50%!important;
+ }
+.THIS .headerCSS{
+    font-size: x-large;
+}
+@media (max-width: 767px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}
+@media (max-width: 576px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}
+
+.THIS .slds-listbox.slds-listbox_vertical {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.THIS li.slds-listbox__item {
+    display: block;
+}
+
+.THIS .slds-form-element__control {
+    padding-left: 0 !important;
+}

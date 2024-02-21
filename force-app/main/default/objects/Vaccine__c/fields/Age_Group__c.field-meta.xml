@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Age_Group__c</fullName>
+    <externalId>false</externalId>
+    <label>Age Group</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Birth</fullName>
+                <default>false</default>
+                <label>Birth</label>
+            </value>
+            <value>
+                <fullName>1-4 months</fullName>
+                <default>false</default>
+                <label>1-4 months</label>
+            </value>
+            <value>
+                <fullName>2-4 months</fullName>
+                <default>false</default>
+                <label>2-4 months</label>
+            </value>
+            <value>
+                <fullName>4-6 months</fullName>
+                <default>false</default>
+                <label>4-6 months</label>
+            </value>
+            <value>
+                <fullName>6-9 months</fullName>
+                <default>false</default>
+                <label>6-9 months</label>
+            </value>
+            <value>
+                <fullName>12-18 months</fullName>
+                <default>false</default>
+                <label>12-18 months</label>
+            </value>
+            <value>
+                <fullName>12-24 months</fullName>
+                <default>false</default>
+                <label>12-24 months</label>
+            </value>
+            <value>
+                <fullName>15-19 months</fullName>
+                <default>false</default>
+                <label>15-19 months</label>
+            </value>
+            <value>
+                <fullName>2-18 years</fullName>
+                <default>false</default>
+                <label>2-18 years</label>
+            </value>
+            <value>
+                <fullName>4-7 years</fullName>
+                <default>false</default>
+                <label>4-7 years</label>
+            </value>
+            <value>
+                <fullName>9-18 years</fullName>
+                <default>false</default>
+                <label>9-18 years</label>
+            </value>
+            <value>
+                <fullName>11-13 years</fullName>
+                <default>false</default>
+                <label>11-13 years</label>
+            </value>
+            <value>
+                <fullName>13-16 years</fullName>
+                <default>false</default>
+                <label>13-16 years</label>
+            </value>
+            <value>
+                <fullName>16-18 years</fullName>
+                <default>false</default>
+                <label>16-18 years</label>
+            </value>
+            <value>
+                <fullName>18 years</fullName>
+                <default>false</default>
+                <label>18 years</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

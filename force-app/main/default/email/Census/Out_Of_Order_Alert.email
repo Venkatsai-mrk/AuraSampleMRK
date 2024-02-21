@@ -1,0 +1,9 @@
+<p>Hi Team , </p>
+
+<p>This Room - <a href="{!Rooms__c.Link}" > {!Rooms__c.Name}</a> is Out of Order. </p>
+
+<b>Reasons for marking the room out of order</b>: {!Rooms__c.Reasons_for_marking_out_of_order__c}
+
+<p>Thanks </p>
+
+Admin

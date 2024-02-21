@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discharge_date_is_mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(AND( ISCHANGED( StageName ),ISPICKVAL(StageName,&quot;Discharged&quot;) ),ISBLANK( Discharge_Date__c ) )</errorConditionFormula>
+    <errorMessage>Please enter the Discharge date first if you want to mark the stage as discharged.</errorMessage>
+</ValidationRule>

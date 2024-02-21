@@ -1,0 +1,148 @@
+.THIS .slds-template__container {
+    background-color: #fff;
+}
+.THIS .open svg{
+    fill : red;
+}
+.THIS.deletePrompt {
+    padding: 0 25%;
+}
+.THIS.deletePrompt .slds-modal.slds-fade-in-open{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS.deletePrompt .slds-modal__container{
+    max-width: 50% !important;
+    width: 50% !important;
+}
+.THIS .open .slds-grid {
+    color: #FFF;
+    background-color: #F08080;
+    padding: 2px 25px;
+     border-radius: 25px;
+    display: inline-block;
+}
+.THIS .open svg{
+    fill: red !important;
+}
+.THIS .close svg{
+    fill : black; 
+}
+.THIS .close .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .close svg{
+    color : black !important;
+}
+.THIS .inuse svg{
+    fill : red;
+}
+.THIS .inuse .slds-grid {
+    color: #FFF;
+    background-color: lightblue;
+    padding: 2px 25px;
+     border-radius: 25px;
+    display: inline-block;
+}
+.THIS .inuse svg{
+    fill: red !important;
+}
+.THIS .inprogress svg{
+    fill : black; 
+}
+.THIS .inprogress .slds-grid {
+    color: #FFF;
+    background-color: #D3D3D3;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .inprogress svg{
+    color : black !important;
+}
+.THIS .blue svg{
+    fill : white;
+}
+.THIS .blue .slds-grid {
+    color: #FFF;
+    background-color: #151B54;
+    padding: 2px 25px;
+    
+    display: inline-block;
+}
+.THIS .blue svg{
+    fill: white !important;
+}
+.THIS .slds-modal__container {
+    max-width: 100% !important;
+    width: 97% !important;
+}
+.THIS .cp-list_view .slds-modal__content {
+    height: calc(80% + 0px);
+    min-height : calc(80% + 0px);
+}
+.THIS .crossSize{
+    bottom: 0px !important;
+}
+.THIS .height-100 {
+    height: 100%;
+}
+.THIS .cp-modal {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .mgList1 {
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+.THIS .margin-tb {
+    margin-top:2px; 
+    margin-left:10px;
+}
+.THIS .pos-r {
+    position:relative;
+}
+.THIS .list-details {
+    /*position: absolute; 
+    bottom:13px;*/
+}
+.THIS .exapdf {
+    text-align:right;
+    padding-right:2.3rem
+}
+.THIS .care_list button.slds-button {
+    line-height: 20px;
+}
+@media (max-width: 992px) {
+    .THIS .slds-modal__content {
+        overflow-x: scroll;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .slds-modal__container {
+        max-width: 88% !important;
+        width: 88% !important;
+    }
+    .THIS .slds-modal__content {
+        overflow-x: scroll;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        max-width: 88% !important;
+        width: 88% !important;
+    }
+    .THIS .slds-modal__content {
+        overflow-x: scroll;
+    }
+}
+.THIS .redcolor svg, .THIS .slds-icon-utility-close svg{
+    fill : red;
+}
+.THIS .greencolor svg, .THIS .slds-icon-utility-check svg{
+    fill : green;
+}

@@ -1,0 +1,21 @@
+<apex:page standardController="Vaccine__c" recordSetVar="Medicalexamination">
+     <apex:includeScript value="/canvas/sdk/js/29.0/publisher-min.js"/>
+     <apex:includeLightning />
+    <div id="vfpLightningCmpId"></div> 
+   
+    <script>   
+    
+    $Lightning.use("ElixirSuite:NewImmunization", function() {     
+    $Lightning.createComponent("ElixirSuite:Elixir_PatientImmunizations",
+    {       
+         accId : '{!$CurrentPage.parameters.id}'
+       
+ 	},
+   "vfpLightningCmpId",
+    function(component) {    
+        
+        // here we can use more lightning Component attributes and component Callback,
+    });
+ });
+ </script>
+</apex:page>

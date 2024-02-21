@@ -1,0 +1,4 @@
+<!--GoalEventValue.evt-->
+<aura:event type="COMPONENT" description="Passes selected Goals">
+    <aura:attribute name="message" type="String" />
+</aura:event>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Group_Name__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Group Name</label>
+    <referenceTo>Account_Group__c</referenceTo>
+    <relationshipLabel>Group Patients</relationshipLabel>
+    <relationshipName>Group_Patients</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

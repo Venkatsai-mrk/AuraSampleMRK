@@ -1,0 +1,25 @@
+<aura:component controller="CMS1500ClaimFormApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+     
+    <aura:attribute name = "patientId" type = "String" default=""/>
+    <aura:attribute name = "preAuthNum" type = "String" default=""/>
+    <aura:attribute name = "vobId" type = "String" default=""/>
+    <aura:attribute name = "medicalCodingScreen" type = "Boolean" default = "False"/>
+    <aura:attribute name="selectedVOBList" type="list" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="parentCSS slds-is-relative">
+        <div class="childCSS">
+            <br></br>
+            <div class="slds-align_absolute-center">
+            <lightning:button variant="brand" label="New Procedure" title="New Procedure" onclick="{!c.handleNew}"/>
+                </div>
+            <br></br>
+            
+            <aura:if isTrue="{!v.medicalCodingScreen}">
+                <c:ElixirOEM_NewProcedure careId="{!v.recordId}" isView="{!v.medicalCodingScreen}" accountId="{!v.patientId}" backPageRCM="{!v.medicalCodingScreen}" preAuthCode="{!v.preAuthNum}"/>
+            </aura:if>
+            
+        </div>
+    </div>
+	
+</aura:component>

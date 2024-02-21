@@ -1,0 +1,40 @@
+.THIS .dialog {
+    max-width: 50% !important; 
+    width:40% !important;
+    margin-left:500px;
+    margin-top:300px;
+    border:grey; 
+    border-width:2px; 
+    border-style:solid;
+}
+.THIS .slds-file.slds-file--card {
+    margin: 20px;
+}
+
+.THIS .message-details p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.THIS .message-details p:first-of-type {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.THIS .bgclor{
+    background-color: #493266;
+}
+
+.THIS .textAlign{
+    text-align: center;
+}
+
+.THIS .demo-only{
+    padding:0.5rem;
+    background:#493266
+}
+
+.THIS.slds-box{
+    background-color: white; 
+    margin-bottom: 10px;
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Financial_Class__c</fullName>
+    <description>We have in Lab order, and this determines socio-economic status.  And the care episode cost can also be processed accordingly</description>
+    <externalId>false</externalId>
+    <label>Financial Class</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Self-pay</fullName>
+                <default>false</default>
+                <label>Self-pay</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

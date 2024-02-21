@@ -1,0 +1,150 @@
+<aura:component controller="ElixirOEM_LocationDefinitionHelper"
+                implements="force:appHostable,lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="setupKeyWrapper" type="String"/>
+    <aura:attribute name="setupKeySelected" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="index" type="Integer"/>
+    <aura:attribute name="indexLevelNotDefined" type="String"/>
+    <aura:attribute name="approvallevelIndexAfterSave" type="String"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="approvalLevelValues" type="String"/>
+    <aura:attribute name="recordID" type="String"/>
+    <aura:attribute name="isApprovalLevelAdded" type="Boolean"/>
+    <aura:attribute name="isSetUpKeySelected" type="Boolean" default="false" />
+    <aura:attribute name="enableEdit" type="Boolean"/>
+    <aura:attribute name="isdisAbled" type="Boolean"/> 
+    <aura:attribute name="closeForce" type="Boolean" default="true"/> 
+    <aura:attribute name="errorForApprovalLevelIndex" type="Boolean"/> 
+    <aura:attribute name="enableSaveButton" type="Boolean" default="true"/>
+    <aura:attribute name="enableEditpencilIcon" type="Boolean"/>
+    <aura:attribute name="dropDownOptions" type="List"/> 
+    <aura:attribute name="dropDownOptionsForLocation" type="List"/> 
+    <aura:attribute name="dropDownSelectedValues" type="List"/>
+    <aura:attribute name="dropDownSelectedValueToName" type="List"/>
+    <aura:attribute name="dropdownLabel" type="String"/> 
+    <aura:attribute name="formName" type="String"/>
+    <aura:attribute name="toDelRecords" type="List"/> 
+    <aura:attribute name="mapOfSetUpKey_MarkupAttibute" type="String"/>
+    <aura:attribute name="searchString" type="string" default="" description="String to search"/>
+    <aura:attribute name="searchString_Location" type="string" default="" description="String to search"/>
+    
+    <aura:registerEvent name="RefreshApprovalMembers" type="c:RefreshApprovalMembers"/> 
+    <div>       
+        <div class="">
+            
+            <div class="slds-col slds-size_12-of-12">
+                
+            </div>
+            <aura:if isTrue="{!v.enableEditpencilIcon}">
+                <div class="utility_approval">
+                    <lightning:buttonIcon iconName="utility:edit" variant="bare" 
+                                          onclick="{!c.handleEditForSingleInstanceApprovalRecord}" 
+                                          alternativeText="edit" title="edit" />
+                </div>
+            </aura:if>
+            <div class="define_box">
+                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <div class="slds-grid slds-gutters">
+                    <aura:if isTrue="{!v.isApprovalLevelAdded}">
+                        <div class="slds-col slds-size_12-of-12">
+                            <p class="approval"><lightning:icon iconName="utility:success" alternativeText="Approved!" title="Approved!" />Location defined for {!v.setupKeySelected}</p>
+                        </div> 
+                    </aura:if>
+                </div>
+                <div class="slds-grid slds-gutters slds-m-top_small">
+                    
+                </div>
+                
+                
+                
+                
+                
+                <aura:if isTrue="{!v.setupKeyWrapper.isUserSelected}">
+                    <div class="slds-grid slds-gutters slds-m-top_small select-user">
+                        <div class="slds-col slds-size_12-of-12">
+                            <c:ElixirOEM_LocationUserMultiselect isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}"
+                                                                 disabled = "{!v.isdisAbled}" options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}"
+                                                                 multiSelect="true" label="{!v.dropdownLabel}" dropDownSelectedValueToName = "{!v.dropDownSelectedValueToName}"
+                                                                 mapOfSetUpKey_MarkupAttibute="{!v.mapOfSetUpKey_MarkupAttibute}" dropDownOptionsForLocation="{!v.dropDownOptionsForLocation}"
+                                                                 toDelRecords="{!v.toDelRecords}"/>
+                        </div>
+                        
+                    </div>
+                    
+                </aura:if>
+                <aura:if isTrue="{!v.setupKeyWrapper.isRoleSelected}">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <c:ElixirOEM_LocationUserMultiselect isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}" disabled = "{!v.isdisAbled}" options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}"
+                                                                 multiSelect="true" label="{!v.dropdownLabel}" toDelRecords="{!v.toDelRecords}"
+                                                                 mapOfSetUpKey_MarkupAttibute="{!v.mapOfSetUpKey_MarkupAttibute}"
+                                                                 dropDownSelectedValueToName = "{!v.dropDownSelectedValueToName}" dropDownOptionsForLocation="{!v.dropDownOptionsForLocation}"/>
+                        </div>
+                        
+                    </div>
+                    
+                </aura:if>
+                <aura:if isTrue="{!v.setupKeyWrapper.isProfileSelected}">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <c:ElixirOEM_LocationUserMultiselect isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}" disabled = "{!v.isdisAbled}" 
+                                                                 options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}" 
+                                                                 multiSelect="true" label="{!v.dropdownLabel}" toDelRecords="{!v.toDelRecords}"
+                                                                 mapOfSetUpKey_MarkupAttibute="{!v.mapOfSetUpKey_MarkupAttibute}"
+                                                                 dropDownSelectedValueToName = "{!v.dropDownSelectedValueToName}" 
+                                                                 dropDownOptionsForLocation="{!v.dropDownOptionsForLocation}"/>
+                        </div>
+                        
+                    </div>
+                    
+                </aura:if>
+                
+                <aura:if isTrue="{!not(empty(v.dropDownSelectedValues))}">
+                    <table class="slds-table slds-table_cell-buffer slds-m-top_small form_config form_config-1"> 
+                        
+                        <tbody>
+                            <aura:iteration items="{!v.dropDownSelectedValueToName}" var="recordInstance" indexVar="idx">
+                                
+                                <tr class="slds-text-title_caps">
+                                    <td> 
+                                        {!recordInstance.selectedUser} 
+                                    </td> 
+                                    
+                                    <td>  
+                                        <c:ElixirOEM_MultiSelect_Location_V2  GenreList="{!recordInstance.locationOptions}" 
+                                                                             enableAbility = "{!recordInstance.enableAbility}"
+                                                                             selectedGenreList = "{!recordInstance.selectedLocations}"/> 
+                                        <!--c:ElixirOEM_LocationMultiselect isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!recordInstance.searchString_Location}" disabled = "{!v.isdisAbled}" 
+                                                                         options="{#recordInstance.locationOptions}" values="{!recordInstance.selectedLocations}"
+                                                                         multiSelect="true" label=""/-->
+                                    </td> 
+                                </tr>
+                                <tr><td colspan="2"><hr/></td></tr>
+                                
+                                
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </aura:if>
+                
+                <div class="slds-grid slds-gutters slds-m-top_medium">
+                    <aura:if isTrue="{!v.enableSaveButton}">
+                        <div class="slds-col slds-size_12-of-12 slds-align_absolute-center">
+                            <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.proceedWithSaveForApprovalProcess}" />
+                        </div> 
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.enableEdit}">
+                        <div class="slds-col slds-size_12-of-12 slds-align_absolute-center">
+                            <lightning:button variant="brand" label="Update" title="Update" onclick="{!c.proceedWithUpdateForApprovalProcess}" />
+                        </div> 
+                    </aura:if>
+                    
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>      
+</aura:component>

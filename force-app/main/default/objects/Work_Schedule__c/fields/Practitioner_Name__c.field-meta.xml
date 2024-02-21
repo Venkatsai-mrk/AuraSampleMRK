@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Practitioner_Name__c</fullName>
+    <description>Represents the name of the practitioner associated with the work schedule.</description>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Practitioner Name</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <filterItems>
+            <field>Contact.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Practitioner</value>
+        </filterItems>
+        <filterItems>
+            <field>Contact.Elixir_Contact_Type__c</field>
+            <operation>equals</operation>
+            <value>Elixir_Practitioner_Contact</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Work Schedule</relationshipLabel>
+    <relationshipName>Work_Schedule</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

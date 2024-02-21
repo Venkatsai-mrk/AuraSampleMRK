@@ -1,0 +1,23 @@
+<aura:component controller="PrescriptionController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="prescriptionOrders" type="List" default="[]"/>
+    <aura:attribute name="columns" type="List"/>
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:if isTrue="{!empty(v.prescriptionOrders)}">
+        <div class="slds-text-align_center">
+                                                No data to display
+                                            </div>
+        <aura:set attribute="else">
+            <div class="dataTable">
+                <lightning:datatable
+                        keyField="id"
+                        data="{! v.prescriptionOrders }"
+                        columns="{! v.columns }"
+                        hideCheckboxColumn="true"/>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PhoneNotGreater_than_10</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISPICKVAL( Relationship__c , &apos;18&apos;) ,false,  IF( LEN( Phone__c )=10,false,true ) )</errorConditionFormula>
+    <errorDisplayField>Phone__c</errorDisplayField>
+    <errorMessage>Phone should be of 10 digits.</errorMessage>
+</ValidationRule>

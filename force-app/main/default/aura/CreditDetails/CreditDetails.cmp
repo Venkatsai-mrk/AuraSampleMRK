@@ -1,0 +1,52 @@
+<aura:component controller="CollectPaymentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="disableCreditTable" type="boolean" default="false"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="creditData" type="list" default=""/>
+     <aura:attribute name="selectedRows" type="list" default=""/>
+     <aura:attribute name="checkbox" type="boolean" default="false"/>
+    <aura:registerEvent name="changehandlerEvent" type="c:changehandlerEvent" />
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    
+    	<aura:if isTrue="{!v.disableCreditTable}">  
+        <b class="slds-text-heading_small">Credit Memos :</b><br></br>
+        <div class = "textsubheading">
+            Select which Credits you would like to apply this payment to from the list below
+        </div>
+            
+        <div class = "tableclass">
+             <aura:if isTrue="{!v.checkbox}">
+            <lightning:datatable
+                             keyField="id"
+                             data="{! v.creditData }"
+                             columns="{! v.columns }"
+                             onrowselection="{!c.handleCredit}"
+                             selectedRows="{!v.selectedRows}"
+                             hideCheckboxColumn="true"
+                             sortedBy="{!v.sortBy}"
+                             sortedDirection="{!v.sortDirection}"
+                             onsort="{!c.handleSort}"
+                             />
+                 <aura:set attribute="else">
+                     <lightning:datatable
+                             keyField="id"
+                             data="{! v.creditData }"
+                             columns="{! v.columns }"
+                             onrowselection="{!c.handleCredit}"
+                             selectedRows="{!v.selectedRows}"
+                             hideCheckboxColumn="false"
+                             sortedBy="{!v.sortBy}"
+                             sortedDirection="{!v.sortDirection}"
+                             onsort="{!c.handleSort}"
+                             />
+                     
+                 </aura:set>
+            </aura:if>
+            </div>
+    </aura:if>
+            
+
+    
+</aura:component>

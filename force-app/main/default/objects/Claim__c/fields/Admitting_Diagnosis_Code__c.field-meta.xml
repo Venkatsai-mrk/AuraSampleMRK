@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admitting_Diagnosis_Code__c</fullName>
+    <description>Refers to the specific code used to represent the primary reason or condition for a patient's admission to a healthcare facility</description>
+    <externalId>false</externalId>
+    <label>Admitting Diagnosis Code</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

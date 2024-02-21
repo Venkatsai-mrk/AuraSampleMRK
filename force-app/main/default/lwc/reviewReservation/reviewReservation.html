@@ -1,0 +1,123 @@
+<template>
+    <article class="slds-card">
+        <div
+            class="slds-text-heading_medium text slds-text-align_center slds-var-p-around_medium slds-border_bottom thickerBorder">
+            Review Reservation
+        </div>
+        <div class="slds-p-around_large">
+            <div class="slds-text-heading_small">Patient Information</div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" label="Name" value={accountName} disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="Date" label="Birth Date" value={accountBirthDate}
+                        disabled="true"></lightning-input>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" label="Phone" value={accountPhone} disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" label="Email" value={accountEmail} disabled="true"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_large">
+            <div class="slds-text-heading_small">Reservation Details</div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-input type="Date" label="Start Date" value={startDate} disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-input type="Date" label="End Date" value={endDate} disabled="true"></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-select label={labelValue} value={selectedValue1} options={picklistOptions} disabled="true" ></lightning-select>
+                </div>
+            </div>
+            <table
+                class="slds-m-top_small slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                aria-label="Example table of Opportunities with vertical borders">
+                <thead>
+                    <tr>
+                        <th>S. No</th>
+                        <th>Location</th>
+                        <th>Select Price</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Net Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data} for:item="item" for:index="index">
+                        <tr key={item.locationId}>
+                            <th class="srWidth"  scope="row">{item.index}</th>
+                            <td>{item.locationName}</td>
+                            <td class="priceBook"><lightning-combobox 
+                                variant="label-hidden"
+                                placeholder="Select Price Book"
+                                value={priceBookValueForRow}
+                                options={item.options}
+                                data-row-index={index}
+                                onchange={handleChangeForPrice}></lightning-combobox></td>
+                            <td>$ {item.price}</td>
+                            <td class="discount"><lightning-combobox 
+                                variant="label-hidden"
+                                options={discountOptions}
+                                value={item.selectedDiscountType}
+                                data-row-index={index}
+                                onchange={handleChangeForDiscountType}>
+                            </lightning-combobox>
+                            <lightning-input 
+                                type="text"
+                                variant="label-hidden"
+                                value={item.selectedDiscountValue}
+                                data-row-index={index}
+                                onchange={handleChangeForDiscountValue}>
+                            </lightning-input></td>
+                            <td>$ {item.netPrice}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <!-- <lightning-input type="text" label="Total Price" value={totalPriceFormatted} disabled></lightning-input> -->
+                    &nbsp;
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <!-- <lightning-input type="text" label="Total Net Price" value={totalNetPriceFormatted} disabled></lightning-input> -->
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            Total Price: <b>{totalPriceFormatted}</b>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            &nbsp;
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            Total Net Price: <b>{totalNetPriceFormatted}</b>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <footer class="slds-card__footer">
+            <div class="slds-grid slds-grid_align-center slds-gutters_x-small">
+                <div class="slds-col">
+                    <lightning-button label="Modify" variant="Neutral" onclick={handleModify}></lightning-button>
+                </div>
+                <div class="slds-col">
+                    <lightning-button label="Confirm &amp; New" variant="Neutral" onclick={confirmNew} disabled={isButtonDisabled}></lightning-button>
+
+                </div>
+                <div class="slds-col">
+                    <lightning-button label="Confirm" variant="brand" onclick={handleConfirmClick} disabled={isButtonDisabled}></lightning-button>
+                </div>
+            </div>
+        </footer>
+    </article>
+</template>

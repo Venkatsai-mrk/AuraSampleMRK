@@ -1,0 +1,247 @@
+<aura:component controller="ElixirOEM_NewReferralHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="accountId" type="String" default="0015Y00003Ptan2QAB"/>
+     <aura:attribute name="contactId" type="String"  />
+    <aura:attribute name="accountName" type="String"/>
+     <aura:attribute name="userId" type="String"  />
+    <aura:attribute name="userName" type="String"/>
+    <aura:attribute name="contactName" type="String"/>
+    <aura:attribute name="selectRecordName" type="String[]" />
+    <aura:attribute name="patientDiagnosisLst" type="List"/>
+    <aura:attribute name="patientProcedureLst" type="List"/> 
+    <aura:attribute name="accountProvider" type="Object"/> 
+    <aura:attribute name="isOpen" type="Boolean" default="false"/> 
+    <aura:attribute name="locationName" type="String"/>
+    <aura:attribute name="referredOutOrgName" type="String"/>
+    <aura:attribute name="chartSummaryOptions" type="List" default="[]"/> 
+    <aura:attribute name="referralRecord" type="Referral__c"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:registerEvent name="ElixirOEM_ReferralToggle" type="c:ElixirOEM_ReferralToggle" />
+    <!--aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.resetData}"/-->
+ <aura:handler name="cmpEvent1" event="c:LookUpEvent" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="cmpEvent1" event="c:LookUpEvent" action="{!c.removeItem}"/>
+   
+    <lightning:workspaceAPI aura:id="workspace" /> <!--Nikhil-->
+    <aura:attribute name="backPage2" type="Boolean" default="false"/> 
+ 
+    <aura:if isTrue="{!v.isOpen}">
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container new-referral_modal">
+                <!--button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                &#10005; <span class="slds-assistive-text">Cancel and close</span>
+            </button-->
+                <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModal }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Referral</h1>
+            </div>
+            <div class="slds-modal__content" id="modal-content-id-1">
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Location</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                            <!--c:lookupComponent  objectName="ElixirSuite__Provider__c"  fieldName="Name" value = "{!v.referralRecord.ElixirSuite__Provider__c}"  searchString = "{!v.locationName}" filterClause = ""/-->
+                            <c:ProviderLookupForReferral selectRecordId = "{!v.referralRecord.ElixirSuite__Provider__c}" 
+                                                     accountId = "{!v.accountId}" selectRecordName = "{!v.locationName}"/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Referred Out Organization</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                            <!--c:lookupComponent  objectName="Account"   fieldName="Name" value = "{!v.referralRecord.ElixirSuite__Referred_Out_Organization__c}" searchString = "{!v.accountName}" filterClause = ""/-->
+                            <c:AccountLookup contactName = "{!v.contactName}" loaded = "{!v.loaded}" selectRecordId = "{!v.referralRecord.ElixirSuite__Referred_Out_Organization__c}"
+                                         selectRecordName = "{!v.accountName}" referralRecord = "{!v.referralRecord}"/>
+                            
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Care Team Member</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                            <c:lookupComponent  objectName="User"   fieldName="Name" value = "{!v.userName}" filterClause = "" searchString = "{!v.userName}" />
+                            <!--c:UserLookup selectRecordName = "{!v.userName}" loaded = "{!v.loaded}"  selectRecordId = "{!v.referralRecord.ElixirSuite__User__c}" referralRecord = "{!v.referralRecord}"/-->
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Referred To</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                            <!--c:lookupComponent  objectName="Contact"  fieldName="Name" value = "{!v.referralRecord.ElixirSuite__Referred_To__c}" filterClause = ""/-->
+                            <c:ContactLookup selectRecordName = "{!v.contactName}" loaded = "{!v.loaded}" selectRecordId = "{!v.referralRecord.ElixirSuite__Referred_To__c}" accountId = "{!v.referralRecord.ElixirSuite__Referred_Out_Organization__c}"
+                                         accountName = "{!v.accountName}" referralRecord = "{!v.referralRecord}"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Email</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        <lightning:input type="email" value="{!v.referralRecord.ElixirSuite__Email_CTM__c}"  />
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Email</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        <lightning:input type="email" name="Email" value="{!v.referralRecord.ElixirSuite__Email_Referred_To__c}"   />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large">
+                    <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small slds-m-top_small">
+                        <label>Phone</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        <lightning:input type="phone"   value="{!v.referralRecord.ElixirSuite__Phone_CTM__c}"  />
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-top_xx-small  slds-m-top_small">
+                        <label>Phone</label>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-m-top_small">
+                        <lightning:input type="phone"   value="{!v.referralRecord.ElixirSuite__Phone_Referred_To__c}"  />
+                    </div>
+                </div>
+                <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_large slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Instructions</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning:inputRichText  value="{!v.referralRecord.ElixirSuite__Instructions__c}" />
+                    </div>
+                </div>
+                <!--       <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Reasons for Referral</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning:inputRichText value="{!v.referralRecord.ElixirSuite__Reasons_for_Referral__c}" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table referal-table">
+                            <thead>
+                                <tr>
+                                    <th>Diagnosis Code</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.patientDiagnosisLst}" var="sObj" indexVar="idx">
+                                    <tr>
+                                        <td>{!sObj.Name}</td>
+                                        <td>{!sObj.ElixirSuite__Code_Description1__c}</td>
+                                        <td><lightning:input type="checkbox" name="options" checked="{!sObj.isSelected}" /></td>
+                                    </tr>
+                                </aura:iteration>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_large slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table referal-table">
+                            <thead>
+                                <tr>
+                                    <th>Procedure Code</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.patientProcedureLst}" var="proc_sObj" indexVar="idx">
+                                    <tr>
+                                        <td>{!proc_sObj.Name}</td>
+                                        <td>{!proc_sObj.ElixirSuite__Code_Description__c}</td>
+                                            <td><lightning:input type="checkbox" name="options" checked="{!proc_sObj.isSelected}"  onchange="{!c.onSelected}"/></td>
+                                    </tr>
+                                </aura:iteration>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if> 
+                </div>-->
+                <div class="instruction_head slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_medium slds-m-bottom_small">
+                    <div class="slds-col slds-size_12-of-12">Reasons for Referral</div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning:inputRichText value="{!v.referralRecord.ElixirSuite__Reasons_for_Referral__c}" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_small slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table referal-table">
+                            <thead>
+                                <tr>
+                                    <th>Diagnosis Code</th>
+                                    <th>Description</th>
+                                    <th class = "selectall">
+                                        <lightning:input type="checkbox" label="Select All" name="selectall" onchange="{!c.selectAllDiagnosis}"/>
+                                       
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.patientDiagnosisLst}" var="sObj" indexVar="idx">
+                                    <tr>
+                                        <td>{!sObj.Name}</td>
+                                        <td>{!sObj.ElixirSuite__Code_Description1__c}</td>
+                                        <td><lightning:input type="checkbox" name="options" checked="{!sObj.isSelected}" /></td>
+                                    </tr>
+                                </aura:iteration>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-p-left_large slds-p-right_large slds-m-top_large slds-m-bottom_medium">
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_8-of-12">	
+                        <table class="slds-table referal-table">
+                            <thead>
+                                <tr>
+                                    <th>Procedure Code</th>
+                                    <th>Description</th>
+                                    <th class = "selectall">
+                                        <lightning:input type="checkbox" label="Select All" name="selectall" onchange="{!c.selectAllRows}"/>
+                                       
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.patientProcedureLst}" var="proc_sObj" indexVar="idx">
+                                    <tr>
+                                        <td>{!proc_sObj.Name}</td>
+                                        <td>{!proc_sObj.ElixirSuite__Code_Description__c}</td>
+                                        <td><lightning:input type="checkbox" name="options" checked="{!proc_sObj.isSelected}" /></td>
+                                    </tr>
+                                </aura:iteration>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if> 
+                </div>
+            </div>
+            <div class="slds-modal__footer referrals_footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.closeModal}">Cancel</button>
+                <button class="slds-button slds-button_brand" onclick="{!c.closePageOne}">Next</button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

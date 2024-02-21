@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Referred_To__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is a lookup to contact to choose the contacts related to the selected Referred Out Organization</description>
+    <externalId>false</externalId>
+    <label>Referred To</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Referral</relationshipLabel>
+    <relationshipName>Referral</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

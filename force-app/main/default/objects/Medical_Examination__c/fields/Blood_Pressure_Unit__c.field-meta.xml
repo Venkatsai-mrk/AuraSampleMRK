@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Blood_Pressure_Unit__c</fullName>
+    <description>To define the Blood Pressure unit in the Vital sign</description>
+    <externalId>false</externalId>
+    <label>Blood Pressure Unit</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>mmHg</fullName>
+                <default>false</default>
+                <label>mmHg</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

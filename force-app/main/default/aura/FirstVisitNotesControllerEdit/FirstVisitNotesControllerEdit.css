@@ -1,0 +1,173 @@
+.THIS .slds-grid.box{
+    display: block;
+    border: 1px solid #f2f2f2;
+    border-radius: 11px;
+    padding: 5px;
+}
+.THIS .box{
+        padding-top: 10px;
+        border-radius: 10px;
+    box-shadow: none;
+    border: 0.5px solid #ccc;
+}
+
+.THIS .oxy {
+    padding-top:30px;
+}
+.THIS .frequency lightning-input{
+    display:flex;
+    width:40%;
+}
+.THIS .name{
+    color: rgb(62, 62, 60);
+    font-size:12px;
+    margin: 0!important;/*-1px!important;*/
+    border: 0!important;
+    padding: 0!important;
+    width:40px !important;
+    overflow: hidden!important;
+    clip: rect(0 0 0 0)!important;
+    text-transform: none!important;
+    white-space: nowrap!important;
+}
+.THIS .icons lightning-icon{
+    width:15px;
+    height:15px;
+}
+.THIS .leftmargin{
+    margin-left : 80px;
+}
+.THIS .buttonpadding{
+    padding-bottom : 1px;
+}
+.THIS .icons svg{
+    width:15px;
+    height:15px;
+    right: 32px;
+    cursor:pointer;
+}
+.THIS .slds-rich-text-editor__textarea.slds-grid.ql-container{
+    min-height:50px;
+}
+.THIS .slds-rich-text-editor.slds-grid.slds-grid_vertical.slds-nowrap{
+    border:none;
+    box-shadow:none;
+}
+.THIS .slds-rich-text-editor.slds-grid.slds-grid_vertical.slds-nowrap.slds-has-focus{
+    border:none;
+    box-shadow:none;
+}
+.THIS .btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.THIS .btn:hover {
+    background-color: RoyalBlue;
+}
+.THIS .patient_note{
+    color: #493266;
+    font-size: 17px;
+}
+.THIS .slds-modal__container {
+    padding:0;
+}
+.THIS label.slds-form-element__label {
+    display: none;
+}
+.THIS .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus),
+.THIS .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>th:not(.slds-has-focus),
+.THIS .slds-table:not(.slds-no-row-hover) tbody tr:hover>td{
+    background-color: transparent;
+    box-shadow: none;
+}
+.THIS .child_observation {
+    background-color: #fafbfc !important;
+    border-top: 1px dotted #ccc;
+}
+.THIS .child_observation th, .THIS .child_observation th:hover {
+    background-color: #f1f2f3 !important;
+}
+.THIS .parent_obseration td {
+    background-color: #f1f2f3 !important;
+}
+.THIS .grand_parent th {
+    background-color: #777 !important;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #fff;
+}
+.THIS .child_observation th {
+    border-top: none !important;
+}
+.THIS .child_observation td {
+    border-top: 1px dotted #ccc !important;
+}
+.THIS .slds-textarea {
+    height: -webkit-fill-available;
+}
+.THIS .topText textarea {
+    height:130px;
+}
+.THIS .topText1 textarea {
+    height:80px;
+}
+.THIS .topText label.slds-form-element__label {
+    display: inline-block;
+}
+.THIS .lab label.slds-form-element__label {
+    display: inline-block;
+}
+.THIS .AddBtnCss{
+    float: right;
+}
+.THIS .chiefCompInputCss
+{
+    width: 80% !important;
+    padding: 0px 0px 10% 0px !important;
+}
+.THIS .dietary label.slds-form-element__label.slds-no-flex{
+    display:none;
+}
+.THIS .iconic svg.slds-icon.slds-icon-text-error.slds-icon_small{
+    width:15px;
+}
+.THIS .weight_history .slds-form-element__control.slds-grow.textarea-container{
+    height:100px;
+}
+.THIS .parentCSS{
+    padding:0 0px 0 0px;
+}
+.THIS .childCSS {
+    margin: 0 auto;
+    width: 70%;
+    max-width: 70%;
+    min-width: 70%;
+}
+.THIS .childCSS_1{
+    font-size: x-large;
+}
+.THIS .childCSS_2{
+    text-align:center;
+}
+.THIS .footerCSS{
+    float:right;
+}
+.THIS.slds-card {
+    height: auto;
+}
+/* changes */
+.THIS .chnagefloat{
+    float:right;
+}
+.THIS .chnagemargin{
+    margin:0px 0px 5px 50px;
+}
+.THIS .chnageleftmargin{
+    margin-left: 80px;
+}

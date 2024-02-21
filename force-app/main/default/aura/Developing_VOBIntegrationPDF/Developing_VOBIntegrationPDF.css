@@ -1,0 +1,107 @@
+.THIS .payBut{
+    width:150px ;
+}
+.THIS .payBut1{
+    width:90px ;
+}
+.THIS .patient-ac {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 0px #666;
+}
+.THIS .patient-ac-1 {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    margin-top: 0px;
+  /*  width: 1077px;*/
+}
+.THIS .patient-ac-2 {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.THIS .patient-ac button.slds-button.slds-button_neutral {
+    background-color: #178cb9;
+    color: #fff;
+    border-radius: 6px;
+   
+}
+.THIS .patient-ac button.slds-button.slds-button_neutral.new-but{
+   background-color: rgb(231 231 230) !important;
+}
+.THIS .claim-btn .slds-radio {
+    float: left;
+    margin-right: 15px;
+}
+.THIS .o_financ .slds-border_bottom {
+    border-bottom: 1px solid #999;
+}
+.THIS .o_financ h3 {
+    font-size: 20px;
+    color: #000;
+    font-weight: 700;
+}
+.THIS .o_financ p {
+    font-weight: 600;
+    font-size: 12px;
+}
+.THIS .o_financ p b {
+    font-size: 12px;
+}
+.THIS .button.slds-button.slds-button_neutral.payBut{
+    margin-left : 0px;
+}
+.THIS .back-col{
+    color: red;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.THIS .back-col-na{
+    color: #64c664;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.THIS .grpId{
+    margin-top: 2px;
+}
+.THIS .grpId2{
+    margin-top: 2px;
+}
+.THIS .newCls{
+    font-weight: bold;
+    text-align: center;
+}
+.THIS .color-493266 {
+    color:#493266;
+}
+.THIS .payer-name {
+    color:#493266;padding: 5px 0;
+}
+.THIS .p-0 {
+    padding: 0;
+}
+.THIS .btn-page-call {
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;    
+    background-color: #95C12C;    
+    width: 60%;    
+    height: 30px;    
+    border: none;
+}
+@media (max-width: 576px) {
+    .THIS .o_financ p b {
+        font-size: 10px;
+    }
+}

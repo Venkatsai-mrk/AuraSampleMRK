@@ -1,0 +1,105 @@
+<aura:component controller = "CareplanSignatureSaveApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="formName" type="String"/>
+    <aura:attribute name="changedFormName" type="String"/>
+    <aura:attribute name="portalFlag" type="String"/>
+    <aura:attribute name="formId" type="String"/>
+    <aura:attribute name="openSignatureBox" type="Boolean" default="false"/>
+
+    <aura:attribute name="userValues" type="Object"/>
+    <aura:attribute name="currentLevel" type="Object"/>
+
+    <aura:attribute name="isEligible" type="Boolean" default="false"/>
+    <aura:attribute name="disableVerify" type="Boolean" default="false"/>
+    <aura:attribute name="comment" type="String"/>
+    <aura:attribute name="code" type="String"/>
+
+    <aura:attribute name="status" type="String" default="In Progress"/>
+
+    <aura:attribute name="label" type="String"/>
+    
+    <aura:attribute name="flag" type="Boolean" default="true"/>
+    
+    <aura:attribute name="prescriptionApprovalData" type="List" default="[]"/>
+    <aura:attribute name="prescriptionApprovalInNewMode" type="Boolean" default="true"/>
+    <aura:attribute name="filteredApprovalLevels" type="List" default="[]"/>
+    <aura:attribute name="parentPrescriptionId" type="String"/>
+
+    <aura:attribute name="labOrderApprovalData" type="List" default="[]"/>
+    <aura:attribute name="labOrderApprovalInNewMode" type="Boolean"/>
+
+    <aura:attribute name="labOrderId" type="String"/>
+    <aura:attribute name="carePlanApprovalData" type="List" default="[]"/>
+    <aura:attribute name="parentcarePlanId" type="String"/>
+    <aura:attribute name="carePlanApprovalInNewMode" type="Boolean" default="true"/>
+
+    <aura:attribute name="approvalType" type="String" default="Care Plan"/>
+
+    <aura:registerEvent name="FormSignatureRefresh" type="c:FormSignatureRefresh"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:if isTrue="{!v.isEligible}">
+        <aura:if isTrue="{! and(v.flag == true, v.status == 'In Progress')}">
+          <img src="{!$Resource.SignAndApprove}" onclick="{!c.signAndApprove}"/><br/>
+          <aura:if isTrue="{!v.label}">
+              <b>____________________________________________________</b> <br/>
+              <b> {!v.label} </b>
+              <aura:set attribute="else">
+                  <br/><br/>
+              </aura:set>
+            </aura:if>
+		</aura:if> 	
+        <aura:if isTrue="{!and(v.flag == false, or(v.portalFlag=='Portal And EHR Form', v.portalFlag==null))}">
+          <img src="{!$Resource.SignAndApprove}" onclick="{!c.signAndApprove}"/>
+          <aura:if isTrue="{!v.label}">
+              <b>____________________________________________________</b> <br/>
+              <b> {!v.label} </b>
+              <aura:set attribute="else">
+                  <br/><br/>
+              </aura:set>
+            </aura:if>
+		</aura:if>
+        <!--Portal start-->
+        <aura:if isTrue="{!and(v.flag == false,v.portalFlag=='Portal Form')}">
+          <img src="{!$Resource.InsertSignature}" onclick="{!c.signAndApprove}"/>
+          <aura:if isTrue="{!v.label}">
+              <b>____________________________________________________</b> <br/>
+              <b> {!v.label} </b>
+              <aura:set attribute="else">
+                  <br/><br/>
+              </aura:set>	
+            </aura:if>
+		</aura:if>
+         <!--Portal end-->
+    </aura:if>
+    <aura:if isTrue="{!v.openSignatureBox}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="signature_modal slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.cancel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close backgroundBlack"/>
+                    <span class="slds-assistive-text">Close</span>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Verify Details</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <lightning:textarea label="Comments" value="{!v.comment}"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <lightning:input type="password" label="Enter Verification Code" value="{!v.code}"/>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.cancel}">Cancel</button>
+                    <button class="slds-button slds-button_brand"  disabled="{!v.disableVerify}" onclick="{!c.saveSignature}">Verify</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

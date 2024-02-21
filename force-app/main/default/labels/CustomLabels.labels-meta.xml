@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AppointmentDisclaimerAgreement</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AppointmentDisclaimerAgreement</shortDescription>
+        <value>I agree to these terms and conditions</value>
+    </labels>
+    <labels>
+        <fullName>AppointmentFilter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AppointmentFilter</shortDescription>
+        <value>Select Filter</value>
+    </labels>
+    <labels>
+        <fullName>AppointmentIntervalHelptext</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AppointmentIntervalHelptext</shortDescription>
+        <value>(In days and hours, in the format of 1D, 2D, 5H, 10H)</value>
+    </labels>
+    <labels>
+        <fullName>AppointmentLocation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AppointmentLocation</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>AppointmentSpeciality</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AppointmentSpeciality</shortDescription>
+        <value>Specialty</value>
+    </labels>
+    <labels>
+        <fullName>Claim_custom_error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Claim custom error</shortDescription>
+        <value>Claim processing in Progress. Please check the Claim Validation Tab or Claim Errors Tab for more details.</value>
+    </labels>
+    <labels>
+        <fullName>EMPTY_FILE</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV file is empty.</shortDescription>
+        <value>CSV file is empty.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The provided Json String was badly formatted.</shortDescription>
+        <value>The provided Json String was badly formatted.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_EMPTY</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No field values were found in the Json String.</shortDescription>
+        <value>No field values were found in the Json String.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_OP_FAILED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation failed, please check messages!</shortDescription>
+        <value>Operation failed, please check messages!</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request failed with no specified error.</shortDescription>
+        <value>Request failed with no specified error.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
+        <value>Unauthorized endpoint, please check Setup</value>
+    </labels>
+    <labels>
+        <fullName>FILE_MISSING</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a comma separated file.</shortDescription>
+        <value>Please provide a comma separated file.</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
+        <value>The number of field values does not match the number of header fields on line</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CHECK_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names!</shortDescription>
+        <value>Please check the Api names!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting and Custom Metadata Types exists in the org!</shortDescription>
+        <value>Make sure Custom Setting and Custom Metadata Types exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the format, Custom Setting.field and Custom Metadata Types.field</shortDescription>
+        <value>Please check the format, Custom Setting.field and Custom Metadata Types.field</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name/Field Name and CMT/Field Name names are required!</shortDescription>
+        <value>Custom Setting Name/Field Name and CMT/Field Name names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_MAPPING_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</shortDescription>
+        <value>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Api Name and Custom Metadata Types Api names are required!</shortDescription>
+        <value>Custom Setting Api Name and Custom Metadata Types Api names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CUSTOM_SETTINGS_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting exists in the org!</shortDescription>
+        <value>Make sure Custom Setting exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names in Json!</shortDescription>
+        <value>Please check the Api names in Json!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Json format!</shortDescription>
+        <value>Please check the Json format!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MDT_END</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Metadata Types name should end with</shortDescription>
+        <value>Custom Metadata Types name should end with</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_COMPLETED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration Completed!</shortDescription>
+        <value>Migration Completed!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_IN_PROGRESS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</shortDescription>
+        <value>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</value>
+    </labels>
+    <labels>
+        <fullName>MSG_NOT_SUPPORTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Supported!!!</shortDescription>
+        <value>Not Supported!!!</value>
+    </labels>
+    <labels>
+        <fullName>Max_Limit_of_Existing_Diagnosis_Selection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Max Limit of Existing Diagnosis Selection</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>Max_Limit_of_Existing_Problem_Selection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Max Limit of Existing Problem Selection</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>MeetingName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MeetingName</shortDescription>
+        <value>Zoom</value>
+    </labels>
+    <labels>
+        <fullName>NewCrop_Screen_Header</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NewCrop_Screen_Header</shortDescription>
+        <value>New Prescription</value>
+    </labels>
+    <labels>
+        <fullName>OrgURL</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>OrgURL</shortDescription>
+        <value>https://momentum-flow-72462-dev-ed.scratch.lightning.force.com</value>
+    </labels>
+    <labels>
+        <fullName>PatientBookingAlert</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PatientBookingAlert</shortDescription>
+        <value>&lt;Patient Name&gt; already has an appointment for this time. Would you like to proceed?</value>
+    </labels>
+    <labels>
+        <fullName>ProcedureCancelation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProcedureCancelation</shortDescription>
+        <value>This action will add this canceled procedure to a claim. Are you sure you want to proceed?</value>
+    </labels>
+    <labels>
+        <fullName>ProcedureCancelationCMS1500</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProcedureCancelationCMS1500</shortDescription>
+        <value>This procedure has been canceled. Are you sure you want to add?</value>
+    </labels>
+    <labels>
+        <fullName>ProcedureClaimCancelation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProcedureClaimCancelation</shortDescription>
+        <value>Are you sure you want to cancel? This procedure is already added to a claim</value>
+    </labels>
+    <labels>
+        <fullName>ReservationStatus</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contains reservation status for data filteration</shortDescription>
+        <value>Confirmed,Pending</value>
+    </labels>
+    <labels>
+        <fullName>Reservation_Reservation_Type_Default</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reservation - Reservation Type - Default</shortDescription>
+        <value>New_Reservation</value>
+    </labels>
+    <labels>
+        <fullName>Reservation_Schedule_Reservation_Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reservation - Schedule Reservation - Type</shortDescription>
+        <value>Reservation Type</value>
+    </labels>
+    <labels>
+        <fullName>TYPE_OPTION_NOT_SELECTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please choose a valid custom metadata type.</shortDescription>
+        <value>Please choose a valid custom metadata type.</value>
+    </labels>
+    <labels>
+        <fullName>UnsolicitedClinicalReportResultBatchSize</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contains the batch size for getting unsolicited results</shortDescription>
+        <value>50</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a cross-object fieldsset is not allowed and attempted.</shortDescription>
+        <value>Cross-object fields not allowed and field &quot;{0}&quot; is a cross-object field.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_fieldset_wrong_sobject_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a field set for a different sobject type.</shortDescription>
+        <value>Field set &quot;{0}&quot; is not for SObject type &quot;{1}&quot;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_recursive_subquery_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to nest subqueries.</shortDescription>
+        <value>Invalid call to subselectQuery.  You may not add a subselect query to a subselect query.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_subquery_invalid_relationship</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to create a subquery from an invalid relationship.</shortDescription>
+        <value>Invalid call to subselectQuery.  Invalid relationship for table.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_insertable</shortDescription>
+        <value>You do not have permission to insert field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_readable</shortDescription>
+        <value>You do not have permission to read the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_updateable</shortDescription>
+        <value>You do not have permission to update the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_deletable</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_deletable</shortDescription>
+        <value>You do not have permission to delete {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_insertable</shortDescription>
+        <value>You do not have permission to insert {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_readable</shortDescription>
+        <value>You do not have permission to read {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
+        <value>You do not have permission to update {0}</value>
+    </labels>
+</CustomLabels>

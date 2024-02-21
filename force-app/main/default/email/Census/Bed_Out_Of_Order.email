@@ -1,0 +1,11 @@
+<p>Hi Team , </p>
+
+<p>This Bed No. <a href="{!Bed__c.Link}" >{!Bed__c.Name}</a> Needs Maintenance.
+</p>
+
+<p><b>
+Please find the details of the maintenance needs below:</b> 
+{!Bed__c.Enter_details_of_the_maintenance_needs__c}</p>
+
+<p>Thanks</p>
+Admin

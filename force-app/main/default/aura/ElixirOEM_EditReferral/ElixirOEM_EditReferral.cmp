@@ -1,0 +1,100 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="isOpen" type="Boolean" default="false" />
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="referralName" type="String" />
+    
+    <aura:if isTrue="{!v.isOpen}">      
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header changeNew" >
+                    
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Edit Referral {!v.referralName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <!--<lightning:recordForm aura:id="recordFormForRefEdit"
+                                          recordId="{!v.accountId}"
+                                          objectApiName="ElixirSuite__Referral__c"
+                                          layoutType="Full"
+                                          columns="2"
+                                          onsuccess="{! c.closeModel }"
+                                          oncancel ="{! c.closeModel }"
+                                          mode="edit" />-->
+                    <lightning:recordEditForm aura:id="recordEditForm"
+                                              recordId="{!v.accountId}"
+                                              objectApiName="ElixirSuite__Referral__c"  
+                                              onsuccess="{!c.closeModel}">    
+                        <lightning:messages /> 
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Provider__c" /> 
+                                </span>
+                            </div>
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Account__c" /> 
+                                </span>
+                </div>
+            </div>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__User__c" /></span>
+                            </div>
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Referred_To__c" />  </span>
+                            </div>
+                        </div>
+                           
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Email_CTM__c" /></span>
+                        </div>
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Email_Referred_To__c" /> </span>
+                            </div>
+                        </div>
+                           
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Phone_CTM__c" /> </span>
+                            </div>
+                            <div class="slds-col">
+                                <span><lightning:inputField fieldName="ElixirSuite__Phone_Referred_To__c" /> </span>
+                            </div>
+                        </div>
+                        
+                        <!--lightning:inputField fieldName="ElixirSuite__Account__c" />    
+        <lightning:inputField fieldName="ElixirSuite__User__c" />    
+        <lightning:inputField fieldName="ElixirSuite__Email_CTM__c" /> 
+                         <lightning:inputField fieldName="ElixirSuite__Email_Referred_To__c" /> 
+                         <lightning:inputField fieldName="ElixirSuite__Instructions__c" /> 
+                         <lightning:inputField fieldName="ElixirSuite__Provider__c" /> 
+                         <lightning:inputField fieldName="ElixirSuite__Phone_CTM__c" /> 
+                         <lightning:inputField fieldName="ElixirSuite__Phone_Referred_To__c" /--> 
+                        <div class="referrals_footer slds-align_absolute-center">
+                        <lightning:button class="slds-m-top_small " type="submit"  label="Update Referral" onclick="{!c.showToast}" />    
+                   </div>
+                        </lightning:recordEditForm>
+                </div>
+                    
+                <!-- footer class="slds-modal__footer">
+                    <lightning:button variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand"
+                                      label="OK"
+                                      title="OK"
+                                      onclick="{!c.submitDetails}"/>
+                </footer -->
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

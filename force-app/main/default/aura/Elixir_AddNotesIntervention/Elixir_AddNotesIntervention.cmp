@@ -1,0 +1,82 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "patientId" type="String"/>
+    <aura:attribute name= "textWritten" type="String"/>
+    <aura:attribute name= "intervId" type="String"/> 
+     <aura:attribute name= "goal" type="Object"/>
+    <aura:attribute name= "notes" type="Object"/>
+    <aura:attribute name="listOfNotes" type="Object[]"/>
+    <aura:attribute name= "carePlan" type="Object"/>
+    <aura:attribute name="openModalAddNotes" type="Boolean" default="false"/>
+    <aura:attribute name= "contentDocumentId" type="List"/>
+    <aura:attribute name="isViewMode" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class = "slds-grid slds-gutters">
+        <!--<div class="slds-col slds-size_2-of-12 slds-m-top_small slds-p-left_none  slds-p-bottom_medium">
+            <lightning:button  onclick="{!c.AddNotes }" label="+ Add Notes" class="btn_add-note" aura:id="button_class_removal"/>
+        </div>-->
+        <div class="slds-col slds-size_10-of-12 slds-p-around_none">
+            <ul class="btn_hover_parent">
+                <aura:iteration items="{!v.listOfNotes}" var="sd">
+                    <li>
+                        
+                        <div class="hyperlink">
+                            
+                            <lightning:formattedDateTime aura:id="dt"
+                                                         value="{!sd.CreatedDate}"
+                                                         month="short"
+                                                         day="numeric"
+                                                         year="numeric"
+                                                         hour="2-digit"
+                                                         minute="2-digit"
+                                                         second="2-digit"
+                                                         hour12="true"
+                                                         timeZone="{!$Locale.timezone}"/>
+                        </div>
+                        
+                        <!--lightning:button label="{!sd.CreatedDate}"/-->
+                        <div class="btn_hover_child slds-is-absolute"> 
+                            {!sd.ElixirSuite__File_Name__c}
+                            <aura:if isTrue="{!NOT(v.isViewMode)}">
+                                <hr/>
+                                <lightning:button  onclick="{!c.delNote }" name="{!sd.ContentDocumentId + '$' + idx}" label="Delete" variant="Neutral"/>
+                                <!--lightning:button  onclick="{!c.closeHover }" label="Cancel" variant="Neutral"/-->
+                            </aura:if>
+                        </div>
+                    </li>             
+                </aura:iteration>
+            </ul>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.openModalAddNotes}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss add_note">
+            <div class="slds-modal__container accordian-parant note_heading">
+                <header class="slds-modal__header slds-text-heading_large"> 
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeMainModal }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    Note Heading
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:textarea name="input7" value="{!v.textWritten}" placeholder="Add your note here..."
+                                        label="Required textarea field with a maximum length of 140 characters" maxlength="500" 
+                                        messageWhenTooLong="A maximum of 500 characters are allowed in a tweet." 
+                                        messageWhenValueMissing="An empty Note cannot be posted." />
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <lightning:button  onclick="{!c.closeMainModal }" label="Cancel" variant="Neutral"/>
+                    <lightning:button  onclick="{!c.Save }" label="Save" variant="Brand"/>
+                </footer>
+                
+            </div>
+        </section>
+        <!--div class="{!'slds-backdrop ' + ((v.openModalAddNotes) ? 'slds-backdrop_open' : 'slds-backdrop_close')}">div-->
+    </aura:if>
+    
+    
+</aura:component>

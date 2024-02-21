@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Procedure__c</fullName>
+    <description>This field is used to associate the procedure code with contracted price.</description>
+    <externalId>false</externalId>
+    <label>Procedure</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 OR 2 OR 3</booleanFilter>
+        <filterItems>
+            <field>Procedure__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Template Procedure</value>
+        </filterItems>
+        <filterItems>
+            <field>Procedure__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Template Inventory</value>
+        </filterItems>
+        <filterItems>
+            <field>Procedure__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Template Lab Test</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>Contracted Price</relationshipLabel>
+    <relationshipName>Contracted_Price</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

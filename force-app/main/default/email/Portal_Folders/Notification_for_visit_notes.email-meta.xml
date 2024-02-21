@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This email template is used to send automated notifications to the patients whenver the visit note becomes available for patient on portal.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification for visit notes</name>
+    <style>none</style>
+    <subject>{!Organization.Name} has shared the Visit Note for {!Event.Subject} held on {!Event.ActivityDate}</subject>
+    <textOnly>Hello {!Account.Name},
+
+{!Organization.Name} has shared the visit note related to {!Event.Subject} held on {!Event.ActivityDate} with {Practitioner}.
+
+Please login into your portal {Patientportallink} to review the visit note.
+
+Regards,
+{!Organization.Name}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

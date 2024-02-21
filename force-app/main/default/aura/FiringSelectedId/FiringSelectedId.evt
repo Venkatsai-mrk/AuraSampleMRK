@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Sample Component Event">
+    <aura:attribute name="SelectedId" type="String"  />
+    <aura:attribute name="recordAsObject" type="object"  />
+    <aura:attribute name="IsDuplicate" type="Boolean"  />
+</aura:event>

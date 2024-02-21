@@ -1,0 +1,24 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" 
+                controller="Elixir_CarePlanController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "relatedDiagnosis" type="String"/> 
+    <aura:attribute name= "problemIndexInDiagnoses" type="String"/>
+    <aura:attribute name= "problemRecord" type="String"/> 
+    <aura:attribute name="goalId" type="String" />    
+    <aura:attribute name="goalIdx" type="Integer"/>
+    <aura:attribute name="tasksList" type="Object"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name= "goalFirstCallBack" type="Boolean"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-show" aura:id="goalId" >
+        <div class="slds-page-header changepoinert" >
+            <section class="slds-clearfix">               
+                <div class="slds-m-left--large showLbl">
+                    <lightning:input type="checkbox" 
+                                     text = "{!v.problemIndexInDiagnoses +'$'+ v.goalIdx}" name="{!v.problemIndexInDiagnoses +'$'+ v.goalIdx}"
+                                     checked ="{!v.relatedDiagnosis.diagnosesIsChecked}" label="{!v.relatedDiagnosis.ElixirSuite__Diagnosis_Code_and_Name__c}" onchange="{!c.handleDiagnosesSelection}" />
+                </div>             
+            </section>
+        </div>
+    </div>
+</aura:component>

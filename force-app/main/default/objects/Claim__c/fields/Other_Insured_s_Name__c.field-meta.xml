@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Insured_s_Name__c</fullName>
+    <description>Used to provide the name of another individual who has health insurance coverage that may coordinate with the patient's primary insurance.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The “Other Insured’s Name” indicates that there is a holder of another policy that maycover the patient.Use commas to separate the last name, first name, and middle initial. A hyphen can be used for hyphenated names. Do not use periods within the name.</inlineHelpText>
+    <label>Other Insured&apos;s Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

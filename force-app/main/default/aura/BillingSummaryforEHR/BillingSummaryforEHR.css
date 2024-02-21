@@ -1,0 +1,16 @@
+.THIS .bill-btn {
+    padding: 7px 0; 
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;
+    background-color: #3b87a5;
+    width: 100%;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+}
+@media (max-width: 576px) {
+    .THIS .bill-btn { 
+    	font-size: 12px;
+    }
+}

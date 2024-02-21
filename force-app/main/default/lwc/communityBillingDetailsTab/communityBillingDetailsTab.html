@@ -1,0 +1,81 @@
+<template>
+    <div class="details_page slds-is-relative" onclick={disablePayment}>
+        <lightning-button class="slds-is-absolute slds-button pay-btn" disabled="true" label="Make a Payment" variant="brand"></lightning-button>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_8-of-12">
+                <h2>Select a Visit from below to make a Payment</h2>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input type="date" value={fromDate} name="fromDate" class="fDate" onchange={changeFromDate}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input type="date" value={toDate} name="toDate" class="tDate" onchange={changeToDate}></lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                <button class="slds-button search-btn slds-m-right_small" onclick={search}>Search</button>
+                <button class="slds-button search-btn" onclick={clearFilter}>Clear Filter</button>
+            </div>
+        </div>
+    </div>
+    <div class="details_page-list ">
+        <template for:each={lstVisit} for:item="visit" for:index="index">
+            <ul key={visit.lstVisits.Id}>
+            <li>
+                <button class="card" onclick={enablePayment}>
+                    <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12 slds-text-align_center">
+                        <template if:true={visit.events}>
+                            <h3><lightning-formatted-date-time value={visit.events.StartDateTime} year="numeric" month="short" day="2-digit"></lightning-formatted-date-time></h3>
+                        </template>
+                        <template if:false={visit.events}>
+                            <h3><lightning-formatted-date-time value={visit.lstVisits.CreatedDate} year="numeric" month="short" day="2-digit"></lightning-formatted-date-time></h3>
+                        </template>   
+                    </div>
+                    <div class="slds-col slds-size_7-of-12 slds-text-align_left">
+                        <template if:true={visit.lstVisits.ElixirSuite__Care_Episode_Location__r}>
+                            <h4>Office Visit at {visit.lstVisits.ElixirSuite__Care_Episode_Location__r.Name}</h4>
+                        </template>
+                        <template if:false={visit.lstVisits.ElixirSuite__Care_Episode_Location__r}>
+                            <h4>Office Visit at {visit.lstVisits.Name}</h4>
+                        </template>
+                        <template if:true={visit.proc}>
+                            <p>Physician Services: {visit.proc.ElixirSuite__Code_Description__c}</p>
+                        </template>
+                        <template if:false={visit.proc}>
+                            <p>Physician Services:</p>
+                        </template>
+                        <template if:true={visit.events}>
+                            <p>Provider: {visit.events.ElixirSuite__Practitioner__r.Name}</p>
+                        </template>
+                        <template if:false={visit.events}>
+                            <template if:true={visit.lstVisits.ElixirSuite__Care_Episode_Location__r}>
+                                <p>Provider: {visit.lstVisits.ElixirSuite__Care_Episode_Location__r.Name}</p>
+                            </template>
+                        </template>
+                        <p>Patient: {visit.lstVisits.ElixirSuite__Account__r.Name}</p>
+                        <p>Primary Payer: {visit.payer}</p>
+                        <p>MR#: {visit.lstVisits.ElixirSuite__Account__r.ElixirSuite__MRN_Number_New__c}</p>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-text-align_right">
+                        <p>Total Charges</p>
+                        <p>Insurance Covered</p>
+                        <p>You have Paid</p>
+                        <h4 class="slds-m-top_large">Remaining Balance</h4>
+                        <p>Due Date</p>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-text-align_right">
+                        <p>${visit.totalCharges}</p>
+                        <p class="unpaid_amt">{visit.insurancePaid}</p>
+                        <p class="unpaid_amt">{visit.patientPaid}</p>
+                        <h4 class="slds-m-top_large">{visit.remainingCharges}</h4>
+                        <p>7/1/2023</p>
+                    </div>
+                    </div>
+                </button>
+            </li>
+            </ul>
+        </template>
+    </div>
+</template>

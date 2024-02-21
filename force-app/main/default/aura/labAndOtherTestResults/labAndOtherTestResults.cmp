@@ -1,0 +1,99 @@
+<aura:component controller="labAndOtherTestResultsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    <aura:attribute name="AllFlag" type="Boolean"/>   
+    <aura:attribute name="files" type="ContentDocument[]"/>  
+    <aura:attribute name="recordId" type="string"/>  
+    <aura:attribute name="pathWay" type="string"/>  
+    <aura:attribute name="currentlyUploadedDocumetIDs" type="list"/> 
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.pdf','.csv','.xlsx']"/>  
+    <aura:attribute name="multiple" type="Boolean" default="true"/>      
+    <aura:attribute name="Spinner" type="boolean" default="false"/> 
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="popUpType" type="string"/>  
+    <aura:attribute name="resultName" type="string"/>   
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="form_css slds-modal__container">
+            <!-- Modal/Popup Box Header Starts here-->            
+            <header class="slds-modal__header">              
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{!c.handleClose}"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close" disabled="{!v.RestrictButtons}"/>                
+            </header>         
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds">  
+                    <lightning:notificationsLibrary aura:id="notifLib"/>
+                    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                    <div class="contentbox">  
+                        <div class="slds-page-header header">
+                            <div class="slds-grid slds-gutters" >
+                                
+                                <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                                    Files
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 update-buttons">
+                                    <lightning:fileUpload label="" multiple="{!v.multiple}"   
+                                                          accept="{!v.accept}" recordId="{!v.recordId}"   
+                                                          onuploadfinished="{!c.UploadFinished}" disabled="{!v.AllFlag}" class="slds-float--right" />
+                                </div>
+                                
+                            </div>   
+                        </div>
+                        
+                        
+                        <div class="slds-form--compound p-relative">
+                            <aura:if isTrue="{!not(empty(v.files))}">
+                                <table class="slds-table slds-table--bordered">  
+                                    <thead>  
+                                        <tr>  
+                                            <th>FileType</th>
+                                            <th>Title</th>
+                                            <th>Action</th>
+                                            <th></th>                    
+                                        </tr>  
+                                    </thead>  
+                                    <tbody>
+                                        
+                                        <aura:iteration items="{!v.files}" var="f">  
+                                            <tr>  
+                                                <!--<td><a href="javascript:void(0)" id="{!f.Id}" onclick="{!c.delFiles}">Delete</a></td>-->
+                                                <td>{!f.FileType}</td>     
+                                                
+                                                <td> <lightning:button name="{!f.Id}" variant="base" label="{!f.Title}"  onclick="{!c.previewFile}"/> </td>
+                                                <td> <lightning:button name="{!f.Id}" variant="base" label="Delete"  onclick="{!c.delFiles}"  disabled="{!v.AllFlag}"/>  </td>
+                                                <!-- <td><a href="" id="{!f.Id}" onclick="{!c.previewFile}">{!f.Title}</a></td>-->  
+                                                
+                                            </tr>  
+                                        </aura:iteration>  
+                                        
+                                    </tbody>  
+                                </table>  
+                                <aura:set attribute="else">
+                                    <h3><center>NO LAB RESULTS PRESENT YET! </center></h3>
+                                </aura:set>
+                            </aura:if>
+                            <aura:if isTrue="{!v.Spinner}">
+                                <div class="slds-spinner_container">
+                                    <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                                        <div class="slds-spinner__dot-a"></div>
+                                        <div class="slds-spinner__dot-b"></div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                        <aura:if isTrue="{!! v.loaded }">
+                            <lightning:spinner variant="brand" alternativeText="Loading" size="medium"/>
+                        </aura:if>
+                    </div>  
+                </div>  
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" disabled="{!v.RestrictButtons}" onclick="{!c.handleClose}">Close</button>
+                
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</aura:component>

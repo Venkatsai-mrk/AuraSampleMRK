@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Out of service Alert</name>
+    <style>none</style>
+    <subject>Room Out Of Service Alert for: {!Rooms__c.Name}</subject>
+    <textOnly>Hi Team ,
+
+This Room - {!Rooms__c.Name} is Out of Service and needs some actions to be performed before it can be allocated.
+
+Reasons for marking the room out of service:{!Rooms__c.Reasons_for_marking_out_of_service__c}
+Thanks
+
+Admin</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

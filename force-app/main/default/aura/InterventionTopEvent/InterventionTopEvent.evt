@@ -1,0 +1,4 @@
+<!-- InterventionTopEvent-->
+<aura:event type="Component" description="Event from Top Intervention Button" >
+    <aura:attribute name="InterventionJSON" type="Object" />
+</aura:event>

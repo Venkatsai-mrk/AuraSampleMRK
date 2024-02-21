@@ -1,0 +1,43 @@
+<template>
+    <div class="overview-parent">
+        <div class="slds-gutters">
+        <div  class="slds-col slds-size_1-of-2 " for:each={providerPaymentWrappers} for:item="providerPaymentWrapper" key={providerPaymentWrapper.location}>      
+         <div key={providerPaymentWrapper.location} >
+            <div class="overview-box">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_8-of-12">
+                         <h3>{providerPaymentWrapper.provider.Name}</h3>
+                        <p>Guarantor #{providerPaymentWrapper.accDetails.ElixirSuite__MRN_Number_New__c}</p>
+                        <p>({providerPaymentWrapper.accDetails.Name})</p> 
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                        <template if:true={providerPaymentWrapper.imageUrls}>
+                            <template for:each={providerPaymentWrapper.imageUrls} for:item="imageUrl">
+                                <img key = "{imageUrl}" src={imageUrl}></img>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                        <h3>Amount Due</h3>
+                        
+                        <!-- Conditionally display based on the value of totalRemainingAmount -->
+                        <template if:true={providerPaymentWrapper.totalRemainingAmount}>
+                            <p class="pending-amt slds-text-color_error">${providerPaymentWrapper.totalRemainingAmount}</p>
+                        </template>
+                        
+                        <template if:false={providerPaymentWrapper.totalRemainingAmount}>
+                            <p class="pending-amt slds-text-color_success">$0.00</p>
+                            <h4 class="slds-m-top_xx-small">No Outstanding</h4>
+                            <h4>Balances!</h4>
+                        </template>                   
+                    </div>
+                </div>
+            </div>
+        </div> 
+        </div>
+        </div>
+    </div>
+</template>

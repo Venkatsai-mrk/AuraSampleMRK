@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Out_of_Order_Date_Validation_Rule</fullName>
+    <active>true</active>
+    <description>This validation rule ensures that the &quot;Out of Order Date&quot; field remains empty when the &quot;Out of Order&quot; checkbox is unchecked. It prevents users from entering a value in the &quot;Out of Order Date&quot; field when the corresponding checkbox is not selected.</description>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL(Status__c, &quot;Out of Order&quot;)),
+NOT(ISBLANK(Out_of_Order_Date__c))
+)</errorConditionFormula>
+    <errorMessage>The &apos;Out of Order Date&apos; field should be empty unless the &apos;Status&apos; field is set to &apos;Out of Order&apos;.&quot;</errorMessage>
+</ValidationRule>

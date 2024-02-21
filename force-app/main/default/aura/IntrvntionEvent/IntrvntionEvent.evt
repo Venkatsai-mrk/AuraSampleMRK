@@ -1,0 +1,4 @@
+<!--IntrvntionEvent.evt-->
+<aura:event type="COMPONENT" description="Intervention Event">
+    <aura:attribute name="message" type="String" />
+</aura:event>

@@ -1,0 +1,134 @@
+<aura:component >
+    <!-- Name of dropdown to display -->
+    <aura:attribute name="mslabel" type="String" default="" />
+    <!-- max selected item display -->
+    <aura:attribute name="maxSelectedShow" type="Integer" default="1" />
+    <!-- Option list to show in drop down -->
+    <aura:attribute name="msoptions" type="List" />
+    <aura:attribute name="msOptionList" type="Object" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showFilterInput" type="Boolean" default="true" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showRefreshButton" type="Boolean" default="true" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showClearButton" type="Boolean" default="true" />
+    <!-- Selected options label -->
+    <aura:attribute name="msname" type="String" default="Select a value.." />
+    
+    <!-- Selected option list -->
+    <aura:attribute name="selectedOptions" type="List" />
+    <!-- Selected options label -->
+    <aura:attribute name="selectedLabel" type="String" default="Select a value.." />
+    <aura:attribute name="selectedLabelDuplicate" type="String" default="Select a value.." />
+    <!-- Selected options label -->
+    <aura:attribute name="initializationCompleted" type="Boolean" default="false" />
+    
+    <!-- Render handler to execute on component initialization -->
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+    <aura:attribute name="evidencesDescription" type="String" />
+    <aura:attribute name="selectedOptionsString" type="String" />
+    <aura:attribute name="displayVal" type="Boolean"/>
+    <aura:attribute name="displayValOpenStatus" type="Boolean"/>
+    
+    <!-- DROPDOWN Component Code Starts HERE-->
+    
+    <aura:if isTrue="{!v.displayVal}">
+        
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_7-of-12 slds-form-element__control parent_CSS_1">
+                <aura:iteration items="{!v.msoptions}" var="item">
+                    <span class="slds-icon_container parent_CSS_2">
+                        <lightning:pill label="{!item.ElixirSuite__Description__c}" onremove="{! c.handleRemove }"  />
+                    </span>
+                </aura:iteration>
+                
+            </div>
+            <div class="slds-col slds-size_5-of-12 slds-form-element" >
+                <lightning:textarea name="input4" value="{!v.selectedLabelDuplicate}" class="boxCss"></lightning:textarea>     
+            </div>
+        </div>
+        
+        <!-- DROPDOWN Component Code Ends HERE-->
+        
+    </aura:if>
+    
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_3-of-12 slds-form-element">
+            <aura:if isTrue="{! !empty(v.mslabel)}">
+                <label class="slds-form-element__label">{!v.mslabel}</label>
+            </aura:if>
+            <div class="parent_CSS_3">
+                <div class="slds-combobox_container slds-size_small">
+                    <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
+                         aria-expanded="false" aria-haspopup="listbox" role="listbox" >
+                        <!-- MAIN BUTTON CODE -->
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left" role="none">
+                            <input class="slds-combobox__input ms-input " id="ms-input" aria-controls="ms-dropdown-items" 
+                                   role="textbox" type="text" placeholder="{!v.selectedLabel}" value="" readonly="true"/>
+                        </div>
+                        <!-- MAIN BUTTON CODE ENDS -->
+                        <!-- Drop down list -->
+                        <div id="ms-dropdown-items" role="listbox">
+                            <!-- Creating unordered list -->
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ms-dropdown customCss" role="presentation">
+                                
+                                <!-- showing filter input -->
+                                <!--      <aura:if isTrue="{!v.showFilterInput}">
+                                <input class="slds-listbox__item ms-filter-input" id="ms-filter-input" aria-controls="ms-dropdown-items" 
+                                role="textbox" type="text" placeholder="Filter values.." value="" oninput="{!c.onInputChange}"/>
+                            </aura:if>-->
+                                <!-- showing clear button -->
+                                <!--   <aura:if isTrue="{!v.showClearButton}">
+                                <lightning:buttonIcon iconName="utility:clear" alternativeText="Clear current filters" onclick="{!c.onClearClick}"/>
+                            </aura:if>-->
+                                <!-- showing refresh button -->
+                                <!--   <aura:if isTrue="{!v.showRefreshButton}">
+                                <lightning:buttonIcon iconName="utility:refresh" alternativeText="Clear all selections and rebuild picklist" onclick="{!c.onRefreshClick}"/>
+                            </aura:if>-->
+                                
+                                <!-- Generating list item by iterating over options --> 
+                                <aura:iteration items="{!v.msoptions}" var="item">
+                                    <li role="presentation" class="{!'slds-listbox__item ms-list-item '+ (item.selected ? 'slds-is-selected' : '')}"
+                                        id="ms-list-item" data-id="{!item.Id}" data-name="{!item.ElixirSuite__Description__c}">
+                                        <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                            <!-- Icon for each list item -->
+                                            <span class="slds-media__figure">
+                                                <lightning:icon iconName="utility:check" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                            </span>
+                                            <!-- Body of each list item -->
+                                            <span class="slds-media__body">
+                                                <span class="slds-truncate" title="{!item.ElixirSuite__Description__c}">{!item.ElixirSuite__Description__c}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_4-of-12 slds-form-element__control parent_CSS_9">
+            <aura:iteration items="{!v.selectedOptions}" var="item">
+                <span class="slds-icon_container parent_CSS_10">
+                    <lightning:pill label="{!item.ElixirSuite__Description__c}"  />
+                </span>
+            </aura:iteration>
+            
+        </div>
+        <div class="slds-col slds-size_5-of-12 slds-form-element" >
+            <lightning:textarea name="input4" value="{!v.selectedLabelDuplicate}" class="boxCss"></lightning:textarea>     
+        </div>
+        <!-- <div class="slds-col slds-size_5-of-12 slds-form-element__control">
+         <lightning:textarea name="input1" label="">
+             <aura:iteration items="{!v.selectedOptions}" var="item">
+                 <span class="slds-icon_container" >
+                     <p>{!item.Name} . </p>
+                 </span>
+             </aura:iteration>
+         </lightning:textarea>
+     </div>-->
+    </div>
+    
+    <!-- DROPDOWN Component Code Ends HERE-->
+</aura:component>

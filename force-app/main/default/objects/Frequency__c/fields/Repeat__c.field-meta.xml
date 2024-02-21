@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Repeat__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Repeat</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>&apos;n&apos; times a day</fullName>
+                <default>false</default>
+                <label>&apos;n&apos; times a day</label>
+            </value>
+            <value>
+                <fullName>After every &apos;n&apos; hours</fullName>
+                <default>false</default>
+                <label>After every &apos;n&apos; hours</label>
+            </value>
+            <value>
+                <fullName>After lunch</fullName>
+                <default>false</default>
+                <label>After lunch</label>
+            </value>
+            <value>
+                <fullName>After supper/Dinner</fullName>
+                <default>false</default>
+                <label>After supper/Dinner</label>
+            </value>
+            <value>
+                <fullName>Before Breakfast</fullName>
+                <default>false</default>
+                <label>Before Breakfast</label>
+            </value>
+            <value>
+                <fullName>Custom pheno</fullName>
+                <default>false</default>
+                <label>Custom pheno</label>
+            </value>
+            <value>
+                <fullName>Once  a day (AM)</fullName>
+                <default>false</default>
+                <label>Once  a day (AM)</label>
+            </value>
+            <value>
+                <fullName>Once  a day (HS)</fullName>
+                <default>false</default>
+                <label>Once  a day (HS)</label>
+            </value>
+            <value>
+                <fullName>Once a day  midday</fullName>
+                <default>false</default>
+                <label>Once a day  midday</label>
+            </value>
+            <value>
+                <fullName>Once a day (Qam)</fullName>
+                <default>false</default>
+                <label>Once a day (Qam)</label>
+            </value>
+            <value>
+                <fullName>Once a day (QHS)</fullName>
+                <default>false</default>
+                <label>Once a day (QHS)</label>
+            </value>
+            <value>
+                <fullName>At a specific time</fullName>
+                <default>false</default>
+                <label>At a specific time</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

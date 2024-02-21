@@ -1,0 +1,80 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-01-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+ 
+    <aura:component controller="Elixir_ViewEditPArentERA" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" > 
+    
+    <!--<aura:attribute name="recid" type="String" />
+    <aura:attribute name="eraId" type="String" />
+    <aura:attribute name="isOpen" type="Boolean" default="false" />
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}" />
+    <aura:attribute name="activeSections" type="List" default=" " />    
+    <aura:attribute name="noteList" type="Notes__c[]"/>
+    <aura:attribute name="deleteNoteList" type="List"/>
+    
+    <aura:handler  name="change" value="{!v.noteList}" action="{!c.getNotesData}"/>
+    <aura:registerEvent name="cmpEvent" type="c:FollowupRecommendationEvent"/>
+    
+    <aura:method name="saveNotes" action="{!c.saveNotes}" description="To create and update Notes">
+    </aura:method>
+    
+    <div class="childname">
+        <lightning:accordion
+                             allowMultipleSectionsOpen="true"
+                             onsectiontoggle="{!c.handleSectionToggle}"
+                             activeSectionName="{!v.activeSections}">
+            <lightning:accordionSection name="B" label="Folllow-up Notes">
+                <div class=" slds-p-around_medium">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered eraline_table">
+                                <thead>
+                                    <tr>
+                                        <th>Follow up Notes</th>
+                                        <th>Assigned To</th>
+                                        <th>Follow-up Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.noteList}" var="code" indexVar="index">
+                                        <tr>
+                                            <td>
+                                                <lightning:textarea name="followUp" placeholder="" value="{!code.ElixirSuite__Follow_Up_Notes__c}"/>
+                                            </td>   
+                                            <td>                                
+                                                <c:lookupComponent 
+                                                                   objectName="user" 
+                                                                   fieldName="Name"
+                                                                   value = "{!code.ElixirSuite__Elixir_Assigned_To__c}"
+                                                                   />
+                                            </td>
+                                            <td>
+                                                <lightning:input  type="datetime" label=" " variant = "label-hidden" name="DateVal" placeholder="" value="{!code.ElixirSuite__Elixir_Follow_up_Date__c}"/>
+                                            </td>
+                                            <td>
+                                                <a onclick="{!c.addNoteRecord}" data-record="{!index}">
+                                                    <lightning:icon iconName="utility:new" class="slds-icon slds-icon_small new_icon" size="small"  alternativeText="add"/>
+                                                    <span class="slds-assistive-text">Add Icon</span>
+                                                </a> 
+                                                <a onclick="{!c.removeNoteRecord}" data-record="{!index}">
+                                                    <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                                    <span class="slds-assistive-text">Delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                          
+                        </div>
+                    </div>
+                </div>
+            </lightning:accordionSection>
+            </lightning:accordion>            
+    </div>  -->  
+</aura:component>

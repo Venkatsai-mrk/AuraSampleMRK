@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plan_Type__c</fullName>
+    <description>Type of insurance plan, such as Silver, Automobile Medical, Blue Cross/Blue Shield, Champus, Commercial Insurance Co, etc</description>
+    <externalId>false</externalId>
+    <label>Insurance Plan Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Silver</fullName>
+                <default>false</default>
+                <label>Silver</label>
+            </value>
+            <value>
+                <fullName>Automobile Medical</fullName>
+                <default>false</default>
+                <label>Automobile Medical</label>
+            </value>
+            <value>
+                <fullName>Blue Cross/Blue Shield</fullName>
+                <default>false</default>
+                <label>Blue Cross/Blue Shield</label>
+            </value>
+            <value>
+                <fullName>Champus</fullName>
+                <default>false</default>
+                <label>Champus</label>
+            </value>
+            <value>
+                <fullName>Commercial Insurance Co.</fullName>
+                <default>false</default>
+                <label>Commercial Insurance Co.</label>
+            </value>
+            <value>
+                <fullName>Dental Maintenance Organization</fullName>
+                <default>false</default>
+                <label>Dental Maintenance Organization</label>
+            </value>
+            <value>
+                <fullName>Disability</fullName>
+                <default>false</default>
+                <label>Disability</label>
+            </value>
+            <value>
+                <fullName>Exclusive Provider Organization (EPO)</fullName>
+                <default>false</default>
+                <label>Exclusive Provider Organization (EPO)</label>
+            </value>
+            <value>
+                <fullName>Health Maintenance Organization</fullName>
+                <default>false</default>
+                <label>Health Maintenance Organization</label>
+            </value>
+            <value>
+                <fullName>Health Maintenance Organization (HMO) Medicare Risk</fullName>
+                <default>false</default>
+                <label>Health Maintenance Organization (HMO) Medicare Risk</label>
+            </value>
+            <value>
+                <fullName>Indemnity Insurance</fullName>
+                <default>false</default>
+                <label>Indemnity Insurance</label>
+            </value>
+            <value>
+                <fullName>Liability Medical</fullName>
+                <default>false</default>
+                <label>Liability Medical</label>
+            </value>
+            <value>
+                <fullName>Medicaid</fullName>
+                <default>false</default>
+                <label>Medicaid</label>
+            </value>
+            <value>
+                <fullName>Medicare Part A</fullName>
+                <default>false</default>
+                <label>Medicare Part A</label>
+            </value>
+            <value>
+                <fullName>Medicare Part B</fullName>
+                <default>false</default>
+                <label>Medicare Part B</label>
+            </value>
+            <value>
+                <fullName>Mutually Defined</fullName>
+                <default>false</default>
+                <label>Mutually Defined</label>
+            </value>
+            <value>
+                <fullName>Other Federal Programs</fullName>
+                <default>false</default>
+                <label>Other Federal Programs</label>
+            </value>
+            <value>
+                <fullName>Other Non-Federal Programs</fullName>
+                <default>false</default>
+                <label>Other Non-Federal Programs</label>
+            </value>
+            <value>
+                <fullName>Point of Service (POS)</fullName>
+                <default>false</default>
+                <label>Point of Service (POS)</label>
+            </value>
+            <value>
+                <fullName>Preferred Provider Organization (PPO)</fullName>
+                <default>false</default>
+                <label>Preferred Provider Organization (PPO)</label>
+            </value>
+            <value>
+                <fullName>Veterans Affairs Plan</fullName>
+                <default>false</default>
+                <label>Veterans Affairs Plan</label>
+            </value>
+            <value>
+                <fullName>Worker&apos;s Compensation Health claim</fullName>
+                <default>false</default>
+                <label>Worker&apos;s Compensation Health claim</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Title V</fullName>
+                <default>false</default>
+                <label>Title V</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

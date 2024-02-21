@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sexual_Orientation__c</fullName>
+    <description>Categorizes the patient's sexual type, such as Lesbian, gay or homosexual, Straight or heterosexual, etc.</description>
+    <externalId>false</externalId>
+    <label>Sexual Orientation</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>38628009</fullName>
+                <default>false</default>
+                <label>Lesbian, gay or homosexual</label>
+            </value>
+            <value>
+                <fullName>20430005</fullName>
+                <default>false</default>
+                <label>Straight or heterosexual</label>
+            </value>
+            <value>
+                <fullName>42035005</fullName>
+                <default>false</default>
+                <label>Bisexual</label>
+            </value>
+            <value>
+                <fullName>OTH</fullName>
+                <default>false</default>
+                <label>Something else, please describe</label>
+            </value>
+            <value>
+                <fullName>UNK</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>ASKU</fullName>
+                <default>false</default>
+                <label>Choose not to disclose</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

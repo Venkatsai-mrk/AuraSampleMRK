@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ClaimLineItemTrigger_Active__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Using this checkbox to activate updateReconciliationSummaryOnClaims trigger.</description>
+    <externalId>false</externalId>
+    <label>ClaimLineItemTrigger Active</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

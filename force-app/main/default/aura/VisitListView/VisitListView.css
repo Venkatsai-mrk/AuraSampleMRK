@@ -1,0 +1,59 @@
+.THIS .open svg{
+    fill : red;
+}
+.THIS .open .slds-grid {
+    color: #FFF;
+    background-color: #F08080;
+    padding: 2px 25px;
+     border-radius: 25px;
+    display: inline-block;
+}
+.THIS .open svg{
+    fill: red !important;
+}
+.THIS .onHold svg{
+    fill : red;
+}
+.THIS .onHold .slds-grid {
+    color: #FFF;
+    background-color: #FFDB58;
+    padding: 2px 20px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .reopen svg{
+    fill : red;
+}
+.THIS .reopen .slds-grid {
+    color: #FFF;
+    background-color: orange;
+    padding: 2px 25px;
+     border-radius: 25px;
+    display: inline-block;
+}
+.THIS .reopen svg{
+    fill: red !important;
+}
+
+.THIS .close svg{
+    fill : black; 
+}
+.THIS .close .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .close svg{
+    color : black !important;
+}
+.THIS .mgList {
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+.THIS .mgl-p {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}

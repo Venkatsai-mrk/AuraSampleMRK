@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ICD_Codes__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>ICD Codes</label>
+    <lookupFilter>
+        <active>false</active>
+        <filterItems>
+            <field>ICD_Codes__c.Is_Patient_Specific__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>ICD_Codes__c</referenceTo>
+    <relationshipLabel>Procedure Diagnosis</relationshipLabel>
+    <relationshipName>Procedure_Diagnosis</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

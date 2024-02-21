@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" 
+                controller="UpcomingAppointmentController">
+    <aura:attribute name="crecordId" type="String" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="show" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <div class="slds-theme_default ">
+        <c:tableForLabOrder rId='{!v.crecordId}' oncloseclicked='{!c.handleNewButtonClose}' />
+    </div>
+</aura:component>

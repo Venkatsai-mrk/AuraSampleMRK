@@ -1,0 +1,22 @@
+.THIS .button .slds-button{
+    background-color: #493266;
+    color: #fff;
+    /* padding: 5px 10px; */
+    /* margin: 5px 10px; 
+    float:right;
+    font-weight: 600;*/
+    font-size: 14px;
+    border: 1px solid #493266;
+  font-family: Salesforce Sans, Arial, sans-serif;
+}
+.THIS .button {
+    float: left;
+     width: calc(100% - 40px);
+}
+.THIS .button .disabled-button {
+    background-color: var(--slds-g-color-neutral-base-80, var(--lwc-brandDisabled,rgb(201, 199, 197)));
+    border-color: var(--slds-g-color-neutral-base-80, var(--lwc-brandDisabled,rgb(201, 199, 197)));
+    color: var(--slds-g-color-neutral-base-100, var(--lwc-colorTextButtonBrandDisabled,rgb(255, 255, 255)));
+    font-size: 14px;
+  font-family: Salesforce Sans, Arial, sans-serif;
+}

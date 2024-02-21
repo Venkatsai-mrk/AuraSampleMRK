@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adding_Discount_Allocating_Discount__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>We should be able to select whether Adding Discount and Allocating Discount radio button should be visible to the user on Private Payment.</description>
+    <externalId>false</externalId>
+    <label>Adding Discount/Allocating Discount</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

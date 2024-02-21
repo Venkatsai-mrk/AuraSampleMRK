@@ -1,0 +1,158 @@
+<aura:component controller="MARStatementController" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="fromDate" type="String"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:attribute name="toDate" type="String"/>
+    <aura:attribute name="secondvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="thirdvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="fourthvalidation" type="Boolean" default="false"/>
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="allDataCopy" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="searchKeyword" type="String" default=""/> 
+    
+    
+    <div>
+        <div class="slds-col slds-size_12-of-12 slds slds-grid">
+            
+            <div class="slds-col slds-size_6-of-12 ">
+                <c:PatientCard_MAR recordId="{!v.recordId}"></c:PatientCard_MAR>
+                <!-- FOR PATIENT INFORMATION -->
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-text-align_right background-class" >
+                
+                <lightning:input value="{!v.searchKeyword}"
+                                 placeholder="Search The List.."
+                                 aura:id="searchField"
+                                 onchange="{!c.Search}"
+                                 class="searchfield"/>
+                <!--<lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" />-->
+                &nbsp;&nbsp;
+            </div>
+        </div>
+        <div class ="mgList mglist123">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_2-of-3">
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-grid">
+            <div class="slds-col slds-size_2-of-12 slds-p-around_medium">
+                <lightning:input type="Date" name="From" label="From" value="{!v.fromDate}"/>
+                <aura:if isTrue="{!v.secondvalidation}">
+                    <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                </aura:if>
+                <aura:if isTrue="{!v.fourthvalidation}">
+                    <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                </aura:if>
+            </div>
+            
+            <div class="slds-col slds-size_2-of-12 slds-p-around_medium">
+                <lightning:input type="Date" name="To" label="To" value="{!v.toDate}"/>
+                <aura:if isTrue="{!v.firstvalidation}">
+                    <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                </aura:if>
+                <aura:if isTrue="{!v.thirdvalidation}">
+                    <lightning:formattedText class="slds-text-color_error" value="Invalid Date"/>
+                </aura:if>
+            </div>       
+            
+            <div class="slds-col slds-size_2-of-12 slds-p-around_medium apply-btn_p">
+                <lightning:button variant="brand" label="Apply" title="Apply" onclick="{! c.fetchData }" />
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium">
+            </div>              
+        </div>   
+    </div>
+    <lightning:card title="Medications Summary">
+        <lightning:layout multipleRows="true" horizontalAlign="center">
+            <lightning:layoutItem padding="around-small" size="12">
+                <!-- table data-->
+                <table class="slds-table slds-table_cell-buffer  table-body-row table_custom">
+                    <thead>
+                        <tr class="slds-line-height_reset " >
+                            <th scope="col">Status&nbsp;</th>
+                            <th scope="col">Medication Name &nbsp;</th>
+                            <th scope="col">Strength / Route&nbsp;</th>
+                            <th scope="col">Date&nbsp;</th>
+                            <th scope="col">Time Taken&nbsp;</th>
+                            <th scope="col">Type&nbsp;</th>
+                            <th scope="col">Comments&nbsp;</th>
+                            <th scope="col">Administered By&nbsp;</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.allData}" var="sample" indexVar="idx1">
+                            <tr class="slds-hint-parent">
+                                <!-- for radio buttons-->
+                                <td scope="row" >
+                                    <div class="slds-truncate" >
+                                        <!--<aura:if isTrue="{!sample.ElixirSuite__Was_Missed__c == false}">
+                                            <aura:if isTrue="{!sample.ElixirSuite__Status__c == true}">
+                                                Taken
+                                            </aura:if>
+                                            <aura:if isTrue="{!sample.ElixirSuite__Status__c == false}">
+                                                Not Taken
+                                            </aura:if>
+                                        </aura:if>
+                                        <aura:if isTrue="{!sample.ElixirSuite__Was_Missed__c == true}">
+                                            Missed
+                                        </aura:if>-->
+                                        {!sample.ElixirSuite__Administration_Status__c} 
+                                    </div>
+                                </td>   
+                                <td scope="row">
+                                    <div class="slds-truncate"> {!sample.ElixirSuite__Drug_Name__c}
+                                    </div>
+                                </td>
+                                <td scope="row">
+                                    <div class="slds-truncate"> {!sample.ElixirSuite__Medication_Quantity__c}
+                                    </div>
+                                </td>
+                                <td scope="row">
+                                    <!--   <div class="slds-truncate" aura:id="searchField">{!sample.HealthCloudGA__WhenGiven__c} <br/><div class="changecolorind"> {!sample.Warning}</div></div></td>-->
+                                    <div class="slds-truncate">
+                                        <lightning:formattedDateTime aura:id="dt"
+                                                                     value="{!sample.ElixirSuite__Dosage_Time__c}"
+                                                                     month="short"
+                                                                     day="numeric"
+                                                                     year="numeric"
+                                                                     />
+                                    </div></td>
+                                <td scope="row">
+                                    <!--   <div class="slds-truncate" aura:id="searchField">{!sample.HealthCloudGA__WhenGiven__c} <br/><div class="changecolorind"> {!sample.Warning}</div></div></td>-->
+                                    <div class="slds-truncate">
+                                        <lightning:formattedDateTime aura:id="dt"
+                                                                     value="{!sample.ElixirSuite__Dosage_Time__c}"
+                                                                     hour="2-digit"
+                                                                     minute="2-digit"
+                                                                     hour12="true"
+                                                                     timeZone="{!$Locale.timezone}"/>
+                                    </div></td>
+                                <td scope="row">
+                                    <div class="slds-truncate slds-text-align_center">{!sample.ElixirSuite__Medication_Name__c}</div>
+                                </td>
+                                <td scope="row">
+                                    <div class="slds-truncate">
+                                        {!sample.ElixirSuite__Reasons__c}
+                                    </div>
+                                </td>
+                                <td scope="row">
+                                    <div class="slds-truncate slds-text-align_center">
+                                        {!sample.ElixirSuite__Administered_By__c}  
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </aura:iteration>
+                        
+                    </tbody>
+                </table>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+    </lightning:card>                             
+    
+</aura:component>

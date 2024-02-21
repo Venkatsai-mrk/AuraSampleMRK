@@ -1,0 +1,37 @@
+<aura:component controller="VisitSummaryTemplateApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="emailSettingName" type="String"/>
+    <aura:attribute name="selectedValues" type="String[]" />
+    <aura:attribute name="picklistOptions" type="List" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="visitSummaryEnabled" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container">
+                <lightning:spinner variant="brand" size="large" />
+            </div>
+        </aura:if>
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Visit Summary Settings</b></h2><br/>        
+        
+        <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+            <div class="slds-col slds-size_6-of-12">
+                <lightning:input type="checkbox" label="Enable Visit Summary" variant="label-inline" checked="{!v.visitSummaryEnabled}" />
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+            <div class="slds-col slds-size_6-of-12">
+                <lightning:checkboxGroup
+                    aura:id="checkboxGroup"
+                    label="Select Visit Summary Sections"
+                    options="{!v.picklistOptions}"
+                    value="{!v.selectedValues}"
+                    onchange="{!c.handleCheckboxChange}"
+                />               
+            </div>
+        </div>
+        <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}" class="slds-m-top_medium"/>
+    </div>
+</aura:component>

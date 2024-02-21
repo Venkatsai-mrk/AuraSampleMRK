@@ -1,0 +1,74 @@
+<aura:component controller= "BillingSearchGlobalHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    <aura:attribute name="fieldName" type="String" default="Name"/> 
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/> 
+    <aura:attribute name="codeCategory" type="String"/>
+    <aura:attribute name="modfierInstance" type="Object"/>
+    <aura:attribute name="MapOfIdAndSObj" type="Object"/>
+    <aura:attribute name="searchRecords" type="List"/>
+    <aura:attribute name="recordDetail" type="String"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>  
+    <aura:attribute name="EmpList" type="Boolean" default="false"/>
+    <aura:attribute name="required" type="Boolean" default="false"/>
+    <aura:attribute name="ICDSearchParam" type="String" default=""/> 
+    <aura:attribute name="currentVersion" type="String" default=""/>
+    <aura:attribute name="iconName" type="String" default="custom:custom47"/>  
+    <aura:attribute name="LoadingText" type="Boolean" default="false"/>
+    <aura:registerEvent name="FiringSelectedId" type="c:FiringSelectedId"/>
+    <div class="slds-grid">
+        <div class="slds-col slds-size--12-of-12 slds-p-left_none slds-p-right_none">
+            
+            <!--<button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon iconheight" onclick="{!c.resetData}"></button>-->
+            <div class="e-employer slds-is-relative">
+                <lightning:input disabled = "{!v.AllFlag}" placeholder="Type.." aura:id="userinput" name="searchText" autocomplete="off"
+                                 onchange="{!c.searchField}" value="{!v.selectRecordName}" onblur="{!c.blurEvent}" />
+                  <aura:if isTrue="{!!v.AllFlag}">
+                <aura:if isTrue="{!empty(v.selectRecordName)}">
+                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right iconheight slds-is-absolute">
+                        <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default slds-search" iconName="utility:search" size="x-small" alternativeText="icon" />
+                    </span> 
+                    <aura:set attribute="else">
+                        <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon iconheight slds-is-absolute" onclick="{!c.resetData}">
+                            <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default slds-close" iconName="utility:clear" size="x-small" alternativeText="icon" />
+                            <span class="slds-assistive-text">Clear</span></button>
+                    </aura:set>
+                </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.EmpList}">
+                    <div class="slds-grid cp-drpdown">
+                        <div class="slds-col slds-size--12-of-12 slds-p-left_small ">
+                            <div aura:id="listbox-id-1" class="pr slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid trigger_click slds-is-open" role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical bg-white" role="presentation" aura:id="resultsDiv">
+                                    <aura:iteration items="{!v.searchRecords}" var="serecord" indexVar="hdtv">
+                                        <li role="presentation" class="slds-listbox__item">
+                                            <div id="{!serecord.Id}" data-name="{!serecord.Name}" onclick="{!c.setSelectedRecord}" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                <span class="slds-media__figure">
+                                                    <span class="slds-icon_container slds-icon-standard-account">
+                                                        <!--lightning:icon iconName="{!v.iconName}" class="slds-icon slds-icon slds-icon_small slds-icon-text-default" size="x-small"/-->
+                                                    </span>
+                                                </span>
+                                                <span class="slds-media__body"> 
+                                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!serecord.Name}</span>
+                                                    <!-- <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!v.objectName} • {!serecord.Name}</span>-->
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </aura:iteration>
+                                    <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
+                                        Selection is not found.
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.LoadingText}">
+                                        Loading...
+                                    </aura:if>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>            
+        </div>
+    </div>
+    
+</aura:component>

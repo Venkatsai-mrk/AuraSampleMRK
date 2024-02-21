@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QUAL_For_Date_current_illness_injury__c</fullName>
+    <description> Associated with the date qualifiers used in Box 14 (Date of Current Illness, Injury, or Pregnancy) on the CMS-1500 form.  </description>
+    <externalId>false</externalId>
+    <label>QUAL For : Date/current illness/injury</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>431</fullName>
+                <default>false</default>
+                <label>431</label>
+            </value>
+            <value>
+                <fullName>484</fullName>
+                <default>false</default>
+                <label>484</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

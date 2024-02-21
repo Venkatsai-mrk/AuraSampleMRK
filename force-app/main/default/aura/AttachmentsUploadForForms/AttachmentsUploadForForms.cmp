@@ -1,0 +1,72 @@
+<aura:component controller="AttachmentsUploadForFormsApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    <aura:attribute name="AllFlag" type="Boolean"/>   
+    <aura:attribute name="files" type="ContentDocument[]"/>  
+    <aura:attribute name="recordId" type="string"/>  
+    <aura:attribute name="pathWay" type="string"/>  
+     <aura:attribute name="currentlyUploadedDocumetIDs" type="list"/> 
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.pdf','.csv','.xlsx']"/>  
+    <aura:attribute name="multiple" type="Boolean" default="true"/>      
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <div class="slds">  
+        <lightning:notificationsLibrary aura:id="notifLib"/>
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+        <div class="contentbox">  
+            <div class="slds-page-header header">
+                <div class="slds-grid slds-gutters" >
+                    
+                    <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                        Files
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 update-buttons">
+                        <lightning:fileUpload label="" multiple="{!v.multiple}"   
+                                              accept="{!v.accept}" recordId="{!v.recordId}"   
+                                              onuploadfinished="{!c.UploadFinished}" disabled="{!v.AllFlag}" class="slds-float--right" />
+                    </div>
+                    
+                </div>   
+            </div>
+            
+            
+            <div class="slds-form--compound">
+                 <aura:if isTrue="{!not(empty(v.files))}">
+                <table class="slds-table slds-table--bordered">  
+                    <thead>  
+                        <tr>  
+                            <th>FileType</th>
+                            <th>Title</th>   
+                            <th></th>                    
+                        </tr>  
+                    </thead>  
+                    <tbody>
+                       
+                            <aura:iteration items="{!v.files}" var="f">  
+                                <tr>  
+                                    <!--<td><a href="javascript:void(0)" id="{!f.Id}" onclick="{!c.delFiles}">Delete</a></td>-->
+                                    <td>{!f.FileType}</td>     
+                                    
+                                    <td> <lightning:button name="{!f.Id}" variant="base" label="{!f.Title}"  onclick="{!c.previewFile}"/> </td>
+                                    <td> <lightning:button name="{!f.Id}" variant="base" label="Delete"  onclick="{!c.delFiles}"  disabled="{!v.AllFlag}"/>  </td>
+                                    <!-- <td><a href="" id="{!f.Id}" onclick="{!c.previewFile}">{!f.Title}</a></td>-->  
+                                    
+                                </tr>  
+                            </aura:iteration>  
+                            
+                    </tbody>  
+                </table>  
+                     <aura:set attribute="else">
+                                <h3><center>NO ATTACHMENT PRESENT YET! </center></h3>
+                            </aura:set>
+                        </aura:if>
+                <aura:if isTrue="{!v.Spinner}">
+                    <div class="slds-spinner_container">
+                        <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </div>  
+    </div>  
+</aura:component>

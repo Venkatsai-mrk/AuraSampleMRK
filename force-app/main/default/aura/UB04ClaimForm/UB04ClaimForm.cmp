@@ -1,0 +1,911 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="UB04ClaimFormController" access="global" >
+    
+    <aura:attribute name="selectedVOBList" type="list" />
+    <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="isActive" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="OpenPopUp" type="Boolean" default="true"/>
+    <aura:attribute name="patId" type="Id"/>
+    <aura:attribute name="jsonList" type="List"/>  
+   
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="revenueData" type="list" default="[]"/>
+    <aura:attribute name="popupData" type="Object"/>
+    <aura:attribute name="birthSexOptions" type="List" default="[
+                                                                {'label': 'Male', 'value': 'M'},                                                     
+                                                                {'label': 'Female', 'value': 'F'},
+                                                                {'label': 'Unknown', 'value': 'UN'}
+                                                                ]"/>
+    <aura:attribute name="selectedBirthSex" type="String" default=""/>
+    <aura:registerEvent name="cancelEvent" type="c:closePopUp"/>
+    
+    <aura:if isTrue="{!v.isActive}">
+        <div aura:id="exampleModal" class="slds-align_absolute-center">
+            <div class="slds-m-around_xx-large">
+                <div  role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+                    <div class="slds-modal__container">                        
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.cancelButton}">
+                                <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            
+                            <div class="slds-grid slds-wrap res_goal-form">
+                                <div class="slds-size_12-of-12">
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-font_Arial,sans-serif colPayHeader"  style="text-transform:uppercase"><b>{!v.heading}</b></h2>                            
+                                </div>
+                            </div> 
+                        </header>
+                        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                        
+                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+                            <div class="cms_box slds-p-around_small slds-m-bottom_small">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small h-91">1. PROVIDER NAME AND ADDRESS <span class="mendate-field">*</span>
+                                        <lightning:input type="text" value="" required="true" placeholder="NAME" aura:id="globalReqCheck"/>
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" aura:id="globalReqCheck" required="true" placeholder="ADDRESS"/>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="true" placeholder="City" aura:id="globalReqCheck" />  
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="true" placeholder="State" aura:id="globalReqCheck"/>  
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="true" placeholder="Zipcode" aura:id="globalReqCheck"/>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small h-91">2. PAY-TO NAME AND ADDRESS
+                                        <lightning:input type="text" value="" required="" placeholder="NAME"/>
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="ADDRESS"/>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="" placeholder="City" />  
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="" placeholder="State" />  
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_xxx-small">
+                                                <lightning:input type="text" value="" required="" placeholder="Zipcode" />  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_9-of-12 slds-m-bottom_small">
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        3a. PATIENT CONTROL NUMBER <span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="" required="true" aura:id="globalReqCheck"/>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        3b. MEDICAL RECORD NUMBER
+                                                        <lightning:input type="text" value="{!v.popupData.patientMRN}" required="false"/>    	
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                                4. TYPE OF BILL<span class="mendate-field">*</span>
+                                                <lightning:input type="text" value="" required="true" aura:id="globalReqCheck"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-m-bottom_small">
+                                                5. FEDERAL TAX ID NUMBER<span class="mendate-field">*</span>
+                                                <lightning:input type="text" value="" required="true" aura:id="globalReqCheck"/>
+                                            </div>
+                                            <div class="slds-col slds-size_5-of-12 slds-m-bottom_small">
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        6. STATEMENT COVERS PERIOD<span class="mendate-field">*</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_6-of-12 pr-5">
+                                                        <lightning:input type="date" value="" required="true" placeholder="FROM" label="" aura:id="globalReqCheck"/>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12 pl-5">
+                                                        <lightning:input type="date" value="" required="true" placeholder="THROUGH" label="" aura:id="globalReqCheck"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                                7. FUTURE USE
+                                                <lightning:input type="text" value="" required="false"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-12 slds-m-bottom_small">8a. PATIENT ID
+                                        <lightning:input type="text" value="" required=""/>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-bottom_small">8b. PATIENT FIRST NAME<span class="mendate-field">*</span>
+                                        <lightning:input type="text" value="{!v.popupData.patientFirstName}" required="true" aura:id="globalReqCheck"/>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-bottom_small">8b. PATIENT LAST NAME<span class="mendate-field">*</span>
+                                        <lightning:input type="text" value="{!v.popupData.patientLastName}" required="true" aura:id="globalReqCheck"/>
+                                    </div>
+                                    <div class="slds-col slds-size_7-of-12 slds-m-bottom_small">
+                                        9a-e. PATIENT ADDRESS<span class="mendate-field">*</span>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 pr-5">
+                                                <lightning:input type="text" value="{!v.popupData.patientAddress}" required="true" placeholder="Address" aura:id="globalReqCheck"/> 
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-12 pl-5 pr-5">
+                                                <lightning:input type="text" value="{!v.popupData.patientCity}" required="true" placeholder="City" aura:id="globalReqCheck"/> 
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-12 pl-5 pr-0">
+                                                <lightning:input type="text" value="{!v.popupData.patientState}" required="true" placeholder="State" aura:id="globalReqCheck"/> 
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-12 pl-5 pr-0">
+                                                <lightning:input type="text" value="{!v.popupData.patientCountryCode}" required="true" placeholder="Country Code" aura:id="globalReqCheck"/> 
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-12">
+                                                <lightning:input type="text" value="{!v.popupData.patientZipcode}" required="true" placeholder="Zipcode" aura:id="globalReqCheck"/> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_2-of-12 slds-m-bottom_small">10. PATIENT BIRTHDATE<span class="mendate-field">*</span>
+                                        <lightning:input type="date" value="{!v.popupData.patientDOB}" required="true" aura:id="globalReqCheck"/>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small gender">11. PATIENT SEX<span class="mendate-field">*</span> 
+                                        <lightning:radioGroup name="radioGroup"
+                                                              options="{! v.birthSexOptions }"
+                                                              value="{! v.selectedBirthSex }"
+                                                              type="radio"
+                                                              required="true"/>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12">12. ADMISSION</div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_7-of-12 pr-5">
+                                                <lightning:input type="date" value=""  placeholder="DATE" label=""/>
+                                            </div>
+                                            <div class="slds-col slds-size_5-of-12 pl-5">
+                                                <lightning:input type="time" value="" placeholder="HOUR" label=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12 slds-m-bottom_small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">ADMISSION TYPE<span class="mendate-field">*</span>
+                                                <lightning:input type="text" value="" label=""  required="true" aura:id="globalReqCheck"/>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">ADMISSION SOURCE<span class="mendate-field">*</span>
+                                                <lightning:input type="text" value="" label=""  required="true" aura:id="globalReqCheck"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_2-of-12 slds-m-bottom_small">16. DISCHARGE HOUR
+                                        <lightning:input type="time" value="" required="false"/>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">17. PATIENT DISCHARGE STATUS<span class="mendate-field">*</span> 
+                                        <lightning:input type="text" value="" required="true" aura:id="globalReqCheck"/>
+                                    </div>
+                                    <div class="slds-col slds-size_7-of-12 slds-m-bottom_small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12">
+                                                <b>CONDITION CODES</b>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-12 pr-5">
+                                                <lightning:input type="text" placeholder="18" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="19" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="20" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="21" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="22" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="23" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="24" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="25" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="26" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="27" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pl-5">
+                                                <lightning:input type="text" placeholder="28" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small pt-15">29. ACCIDENT STATE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small pt-15">30. FUTURE USE
+                                        <lightning:input type="text" value="" required=""/>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_xx-small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12 pl-5">
+                                                <b>OCCURRENCE CODES AND DATES</b>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-m-bottom_small">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                                    <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    31. CODE
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    OCCURRENCE DATE 
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    32. CODE
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    OCCURRENCE DATE
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    33. CODE 
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    OCCURRENCE DATE
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    34. CODE 
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    OCCURRENCE DATE
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_xx-small">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12" >
+                                                <b>OCCURRENCE SPAN CODES AND DATES</b>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-m-bottom_xxx-small">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_12-of-12 slds-m-bottom_xxx-small">
+                                                    <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    35. CODE
+                                                                </td>
+                                                                <td>
+                                                                    FROM DATE 
+                                                                </td>
+                                                                <td>
+                                                                    THROUGH DATE
+                                                                </td>
+                                                                <td>
+                                                                    36. CODE
+                                                                </td>
+                                                                <td>
+                                                                    FROM DATE 
+                                                                </td>
+                                                                <td>
+                                                                    THROUGH DATE
+                                                                </td>
+                                                                <td>
+                                                                    37. FUTURE USE
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="text" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="A" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="text" value="" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="text" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="B" />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="date" value="" placeholder="B" />
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12 slds-m-bottom_small slds-m-top_large">38. RESPONSIBLE PARTY NAME AND ADDRESS  
+                                        <lightning:input type="text" value="" required="" placeholder="NAME"/>
+                                        <div class="slds-m-top_xx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="ADDRESS"/>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 slds-m-top_xx-small">
+                                                <lightning:input type="text" value="" required="" placeholder="City" />  
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-m-top_xx-small">
+                                                <lightning:input type="text" value="" required="" placeholder="State" />  
+                                            </div>
+                                        </div>
+                                        <div class=" slds-size_6-of-12 slds-m-top_xx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="Zipcode" />  
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 slds-m-bottom_small">
+                                        VALUE CODES AND AMOUNTS
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                                <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                39. CODE
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                            <td>
+                                                                VALUE CODES AMOUNT 
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                            <td>
+                                                                40. CODE
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                            <td>
+                                                                VALUE CODES AMOUNT 
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                            <td>
+                                                                41. CODE
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                            <td>
+                                                                VALUE CODES AMOUNT 
+                                                                <lightning:input type="text" value="" placeholder="A" />
+                                                                <lightning:input type="text" value="" placeholder="B" />
+                                                                <lightning:input type="text" value="" placeholder="C" />
+                                                                <lightning:input type="text" value="" placeholder="D" />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cms_box slds-p-left_small slds-p-right_small slds-m-bottom_small">
+                                <div class="slds-grid slds-gutters">
+                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer patient-table" > 
+                                        <thead>
+                                            <tr class="slds-text-title_caps">
+                                                <th scope="col">
+                                                    <div class="">S.No</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">42. REVENUE CODE<span class="mendate-field">*</span></div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">43. REVENUE CODE DESCRIPTION<span class="mendate-field">*</span></div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">44. HCPCS RATES/HIPPS CODE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">45. SERVICE DATE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">46. UNITS OF SERVICE<span class="mendate-field">*</span></div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">47. TOTAL CHARGES(BY REVENUE CODE)<span class="mendate-field">*</span></div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">48. NON-COVERED CHARGES</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="">49. FUTURE USE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <aura:if isTrue="{!lessthanorequal(v.revenueData.length,21)}">
+                                                        <a onclick="{!c.addRevenueDataRow}" data-value="{!revenueRowIndex}">
+                                                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="x-small" alternativeText="add" />
+                                                            <span class="slds-assistive-text">Add Icon</span>
+                                                        </a>
+                                                    </aura:if>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            <aura:iteration items="{!v.revenueData}" var="revenueInstance" indexVar="revenueRowIndex">   
+                                                <tr class="slds-text-title">
+                                                    <td>{!revenueRowIndex+1}</td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" required="true" value="{!revenueInstance.revenueCode}" placeholder="" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" required="true" value="{!revenueInstance.revenueCodeDescription}"  placeholder="" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" value="{!revenueInstance.HCPCSRates}"  placeholder=""/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" value="{!revenueInstance.serviceDate}" placeholder=""/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" required="true" value="{!revenueInstance.serviceUnits}"  placeholder="" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" required="true" value="{!revenueInstance.totalCharge}" placeholder="" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" value="{!revenueInstance.nonCoveredCharges}"  placeholder=""/>
+                                                    </td>
+                                                    <td>
+                                                        <lightning:input type="text" name="" disabled="false" value="{!revenueInstance.futureUse}"  placeholder=""/>
+                                                    </td>
+                                                    <td>
+                                                        <a onclick="{!c.callRemoveThisRow}" data-value="{!revenueRowIndex}">
+                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="x-small"
+                                                                            alternativeText="icon" />
+                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="cms_box slds-p-around_small slds-m-bottom_small">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                        <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        50. PAYER NAME<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="{!v.popupData.primaryPayerName}" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="{!v.popupData.secondaryPayerName}" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="{!v.popupData.tertiaryPayerName}" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        51. HEALTH PLAN ID 
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        52. RELEASE OF INFORMATION CERTIFICATION<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        53. ASSIGNMENT OF BENEFIT CERTIFICATION<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        54. PRIOR PAYMENTS
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        55. ESTIMATED AMOUNT DUE<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">56. NPI<span class="mendate-field">*</span>
+                                        <lightning:input type="text" value="" required="true" aura:id="globalReqCheck"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                        <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        57. OTHER PROVIDER IDS
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        58. INSURED'S NAME<span class="mendate-field">*</span> 
+                                                        <lightning:input type="text" value="{!v.popupData.primaryInsuredName}" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="{!v.popupData.secondaryInsuredName}" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="{!v.popupData.tertiaryInsuredName}" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        59. PATIENT'S RELATION TO THE INSURED<span class="mendate-field">*</span> 
+                                                        <lightning:input type="text" value="" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        60. INSURED'S UNIQUE ID<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" value="" required="true" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        61. INSURED'S GROUP NAME
+                                                        <lightning:input type="text" value="{!v.popupData.primaryGroupName}" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="{!v.popupData.secondaryGroupName}" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="{!v.popupData.tertiaryGroupName}" required="" placeholder="C" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                        <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        62. INSURED'S GROUP NUMBER
+                                                        <lightning:input type="text" value="{!v.popupData.primaryGroupNumber}" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="{!v.popupData.secondaryGroupNumber}" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="{!v.popupData.tertiaryGroupNumber}" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        63. TREATMENT AUTHORIZATION CODES
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        64. DOCUMENT CONTROL NUMBER 
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                    <td>
+                                                        65. EMPLOYER NAME
+                                                        <lightning:input type="text" value="" required="" placeholder="A" />
+                                                        <lightning:input type="text" value="" required="" placeholder="B" />
+                                                        <lightning:input type="text" value="" required="" placeholder="C" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12 slds-m-bottom_small">66. DIAGNOSIS/PROCEDURE CODE QUALIFIER
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 slds-m-bottom_small">67. PRINCIPAL DIAGNOSIS CODE/OTHER DIAGNOSIS CODES<span class="mendate-field">*</span>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-12 pr-5">
+                                                <lightning:input type="text" required="true" placeholder="A" aura:id="globalReqCheck"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="B" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="C" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="D" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="E" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="F" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="G" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="H" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="I" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pr-5 pl-5">
+                                                <lightning:input type="text" placeholder="J" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pl-5">
+                                                <lightning:input type="text" placeholder="K" />
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-12 pl-5">
+                                                <lightning:input type="text" placeholder="L" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">68. FUTURE USE
+                                        <lightning:input type="text" value="" required=""/>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">69. ADMITTING DIAGNOSIS CODE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>  
+                                </div>
+                                <div class="slds-grid slds-gutters">                                    
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">70. PATIENT’S REASON FOR VISIT CODE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-bottom_small">71. PPS CODE
+                                        <lightning:input type="text" value="" required=""/>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12 slds-m-bottom_small">72. EXTERNAL CAUSE OF INJURY CODE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-bottom_small">73. FUTURE USE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                        <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                            <tbody>
+                                                <tr>
+                                                    <td>74. PRINCIPAL PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>PRINCIPAL PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>a. OTHER PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>OTHER PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>b. OTHER PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>OTHER PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>c. OTHER PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>OTHER PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>d. OTHER PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>OTHER PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>e. OTHER PROCEDURE CODE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>OTHER PROCEDURE DATE 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">75. FUTURE USE
+                                        <lightning:input type="text" value="" required="false"/>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small">
+                                        <table class="slds-table slds-table_cell-buffer patient-table1" >
+                                            <tbody>
+                                                <tr>
+                                                    <td>76a. ATTENDING PROVIDER NPI<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" label="" required="true" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>b. ATTENDING PROVIDER QUALIFYING ID <span class="mendate-field">*</span>
+                                                        <lightning:input type="text" label="" required="true" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>c. ATTENDING PROVIDER LAST NAME<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" label="" required="true" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                    <td>d. ATTENDING PROVIDER FIRST NAME<span class="mendate-field">*</span>
+                                                        <lightning:input type="text" label="" required="true" aura:id="globalReqCheck"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>77a. OPERATING PHYSICIAN NPI 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>b. OPERATING PHYSICIAN QUALIFYING ID  
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>c. OPERATING PHYSICIAN LAST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>d. OPERATING PHYSICIAN FIRST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>78a. OTHER PROVIDER NPI 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>b. OTHER PROVIDER QUALIFYING ID  
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>c. OTHER PROVIDER LAST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>d. OTHER PROVIDER FIRST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>79a. OTHER PROVIDER NPI 
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>b. OTHER PROVIDER QUALIFYING ID  
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>c. OTHER PROVIDER LAST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                    <td>d. OTHER PROVIDER FIRST NAME
+                                                        <lightning:input type="text" label=""/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small h-130">80. REMARKS
+                                        <lightning:textarea type="text" value="" required=""/>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">81. CODE-CODE FIELD/QUALIFIERS
+                                        <!--lightning:input type="text" value="" required="true"/-->
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="a"/>
+                                        </div>
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="b"/>
+                                        </div>
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="c"/>
+                                        </div>
+                                        <div class="slds-m-top_xxx-small">
+                                            <lightning:input type="text" value="" required="" placeholder="d"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Second section starts-->
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <div class="button" align ="right">
+                                <lightning:button class="btn1 btn2 colPayHeader1" variant ="neutral" label ="Cancel" onclick = "{!c.cancelButton}"/>                                
+                                <lightning:button class="btn1 colPayHeader1" variant="brand" label="Save" type="submit" onclick = "{!c.save}" />
+                            </div>
+                        </footer>
+                        
+                    </div></div>
+            </div>
+            
+        </div>
+        
+    </aura:if>
+</aura:component>

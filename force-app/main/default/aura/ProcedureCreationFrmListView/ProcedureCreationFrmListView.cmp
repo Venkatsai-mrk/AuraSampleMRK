@@ -1,0 +1,161 @@
+<aura:component  implements="lightning:availableForFlowScreens,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,lightning:actionOverride,lightning:hasPageReference,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="ProcedureDisplayController" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:attribute name="accId" type="String"/>
+    <aura:attribute name="hide" type="Boolean" default="false"/> 
+    <aura:attribute name="hideBill" type="Boolean" default="true"/> 
+    <aura:attribute name="hideBilled" type="Boolean" default="true"/> 
+    <aura:attribute name="accountId" type="String" default=""/>
+    <aura:attribute name="recTypeId" type="String" default=""/> 
+    <aura:attribute name="Procedures" type="List" />
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+    
+    <aura:handler name="SearchBarToNotes" event="c:SearchBarToNotes" action="{!c.handleComponentEvent}"/>
+    
+    <header class="slds-modal__header headerCSS">
+        <lightning:buttonIcon iconName="utility:close" onclick="{!c.Cancel}" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>CREATE PROCEDURE</b></h2>
+    </header>
+    <div class="slds-box parentCSS">
+        <lightning:recordEditForm objectApiName="ElixirSuite__Procedure__c" recordTypeId = "{!v.recTypeId}" aura:id="accForm"  
+                                  onsubmit="{!c.handleSubmit}" onload="{!c.doInit}" onsuccess="{!c.handleSuccess}"  >
+            <div class="slds-col slds-size_12-of-12 slds-m-bottom_x-small slds-m-top_x-small slds-m-left_x-small searchbarCSS"  
+                 >
+                <div class="slds-grid slds-gutters LabTestsnew ">
+                    <div class="slds-grid slds-gutters defaultBackground4">
+                        <div class="slds-col slds-size_6-of-12">        
+                            <!--<lightning:input type="text" name="searchKey" label="Search" aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Smart Search" disabled="{!v.hide}"/>-->
+                            <c:SearchBarForProcedure />
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">Template Procedure Name
+                                <lightning:input type="text" value="{!v.Procedures[0].Name}" />
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-m-bottom_small">CPT Code
+                                <lightning:input type="text" value="{!v.Procedures[0].ElixirSuite__CPT_HCPCS_Code__c}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                
+                <lightning:messages />
+                
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground ">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="Name" disabled="{!v.hide}" value="{!v.Procedures[0].Name}" aura:id="pName" class="slds-form-element_stacked requiredField" required="true"/>
+                        </div>
+                        
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__CPT_HCPCS_Code__c" disabled="{!v.hide}" value="{!v.Procedures[0].ElixirSuite__CPT_HCPCS_Code__c}" aura:id="cptCode" required="true"/>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Account__c" disabled="{!v.hide}" value="{!v.accountId}" required="true"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__ICD_Codes__c" disabled="{!v.hide}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Start_Time__c" disabled="{!v.hide}" required="true"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__End_Time__c" disabled="{!v.hide}" required="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__From_Date__c" disabled="{!v.hide}" required="true"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__To_Date__c" disabled="{!v.hide}" required="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__modifier_1__c" disabled="{!v.hide}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__modifier_2__c" disabled="{!v.hide}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__modifier_3__c" disabled="{!v.hide}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__modifier_4__c" disabled="{!v.hide}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Ready_for_Claim_Processing__c" disabled="{!v.hide}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Ready_for_Billing__c" disabled="{!v.hideBill}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Claim_Generation__c" disabled="{!v.hide}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Is_Patient_Procedure__c" />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters LabTests ">
+                    <div class="slds-grid slds-gutters defaultBackground">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Is_Billable__c" disabled="{!v.hide}" aura:id="isBillable" onchange="{!c.disableBillFields}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:inputField fieldName="ElixirSuite__Is_Billed__c" disabled="{!v.hideBilled}" aura:id="isBilld" onchange="{!c.disableFields}"/>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </lightning:recordEditForm>
+        <lightning:navigation aura:id="navService"/>
+        
+        <div class=" LabTests ">
+            <div class="slds-grid slds-gutters defaultBackground2">
+                <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                    <lightning:button class="slds-m-top_small" variant="brand" type="button" name="Save" label="Save" onclick="{!c.handleCreateProcedure}"/>
+                    <lightning:button class="slds-m-top_small" variant="Neutral" type="button" name="Cancel" label="Cancel" onclick="{!c.Cancel}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

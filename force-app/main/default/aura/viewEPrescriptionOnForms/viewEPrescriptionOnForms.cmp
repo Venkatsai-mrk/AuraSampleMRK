@@ -1,0 +1,50 @@
+<aura:component controller="EditPrescriptionController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+
+<aura:attribute name="data" type="List" />
+<aura:attribute name="ePrescData" type="List" />
+<aura:attribute name="patientID" type="String" default=""/>
+<aura:attribute name="columns" type="List" />
+<aura:attribute name="checkTableSize" type="boolean" default="false"/>
+<aura:attribute name="checkTableSizeZero" type="boolean" default="false"/>
+
+<aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+<aura:if  isTrue="{!v.checkTableSizeZero}">
+    <h1>No Prescription found</h1>
+    <aura:set attribute="else">
+        <h1 class="slds-page-header__title">Prescription List</h1>
+        <br/>
+<aura:if  isTrue="{!v.checkTableSize}">
+   <div class="scrollHeight">
+     <!--div aura:id="datatable" class="slds-col changeHeight" --> 
+        <lightning:datatable
+                             keyField="id"
+                             columns="{!v.columns}"
+                             data="{!v.data}"
+                             hideCheckboxColumn='true'
+                             defaultSortDirection="{!v.defaultSortDirection}"
+                             sortedDirection="{!v.sortDirection}"
+                             sortedBy="{!v.sortedBy}"
+                             onsort="{!c.handleSort}">
+        </lightning:datatable>
+    </div>
+    <aura:set attribute="else">
+        <div class="scrollHeight">
+         <!--div aura:id="datatable" class="slds-col  changeHeight" -->
+            <lightning:datatable
+                                 keyField="id"
+                                 columns="{!v.columns}"
+                                 data="{!v.data}"
+                                 hideCheckboxColumn='true'
+                                 defaultSortDirection="{!v.defaultSortDirection}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 sortedBy="{!v.sortedBy}"
+                                 onsort="{!c.handleSort}">
+            </lightning:datatable>
+        </div>
+    </aura:set>
+</aura:if> 
+</aura:set>
+</aura:if>
+
+</aura:component>

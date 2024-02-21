@@ -1,0 +1,65 @@
+<!-- Created by Avani Jain !-->
+<aura:component controller="BillingSummaryApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler value="{!this}" name="init" action="{!c.myAction}"/>
+    <aura:attribute name="opencoc" type="boolean" default="false"/>
+    <aura:attribute name="openPayschedule" type="boolean" default="false"/>
+    <aura:attribute name="openClaimHistry" type="boolean" default="false"/>
+    <aura:attribute name="openPaymentHistory" type="boolean" default="false"/>
+    <aura:attribute name="recordId1" type="String"/>
+    <aura:attribute name="recordId2" type="String"/>
+    <aura:attribute name="ehrLicense" type="boolean"/>
+    <aura:attribute name="billingLicense" type="boolean"/>
+    <aura:attribute name="contactcenterLicense" type="boolean"/>
+    
+    <lightning:card title="Billing Summary"><br/> 
+        <div class="slds-p-left_small slds-p-right_small">
+            <div class="slds-grid slds-gutters">
+                 <aura:if isTrue="{!or(v.billingLicense, v.contactcenterLicense)}">
+                <div class="slds-col slds-size_3-of-12">
+                    <span><button class="bill-btn" 
+                                  onclick="{!c.handleClickPastEstimate}">
+                        Cost Of Care 
+                        </button></span>
+                </div>
+                </aura:if>
+                <aura:if isTrue="{!or(v.billingLicense, v.contactcenterLicense)}">
+                <div class="slds-col slds-size_3-of-12">
+                    <span><button class="bill-btn" 
+                                  onclick="{!c.handleClickViewPaymentSchedule}">
+                        Payment Schedule  
+                        </button></span>
+                </div>
+                </aura:if>
+                <aura:if isTrue="{!or(and(v.billingLicense, v.contactcenterLicense), v.billingLicense)}">
+                <div class="slds-col slds-size_3-of-12">
+                    <span><button class="bill-btn" 
+                                  onclick="{!c.handleClickViewPaymentHistory}">
+                        View Payment history  
+                        </button></span>
+                </div>
+                </aura:if>
+                 <aura:if isTrue="{!or(and(v.billingLicense, v.contactcenterLicense), v.billingLicense)}">
+                <div class="slds-col slds-size_3-of-12">
+                    <span><button class="bill-btn" 
+                                  onclick="{!c.handleClickViewClaimHsry}">
+                        View Claim History  
+                        </button></span>
+                </div>
+                </aura:if>
+            </div>
+        </div> <br/>
+        <aura:if isTrue="{!v.opencoc}">  
+            <c:Past_Estimates_for_EHR patId = "{!v.recordId1}" recordId="{!v.recordId2}"></c:Past_Estimates_for_EHR> 
+        </aura:if> 
+        <aura:if isTrue="{!v.openPayschedule}"> 
+            <c:View_Payment_Schedule_for_EHR patId = "{!v.recordId1}"></c:View_Payment_Schedule_for_EHR>
+        </aura:if>
+        <aura:if isTrue="{!v.openClaimHistry}"> 
+            <c:ClaimListView_for_Ehr patId = "{!v.recordId1}"></c:ClaimListView_for_Ehr>
+        </aura:if>
+        <aura:if isTrue="{!v.openPaymentHistory}"> 
+            <c:PaymentHistory_for_ehr patId = "{!v.recordId1}"></c:PaymentHistory_for_ehr>
+        </aura:if>
+    </lightning:card>
+</aura:component>

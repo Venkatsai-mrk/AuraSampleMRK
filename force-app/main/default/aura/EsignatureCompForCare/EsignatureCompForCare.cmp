@@ -1,0 +1,31 @@
+<aura:component  implements="lightning:availableForFlowScreens,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,lightning:actionOverride,lightning:hasPageReference,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="EsignatureCls" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute type="id" name="recordId" />
+    <aura:attribute name="profileName" type="String"/>
+    <aura:attribute name="openSignaturePad" type="Boolean" /> 
+    <aura:attribute name="openCompanyLogoUpload" type="Boolean" />
+    <aura:attribute name="openSignaturePadUpdate" type="Boolean" />
+    
+    
+    <lightning:card> 
+        <div class="parentCSS">
+            <div class="parentCSS_Header slds-is-fixed">
+                <ul>
+                    <li><button class="parentCSS_1" aura:id="companyLogo"  onclick="{!c.handleCompanyLogoUpload}">Company Logo</button></li>
+                    <li><button class="parentCSS_1" aura:id="generatePin"  onclick="{!c.handleClickForOTP}">Generate Pin</button></li>
+                    <li><button class="parentCSS_1" aura:id="registerSign"  onclick="{!c.signaturePad}">Register eSignature</button></li>
+                     </ul>
+            </div>
+            <div class="parent_content">
+                <aura:if isTrue="{!v.openCompanyLogoUpload}">
+                    <c:billReceiptLogo />         
+                </aura:if>
+                <aura:if isTrue="{!v.openSignaturePad}">
+                    <c:SignaturePadNew isActive = "{!v.openSignaturePad}" recordVal="{!v.recordId}"/>         
+                </aura:if>
+            </div>
+        </div> 
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,49 @@
+.THIS .headerCSS{
+    background-color: #493266;
+      padding: 12px;
+}
+.THIS .colPayHeader1 {
+   color: white;
+   background-color: #493266;
+}
+.THIS .headerCSS .slds-text-heading_medium.slds-hyphenate {
+    color: #fff;
+}
+.THIS .slds-modal__container {
+    margin: 0 auto;
+    max-width: 60% !important;
+    width: 60%!important;
+}
+.THIS .form_config .slds-accordion__summary {
+   /* margin-bottom: 0;
+    background-color: #666;*/
+   /*  width: calc(100% - 110px); /*  width: calc(100% - 108px);*/
+    /*border-radius: 10px 0px 0 0;
+    margin-left: 0;
+    padding: 5px;
+    width: 100%;*/
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: #493266;
+    color: #fff;
+    font-weight: 600;
+}
+.THIS .form_config .slds-accordion__summary .slds-button {
+    color:#fff;
+}
+.THIS .instruction_head {
+    background-color: #493266;
+    color: white;
+    padding-left: 10px;
+    font-size: medium;
+    padding-top: 5px;
+    padding-bottom: 8px;
+   
+}
+.THIS .fieldLabel{
+    margin-top : 3px;
+}
+.THIS .hideLabel .slds-form-element__label{
+    display : none !important; 
+}

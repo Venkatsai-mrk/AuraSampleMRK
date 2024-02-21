@@ -1,0 +1,19 @@
+<apex:page standardController="Procedure__c" recordSetVar="proc"  lightningStylesheets="true" sidebar="false" docType="html-5.0">
+  <apex:includeLightning />
+    <div  id="compContainer" />
+    <apex:includeScript value="{!$Resource.newProcedureOnAccountToast}"/>
+  <!--script>
+     $Lightning.use("c:NewProcedureApp", function() {
+         $Lightning.createComponent("c:ProcedureCreationFrmListView",
+             {
+                accId : '{!$CurrentPage.parameters.id}'
+             },
+             "compContainer",
+             function(cmp) {
+                 
+          console.log("c:VFPageApp loaded successfully in VF page");
+             }
+         );
+     });
+  </script-->
+</apex:page>

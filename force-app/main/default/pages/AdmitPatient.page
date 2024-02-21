@@ -1,0 +1,4 @@
+<apex:page extensions="OccupancyAllocation" standardController="Opportunity" sidebar="false" >
+
+
+</apex:page>

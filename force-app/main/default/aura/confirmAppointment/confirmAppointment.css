@@ -1,0 +1,90 @@
+.THIS .headerClass{
+    text-align: center;
+}
+.THIS .childCSS {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+    min-height: 570px!important;    
+}
+.THIS .headingCSSClass {
+    vertical-align: middle;
+    font-size:20px;
+}
+.THIS .parentCSS{
+    height:100%;
+}
+.THIS .checkBoxClass{
+    margin-left: 13px;
+}
+.THIS .border{
+    padding: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.THIS .rightSideCont{
+    height: 686px;
+    overflow-y: scroll;
+}
+.THIS .accordClass .slds-accordion__content {
+    height: 620px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.THIS .heading{
+    font-weight: bold;
+    margin-top: 10px;
+    background-color:#e7e9eb;
+}
+
+.THIS .headingChild{
+    background-color:rgb(243, 242, 242); 
+}
+
+.THIS .gridChildClass {
+    font-size:14px;
+    padding: 10px;
+    font-weight: normal;
+}
+.THIS .gridChildDiscClass {
+    font-size:14px;
+    padding: 10px;
+    font-weight: normal;
+    padding-top: 0px;
+}
+.THIS .textClass{
+    font-weight : bold ;
+    font-size:12px;
+    
+}
+
+.THIS .textClass1{
+    font-weight : bold ;
+    font-size:15px;
+    margin-top: 1px;
+}
+.THIS .colon {
+   padding-left: 65px;
+}
+.THIS .button {
+    margin-top : 30px;
+    display: flex; 
+    justify-content: flex-end;
+}
+.THIS .button1 {
+    margin-top: 10px;
+    text-align: center;
+}
+.THIS .buttonGrp {
+    text-align: center;
+}
+.THIS .borderRad {
+border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+}
+
+.THIS .fieldName {
+    width: 200px; /* set a fixed width for the long field name */
+    text-align: left; /* align the text to the right */
+}

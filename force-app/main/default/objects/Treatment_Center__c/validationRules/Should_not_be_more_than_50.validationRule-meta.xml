@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Should_not_be_more_than_50</fullName>
+    <active>false</active>
+    <errorConditionFormula>OR(No_Of_Houses__c &gt;50,No_Of_Houses__c &lt; 1)</errorConditionFormula>
+    <errorDisplayField>No_Of_Houses__c</errorDisplayField>
+    <errorMessage>The number of houses in a treatment center cannot be less than 1 or more than 50. If your treatment center has more than 50 houses you can create and configure them manually from the related list.</errorMessage>
+</ValidationRule>

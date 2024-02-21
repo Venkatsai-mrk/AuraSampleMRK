@@ -1,0 +1,623 @@
+.THIS #modal-heading-01 .slds-form-element__control.slds-grow{
+    
+    margin: 0 auto;
+}
+
+.THIS .text_cls input {
+    width: calc(74% + 1px);
+    margin-left: 3px;
+}
+
+.THIS .form_css.slds-modal__container{
+    min-width: 90% !important;
+    max-width: 90% !important;
+    
+}
+.THIS .form_css textarea{
+    height:100px;
+}
+.THIS .picklist_cls .slds-select_container{
+    width:75%;
+}
+
+.THIS .header_cls .slds-input[disabled], .THIS .header_cls .slds-input.slds-is-disabled {
+background-color: #fff;
+}
+
+.THIS .header_cls lightning-input.slds-form-element{
+    text-align: -webkit-center;
+}
+.THIS lightning-formatted-rich-text.slds-rich-text-editor__output {
+    margin-bottom: 10px;
+    margin-top: 25px;
+    display: block;
+}
+.THIS .text_cls p{
+    text-align:center;
+}
+.THIS .lookup ul.slds-listbox.slds-listbox_vertical {
+    margin-left: 0;
+} 
+.THIS .lookup span.slds-icon_container.slds-icon-utility-search.slds-input__icon.slds-input__icon_right.iconheight {
+    top: 18px;
+}
+.THIS .radio_btn legend{
+    font-weight:unset;
+    width:100%;
+}
+.THIS .slds-grid{
+    display:flex !important;
+}
+.THIS .slds-form-element__control.slds-grow{
+    /*padding-left:0 !important;*/
+}
+.THIS .p_40{
+    padding:0 40px 0 40px;
+}
+.THIS .date_cls .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    width: 83%;
+}
+.THIS .notMultiVertical span.slds-radio {
+    float: left;
+}
+.THIS #modal-heading-01 .slds-form-element__control.slds-grow{
+    font-size: 15px;
+    text-align: center;
+    width: 40%;
+}
+.THIS .checkbox_btn.MultiVertical .slds-form-element__control{
+	display:inline-block;
+	padding-left:0;
+}
+.THIS .radio_btn.MultiVertical .slds-form-element__control{
+	display:inline-block;
+	padding-left:0;
+}
+.THIS .radio_btn legend{
+    display:flex; 
+}
+.THIS .slds-text-heading_medium input{
+    text-align:center;
+    height:56px;
+}
+.THIS .SectionName span{
+    margin-left: 100px;
+}
+.THIS .forHeading .subs-th {
+    background-color:#493266; /*Changes By pratiksha*/
+    color:#fff;
+    text-align:center;
+    padding:5px;   
+}
+.THIS .subs-th {
+    padding: 5px 0;
+}
+.THIS .slds-grid.AddProblemCls .subs-th {
+    background: #333;
+    padding: 5px;
+    color: #fff;
+    border-right: 1px solid #fff;
+}
+.THIS .slds-grid.AddProblemCls .subs-th:last-child {
+    border-right:none;
+}
+.THIS .forConditionData {
+    border: 1px solid #ccc;
+    margin: 0 0px 15px;
+    padding: 0 15px;
+    line-height: 25px;
+}
+/*Added by Pratiksha */
+.THIS .subs-table .subs-th {
+    border: 1px solid #a39695;
+    
+}
+/*End*/
+.THIS .richtext_button button{
+    width:40px;
+}
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg, .THIS .slds-icon-utility-close svg{
+    fill : white;
+}
+.THIS .greencolor svg, .THIS .slds-icon-utility-check svg{
+    fill : green;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+.THIS .hideLabelForFooter .slds-form-element .slds-size_1-of-1 .slds-form-element__label {
+    display :none;
+}
+.THIS .hideLabelForFooter .slds-form-element__group .slds-form-element__label {
+     display :none;
+}
+/*.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+
+.THIS .datetime_class legend{
+    margin-bottom : -20px;
+}
+
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+.THIS .datetime_class lightning-datetimepicker button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top:-1px;
+}
+.THIS .selected{
+    height: 40px;
+    width: 60px;
+    margin-bottom: 15px;
+    padding : 2px;
+    border: 1px solid ;
+}
+*/
+/* .THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+} */
+.THIS .left-margin{
+    margin-left:5px;
+}
+    
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #ffffff;
+}
+ 
+.THIS .redcolor svg{
+    fill : white;
+}
+.THIS .redcolor .slds-grid {
+    color: #FFF;
+    background-color: #ff726f;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .redcolor svg{
+    fill: red !important;
+}
+.THIS .blackcolor svg{
+    fill : white; 
+}
+.THIS .blackcolor .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .blackcolor svg{
+    color : black !important;
+}
+
+.THIS .greycolor svg{
+    fill : white; 
+}
+.THIS .greycolor .slds-grid {
+    color: #FFF;
+    background-color: grey;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .greycolor svg{
+    color : black !important;
+}
+
+/*.THIS .bluecolor svg{
+    fill : white; 
+}
+.THIS .bluecolor .slds-grid {
+    color: #FFF;
+    background-color: lightblue;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .bluecolor svg{
+    color : black !important;
+}
+*/
+.THIS .bluecolor svg{
+    fill : white; 
+}
+.THIS .bluecolor .slds-grid {
+    color: #FFF;
+   /*background-color: lightblue;*/
+    background-color: #151B54;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .bluecolor svg{
+     fill: white !important;
+   /* color : black !important;*/
+}
+.THIS .darkcolor svg{
+    fill : white;
+}
+.THIS .darkcolor .slds-grid {
+    color: #FFF;
+    background-color: #151B54;
+    padding: 2px 25px;
+    
+    display: inline-block;
+}
+.THIS .darkcolor svg{
+    fill: white !important;
+}
+.THIS .slds-modal__container {
+	max-width: 100%!important;
+    width: 100%!important;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.THIS .fitDynamicUI .slds-modal__content {
+    height: calc(100% - 100px);
+    max-height: calc(100% - 100px);
+}
+.THIS .close svg{
+    fill : black; 
+}
+.THIS .close .slds-grid {
+    color: #FFF;
+    background-color: lightgreen;
+    padding: 2px 25px;
+    border-radius: 25px;
+    display: inline-block;
+}
+.THIS .close svg{
+    color : black !important;
+}
+.THIS .removeScroll {
+    overflow-y : hidden ; 
+}
+.THIS  .slds-modal__containerr{ 
+    height : auto; 
+    width: 50%; 
+    max-width: 40vh; 
+    /*position: fixed;*/
+    top: 12%;
+    left: calc(90% - 40vh);
+   } 
+ .THIS .modal-body{ 
+     height : 40vh !important; 
+     max-height: 40vh !important; 
+   } 
+.THIS .uu{
+    float:right;
+}
+
+/* .THIS .uiInput.uiInputCheckbox.uiInput--default.uiInput--checkbox {
+    float: right;
+    position: relative;
+    z-index: 1;
+} */
+
+.THIS .customBackdrop{
+        background: rgba(0,0,0,0.8);
+}
+/* .THIS label.uiLabel-left.form-element__label.uiLabel {
+    float: left;
+    margin-right: 10px;
+} */
+/* .THIS .checkbox_btn span.slds-form-element__label {
+    width: calc(100% - 30px) !important;
+} */
+/* .THIS .checkbox_btn span.slds-checkbox_faux {
+    float: left;
+    margin-top: 8px;
+} */
+/* .THIS span.slds-checkbox {
+    clear: both;
+} */
+.THIS .slds-grid {
+    display: block;
+}
+/* .THIS .slds-checkbox__label .slds-form-element__label {
+    width: calc(100% - 30px) !important;
+}
+.THIS  .slds-checkbox__label span.slds-checkbox_faux {
+    float: left;
+    margin-top: 9px;
+} */
+/*.THIS .radio_btn.MultiVertical .slds-form-element__control {
+    padding-left: 33%;
+    display: flex;
+    width: auto;
+}*/
+.THIS .d-none {
+    display:none;
+}
+.THIS .tableCustom {
+    width: calc(100% + 30px);
+    margin-left: 0px;
+}
+.THIS .slds-modal.slds-fade-in-open {
+    background: rgba(0,0,0,0.2);
+}
+.THIS .checkbox_btn legend.slds-form-element__legend.slds-form-element__label{
+    font-weight:unset;
+}
+.THIS .unset_standard_label .slds-form-element__legend{
+    font-weight:unset;
+}
+.THIS .header_font{
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 15px;
+}
+.THIS .header_font_onlytext{
+    font-weight: 600;
+    text-align: center;
+    font-size: 15px;
+}
+.THIS .matrix_col{
+  /*  height:80px;*/
+    border:1px solid black;
+}
+.THIS .matrix_col input{
+    width:100%;
+}
+.THIS .matrix_col .slds-form-element__control.slds-grow{
+    padding:15px 10px;
+}
+.THIS .matrix_col .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    padding:15px 10px;
+}
+.THIS .matrix_col .dateTimeField .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    padding: 0px 10px 0px 0px;
+}
+.THIS .matrix_col span.slds-form-element__label{
+    height:32px;
+}
+.THIS .matrix_col .textarea_cls textarea{
+    width:100%;
+    height:65px;
+}
+.THIS .matrix_col .slds-form-element__control.slds-grow.textarea-container{
+    padding:2px 8px !important;
+}
+.THIS .paragraph_text{
+    margin:4px;
+}
+/* added by deepak and meghna later for fixing table in forms*/
+.THIS .matclass label.slds-form-element__label.slds-no-flex{
+    max-width: 100% !important;
+    margin-bottom: 5px;
+}
+.THIS .matclass label.slds-form-element__label {
+    max-width: 100% !important;
+    margin-bottom: 5px !important;
+}
+.THIS .matclass .slds-form-element__control {
+    padding-left: 0 !important;
+}
+.THIS .matclass .slds-dropdown-trigger.slds-dropdown-trigger_click.slds-size_1-of-1 label.slds-form-element__label {
+    min-width: 100%;
+    margin-bottom: 5px !important;
+}
+.THIS .lookup .slds-form-element__control {
+    padding-left: 0;
+}
+.THIS .lookup .slds-size_4-of-12 {
+    width: 33%;
+    padding-left: 4px;
+    padding-top: 10px;
+}
+.THIS .lookup .slds-size_8-of-12 {
+    width: 67%
+}
+.THIS .lookup .slds-size_8-of-12 .slds-form-element {
+    padding-left: 2px;
+}
+.THIS .forFooter {
+    padding-top: 45px;
+} 
+/* additional css ends here that is added by deepak and meghna*/
+@media (max-width: 767px) {
+  	.THIS #modal-heading-01 .slds-form-element__control.slds-grow{
+        width: 100%;
+    } 
+    .THIS .date_cls label{
+        width: 100%;
+    }
+}
+
+.THIS div ul {    
+    /*margin-left: 50px;*/
+    list-style: disc;
+}
+
+.THIS .add-inventory_table lightning-combobox.slds-form-element {
+    width: 100%;
+}
+.THIS .add-inventory_table .slds-combobox__input.slds-input_faux{
+    width: 100%;
+}
+
+.THIS .add-inventory_table .slds-form-element__label {
+    display: none;
+}
+
+
+/*Override above CSS(.This div ul {margin-left: 50px}) in multi-select picklist/dualListbox*/
+.THIS .myDualListbox div ul {
+    margin-left: 0px;
+    list-style: none;
+}
+
+.THIS .slds-form span.slds-form-element__label {
+    margin-top: 0;/*-5px;*/
+}
+
+.THIS .notMultiVertical span.slds-checkbox {
+    display: inline;
+}
+.THIS .w-100 {
+    width: 100%;
+}
+/*Added by pratiksha*/
+.THIS .subs-table1 {
+    padding: 0 12px 0 79px !important;
+    text-align : center ;
+}
+.THIS .subs-table2 {
+    padding: 0 0px 0 79px !important;
+    text-align : center ;
+}
+/*End*/
+.THIS .widthGlobal {
+    width:100% !important;
+}
+.THIS .slds-grid.slds-gutters.forHeading {
+    padding: 0 0 0 68px;
+}
+.THIS .slds-grid.slds-gutters.w-100 {
+    padding: 0 16px 0 26px;
+}
+/*changes*/
+.THIS .changeMWP{
+    margin-left: 85%;
+     width: fit-content;
+      padding:none;
+}
+
+.THIS .removeLeftPaddingCheckbox .slds-form-element__control {
+    padding-left: 0px;
+}
+
+.THIS .removeListStyle ul{
+    /* .THIS div ul selector above makes this ul with disc too, overriding that */
+    list-style: none;
+}
+
+.THIS .removeListMarginLeft ul{
+    /* .THIS div ul selector above give this ul margin-left: 50px, overriding that */ 
+    margin-left: 0px !important; 
+}
+
+.THIS .setMaxWidth ul {
+    /* .slds-grid selector has- display: flex!important
+       it makes this ul grow out of screen. thus fixing width to 500px 
+    */
+    max-width: 500px;
+}
+
+.THIS .removeLabelNegativeMargin .slds-form-element__label {
+    margin-top: 0px !important;
+}
+
+.THIS .checkboxLabelAlwaysInline span .slds-form-element__label {
+    max-width: 90% !important;
+    /*
+    .slds-form-element__label has been attributed margin-top: -5px style somewhere above.
+    it causes label of checkboxes to be too close and hard to figure which checkbox belongs to which label
+    so overriding that CSS here
+     */
+    margin-top: auto !important;
+}
+/*Added by pratiksha */
+
+.THIS .changeText{
+    text-align: left;
+}
+
+.THIS .noLabelGeneric .slds-form-element__label:first-child {
+    max-width: 0px !important;
+    max-height: 0px !important;
+    padding: 0px;
+}
+
+.THIS .noLabelGeneric input {
+    margin-left: 0px;
+}
+
+.THIS .noLabelGeneric .slds-form-element__control {
+    padding-left: 0px !important;
+}
+
+.THIS .custom-button-class {
+    color: #0176D3;
+}
+
+.THIS.debugging {
+    z-index : 1;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+.THIS.debugging header {
+    background-color: #f2f2f2;
+    padding: 15px;
+}
+.THIS .form_css {
+    padding-bottom: 45px;
+}
+.THIS .footer-btn {
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 10px 15px;
+    background-color: #f3f3f3;
+}
+
+.THIS .allergyCssClass {
+    height: 200px;
+    overflow-y: auto;
+}
+
+.THIS .scrollable-container {
+    width: 100%; 
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.THIS .instruction_head {
+    color: #000;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+}
+.THIS .delbtn .slds-button__icon.slds-button__icon_left {
+    margin-right: 0;
+}
+.THIS .button_margin{
+    margin-left: 959px;
+}
+
+.THIS .cardCls {
+    padding: 0 24px;
+}
+.THIS .cardCls li.card_list {
+    display: inline-block;
+}
+.THIS .cardCls li.card_list svg.slds-button__icon.slds-button__icon_left {
+    margin-right: 0;
+}
+.THIS .warning_modal .slds-modal__container {
+    width: 50% !important;
+    max-width: 50% !important;
+}

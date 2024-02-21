@@ -1,0 +1,23 @@
+.THIS .my-button-class {
+    background-color: #493266;
+  }
+.THIS .my-icon {
+    --lwc-colorTextIconDefault: #fff;
+}
+.THIS .my-bg-color {
+  background-color: #493266;
+}
+.THIS .center {
+  display: flex;
+  justify-content: center;
+}
+.THIS .slds-card__body {
+  margin-bottom: 0 !important;
+}
+.THIS .myDiv_ForUpload{
+        width: max-content;
+    text-align: left !important;
+}
+.THIS .slds-modal__content {
+    max-height: 400px;
+}

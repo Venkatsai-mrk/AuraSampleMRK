@@ -1,0 +1,11 @@
+.THIS.vaccineTable thead tr th{
+    background-color: #493266;
+	color:#fff;
+}
+.THIS.vaccineTable{
+    margin-bottom : 300px;
+}
+/* chnages */
+.THIS .changeheight{
+    height:5rem;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attending_Provider_Qualifying_Id__c</fullName>
+    <description>Refers to a unique identifier associated with the attending provider who is responsible for the care and treatment of a patient.</description>
+    <externalId>false</externalId>
+    <label>Attending Provider Qualifying ID</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,196 @@
+.THIS .slds-modal__container.hideDiv.new_procedure {
+    max-width: 60%;
+    width: 60%;
+}
+.THIS .childCSS{
+    background-color: rgba(0,0,0,.5);
+}
+.THIS .new_procedure .headerCSS {
+    background-color: #e5e5e5;
+    color: #000;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+}
+.THIS .new_procedure .spinnerCSS {
+    border: 1px solid #e5e5e5;
+    border-bottom: none;
+}
+.THIS .p_name label.slds-form-element__label {
+    display: none;
+}
+.THIS .p_name .slds-input-has-icon .slds-input__icon {
+    top: 40%;
+}
+.THIS .p-code div.slds-form-element {
+    width: 120px;
+    float: left;
+}
+.THIS .p-code div.slds-form-element .slds-select {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+.THIS .p-code div.slds-form-element .slds-select_container:before {
+    display:none;
+}
+.THIS .p-code div.slds-form-element .slds-select_container:after {
+    border-top: 10px solid #000;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    top: 12px;
+}
+.THIS .p-code .slds-form-element {
+    /*width: calc(100% - 120px);*/
+width:100%;
+    float: left;
+}
+.THIS .p-code .slds-form-element .slds-input {
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+.THIS .add-head {
+    width: 100%;
+    background-color: #0176D3;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 5px 15px;
+}
+.THIS .add-modi-table {
+    border: 1px solid #e5e5e5;
+}
+.THIS .add-modi-table thead th {
+    background-color: #e5e5e5;
+    color: #000;
+    text-align: center;
+    border-right: 1px solid #e5e5e5;
+    padding: 5px;
+}
+.THIS .add-modi-table tbody th {
+    color: #000;
+    text-align: center;
+    border-right: 1px solid #e5e5e5;
+    padding: 5px;
+}
+.THIS .add-modi-table th:last-child {
+    border-right: none;
+}
+.THIS .add-modi-table tr td {
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 3px 5px;
+}
+.THIS .add-modi-table tr td:last-child {
+    border-right: none;
+    text-align: center;
+}
+.THIS .add-modi-table tr:last-child td {
+    border-bottom: none;
+}
+.THIS .add-modi-table tr td .slds-form-element__label {
+    display: none;
+}
+.THIS .add-modi-table tr td lightning-icon.slds-icon-utility-add.slds-icon.slds-icon_small.slds-icon_container,
+.THIS .add-modi-table tr td lightning-icon.slds-icon-utility-delete.slds-icon.slds-icon_small.slds-icon_container{
+    background-color: #000;
+    border-radius: 50%;
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    margin: 0 7px;
+}
+.THIS .add-modi-table tr td svg.slds-icon.slds-icon-text-default.slds-icon_small,
+.THIS .add-modi-table tr td svg.slds-icon.slds-icon-text-error.slds-icon_small{
+    height: 14px;
+    fill:#fff;
+    width: 14px;
+    margin-top: 2px;
+}
+.THIS .diagosis-text {
+    color: #ccc;
+    font-size: 12px;
+}
+.THIS .add-problem-btn .slds-button.slds-button_brand {
+    background-color: #493364;
+    border: 1px solid #e5e5e5;
+    width: 100%;
+}
+.THIS .p_name input[type=checkbox] {
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+}
+.THIS .claim-type .slds-form-element {
+    width: 100% !important;
+}
+.THIS .claim-type .slds-form-element .slds-select {
+    border-radius: 0.25rem 0.25rem !important;
+}
+.THIS .claim-type .slds-form-element .slds-select_container:after {
+    left: auto !important;
+}
+.THIS .new_procedure .slds-modal__footer {
+    border: 1px solid #e5e5e5;
+    border-top: none;
+    text-align: right;
+}
+.THIS .add-modi-table td .slds-form-element__control, .THIS .add-modi-table td .slds-form-element {
+    position: unset;
+}
+.THIS .diagnosis-stmt {
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    background-color: #fefefe;
+    padding: 5px;
+}
+.THIS .ar-diagnosis .slds-size_3-of-12 {
+    margin: 5px 0;
+    float: left;
+}
+.THIS .p_name .slds-dropdown.slds-dropdown_length-5.slds-dropdown_fluid.onDrop {
+    bottom: 100%;
+    bottom: auto;
+    position: relative;
+    z-index: 1;
+}
+.THIS .code_pick-list .slds-gutters {
+    width: 50%;
+    float: left;
+}
+.THIS .code_pick-list .slds-gutters .slds-size_8-of-12 {
+    margin-bottom: 15px;
+}
+.THIS .code_pick-list .slds-gutters:nth-child(odd) .slds-size_8-of-12 {
+    padding: 0 0 0 16px;
+}
+.THIS .code_pick-list .slds-gutters:nth-child(even) {
+    float:right;
+}
+.THIS .code_pick-list .slds-gutters:nth-child(even) .slds-size_4-of-12 {
+    padding-left: 0;
+} 
+.THIS .code_pick-list .slds-gutters:nth-child(even) .slds-size_8-of-12 {
+    padding-left: 5px;
+} 
+.THIS .code_pick-list .slds-form-element__label {
+    display : none;
+}
+.THIS.mgList {
+    margin-bottom: 18px;
+    color: inherit;
+    background-color: #eee;
+    -webkit-border-radius:5px; padding:17px;
+}
+.THIS .mgList-p {
+    width:fit-content;
+    background-color:rgb(243, 242, 242); 
+    height:60%;
+}
+.THIS .mgList1 {
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+/*.THIS .bottomfooter{
+float:center;
+}*/
+.THIS .h-50 .slds-textarea {
+    height: 70px;
+}

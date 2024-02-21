@@ -1,0 +1,87 @@
+<aura:component controller="attendanceController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="mapKey" type="Object"/>
+    <aura:attribute name="idx" type="Integer"/>
+    <aura:attribute name="mapKeyId" type="String" />
+    <aura:attribute name="collpaseText" type="String" default="Notes »"/>
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}"/>
+    <aura:attribute name="attended" type="Integer" />
+    <aura:attribute name="count" type="Integer"/>
+    <aura:attribute name="allVal" type="List"/>
+    <aura:attribute name="eventData" type="List"/>
+    <aura:attribute name="selectedAttendees" type="Map" default="{}" />
+    <aura:attribute name="jsonList" type="List"/> 
+    <aura:attribute name="savedListRecord" type="List"/>
+    <aura:attribute name="flag" type="Boolean"/>
+    <aura:registerEvent name="cmpAttEvent" type="c:Elixir_MangeAttendanceEvent"/>
+    
+    <div aura:id="mapKeyId">
+        <ul class="pateint_list">
+            <li>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12 slds-text-align--left slds-p-top_large">
+                        <ui:inputCheckbox name="{!v.mapKey.id + '$' + v.idx}" label="" change="{!c.handleChange}" value="{!v.mapKey.Attendance}"/>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <aura:if isTrue="{!not(empty(v.mapKey.profilePic))}">                       
+                            <img alt="Patient Image" src="{!'/sfc/servlet.shepherd/version/download/'+ v.mapKey.profilePic}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                            <aura:set attribute="else">
+                                <img src="{!$Resource.DefaultImage}"/>                                
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-p-top_large">
+                        <ui:outputText value="{!v.mapKey.accName}" />
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-text-align--right remove_btn">
+                        
+                        <!-- <lightning:button label="Remove X" name="{!v.mapKey.Attendance}"  onclick="{! c.removeSection}"></lightning:button>
+                       <ui:button class="slds-button" value="{!v.mapKey.id + '$' + v.idx}" label="" press="{! c.removeSection}"  /> -->
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12 ">
+                    	<div class="Message">
+                            <div class="expandCollapse" onclick="{!c.ToggleCollapse}"> {!v.collpaseText} </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-show slds-p-around--medium" aura:id="attendSec"></div>
+                <div class="slds-hide" aura:id="attendSec">
+                    
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <!--div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <h2 class="header">EVENT START</h2>
+                                    <aura:if isTrue="{!(v.mapKey.started == 'Undefined' || v.mapKey.started == null ||  v.mapKey.started == '')}">
+                                        <lightning:input type="datetime" variant="label-hidden"  name="{!v.mapKey.id + '$' + v.idx}" value="{!v.eventData.StartDateTime}" /> 
+                                        <aura:set attribute="else"> 
+                                            <lightning:input type="datetime" variant="label-hidden"  name="{!v.mapKey.id + '$' + v.idx}" value="{!v.mapKey.started}"/>    
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <h2 class="header">EVENT END</h2>
+                                    <aura:if isTrue="{!(v.mapKey.ended == 'Undefined' || v.mapKey.ended == null ||  v.mapKey.ended == '')}">
+                                        <lightning:input type="datetime" variant="label-hidden"  name="{!v.mapKey.id + '$' + v.idx}" value="{!v.eventData.EndDateTime}" /> 
+                                        <aura:set attribute="else"> 
+                                            <lightning:input type="datetime" variant="label-hidden"  name="{!v.mapKey.id + '$' + v.idx}" value="{!v.mapKey.ended}" /> 
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </div-->
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <lightning:textarea label="ADD INDIVIDUAL PARTICIPATION NOTES" name="{!v.mapKey.id + '$' + v.idx}" value="{!v.mapKey.individualNotes}" /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </li>
+        </ul>
+    </div>
+    
+</aura:component>

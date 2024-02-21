@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email sending after refill request done</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Elixir_logo</letterhead>
+    <name>Email Template for Refill Request</name>
+    <style>formalLetter</style>
+    <subject>Refill Request from {!User.Name}</subject>
+    <textOnly>Hello Care Team,
+
+{!User.Name} has requested for refill for {!DrugName}. Please do the needful.
+
+Thanks.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

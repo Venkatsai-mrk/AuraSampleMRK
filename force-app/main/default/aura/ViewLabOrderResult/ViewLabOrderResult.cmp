@@ -1,0 +1,16 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global">
+  <aura:attribute name="activetabId" type="String" />
+     <aura:attribute name="rid" type="String" />
+    
+  <lightning:workspaceAPI aura:id="workspace" />
+  <aura:attribute name="show" type="Boolean" default="false" />
+  <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    
+      <div class="slds-theme_default ">
+       
+    <c:labOrderDetailScreen activetabdetail='{!v.activetabId}' rid='{!v.rid}'/>
+  </div>
+    
+</aura:component>

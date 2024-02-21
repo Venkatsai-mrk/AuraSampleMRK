@@ -1,0 +1,132 @@
+<aura:component controller="AllergyMedicalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="backgroundImageURL" type="String" default=""/>
+    <aura:attribute name="editScreen" type="boolean" default="true"/>
+    <aura:attribute name="AlertScreen" type="boolean" default="false"/>
+    <aura:attribute name="accId" type="Id" default=""/>
+    <aura:attribute name="FoodAllergyList" type="Medical_Examination__c" default=""/>
+    <aura:attribute name="SkinAllergyList" type="Medical_Examination__c" default=""/>
+    <aura:attribute name="DrugAllergyList" type="Medical_Examination__c" default=""/>
+    <aura:attribute name="AlertsList" type="Medical_Examination__c" default=""/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+    <aura:if isTrue="{!v.AlertScreen}">
+       
+        <div class="slds-grid chnagesheight" aura:id="text">
+            
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            
+            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                <div class="slds-modal__container1">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.Title}</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div style="{!' background:' + v.backgroundColor + ' url(' + v.backgroundImageURL +') no-repeat;background-position: center;'}">
+                            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                            <div class="my-container">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <div class="Allegies_box">
+                                            <h3>Allergies</h3>
+                                            <div class="Allegies_box-child">
+                                                <ul class="main-list">
+                                                    <li>
+                                                        Food Allergies
+                                                        <ul class="sub-list">
+                                                            <aura:if isTrue="{! not(empty(v.FoodAllergyList))}"> 
+                                                                <aura:iteration items="{!v.FoodAllergyList}" var="item">
+                                                                    <li> <lightning:icon iconName="utility:check" size="xx-small" />&nbsp;&nbsp;{!item.ElixirSuite__Allergy_Name__c}</li>
+                                                                </aura:iteration>
+                                                                <aura:set attribute="else">
+                                                                    <p class="paragrpahCSS" >&nbsp;&nbsp;&nbsp;No food allergies found..</p>
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </ul>                        
+                                                    </li>
+                                                    <li>
+                                                        Skin Allergies
+                                                        <ul class="sub-list">
+                                                            <aura:if isTrue="{! not(empty(v.SkinAllergyList))}">
+                                                                <aura:iteration items="{!v.SkinAllergyList}" var="item">
+                                                                    <li> <lightning:icon iconName="utility:check" size="xx-small" />&nbsp;&nbsp;{!item.ElixirSuite__Allergy_Name__c}</li>
+                                                                </aura:iteration>
+                                                                <aura:set attribute="else">
+                                                                    <p class="paragrpahCSS" >&nbsp;&nbsp;&nbsp;No skin allergies found..</p>
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </ul>                        
+                                                    </li>
+                                                    <li>
+                                                        Drug Allergies
+                                                        <ul class="sub-list">
+                                                            <aura:if isTrue="{! not(empty(v.DrugAllergyList))}">
+                                                                <aura:iteration items="{!v.DrugAllergyList}" var="item">
+                                                                    <li> <lightning:icon iconName="utility:check" size="xx-small" />&nbsp;&nbsp;{!item.ElixirSuite__Allergy_Name__c}</li>
+                                                                </aura:iteration>
+                                                                <aura:set attribute="else">
+                                                                    <p class="paragrpahCSS" >&nbsp;&nbsp;&nbsp;No drug allergies found..</p>
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </ul>                        
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <div class="Allegies_box medical-alert ">
+                                            <h3>Medical Alerts</h3>
+                                            <div class="Allegies_box-child">
+                                                <ul class="main-list">
+                                                    <aura:iteration items="{!v.AlertsList}" var="item">
+                                                        <li> <lightning:icon iconName="utility:check" size="xx-small" />&nbsp;&nbsp;{!item.ElixirSuite__Alert_Name__c}</li>
+                                                    </aura:iteration>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+            
+        </div>
+        
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.isOpen}">
+        <c:displayActiveMedication parentId="{!v.recordId}"></c:displayActiveMedication>
+    </aura:if>
+</aura:component>

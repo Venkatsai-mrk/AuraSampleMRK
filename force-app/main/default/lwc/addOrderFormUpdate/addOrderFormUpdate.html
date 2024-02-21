@@ -1,0 +1,250 @@
+<template>
+
+  <div class="mainDiv">
+      <!-- Header Start -->
+      <header class="slds-page-header slds-p-around_none">
+        <div class="createOrderHeadingDiv"> 
+          <h2 class="slds-text-heading_medium slds-hyphenate header-string createOrderHeading" >
+            Update Order
+          </h2>
+        </div>
+      </header>
+      <lightning-layout multiple-rows>
+        <div class="lab-o_details-form">
+          <lightning-layout-item size="9" padding="around-small" >
+            <!--bill type combobox-->
+          <lightning-combobox
+          name="ordertype"
+          label="Order Type"
+          value={orderTypeValue}
+          placeholder="Select Order Type"
+          options={orderTypeOptions}
+          onchange={orderTypeHandleChange} variant="label-inline" ></lightning-combobox>
+           </lightning-layout-item>
+        <lightning-layout-item size="9" padding="around-small" >
+          <!--bill type combobox-->
+        <lightning-combobox
+        name="billtype"
+        label="Bill Type"
+        value={billvalue}
+        placeholder="Select Bill Type"
+        options={billoptions}
+        onchange={billhandleChange} variant="label-inline" ></lightning-combobox>
+         </lightning-layout-item>
+                
+      <lightning-layout-item size="9" padding="around-small"  >
+        <!--Lab Data combobox-->
+      <lightning-combobox
+      name="lab"
+      label="Lab:"
+      value={selectedLab}
+      placeholder="Select Lab"
+      options={labOptions}
+      onchange={handleLabChange} variant="label-inline" 
+      required
+      class="labError"></lightning-combobox>
+        </lightning-layout-item>
+  
+        <lightning-layout-item size="9" padding="around-small">
+          <!-- Physician Data Combobox-->
+            <lightning-combobox
+              name="OrderingPhysician"
+              label="Ordering Physician:"
+              value={selectedPhysician}
+              placeholder="Select Physician"
+              options={orderingPhysicianOptions}
+              onchange={handleOrderingPhysicianChange} variant="label-inline" 
+              required
+              class="physicianError"></lightning-combobox>
+                </lightning-layout-item>
+                <!-- Entered by Data Combobox-->
+          <lightning-layout-item size="9" padding="around-small">
+            <lightning-combobox
+            name="EnteredBy"
+            label="Entered By:"
+            value={selectedEnteredBy}
+            placeholder="Entered By"
+            options={enteredByOptions}
+            onchange={handleEnteredByChange} variant="label-inline" 
+            required
+            class="enteredByError"></lightning-combobox>
+              </lightning-layout-item>
+              <lightning-layout-item size="9" padding="around-small">
+                <lightning-combobox
+                name="VerifiedBy"
+                label="Verified By:"
+                value={selectedVerifiedBy}
+                placeholder="Verified By"
+                options={verifiedByOptions}
+                onchange={handleVerifiedByChange} variant="label-inline" 
+                required
+                class="verifiedByError"></lightning-combobox>
+                  </lightning-layout-item>
+        <lightning-layout-item size="9" padding="around-small">
+          <!-- Facility Data Combobox-->
+                    <lightning-combobox
+                      name="facility"
+                      label="Facility:"
+                      value={selectedFacility}
+                      placeholder="Select facility"
+                      options={facilityOptions}
+                      onchange={handleFacilityChange} variant="label-inline" required
+                      class="facilityError"></lightning-combobox>
+                </lightning-layout-item>
+                <template if:true={orderTypeVisible}>
+                  <div class="dateForm">
+                                      <lightning-layout multiple-rows>
+                  <lightning-layout-item size="9" padding="around-small">
+                  <!--Collection Date/Time Input-->
+                     <lightning-input  class = "inputTextCollection" type="datetime" timezone="GMT"  variant="label-inline" placeholder="Select Date/Time" label="Expected Date/Time:"  value={collectionTime} onchange={handleExpectedDateTimeChange} ></lightning-input>
+                 </lightning-layout-item> 
+                </lightning-layout>
+              </div>
+                </template>
+               
+<template if:false={orderTypeVisible}>
+  <div class="dateForm">
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="9" padding="around-small">
+         <!--Collection Date/Time Input-->
+            <lightning-input  class = "inputTextCollection" type="datetime" timezone="GMT"  variant="label-inline" placeholder="Select Date/Time" label="Collection Date/Time:" value={collectionTime} onchange={handleCollectionTimeChange} ></lightning-input>
+        </lightning-layout-item>
+      </lightning-layout>
+      </div>
+      </template>
+<lightning-layout-item size="12" padding="around-small">
+
+    <!--Test List Dualbox-->
+    <lightning-dual-listbox name="tests" label="Select Tests" source-label="Available Tests" selected-label="Selected Tests" onchange={handleTestsChange} value={selectedTests} options={testsOptions} class="testError">
+    </lightning-dual-listbox>
+<!--</lightning-layout-item>--> 
+
+<div class="slds-align_absolute-center slds-is-relative">
+    <!-- Button to Add More Tests-->
+    <lightning-button-icon icon-name="utility:add" variant="brand" onclick={handleShowModal} class="slds-m-left_xx-small slds-is-absolute addTestButton"></lightning-button-icon>
+    <c-add-more-tests ontestsadded={handelTestsAdded}> </c-add-more-tests>
+
+</div>
+</lightning-layout-item>
+<lightning-layout-item size="12" padding="around-small">
+
+    <!--ICD List Dualbox-->
+    <lightning-dual-listbox name="ICD10" label="Select Diagnosis Codes" source-label="Patient Diagnosis Codes" selected-label="Selected Diagnosis Codes" onchange={handleICD10Change} value={selectedICDs} options={ICD10Options}>
+    </lightning-dual-listbox>
+
+    <!-- Button to add more ICDs
+    <div class="slds-align_absolute-center slds-is-relative">
+        <lightning-button-icon icon-name="utility:add" variant="brand" onclick={handleICDShowModal} class="slds-m-left_xx-small slds-is-absolute addICDButton"></lightning-button-icon>
+        <c-add-more-i-c-ds onicdsadded={handelICDsAdded}> </c-add-more-i-c-ds>
+
+    </div>-->
+</lightning-layout-item>
+<!-- For Handling Guarantor for Patient Bill type -->
+<div>
+    <template if:true={billTypePatient}>  
+          <div class="slds-size_2-of-2 commonBackground">
+            
+            <lightning-accordion class="example-accordion" onsectiontoggle={handleToggleSectionGuarantor} allow-multiple-sections-open>
+              <lightning-button variant="neutral"  label="Edit" title="Edit" onclick={handleGuarantorEdit} disabled={guarantorEditDisabled} class="slds-float_right editButton"></lightning-button>       
+                    <lightning-button variant="neutral" label="New" title="New" onclick={handleGuarantorNew} class="slds-float_right newButton"></lightning-button>
+                    <lightning-button-icon icon-name="action:refresh" variant="border-filled" alternative-text="Refresh"  onclick={handleGuarantorRefresh} class="slds-float_right refreshButton" title="Refresh"></lightning-button-icon>
+                    <lightning-accordion-section name="B" label="Guarantor Details" class="lgc slds-accordion__summary-heading">
+                           
+                  <lightning-layout multiple-rows>
+                <!-- Default/basic -->
+
+
+                <lightning-layout-item size="12" padding="around-small" >
+                   <lightning-combobox
+                         name="Relationship"
+                         label="Guarantor : "
+                         value={guarantorValue}
+                         placeholder="Select Guarantor"
+                         options={guarantorOptions}
+                         onchange={guarantorOnChange} variant="label-inline" 
+                         required
+                         class="guarantorError"></lightning-combobox>
+                  </lightning-layout-item>
+                  <lightning-layout-item size="12" padding="around-small">
+                    <lightning-input type="text" label="Relationship : " variant="label-inline" value={relationship} read-only="true"></lightning-input>
+                  </lightning-layout-item>
+                  <lightning-layout-item size="12" padding="around-small">
+                    <lightning-input type="text" label="First Name : " variant="label-inline" value={firstName} read-only="true"></lightning-input>
+                  </lightning-layout-item>
+                 
+                  <lightning-layout-item size="12" padding="around-small">
+                      <lightning-input type="text" label="Last Name : " variant="label-inline" value={lastName} read-only="true"></lightning-input>
+                  </lightning-layout-item>            
+                  </lightning-layout>
+                 
+                </lightning-accordion-section>
+            </lightning-accordion> 
+        </div>   
+      </template>
+</div>
+<!-- Insurance Accordian Section-->
+<div class="insuranceDiv">
+    <template if:true={billValueShow}>  
+          <div class="slds-size_2-of-2 commonBackground" >
+            <lightning-accordion class="example-accordion"
+                                onsectiontoggle={handleToggleSection}
+                                allow-multiple-sections-open>
+                              <lightning-button variant="neutral"  label="Edit" title="Edit" onclick={handleInsuranceEdit} disabled={insuranceEditDisabled} class="slds-float_right editButton"></lightning-button>        
+                               <lightning-button variant="neutral"  label="New" title="New" onclick={handleInsuranceNew} class="slds-float_right newButton"></lightning-button>
+                               <lightning-button-icon icon-name="action:refresh" variant="border-filled" alternative-text="Refresh"  onclick={handleInsuranceRefresh} class="slds-float_right refreshButton" title="Refresh"></lightning-button-icon>
+                <lightning-accordion-section name="A" label="Insurance Details" class="lgc slds-accordion__summary-heading">
+                  <lightning-layout multiple-rows>
+                    
+                        <lightning-layout-item size="12" padding="around-small" >
+                        <lightning-combobox
+                           name="insurance"
+                           label="Insurance "
+                           value={insuranceValue}
+                           placeholder="Select Insurance"
+                           options={insuranceOptions}
+                           onchange={insuranceOnChange} variant="label-inline" 
+                           required
+                           class="insuranceError"></lightning-combobox>
+                       
+                      </lightning-layout-item>
+                         <lightning-layout-item size="12" padding="around-small" >
+                           
+
+                           <lightning-input type="text" label="Code" variant="label-inline" value={code} read-only="true"></lightning-input>
+                           </lightning-layout-item>
+                           <lightning-layout-item size="12" padding="around-small">
+                             <lightning-input type="text" label="Policy" variant="label-inline" value={policy} read-only="true"></lightning-input>
+                             </lightning-layout-item>
+                             <lightning-layout-item size="12" padding="around-small">
+                               <lightning-input type="text" label="Group" variant="label-inline" value={group} read-only="true"></lightning-input>
+                               </lightning-layout-item>
+                               
+                     
+                     
+                
+                         </lightning-layout>
+                 
+                </lightning-accordion-section>
+            </lightning-accordion> 
+        </div>   
+            </template>
+
+</div>
+<lightning-layout-item size="12">
+    <div class="slds-align_absolute-center submitDiv">
+      <lightning-button variant="neutral" label="Cancel" title="Cancel and Go Back" onclick={handleClear} class="slds-float_left cancelButton"></lightning-button>
+        <lightning-button variant="brand" label="Save" title="Save this order" onclick={handleSubmit} class="slds-float_left saveButton"></lightning-button>
+        <lightning-button if:true={isButtonVisible} variant="brand" label="Save & Transmit" title="Save this order & Transmit" onclick={handleSubmitTransmit} class="slds-float_left saveButton"></lightning-button>
+    </div>
+</lightning-layout-item>
+</div>
+</lightning-layout>
+
+
+</div>
+<template if:true={showSpinner}>
+<div class="slds-is-absolute exampleHolder">
+    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+  </div>
+</template>
+</template>

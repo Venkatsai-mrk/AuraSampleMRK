@@ -1,0 +1,88 @@
+.bcol{
+    background-color: #493266;
+    color: #fff;
+    border: 1px solid #493266;
+    border-radius: 0;
+   
+}
+.slds-modal__container {
+    max-width: 80rem !important;
+    width: 80% !important;
+    height: 110%;
+}
+
+.div1{
+    background-color: #fff;
+    width: auto;
+}
+
+.header-string{
+    padding: 5px 0px;
+    font-weight:normal;
+    font-size:14px;
+}
+
+.row{
+    width: calc(100% - 30px);
+    margin: 5px 15px;
+}
+
+.add-modi-table{
+    border: 1px solid #ddd;
+}
+
+.add-modi-table thead th {
+    background-color: #e5e5e5;
+    color: #000;
+    text-align: center;
+    border-right: 1px solid #e5e5e5;
+    padding: 5px;
+}
+
+.add-modi-table tbody th {
+    color: #000;
+    text-align: center;
+    border-right: 1px solid #e5e5e5;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.ip2 {
+    border-radius: 25px;
+    border: 2px solid rgb(6, 6, 6);
+    padding: 20px; 
+    width: 200px;
+    height: 5px;    
+}
+
+.closeCol{
+    color: red;
+}
+
+.description_modal{
+    overflow-y:hidden;
+    height: 95px;
+}
+
+.diagnosis_modal{
+    max-height: 200px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ccc;
+    width: calc(100% - 90px);
+    margin-left: 45px;
+    z-index: 0;
+}
+
+.diagnosis_head{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.buttonIcon{
+    background-color:red;
+}
+.bcol .header-string{
+    font-weight:normal;
+    padding: 5px;
+    font-size:24px;
+}

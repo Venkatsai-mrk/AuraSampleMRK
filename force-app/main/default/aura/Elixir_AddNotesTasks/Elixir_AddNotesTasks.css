@@ -1,0 +1,139 @@
+.THIS.accordian_header {
+    float:left;
+    width: 100%;
+}
+.THIS .slds-modal__close {
+   /* position: absolute;*/
+    right: 0px;
+    color: #fff;
+    z-index: 1;
+    opacity: 1;
+   
+}
+.THIS .footercls {
+    text-align: center;
+}
+.THIS.add_note {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS.add_note {
+    width: 100%!important;
+    margin: 0 0%;
+    padding: 0 25%;
+} 
+.THIS.add_note .slds-modal__content {
+    height: 300px;
+    min-height: 300px;
+}
+.THIS ul.btn_hover_parent {
+    margin: 10px 0 15px 0;
+}
+.THIS .btn_hover_parent li {
+    display: inline-block;
+    margin: 0px 10px;
+    font-size: 12px;
+    color: #006ed0;
+    padding: 8px 0;
+    position: inherit;
+}
+.THIS .btn_hover_parent li:hover {
+    position: relative;
+    z-index: 0;    
+}
+.THIS .btn_hover_parent li .hyperlink {
+    border-bottom: 1px solid #006ed0;
+}
+.THIS .btn_hover_parent li .slds-button {
+    background: #fff;
+    color: #006ed0;
+    padding: 0;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 9px;
+    border: none;
+}
+.THIS .btn_hover_parent li .slds-button:focus {
+    border: none;
+    box-shadow: none;;
+}
+.THIS .btn_hover_child {
+    display: none;
+    /* position: absolute;*/
+    z-index: 2;
+    background-color: #324148;
+    border-radius: 5px;
+    color: #fff;
+    top: 30px;
+    padding: 8px 15px;
+    width: 300px;
+    left: 0;
+}
+.THIS .btn_hover_parent li:hover .btn_hover_child {
+    display: block;
+
+}
+.THIS .btn_hover_child:after {
+    content: " ";
+   /*  position: absolute;*/
+    z-index: 0;
+    height: 10px;
+    width: 10px;
+    transform: rotate(45deg);
+    left: calc(50% - 10px);
+    display: block;
+    background-color: #324148;
+}
+.THIS .btn_hover_child hr {
+    width: calc(100% + 0px);
+/*margin: 10PX -15px 0;*/
+    margin: 10PX 0 0;
+    border-top: 1px solid #666;
+    height: 0;
+}
+.THIS .btn_hover_child .slds-button {
+    padding: 15px !important;
+    font-size: 12px !important;
+    line-height: 0px !important;
+    margin: 0 5px;
+}
+.THIS .btn_hover_child .slds-button:nth-child(2) {
+    background-color: #fff !important;
+    color: #006ed0;
+}
+.THIS .note_heading .slds-form-element__label {
+    display: none;
+}
+.THIS .note_heading .slds-textarea {
+    height: 250px;
+    border:none;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+}
+.THIS .note_heading .slds-textarea:focus {
+    box-shadow: none;    
+}
+.THIS .note_heading .slds-modal__header {
+    padding: 10px;
+    font-weight: 300;
+}
+.THIS .btn_add-note {
+    display: inline-flex;
+    align-items: center;
+    padding: 0px 15px;
+    background: #fff;
+    box-shadow: 0 0 2px #ccc;
+    position: initial;  
+}
+.THIS .headerCSS{
+    font-size: x-large;
+}
+@media(max-width:576px) {
+    .THIS.add_note {
+        padding: 0 5%;
+    } 
+}
+@media(max-width:576px) {
+    .THIS.add_note {
+        padding: 0 10% 0 4%;
+    } 
+}

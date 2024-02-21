@@ -1,0 +1,41 @@
+.THIS .img {
+    /* max-width: 100%; */
+    height: 100px;
+    width: 100px;
+}
+.THIS div.Message {
+    width: 110px;
+    color: #ffffff;
+    background-color: #0176d3;
+    padding: 8px;
+    margin-top: 15px;
+    border-radius: 20px;
+    text-align: center;
+}
+.THIS div.Message .expandCollapse {
+    cursor:pointer;
+}
+.THIS div.show{
+    display:block;
+}
+.THIS div.hide{
+    display:none;
+}
+.THIS .pateint_list li {
+    background-color: #fdfbfc;
+    width: calc(100% + 60px);
+    margin-left: 0px;/*-30*/
+    padding: 16px 30px;
+    margin-top: 1px;
+}
+.THIS .pateint_list li:nth-child(2n){
+    background-color: #fff;
+}
+.THIS .pateint_list li img {
+    width: 100%;
+    height: 64px;
+    object-fit: cover;
+    vertical-align: middle;
+    max-width: 100%;
+    border-radius: 50%;
+}

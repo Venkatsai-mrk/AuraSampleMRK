@@ -1,0 +1,30 @@
+<aura:component controller="SendClaimController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" >
+    <ltng:require styles="{!$Resource.SendClaimButtonCSS}" afterScriptsLoaded="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="string"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isPopUp" type="Boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.isPopUp}">
+        <header class="slds-modal__header modal-header">
+            <h1 class="slds-text-heading--medium">Confirmation</h1>
+        </header>
+        <!--Modal/Popup Box Body Starts here-->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <center> <p>This action will send this claim to the clearing house. Are you sure you want to proceed?</p></center>
+        </div><!--Modal/Popup Box Footer Starts here-->
+        <footer class="slds-modal__footer">
+            <lightning:button variant="neutral" label="No" title="No" onclick="{!c.closePopUp}"/>
+            <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.submitDetails}"/>
+        </footer>
+    </aura:if>
+    <aura:if isTrue="{!v.loaded }">
+        <div>
+            <div role="status" class="slds-spinner slds-spinner_large slds-spinner_inverse"
+                 >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+        </aura:if>
+    </aura:component>

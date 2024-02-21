@@ -1,0 +1,34 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #ffffff;
+
+ }
+ .THIS .list_modal.slds-modal__container{
+     width:50%!important;
+ }
+.THIS .headerCSS{
+    font-size: x-large;
+}
+.THIS .slds-listbox.slds-listbox_vertical {
+    padding-left: 0;
+    margin-left: 0;
+}
+.THIS.slds-modal.slds-fade-in-open.slds-modal_small .signature_modal .slds-modal__content{
+    min-height: auto;
+    height : 31%;
+}
+@media (max-width: 767px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}
+@media (max-width: 576px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}
+.THIS .list_modal .slds-modal__content {
+    height: 300px !important;
+    min-height: 200px !important;
+}

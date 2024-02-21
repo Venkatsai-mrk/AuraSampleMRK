@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Template_Equipment</fullName>
+    <active>true</active>
+    <label>Template Equipment</label>
+    <picklistValues>
+        <picklist>Billable__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Claim_type__c</picklist>
+        <values>
+            <fullName>Institutional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Code_Category__c</picklist>
+        <values>
+            <fullName>HCPCS Level 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCPCS Level 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ICD -10-PCS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifier</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Item_type__c</picklist>
+        <values>
+            <fullName>Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inventory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedure</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Place_Of_Service_Picklist__c</picklist>
+        <values>
+            <fullName>01 - Pharmacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02 - Telehealth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>35-40 - Unassigned</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Related_Procedure_Code_Category__c</picklist>
+        <values>
+            <fullName>HCPCS Level 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCPCS Level 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ICD -10-PCS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_type__c</picklist>
+        <values>
+            <fullName>Main</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medicine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utility</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Procedure__c</picklist>
+        <values>
+            <fullName>Insurance Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Payment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Version__c</picklist>
+        <values>
+            <fullName>ICD-10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ICD-9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

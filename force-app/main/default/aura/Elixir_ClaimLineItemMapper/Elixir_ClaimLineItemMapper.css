@@ -1,0 +1,25 @@
+.THIS .slds-modal__header.attach_claim-head {
+    background-color: #493266;
+    color: #fff;
+}
+.THIS .claimline_table{
+    border: 1px solid #ccc;
+    width: 80%;
+    margin: 0 auto;
+}
+.THIS .claimline_table thead th{
+    background-color: #f1f2f3;
+}
+.THIS .claimline_table thead th:first-child{
+    width: 77px;
+    
+}
+.THIS .claimline_table thead th:last-child{
+    width: 60px;
+    
+}
+.THIS .claimline_table thead th:first-child, .THIS .claimline_table thead th:last-child,
+.THIS .claimline_table tbody td:first-child, .THIS .claimline_table tbody td:last-child{
+    padding-left: 8px;
+    padding-right: 8px;
+}

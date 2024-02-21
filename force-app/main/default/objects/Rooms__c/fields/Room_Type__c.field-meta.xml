@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Room_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Room Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Balcony</fullName>
+                <default>false</default>
+                <label>Balcony</label>
+            </value>
+            <value>
+                <fullName>King Bed</fullName>
+                <default>false</default>
+                <label>King Bed</label>
+            </value>
+            <value>
+                <fullName>Queen Bed</fullName>
+                <default>false</default>
+                <label>Queen Bed</label>
+            </value>
+            <value>
+                <fullName>No Balcony</fullName>
+                <default>false</default>
+                <label>No Balcony</label>
+            </value>
+            <value>
+                <fullName>Sliding Balcony Door</fullName>
+                <default>false</default>
+                <label>Sliding Balcony Door</label>
+            </value>
+            <value>
+                <fullName>Regular Balcony Door</fullName>
+                <default>false</default>
+                <label>Regular Balcony Door</label>
+            </value>
+            <value>
+                <fullName>Close to Elevator</fullName>
+                <default>false</default>
+                <label>Close to Elevator</label>
+            </value>
+            <value>
+                <fullName>ADA</fullName>
+                <default>false</default>
+                <label>ADA</label>
+            </value>
+            <value>
+                <fullName>Door side of Room</fullName>
+                <default>false</default>
+                <label>Door side of Room</label>
+            </value>
+            <value>
+                <fullName>Window side of Room</fullName>
+                <default>false</default>
+                <label>Window side of Room</label>
+            </value>
+            <value>
+                <fullName>Semi-Private</fullName>
+                <default>false</default>
+                <label>Semi-Private</label>
+            </value>
+            <value>
+                <fullName>Lower Level</fullName>
+                <default>false</default>
+                <label>Lower Level</label>
+            </value>
+            <value>
+                <fullName>Off-Set Queens</fullName>
+                <default>false</default>
+                <label>Off-Set Queens</label>
+            </value>
+            <value>
+                <fullName>Walk-Out Balcony</fullName>
+                <default>false</default>
+                <label>Walk-Out Balcony</label>
+            </value>
+            <value>
+                <fullName>Dormitory</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dormitory</label>
+            </value>
+            <value>
+                <fullName>Double Occupancy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Double Occupancy</label>
+            </value>
+            <value>
+                <fullName>Single Occupancy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Single Occupancy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

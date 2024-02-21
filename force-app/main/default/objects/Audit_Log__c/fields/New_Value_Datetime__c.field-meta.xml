@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Value_Datetime__c</fullName>
+    <description>Indicates the date and time when the new value was assigned to the field during the audited action.</description>
+    <externalId>false</externalId>
+    <label>New Value Datetime</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

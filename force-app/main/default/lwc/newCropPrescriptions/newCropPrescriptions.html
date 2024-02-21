@@ -1,0 +1,129 @@
+<template>
+    <div class="divFirst">
+        <div class="divSecond">
+            <div class="slds-p-around_medium lgc-bg list_view_and_table_container">
+                <lightning-tile type="media" title="Prescription List" class="list_view_container lightningTile">
+                    <!--Added by Ashwini-->
+                    <lightning-breadcrumbs>
+                        <lightning-breadcrumb
+                            label="Accounts"
+                            
+                            onclick={navToListView}
+                        >
+                        </lightning-breadcrumb>
+                        <lightning-breadcrumb
+                            label={AccountName}
+                            onclick={navToAccRecord}
+                        >
+                        </lightning-breadcrumb>
+                    </lightning-breadcrumbs>
+                    <!---End-->
+                    <lightning-icon slot="media" icon-name="standard:orders" size="Large" class="icon_custom_class"></lightning-icon>
+                    <span>{customLabel}</span>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-combobox_container slds-size_small">
+                                <div class={dropdownTriggerClass} aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none" onclick={handleFilterClickExtend}>
+                                        <span class="current_filter">{currentFilter}
+                                            <lightning-icon class="slds-button__icon slds-icon-utility-down slds-icon_container forceIcon"
+                                                data-data-rendering-service-uid="232" data-aura-rendered-by="371:0" data-aura-class="forceIcon" icon-name="utility:down" size="x-small">
+                                            </lightning-icon>
+                                        </span>
+                                    </div>
+                                    <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                            <template for:each={filterOptions} for:item="option">
+                                                <li role="presentation" class="slds-listbox__item" key={option.value}>
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" 
+                                                        data-filter={option.value} onclick={handleFilterChangeButton}>
+                                                        <span class="slds-media__figure slds-listbox__option-icon" data-filter={option.value}></span>
+                                                        <span class="slds-media__body" data-filter={option.value}>
+                                                            <span class="slds-truncate" title="Option A" data-filter={option.value}>{option.label}</span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-tile>
+            </div>
+            <div>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item padding="around-small" size="6" flexibility="auto">
+                        <lightning-input type="search" variant="label-hidden" placeholder="Search Drug Name" value={searchValue} class="searchInput" onchange={searchKeyword}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6" flexibility="auto">
+                        <!--Button to start the search process-->
+                        <lightning-button variant="neutral" title="Search" label="Go" onclick={handleSearchKeyword} class="slds-float_left" ></lightning-button>
+                        <!--Button to navigate to Create Order Page-->
+                        <lightning-button-icon icon-name="action:refresh" variant="border-filled" alternative-text="Refresh"  onclick={handleRefresh} class="slds-float_right padding" title="Refresh"></lightning-button-icon>
+                       
+
+                        <template if:true={ShowBtn}>
+                            <lightning-button variant="neutral"  label="Activate" onclick={navigateToNewCropMedEntry} class="slds-float_right padding"></lightning-button>       
+                   
+                 <lightning-button variant="neutral"  label="New" onclick={navigateToNewCrop} class="slds-float_right padding"></lightning-button>  
+                    
+                </template>
+                <div class="slds-float_right padding">
+                    <c-prescription-column-configuration onsave={handleCallMethodEvent}></c-prescription-column-configuration>
+                    </div>
+                </lightning-layout-item>
+           
+                </lightning-layout>
+            </div>
+
+           
+           
+
+            <div>
+                <template if:true={data}>
+                <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        sorted-by={sortBy}
+                                     sorted-direction={sortDirection}
+                                     onsort={doSorting}
+                        onrowaction={fetchrecord}
+                        columns={defaultCols}>
+                </lightning-datatable>
+                </template>
+            </div>
+            </div></div>
+            <div>
+            <template if:true={openVf}>
+                
+                <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+                    <div class="slds-modal__container enhasesize">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                            <lightning-icon icon-name="utility:close"
+                               alternative-text="close"
+                               variant="inverse"
+                               size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                         </button>
+                    <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{customLabel}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <c-new-crop-child-comp record-id={recordVal} page={page} page-name={pageName}></c-new-crop-child-comp>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Close</button>
+                    </div>
+                    </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                 
+
+
+                   
+            </template>
+        </div>
+    
+</template>

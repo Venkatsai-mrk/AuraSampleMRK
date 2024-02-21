@@ -1,0 +1,77 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="wrapListItems" type="List"/>
+    <aura:attribute name="editInvlst" type="List"/>
+    <!--aura:handler name="init" value="{!this}" action="{!c.doInit}"/-->
+    <aura:attribute name="recSelectId" type="String" default=""/>
+    <aura:attribute name="column" type="Object"/> 
+    <aura:attribute name="ind" type="String"/>
+    <aura:attribute name="editMode" type="Boolean" default="false"/>
+    <aura:attribute name="invMode" type="Boolean" default="true"/>
+    <aura:attribute name="lotRequired" type="Boolean" />
+    
+    <aura:if isTrue="{!v.editMode}">
+        
+        <c:editInventory isShowModal="true" column="{!v.editInvlst}" index="{!v.ind}" onvaluechange="{!c.getValueFromLwc}" onclosechange="{!c.closeLwc}" editButton="false" lotRequired="{!v.lotRequired}"/>
+        
+    </aura:if>
+    
+    <aura:if isTrue="{!v.invMode}">
+    
+    <h1 class="slds-page-header__title">Inventory List</h1>
+    <br/>
+    <div class="tableborder" >
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead> 
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">S.No</th>
+                    <th class="" scope="col">Inventory Type</th>
+                    <th class="" scope="col">Inventory Item</th>
+                    <aura:if isTrue="{!v.lotRequired}">
+                        <th class="" scope="col">Lot Name</th>
+                    </aura:if>
+                    <!--th>Units Available</th-->
+                    <th class="" scope="col">Units Required</th>
+                    <th class="" scope="col">Total Price</th>
+                    <!--th></th-->
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.wrapListItems}" var="wrapVar" indexVar="index">
+                    <tr class="slds-hint-parent" id="{!index}">
+                        <td>
+                            {!index+1}
+                        </td>
+                        <td>{!wrapVar.Type}</td>
+                        
+                        <td>{!wrapVar.Name}</td>
+
+                        <aura:if isTrue="{!v.lotRequired}">
+                            <td>{!wrapVar.Lot}</td>
+                        </aura:if>
+                        
+                        <!--td>{!wrapVar.Avail}</td-->
+                        
+                        <td>{!wrapVar.req}</td>
+
+                        <td>{!wrapVar.totalPrice}</td>
+                        
+                        <!--td> 
+                            
+                            <lightning:buttonIcon iconName="utility:edit" name="{!index}" variant="bare" onclick="{! c.editTalent }" alternativeText="Edit" />
+                            
+                            <lightning:buttonIcon iconName="utility:delete" name="{!index}" variant="bare" onclick="{! c.deleteRowId }" alternativeText="Delete" />
+                            
+                        </td-->  
+                        
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+    </div>
+    
+    <br/><br/>
+        </aura:if>
+    
+</aura:component>

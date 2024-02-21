@@ -1,0 +1,97 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" 
+                controller="AppointmentsForPortal"  access="global" >
+    <aura:attribute name="pastAppointmentsList" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="isButtonDisabled" type="Boolean" default="false" />
+    
+     <aura:attribute name="enableVisitSummary" type="Boolean" default="false"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/> 
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "PresId" type="String"/>
+    <aura:attribute name="selectedFormName" type="Boolean"/>
+    <aura:attribute name="viewMode" type="Boolean"/>
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <aura:attribute name="flag" type="Boolean" default="false"/>
+    <aura:attribute name="url" type="String"/>
+    <lightning:navigation aura:id="navigationService" />
+    <aura:attribute name="pageReference" type="Object"/>
+    <div class="upapp_port">
+        <div class="care-head">
+            <div class="slds-text-heading_small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">Past Appointments</div>
+                </div>
+            </div>
+        </div>
+        <div class="care_team-box">  
+            <aura:if isTrue="{!empty(v.pastAppointmentsList)}">
+                <div class="iconAlign">
+                    <lightning:icon iconName="utility:event" size="medium" alternativeText="Event" />
+                    <div class="slds-text-color_weak">
+                        <h3 class="slds-text-heading_medium fontSize">No Past Appointments…</h3>
+                    </div>
+                </div>
+                
+                <aura:set attribute="else">
+                    <aura:iteration items="{!v.pastAppointmentsList}" var="appointment">
+                        <div class="appointment_list">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                                    <div class="appoint_datge">
+                                        <p><lightning:formattedDateTime value="{!appointment.StartDateTime}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                                        minute="2-digit" hour12="true"/></p>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_5-of-12">
+                                    <div class="appoint_name">
+                                        <h4>{!appointment.Subject}</h4>
+                                        <p>{!appointment.ElixirSuite__Practitioner__r.Name}</p>
+<a href="{!'https://' + appointment.ElixirSuite__Virtual_Meeting_Link__c}" target="_blank"><p>{!appointment.ElixirSuite__Virtual_Meeting_Link__c}</p></a>
+                                        <!--p>{!appointment.Owner.FirstName}&nbsp;{!appointment.Owner.LastName}</p-->
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_5-of-12 slds-text-align_right">
+                                    <div class="appoint_btn">
+                                        <aura:if isTrue="{!appointment.hasNotes}">
+                                        <lightning:button class="hasDocument"
+                                                              label="Visit Notes"
+                                                          variant="brand"
+                                                          onclick = "{!c.generateVisitNote}"
+                                                          name="{!appointment.Id}"/>
+                                        <aura:set attribute="else">
+                                                <lightning:button class="btncss"
+                                                                  label="Visit Notes" 
+                                                                  variant="brand" 
+                                                                  disabled="true" />
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                        <aura:if isTrue="{!appointment.hasDocument}">
+                                            <lightning:button class="hasDocument"
+                                                              label="Visit Summary" 
+                                                              variant="brand" 
+                                                              onclick="{!c.generateVisitSummary}" 
+                                                              name="{!appointment.Id}" />
+                                            <aura:set attribute="else">
+                                                <lightning:button class="btncss"
+                                                                  label="Visit Summary" 
+                                                                  variant="brand" 
+                                                                  disabled="true" />
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:iteration>
+                </aura:set>
+            </aura:if>
+        </div>
+        <div class="ma_btn ">
+            <button class="slds-button slds-button_brand" onclick="{!c.navToMoreAppointments }">More Appointments</button>
+        </div>
+    </div>
+    
+    
+</aura:component>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ferquency__c</fullName>
+    <externalId>false</externalId>
+    <label>Frequency</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Repeat</fullName>
+                <default>false</default>
+                <label>Repeat</label>
+            </value>
+            <value>
+                <fullName>Number Of Times</fullName>
+                <default>false</default>
+                <label>Number Of Times</label>
+            </value>
+            <value>
+                <fullName>Days</fullName>
+                <default>false</default>
+                <label>Days</label>
+            </value>
+            <value>
+                <fullName>Weeks</fullName>
+                <default>false</default>
+                <label>Weeks</label>
+            </value>
+            <value>
+                <fullName>After every &apos;n’ hours</fullName>
+                <default>false</default>
+                <label>After every &apos;n’ hours</label>
+            </value>
+            <value>
+                <fullName>After lunch</fullName>
+                <default>false</default>
+                <label>After lunch</label>
+            </value>
+            <value>
+                <fullName>After supper/Dinner</fullName>
+                <default>false</default>
+                <label>After supper/Dinner</label>
+            </value>
+            <value>
+                <fullName>Before Breakfast</fullName>
+                <default>false</default>
+                <label>Before Breakfast</label>
+            </value>
+            <value>
+                <fullName>Custom pheno</fullName>
+                <default>false</default>
+                <label>Custom pheno</label>
+            </value>
+            <value>
+                <fullName>Once a day (AM)</fullName>
+                <default>false</default>
+                <label>Once a day (AM)</label>
+            </value>
+            <value>
+                <fullName>Once a day (HS)</fullName>
+                <default>false</default>
+                <label>Once a day (HS)</label>
+            </value>
+            <value>
+                <fullName>Once a day midday</fullName>
+                <default>false</default>
+                <label>Once a day midday</label>
+            </value>
+            <value>
+                <fullName>Once a day (Qam)</fullName>
+                <default>false</default>
+                <label>Once a day (Qam)</label>
+            </value>
+            <value>
+                <fullName>Once a day (QHS)</fullName>
+                <default>false</default>
+                <label>Once a day (QHS)</label>
+            </value>
+            <value>
+                <fullName>At a specific time</fullName>
+                <default>false</default>
+                <label>At a specific time</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

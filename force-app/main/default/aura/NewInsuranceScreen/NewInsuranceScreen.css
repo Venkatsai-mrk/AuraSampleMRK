@@ -1,0 +1,16 @@
+.THIS .parentCSS{
+    height:100%;
+}
+.THIS .childCSS {
+    width: 100%;
+    background-color: rgb(243, 242, 242);
+    height: 100%;
+    padding: 30px 30px 15px;    
+}
+.THIS .titlegrp {
+    font-weight: bold !important;
+    font-size: 150% !important;
+}
+.THIS .radiogrp {
+font-size:20pt;
+}

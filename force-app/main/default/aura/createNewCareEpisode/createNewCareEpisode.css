@@ -1,0 +1,26 @@
+.THIS.c-container {
+    border: 5px solid #d8dde6;
+    margin: 1px 1px 1px 1px;
+    background: #f8f8f8;
+    padding: 80px;
+}
+.THIS .header{
+    border-bottom:1px solid #CCC;
+}
+.THIS .header h1{
+ font-size:30px;
+ margin:15px 0 20px;
+}
+.THIS .body .slds-form:first-child {
+    padding: 15px 50px;
+}
+.THIS .body .slds-form:first-child .slds-form{
+    padding: 0px 0px;
+}
+.THIS .body h2{
+    
+background-color:#eee;
+padding:5px 15px ;
+margin:10px 10px 0px;
+width:calc(100% - 20px);    
+}

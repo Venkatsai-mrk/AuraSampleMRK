@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>{!Location__c.Name} has been marked as Out of Order by {!Location__c.LastModifiedBy} and will be unavailable for any bookings from {!Location__c.Out_of_Order_Date__c}</p>
+    <p>Reason is {!Location__c.Out_of_Order_Reason__c}. </p>
+    <p>Please take necessary next steps.</p>
+    <p>Regards,<br>{!Organization.Name}</p>
+</body>
+</html>

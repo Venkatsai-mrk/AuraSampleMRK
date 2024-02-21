@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reserved_bed__c</fullName>
+    <description>This field is used to associate the account holder with a specific bed.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Bed ID</label>
+    <referenceTo>Location__c</referenceTo>
+    <relationshipLabel>Beds</relationshipLabel>
+    <relationshipName>Reserved_beds</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

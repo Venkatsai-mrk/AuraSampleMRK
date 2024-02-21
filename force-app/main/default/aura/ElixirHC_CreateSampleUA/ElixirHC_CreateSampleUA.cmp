@@ -1,0 +1,231 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="ElixirHC_UAanalysisApexConroller" access="global" >
+    
+    <lightning:workspaceAPI aura:id="workspace" /> <!--Nikhil -->
+    <aura:attribute name="popFlag" type="Boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="physicalSampleDetails" type="UA_Sample_Details__c"/>
+    <aura:attribute name="accountDetails" type="Account"/>
+    <aura:attribute name="openModal" type="Boolean" default="true"/> 
+    <aura:attribute name="usersList" type="User[]"/>
+    <aura:attribute name="patAge" type="String"/>
+    <aura:attribute name="patDOB" type="String"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:registerEvent name="LandingPage" type="c:LandingPage" />    
+    <aura:registerEvent name="RefreshUAListView" type="c:RefreshUAListView" /> 
+    
+    <aura:if isTrue="{!v.openModal}">
+        <div aura:id="text" onscroll="{!c.scrollBottom}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open bg-transparent">
+                <div class="slds-modal__container hideDiv">
+                    
+                    <header class="slds-modal__header slds-text-heading_large">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Urine Analysis</h2>
+                        
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12 patient_card">
+                                <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_small slds-p-left_none slds-p-right_none">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 bold_row">
+                                                Patient Name:
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-p-around_none">
+                                                {!v.accountDetails.Name}
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 bold_row">
+                                                DOB:
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12  slds-p-around_none">
+                                                <ui:outputDate value="{!v.patDOB}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12  bold_row">
+                                                Age:
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-p-around_none">
+                                                <aura:if isTrue="{!(v.patAge != 'Undefined' || v.patAge != null ||  v.patAge != '')}">
+                                                    {!v.patAge} years
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 ">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 bold_row">
+                                                Blood Group:
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                {!v.accountDetails.ElixirSuite__Blood_Group__c}
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 bold_row">
+                                                MRN No.
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                {!v.accountDetails.ElixirSuite__MRN_Number_New__c}
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 bold_row">
+                                                Status:
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <p>Active</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12">
+                                &nbsp;
+                            </div>
+                            <div class="slds-col slds-size_4-of-12 right_side">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input type="checkbox" disabled="true" checked="true" label="Physical" />
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input type="checkbox" disabled="true" label="Laboratory"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-m-top_medium slds-text-align_center">
+                            <div class="slds-col slds-size_12-of-12 physical_sample">
+                                <h2>Sample Details</h2>
+                                <div class="slds-grid slds-gutters physical_sample_row">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Name of the Container<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="text" required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Name_of_container__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Type of the Container<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="text" required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__ContainerType__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Specimen Quantity<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="number"  required="true" aura:id="SpecimenQuantity" value="{!v.physicalSampleDetails.ElixirSuite__Specimen_Quantity__c}" onblur="{!c.showInfo}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Condition of the Specimen<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="text" required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Specimen_Condition__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters m-top_35">
+                                            <div class="slds-col slds-size_3-of-12 sample_column">
+                                                Notes
+                                            </div>
+                                            <div class="slds-col slds-size_9-of-12">
+                                                <lightning:textarea autocomplete="off" type="text" value="{!v.physicalSampleDetails.ElixirSuite__Notes__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Order to<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:select required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Order_to__c}">
+                                                    <option value="">Choose one...</option>
+                                                    <aura:iteration items="{!v.usersList}" var="userRec">
+                                                        <option value="{!userRec.Id}">{!userRec.Name}</option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Description of the Container
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="text" value="{!v.physicalSampleDetails.ElixirSuite__Container_Description__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Container Size/Volume<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="number" required="true" aura:id="containersize" value="{!v.physicalSampleDetails.ElixirSuite__ContainerSize__c}" onblur="{!c.showAction}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Additives, if any
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input autocomplete="off" type="text" value="{!v.physicalSampleDetails.ElixirSuite__Additives_if_Any__c}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12 sample_column">
+                                                Collection Date/Time<span>*</span>
+                                                <lightning:input autocomplete="off" type="datetime" required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Collection_Datetime__c}"/>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_12-of-12 sample_column">
+                                                Specimen Collector<span>*</span>
+                                                <lightning:input autocomplete="off" type="text" required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Specimen_Collector__c}"/>
+                                            </div> 
+                                            
+                                        </div>
+                                        
+                                        <div class="slds-grid slds-gutters slds-m-top_large">
+                                            <div class="slds-col slds-size_6-of-12 sample_column">
+                                                Order by<span>*</span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:select required="true" aura:id="field" value="{!v.physicalSampleDetails.ElixirSuite__Order_By__c}">
+                                                    <option value="">Choose one...</option>
+                                                    <aura:iteration items="{!v.usersList}" var="userRec">
+                                                        <option value="{!userRec.Id}">{!userRec.Name}</option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer buttonRound">
+                        <lightning:button label="Save" variant="brand" disabled="{!v.disabled}" onclick="{!c.Save}"/>
+                        <lightning:button label="Cancel" variant="neutral" onclick="{!c.closeModel}"/>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,169 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="PaymentSchedule">
+    
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name ="patientID" type = "String"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name ="Fdate" type = "String"/>
+    <aura:attribute name ="Tdate" type = "String"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name ="patId" type = "String"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedLabOrders" type="List" />
+    <aura:attribute name="showDeleteButton" type="Boolean" default="false"/>
+    <aura:attribute name="isEnabledEditButton" type="Boolean" default="false"/>
+    <aura:attribute name="sortedBy" type="String" default="Name"/> 
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="openNewForm" type="Boolean" default="false"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/>
+    <aura:attribute name = "editScreenDisabled" type="boolean" default="false"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="labresult" type="boolean" default="false"/>
+    <aura:attribute name="isClaimList" type="Boolean"/>
+    <!-- <aura:handler name="change" value="{!v.labresult}" action="{!c.doInit}"/>-->
+    <aura:attribute name="errorType" type="String"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="totalCount" type="Integer"/>
+    <aura:attribute name="viewAllBool" type="Boolean" default="true"/>
+    <aura:attribute name="viewAllBoolgo" type="Boolean" default="false"/>
+    <div class="w-100">
+        
+        <div class="w-100">
+            
+            <!--List Status-->
+            <div class="slds-grid mobile-grid">
+                <div class="slds-col slds-size_9-of-12 pr">
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 remove_label">
+                                    <b>From Date:</b>
+                                    <lightning:input type="Date" Label="From Date" value="{!v.Fdate}" onchange="{!c.checkDates}"></lightning:input>
+                                    <aura:if isTrue="{!v.errorType == 'Fdate'}">
+                                        <span class="color-r">
+                                            {!v.errorMsg}
+                                        </span>
+                                    </aura:if>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 remove_label">
+                                    <b>To Date :</b>
+                                    <lightning:input type="date" value="{!v.Tdate}" onchange="{!c.checkDates}"></lightning:input>
+                                    <aura:if isTrue="{!v.errorType == 'Tdate'}">
+                                        <span class="color-r">
+                                            {!v.errorMsg}
+                                        </span>
+                                    </aura:if>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <button class="apply-btn" onclick="{! c.FilteredData1 }">
+                                Apply
+                            </button>
+                            <lightning:button  variant="neutral"
+                                      label="Clear Filters"
+                                      title="Clear Filters"
+                                      onclick="{!c.doInit}"
+                                              class="clear_filters"/>
+                            <!--lightning:button label="Go" title="Go" onclick="{!c.FilteredData1}"/-->
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <!--div class="changepostion slds-is-absolute">
+                            {! v.data.length }  items . Sorted by {!v.sortedBy} 
+                            <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                            </aura:if>
+                        </div-->
+                </div> 
+                
+                <div class="slds-col slds-size_3-of-12 slds-text-align_right slds-p-top_medium">
+                    <!--aura:if isTrue="{!v.showDeleteButton}">
+                          <lightning:button label="Delete Selected"  variant="brand" onclick="{!c.deleteSelectedRows}"/>
+                          <lightning:button label="Send Claims"  variant="brand" onclick="{!c.sendSelectedClaimId}"/>  
+                        </aura:if-->
+                    <!--lightning:button label="New" title="New Lab Order" onclick="{!c.createClaim}"/-->
+                    
+                    <!--   <lightning:button label="New" title="New" onclick="{!c.openPopUp}"/>-->
+                    <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class="inline-buttons left-margin"/> 
+                    
+                </div>
+            </div> 
+            <div class="db">         
+                <!--to display datatable-->
+                <div aura:id="dataTable" class="slds-col data-table-100">
+                    
+                    <lightning:datatable data="{! v.data }"  
+                                         class = "table-test"
+                                         aura:id="myCol"
+                                         columns="{! v.mycolumns }" 
+                                         keyField="Id"
+                                         selectedRows="{!v.selectedRows}"
+                                         hideCheckboxColumn="true"
+                                         onsort="{!c.updateColumnSorting}"
+                                         sortedBy="{!v.sortedBy}"  
+                                         sortedDirection="{!v.sortedDirection}"
+                                         onrowaction="{! c.handleRowAction }"
+                                         onrowselection="{!c.selectedRows}"
+                                         resizeColumnDisabled="false" />
+                    <br/>
+                    <aura:if isTrue="{!v.data.length == 0}">
+                        <center class="slds-m-bottom_medium">
+                            <span class="slds-text-heading_small">
+                                NO RECORDS TO SHOW
+                            </span>
+                        </center>
+                    </aura:if>
+                    <aura:if isTrue="{!v.viewAllBoolgo}">                                                       
+                        <center><lightning:button label="View All" title="View All" disabled="{! or(v.data.length == 0,v.data.length == v.totalCount,true,false)}" onclick="{! c.FilteredViewAll }"/></center>                            
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.viewAllBool}">                                                        
+                        <center><lightning:button label="View All" title="View All" disabled="{! or(v.data.length == 0,v.data.length == v.totalCount,true,false)}" onclick="{! c.LoadViewAll }"/></center>                            
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.isClaimList}">
+            <c:ClaimTypeSelection isActive="{!v.isClaimList}" patId="{!v.patientId}"></c:ClaimTypeSelection>
+        </aura:if>
+        <aura:if isTrue="{!v.openNewForm}"> 
+        </aura:if> 
+        <aura:if isTrue="{!v.labresult}"> 
+        </aura:if> 
+        <aura:if isTrue="{!v.editScreen}">
+        </aura:if>
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this item?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+    </div>
+    
+</aura:component>

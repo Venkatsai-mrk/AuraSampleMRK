@@ -1,0 +1,6 @@
+({
+    
+    getprocedureRecord : function(component, helper) {
+        
+    }
+})

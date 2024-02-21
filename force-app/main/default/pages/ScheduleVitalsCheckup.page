@@ -1,0 +1,18 @@
+<apex:page standardController="Medical_Examination__c" recordSetVar="Medicalexamination">
+     <apex:includeLightning />
+    <div id="vfpLightningCmpId"></div> 
+    
+    <script>      
+    $Lightning.use("ElixirSuite:scheduleVitalsCheckupApp", function() {     
+    $Lightning.createComponent("ElixirSuite:ScheduleVitalsCheckup",
+    {       
+         accId : '{!$CurrentPage.parameters.id}'
+       
+ 	},
+   "vfpLightningCmpId",
+    function(component) {        
+        // here we can use more lightning Component attributes and component Callback,
+    });
+ });
+ </script>
+</apex:page>

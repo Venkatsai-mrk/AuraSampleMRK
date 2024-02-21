@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_ViewCarePlanApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "problem" type="Object"/> 
+    <aura:attribute name="problemId" type="String" />
+    <aura:attribute name="problemIndex" type="Integer"/>
+    <aura:attribute name= "note" type="Object"/>
+    <aura:attribute name= "note_2" type="Object"/>
+    <aura:attribute name="listOfNotes" type="Object[]"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name="problemsList" type="Object"/>   
+    <aura:attribute name="allGoals" type="List"/>
+    <aura:attribute name= "carePlan" type="Object"/>
+    <aura:attribute name= "problemFirstCallBack" type="Boolean"/>
+    <aura:attribute name= "isDueDateVisible" type="Boolean" default="true"/>
+    <aura:attribute name= "carePlanViewGoals" type="Boolean"/> 
+    <aura:attribute name= "carePlanClosedStatus" type="Boolean"/> 
+    <aura:attribute name= "customGoalModal" type="Boolean" default="false"/>
+    <aura:attribute name= "addNotesForProblemModal" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="msOptionsList" type="Object"/>
+    <aura:attribute name="editableBoxValView" type="Boolean"/>
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="listEvidence" type="List"/>
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name= "labelApicombo_CustomSetting" type="String"/>
+    <aura:handler name="change" value="{!v.msOptionsList}" action="{!c.handleValueChange}"/>
+    
+    
+    <div class="slds-show accordian_header" aura:id="problemId" >
+        <lightning:button class="slds-show chevron_btn" aura:id="problemSection" iconName="utility:chevronright"   onclick="{!c.problemSection}"/>
+        <lightning:button class="slds-hide chevron_btn" aura:id="problemSection" iconName="utility:chevrondown"   onclick="{!c.problemSection}"/>
+        <div class="slds-page-header c-point">
+            <section class="slds-clearfix">
+                <div class="slds-float--left">                    
+                    <lightning:icon  iconName="utility:puzzle"/> 
+                </div>
+                <div class="slds-m-left--large">
+                    <h3>
+                        {!v.problem.Name}
+                        <div class="slds-float--right right-side_bar">
+                            <div class="slds-float_left">
+                                <div class="slds-grid slds-gutters">
+                                    <aura:if isTrue="{!!v.carePlanClosedStatus}">
+                                        <div class="slds-col slds-size_12-of-12">
+                                            <p>Due Date <i>:</i> <ui:outputDate value="{!v.problem.ElixirSuite__Due_Date__c}"/></p>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>                      
+                        </div>
+                    </h3>
+                    <p>{!v.problem.ElixirSuite__Description__c}</p>
+                </div>
+                <aura:if isTrue="{!v.addNotesForProblemModal}">
+                    <div class="Add_Notes_Problem Add_Notes_Problem_icon">
+                        <c:Elixir_AddNotesProblems carePlan="{!v.carePlan}" listOfNotes="{!v.listOfNotes}" patientId="{!v.recordVal}" problem="{!v.problem}"  notes="{!v.note}"/>
+                    </div>
+                </aura:if>
+            </section>
+            
+            
+        </div>
+        
+        <div class="slds-hide slds-p-around--medium accordian_open slds-p-top_none" aura:id="problemSection">
+            <!--aura:if isTrue="{!not(empty(v.listEvidence))}">              	
+           <div class="chnagepadding">	
+            <c:Elixir_OpenStatusMultiSelectDropdown mslabel="RELATED TO AND EVIDENCED BY" msoptions="{!v.listEvidence}" 	
+                                          msOptionList = "{!v.msOptionsList}"/>	
+            </div>	
+            </aura:if-->
+            <div class="slds-float--right">
+                
+            </div> 
+            <aura:if isTrue="{!v.customSetting.ElixirSuite__Diagnosis__c}">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        <div class="slds-p-left_medium">
+                            <aura:iteration items="{! v.problem.listOfRelatedDiagnosis}" var="diagnosisRec" indexVar="level3Idx">
+                                <span class = "arrangeDiagnosis"> {!diagnosisRec.ElixirSuite__Code__c} </span>
+                                
+                            </aura:iteration>
+                        </div>
+                    </div>
+                    
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.carePlanViewGoals}">
+                
+                <aura:iteration items="{! v.goalsList.listOfDef }" var="goalRec" indexVar="goalIdx">
+                    <!--Behave comp.-->
+                    <c:Elixir_CarePlanViewLevel3 goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" goal="{!goalRec}"
+                                                 goalsList="{!v.goalsList}"
+                                                 note= "{!v.note_2}" carePlan ="{!v.carePlan}"
+                                                 recordVal="{!v.recordVal}" customSetting="{!v.customSetting}"  labelApicombo_CustomSetting="{!v.labelApicombo_CustomSetting}"/>
+                    <div class="first-inner-dl"></div>
+                    
+                </aura:iteration>
+                <aura:iteration items="{! v.goalsList.listOfGoal }" var="goalRec" indexVar="goalIdx">
+                    <c:Elixir_CarePlanViewGoals goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" goal="{!goalRec}"
+                                                goalsList="{!v.goalsList}" carePlan ="{!v.carePlan}" note="{!v.note}"
+                                                recordVal="{!v.recordVal}" customSetting="{!v.customSetting}"  labelApicombo_CustomSetting="{!v.labelApicombo_CustomSetting}"/>
+                    <div class="first-inner-dl"></div>
+                </aura:iteration>
+                
+            </aura:if>
+            
+        </div>
+        
+        
+    </div>
+    
+</aura:component>

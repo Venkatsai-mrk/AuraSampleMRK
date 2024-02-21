@@ -1,0 +1,6 @@
+<aura:component controller="VisitHelperController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name ="recId" type = "Id" />`
+    <aura:attribute name="newVisit" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.createRecordNew}"/>
+</aura:component>

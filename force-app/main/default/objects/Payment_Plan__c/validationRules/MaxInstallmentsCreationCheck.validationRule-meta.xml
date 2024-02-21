@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MaxInstallmentsCreationCheck</fullName>
+    <active>true</active>
+    <description>To control the maximum no of installment creation with one payment plan.</description>
+    <errorConditionFormula>CEILING( Patient_Responsibility__c / Installment_Amount__c ) &gt; 100</errorConditionFormula>
+    <errorMessage>You cannot create more than 100 installments. Please create a new payment plan if required.</errorMessage>
+</ValidationRule>

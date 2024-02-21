@@ -1,0 +1,177 @@
+/* .alignAccountField {
+  margin-top: 22px;
+} */
+
+.thickerBorder {
+  border-bottom-width: 1px;
+  border-color: rgb(201, 201, 201);
+}
+
+.divFirst {
+  width: 100%;
+  height: 100%;
+  color: black;
+}
+
+.lgc-bg {
+  background-color: rgb(200, 200, 200);
+}
+
+.child {
+  display: none;
+  z-index: 1;
+  position: relative;
+}
+
+.parent:hover .child {
+  display: block;
+}
+
+.firstUniqueBuilding {
+  border-top: solid rgb(235, 235, 235) 1px;
+}
+
+.firstUniqueSuite {
+  border-top: solid rgb(235, 235, 235) 1px;
+}
+
+.firstUniqueRoom {
+  border-top: solid rgb(235, 235, 235) 1px;
+}
+
+.bed {
+  color: #b3b3b3; /* Salesforce grey color */
+  cursor: pointer;
+}
+
+.bed-selected {
+  color: #0070d2; /* Salesforce blue color */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.feature-selected {
+  color: #0070d2; /* Salesforce blue color */
+  font-weight: bold;
+  cursor: pointer;
+}
+.room-selected {
+  color: #0070d2; /* Salesforce blue color */
+  font-weight: bold;
+  cursor: pointer;
+}
+.suite-selected {
+  color: #0070d2; /* Salesforce blue color */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.searchResultsTableParent {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.button-space {
+  display: inline-block;
+  width: 10px; /* Adjust the width as per your requirement */
+}
+
+.list-item {
+  cursor: pointer;
+  padding: 5px 5px 5px 30px;
+}
+.value-list {
+  font-size: 13px;
+  max-height: 210px;
+  overflow-y: auto;
+  left: 0;
+  top: 100%;
+  list-style-type: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+.my-input{
+  font-size: 13px;
+}
+.my-input ::placeholder {
+  color: #070707;
+  font-size: 13px;
+}
+.div1{
+  background-color: rgb(220, 220, 220);
+  padding: 5px 5px 5px 30px;
+  font-weight: 700;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  font-size: 14px;
+}
+.divWidth{
+  min-width: 24px;
+}
+
+.column-width-fixed {
+  table-layout:fixed;
+}
+
+.wrap-column-values {
+  overflow-wrap:break-word;
+  white-space: normal;
+}
+.help {
+  padding-left: 3px;
+}
+
+/* .lgc-bg {
+  background-color: none; 
+} */
+
+/* .lgc-bg-inverse {
+  background-color: rgb(22 50 92);
+} */
+.s-text {
+  float: left;
+  font-size: 14px;
+}
+.t-icon {
+  position: relative;
+  z-index: 0;
+  margin-left: 10px;
+  width: 16px;
+  height: 16px;
+  background-color: #747474;
+  display: inline-block;
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
+  color: #fff;
+}
+.t-text {
+  background-color: #16325C;
+  color: #fff;
+  border-radius: 5px;
+  left: 30px;
+  top: 0px;
+  width: 290px;
+  font-size: 12px;
+  padding: 5px 10px;
+  font-weight: 500;
+  display: none;
+}
+.t-carot {
+    width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #16325C;
+  left: 22px;
+  top: 16%;
+  display: none;
+}
+.t-icon:hover .t-text, .t-icon:hover .t-carot {
+  display: block;
+}
+th.heading {
+  position: inherit;
+}

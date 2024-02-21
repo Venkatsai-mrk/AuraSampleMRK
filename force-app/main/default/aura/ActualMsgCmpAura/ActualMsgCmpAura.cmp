@@ -1,0 +1,131 @@
+<aura:component controller="ActualMsgCmpController" implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="message" type="Object" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="isShowModal" type="Boolean" default="false" />
+    <aura:attribute name="isShowAttach" type="Boolean" default="false" />
+    <aura:attribute name="isShowAttachButton" type="Boolean" default="false" />
+    <aura:attribute name="showModalDeletePrompt" type="Boolean" default="false" />
+    <aura:attribute name="showModalArchivePrompt" type="Boolean" default="false" />
+    <aura:attribute name="archiveButton" type="Boolean"/>
+    <aura:attribute name="unArchiveButton" type="Boolean"/>
+    <aura:attribute name="bookMarkButton" type="Boolean" default="false" />
+    <aura:attribute name="removeBookMarkButton" type="Boolean" default="false" />
+    <aura:attribute name="showModalRemoveBookmarkPrompt" type="Boolean" default="false" />
+    <aura:attribute name="showModalBookmarkPrompt" type="Boolean" default="false" />
+    <aura:attribute name="replyMsg" type="Boolean" default="false"/>
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="filterValue" type="String"/>
+    <aura:attribute name="fileList" type="String[]"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+    <aura:if isTrue="{!v.isShowModal}">
+        
+        
+        <div class="bgclor">
+            <h1 class="slds-page-header__title">
+                
+                <div class="demo-only">
+                    <div class="slds-text-color_inverse textAlign">View Message</div>
+                </div>
+            </h1>
+        </div>
+        
+        
+        
+        <div class="slds-box">
+            
+            <lightning:button variant="brand-outline" name="Back" label="Back" title="Back" onclick="{! c.goBack }" />
+            <div class="slds-float_right slds-p-bottom_large">
+                
+                <lightning:button variant="brand-outline" name="Reply" label="Reply" title="Reply" onclick="{! c.navToReplyBoxCmp }" />
+                <lightning:button variant="brand-outline" name="Delete" label="Delete" title="Delete" onclick="{!c.delMsg }" />
+                <aura:if isTrue="{!v.archiveButton}">
+                 <lightning:button variant="brand-outline" name="Archive" label="Archive" title="Archive" onclick="{! c.archiveMsg }" />
+                </aura:if>
+                <aura:if isTrue="{!v.unArchiveButton}">
+                    <lightning:button variant="brand-outline" name="UnArchive" label="UnArchive" title="UnArchive" onclick="{! c.archiveMsg }"/>
+                </aura:if>
+                <aura:if isTrue="{!v.bookMarkButton}">
+                    <lightning:button variant="brand-outline" name="Bookmark" label="Bookmark" title="Bookmark" onclick="{! c.bookmarkMsg }" />
+                   </aura:if>
+                   <aura:if isTrue="{!v.removeBookMarkButton}">
+                    <lightning:button variant="brand-outline" name="RemoveBookmark" label="Remove Bookmark" title="Remove Bookmark" onclick="{! c.bookmarkMsg }" />
+                   </aura:if>
+                <!-- <aura:if isTrue="{!v.isShowAttachButton}">
+                <lightning:button variant="brand-outline" name="View Attachments" label="View Attachments" title="View Attachments" onclick="{! c.viewAttachments }" />
+                </aura:if> -->
+                
+            </div>
+            <br/><br/>
+            <!-- <aura:if isTrue="{!v.isShowAttach}">
+                
+                 <div role="dialog" class="slds-modal slds-fade-in-open bg-col ">
+            <div class="slds-border_top dialog">
+                
+                <div class="slds-modal__content slds-p-around__medium">
+                    <aura:iteration items="{!v.fileList}" var="section" indexVar="idx">
+                    <center><b><lightning:fileCard fileId="{!section}" description=""/></b></center>
+                        </aura:iteration>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleConfirmDialogNo}'/>
+                </footer>
+                
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop__open"></div>   
+               
+                </aura:if> -->
+            <div>
+                <div class="slds-p-left_medium slds-p-right_medium slds-col slds-size_9-of-12">
+                    <div class="slds-text-title_caps">Subject</div><br/>
+                    <h1>
+                        <lightning:formattedText  value="{!v.message.ElixirSuite__Subject__c}"></lightning:formattedText>
+                    </h1>
+                </div>
+            </div><br/>
+            
+            <div class="slds-p-left_medium slds-p-right_medium">
+                <div class="slds-text-title_caps"> Message Details </div>
+            </div><br/>
+            
+            <div class="slds-p-left_medium slds-p-right_medium message-details">
+                
+                <lightning:formattedRichText value="{!v.message.ElixirSuite__Message_Details_lookup__r[0].ElixirSuite__Message_Body__c}"></lightning:formattedRichText>
+                
+            </div>
+            <!--<div class="slds-modal__content slds-p-around__medium">
+                    <aura:iteration items="{!v.fileList}" var="section" indexVar="idx">
+                    <b><lightning:fileCard fileId="{!section}" description=""/></b>
+                        </aura:iteration>
+                </div>-->
+            <div class="slds-grid slds-wrap">
+                <aura:iteration items="{!v.fileList}" var="section" indexVar="idx">
+                    <div class="slds-col slds-size_1-of-3">
+                        <b><lightning:fileCard fileId="{!section}" description=""/></b>
+                    </div>
+                </aura:iteration>
+            </div>
+            
+            
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.replyMsg}">
+        <c:ReplyBoxCmp message="{!v.message}" patientId="{!v.patientId}" showModal="{!v.replyMsg}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalDeletePrompt}">
+        <c:promptForMessaging showModal="{!v.showModalDeletePrompt}" patientId="{!v.patientId}" showModalDeletePrompt="{!v.showModalDeletePrompt}" recordId="{!v.recordId}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalArchivePrompt}" >
+        <c:promptForMessaging showModal="{!v.showModalArchivePrompt}" showModalArchivePrompt="{!v.showModalArchivePrompt}" recordId="{!v.recordId}" archivePrompt="{!v.archiveButton}" unArchivePrompt="{!v.unArchiveButton}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalBookmarkPrompt}">
+        <c:promptForMessaging showModal="{!v.showModalBookmarkPrompt}" showModalBookmarkPrompt="{!v.showModalBookmarkPrompt}" recordId="{!v.recordId}" bookMarkPrompt="{!v.bookMarkButton}" removeBookMarkPrompt="{!v.removeBookMarkButton}"/>
+    </aura:if>
+    
+    
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_Authorization_Number__c</fullName>
+    <description>Unique identifier assigned by an insurance company or payer to approve a specific healthcare service or treatment before it is provided to a patient.</description>
+    <externalId>false</externalId>
+    <label>Prior Authorization Number</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

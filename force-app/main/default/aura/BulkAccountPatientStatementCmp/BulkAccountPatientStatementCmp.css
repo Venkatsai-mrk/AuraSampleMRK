@@ -1,0 +1,165 @@
+.THIS .view_stmt {
+    border: 1px solid #039eda;
+    box-shadow: 0px 0px 4px 0 #ccc;
+}
+.THIS .view_stmt thead th {
+    background-color: #039eda;
+    color: #fff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.THIS .claim-btn .slds-radio {
+    float: left;
+    margin-right: 15px;
+}
+.THIS .slds-modal__container {
+    width: 50% !important;
+}
+.THIS .hideDiv .slds-modal__content{
+    height:unset !important;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+.THIS .colPayHeader {
+   color: black;
+   background-color: white;
+}
+.THIS .view_stmt tbody tr td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.THIS .view_stmt tbody tr td .slds-button { 
+	padding-top: 0;
+    padding-bottom: 0;
+    line-height: 0;
+}
+.THIS .view_stmt tbody tr:nth-child(odd) td {
+    background-color: #f1f2f3;
+}
+.THIS .view_stmt tbody tr:nth-child(even) td {
+    background-color: #d1d2d3;
+}
+.THIS .form-elem .slds-radio {
+    float: left;
+    width: 225px;
+}
+.THIS .form-elem .slds-form-element__label {
+    font-weight: 700;
+    color: #000;
+}
+.THIS .down_stmt {
+    background-color: #f1f2f3;
+    padding: 0 0px 15px;
+    margin-top: 15px;
+}
+.THIS .slds-grid {
+    display: flex;
+    padding-block-start: 0;
+}
+.THIS .down_stmt h2 {
+    text-align: center;
+    font-size: 24px;
+    margin: 5px 0 10px;
+    background-color: #493266;
+    width: calc(100% + 0px);
+    color: #fff;
+}
+.THIS .buttonRound button:focus{
+    background-color: #493266;
+    color : white;
+    width : 40%;
+}
+.THIS .slds-modal.slds-fade-in-open {
+    background-color: rgba(0,0,0,0.5);
+}
+.THIS .slds-modal__header {
+    font-size: x-large;
+}
+.THIS .patient_stmt-img {
+    width: max-content;
+    margin: 0 auto;
+}
+.THIS .pr {
+    position:relative;
+}
+.THIS .bill-summ_btn {
+  /*  height: 50px;*/
+    font-size: 18px;
+    width: 100%;
+    font-weight:bold;
+    border-style:none;
+}
+.THIS .previous-stmt-btn {
+    color: black;
+    height: 50px;
+    font-size: 20px;
+    width: 100%;
+    font-weight:bold;
+}
+@media (max-width: 992px) {
+ 	.THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 75% !important;
+    }
+}
+@media (max-width: 767px) {
+ 	.THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 89% !important;
+    }
+    .THIS .bill-summ_btn, .THIS .previous-stmt-btn {
+        font-size: 17px;
+    } 
+    .THIS .ds-row .slds-size_3-of-12 {
+        width: 40%;
+    }
+    .THIS .ds-row .slds-size_2-of-12 {
+        display:none;
+    }
+    .THIS .ds-row .slds-size_3-of-12:last-child {
+        width: 20%;
+    }
+}
+@media (max-width: 576px) {
+ 	.THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 86% !important;
+    }
+    .THIS .bill-summ_btn, .THIS .previous-stmt-btn {
+        font-size: 14px;
+    } 
+    .THIS .ds-row .slds-size_3-of-12 {
+        width: 40%;
+    }
+    .THIS .ds-row .slds-size_2-of-12 {
+        display:none;
+    }
+    .THIS .ds-row .slds-size_3-of-12:last-child {
+        width: 20%;
+    }
+}
+/* changes */
+.THIS .changesalign{
+    text-align: center;
+}
+
+.THIS .lemarg {
+margin-left: 60px;
+}
+
+.THIS .rimarg {
+margin-left: 20px;
+}
+
+.THIS .margBot {
+margin-bottom: 10px;
+}
+
+.THIS .center {
+display: flex;
+justify-content: center;
+}

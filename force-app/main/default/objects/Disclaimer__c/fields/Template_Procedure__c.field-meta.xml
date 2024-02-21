@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Template_Procedure__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field will be storing Template Procedure record against the disclaimer.</description>
+    <externalId>false</externalId>
+    <label>Template Procedure</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Procedure__c.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Template_Procedure</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>Disclaimers</relationshipLabel>
+    <relationshipName>Disclaimers</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

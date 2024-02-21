@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adjustment_Codes</fullName>
+    <columns>ElixirSuite_Adjustment_Reason_Code__c</columns>
+    <columns>Adjustment_Group_Code__c</columns>
+    <columns>ElixirSuite_Recommendation__c</columns>
+    <columns>ElixirSuite_Assign_To__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Master_Object__c.ElixirSuite_Adjustment_Codes</value>
+    </filters>
+    <label>Adjustment Codes</label>
+</ListView>

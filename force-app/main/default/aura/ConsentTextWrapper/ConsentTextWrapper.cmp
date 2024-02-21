@@ -1,0 +1,8 @@
+<aura:component access="public">
+    <aura:attribute name="textValue" type="String" default=""/>
+    <aura:attribute name="column" type="Object" default=""/>
+    <aura:attribute name="consentData" type="Object" default=""/>
+    <aura:method name="childMessageMethod" action="{!c.myAction}" access="public"/>
+	<c:consenText aura:id="consent_text" textValue="{!v.textValue}" column="{!v.column}" 
+                  onvaluechange="{!c.getValueFromLwc}" consentData="{!v.consentData}"/>  
+</aura:component>

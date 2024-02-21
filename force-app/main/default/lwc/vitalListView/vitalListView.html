@@ -1,0 +1,48 @@
+<!-- vitalListView.html -->
+<template>
+    <div class="setMaxHeight">
+    <div>
+            <template if:true={hasData}>
+            <div  class="htC">
+                <lightning-datatable
+                class = "tableCss"
+                key-field="Id"
+                data={data}
+                columns={columns}
+                hide-checkbox-column="true"
+                onrowaction={handleRowAction}
+                sorted-by={sortedBy}
+                sorted-direction={sortedDirection}
+                onsort={handleSort}
+                show-row-number-column>
+                </lightning-datatable>
+            </div>
+            </template>
+            <template if:false={hasData}>
+                <center>No data to display
+
+                </center>
+            </template>
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+    </div>
+    </div>
+    <template if:true={showConfirmWarning}>
+    <div role="dialog" class="slds-modal slds-fade-in-open warning_modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h1 class="slds-text-heading--medium">Severe Warning!</h1>
+            </header>
+            <div class="slds-modal__content slds-p-around--medium">
+                <center>The data which you are trying to delete will get permanently deleted from the patient's database</center>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning-button name='Cancel' label='Cancel' onclick={handleProblemCancel}></lightning-button>
+                <lightning-button variant="brand" name='Delete' label='Delete' onclick={handleVitalDelete} class="slds-m-left_xx-small"></lightning-button>
+            </footer>
+        </div>
+    </div>
+    
+</template>
+</template>

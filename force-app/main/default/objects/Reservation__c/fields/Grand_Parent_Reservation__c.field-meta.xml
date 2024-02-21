@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grand_Parent_Reservation__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>original reservation to which all the child reservations have been originated and linked</description>
+    <externalId>false</externalId>
+    <label>Grand Parent Reservation</label>
+    <referenceTo>Reservation__c</referenceTo>
+    <relationshipLabel>Grand Parent Reservation</relationshipLabel>
+    <relationshipName>Reservations2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<font face="arial">Hi {!Contact.Name}</font>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[To see the full conversation<div>Login in to the portal to view complete message.</div><div><a class="netx-shareLink netx-networkUrlText" href="https://momentum-flow-72462-dev-ed.scratch.my.site.com/ElixirPatientPortal" target="_blank" style="color: rgb(64, 76, 91); font-size: 14px; line-height: 16px; text-decoration-line: none; font-family: Arial, Helvetica, sans-serif; background-color: rgb(236, 241, 245);">https://momentum-flow-72462-dev-ed.scratch.my.site.com/ElixirPatientPortal</a></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

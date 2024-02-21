@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+  <aura:attribute name="isOpen" type="boolean"/>
+    <aura:attribute name="resultName" type="string"/>
+</aura:event>

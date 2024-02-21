@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Set_up_Houses__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Keep this field unchecked if you offer accommodation only in the form of rooms</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If this box is checked, then you cannot create rooms and can only set up houses .One room will be automatically created for each house. If you want to add more rooms, please add it from the related list.</inlineHelpText>
+    <label>Set Up Houses</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Checkbox_For_Missed_Time_27__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Checkbox For Missed Time 27</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

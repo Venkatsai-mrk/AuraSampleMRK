@@ -1,0 +1,28 @@
+.THIS button.slds-button.slds-button_reset.slds-accordion__summary-action {
+    background-color: #493266;
+    border-radius: 0;
+    color: #fff;
+}
+.THIS .new_icon svg {
+    fill : #493266;
+    padding:0px;
+    margin:0 0 12px 0;
+}
+.THIS .new_del svg {
+    fill : #ff0000;
+    padding:0px;
+    margin:0 0 12px 10px;
+}
+.THIS .eraline_table thead th{
+    background-color: #f1f2f3;
+}
+.THIS .eraline_table .slds-form-element__label {
+    display: none;
+}
+.THIS .date-time .slds-form-element__row .slds-form-element {
+    width: 50%;
+}
+/* changes */
+.THIS .chnagesalign{
+    text-align:center;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assignment_of_benefit_certificate_A__c</fullName>
+    <description>Legal document that allows healthcare providers to receive direct payment for services from a patient's insurance company.</description>
+    <externalId>false</externalId>
+    <label>Assignment of benefit certificate A</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

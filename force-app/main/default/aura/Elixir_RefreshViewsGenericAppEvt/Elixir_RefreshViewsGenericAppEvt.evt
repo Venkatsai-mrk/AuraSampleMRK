@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" access="global">
+    <aura:attribute name="screenType" type="String"/>
+    <aura:attribute name="action" type="String"/>
+    <aura:attribute name="recordIds" type="List"/>
+    <aura:attribute name="button" type="String"/>
+</aura:event>

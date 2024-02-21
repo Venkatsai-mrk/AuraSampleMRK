@@ -1,0 +1,69 @@
+<apex:page controller="GenerateUpfrontPaymentReceiptCtrl" renderAs="pdf">
+    <apex:form style=" padding: 1rem; !important;">
+        <div style="padding: 2rem; !important;">
+            <br/><br/>
+            <center>
+                <apex:image url="{!$Resource.ElixirLogo}" width="180"/>
+                <br/>
+                <header>
+                    <h1 style="font-size: xx-large">
+                        PAYMENT RECEIPT
+                    </h1>
+                </header>
+                <br/><br/>
+            </center>
+            <apex:outputLabel style="color: red; margin-right: 0.5%;">Receipt Number</apex:outputLabel> <span style="">________</span>
+            <br/><br/><br/><br/>
+            <b>Provider Information</b>
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">Provider Name</apex:outputLabel><span style="float: left; display : {!IF(providerData.Name == '','block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(providerData.Name == '','none','block')}">{!providerData.Name}</span>
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">Provider Address</apex:outputLabel><span style="float: left; display : {!IF(providerData.Address__c == '','block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(providerData.Address__c == '','none','block')}">{!providerData.Address__c}</span> 
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">License Number</apex:outputLabel><span style="float: left; display : {!IF(providerData.Provider_Code__c == '','block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(providerData.Provider_Code__c == '','none','block')}">{!providerData.Provider_Code__c}</span>
+            
+            <br/><br/><br/><br/>
+            <b>Patient Information</b>
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">Patient Name</apex:outputLabel><span style="float: left; display : {!IF(patientData.Name == '','block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(patientData.Name == '','none','block')}">{!patientData.Name}</span>
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">MRN Number</apex:outputLabel><span style="float: left; display : {!IF(patientData.MRN_Number__c == null,'block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(patientData.MRN_Number__c == null,'none','block')}">{!patientData.MRN_Number__c}</span> 
+            <br/><br/>
+            <apex:outputLabel style="color: red; margin-right: 0.5%; float: left;">Contact (Email/Phone)</apex:outputLabel><span style="float: left; display : {!IF(patientData.Phone == '','block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(patientData.Phone == '','none','block')}">{!patientData.Phone}</span>
+            
+            <br/><br/><br/><br/>
+            <div style="float:left;">
+                <div>
+                    <span style="float: left; display : {!IF(amountPaid == null,'block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(amountPaid == null,'none','block')}">$ {!amountPaid}</span>
+                </div>
+                <br/>
+                <div>
+                    <apex:outputLabel style="color: red; float: left;">Amount Paid</apex:outputLabel>    
+                </div>
+                
+            </div>
+            <div style="float:right;">
+                <div>
+                    <span style="float: left; display : {!IF(paymentDate == null,'block','none')}">__________</span> <span style="text-decoration: underline !important; float: left; display : {!IF(paymentDate == null,'none','block')}">{!paymentDate}</span>
+                </div>
+                <br/>
+                <div>
+                    <apex:outputLabel style="color: red; float: left;">Date</apex:outputLabel>    
+                </div>
+                
+            </div>
+            <br/><br/><br/><br/>
+            <div style="float:right;">
+                <div>
+                    <span style="float: left;">__________</span>
+                </div>
+                <br/>
+                <div>
+                    <apex:outputLabel style="color: red; float: left;">Signature</apex:outputLabel>    
+                </div>
+                
+            </div>
+            <br/><br/><br/><br/>
+        </div>
+    </apex:form>
+</apex:page>

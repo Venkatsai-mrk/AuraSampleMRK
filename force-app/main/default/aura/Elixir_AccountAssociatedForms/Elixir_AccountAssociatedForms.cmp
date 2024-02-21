@@ -1,0 +1,206 @@
+<!-- 
+ Developer Name : Kishan Kumar
+    Purpose : To show the List of Saved Forms And Has Edit,Delete,Create,ExportASPDF Functionality
+ Apex Class : Elixir_FormApexController , Test Class : Elixir_FormApexControllerTest
+ -->
+<aura:component controller="Elixir_FormApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "incomingRoute" type="String"/>
+    <aura:attribute name= "FormIDForHistory" type="String"/>
+    <aura:attribute name="AllFlag" type="Boolean"/>
+    <aura:attribute name= "PresId" type="String"/>
+    <aura:attribute name="problemDiagnosesData" type="Object"/> 
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="isOpen1" type="boolean" default="true"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/> 
+    <aura:attribute name="selectedLabOrders" type="List" />
+    <aura:attribute name="SaveButton" type="boolean" default="false"/>
+    <aura:attribute name="listDetails" type="Form__c[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="allData" type="List"/>    
+    <aura:attribute name="accName" type="object" />
+    <aura:attribute name="deletionAbility" type="Boolean" />
+    <aura:attribute name ="recId" type = "Id"/>
+    <aura:attribute name="enableExportAsPdf" type="boolean" default="false"/>
+    <aura:attribute name ="FormId" type = "Id"/>
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="actionName" type="Object"/> 
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name="Title" type="String"/>
+    <aura:attribute name = "categorized" type="String"/>
+    <aura:attribute name = "subCategorized" type="String"/>
+    <aura:attribute name = "headingTitle" type="String"/>
+    <aura:attribute name = "SelectedRec" type="String"/>
+    <aura:attribute name="showDeleteButton" type="Boolean" default="false"/>
+    <aura:attribute name = "openMedicationModal" type="boolean" default="false"/>
+    <aura:attribute name="parentSelectedValues" type="String"/>
+    <aura:attribute name="inputSelectedValues" type="String"/>
+    <aura:attribute name="inputTextAreaSelectedValues" type="String"/>
+    <aura:attribute name="inputDateselectedValues" type="String"/>
+    <aura:attribute name="ErrorMessage" type="Boolean" default="false"/>
+    <aura:attribute name="initButtons" type="Boolean" default="true"/>
+    <aura:attribute name="inputDateTimeselectedValues" type="String" />
+    <aura:attribute name="isRestricted" type="Boolean" default=""/>
+    <aura:attribute name= "RefreshList" type="String"/>
+    <aura:attribute name="isRestrict" type="Boolean" default="false"/>
+    <aura:attribute name="RestrictButtons" type="Boolean" />
+    <aura:attribute name="SecurityKeys" type="String"/>
+    <aura:attribute name="selectedFormName" type="String"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:handler value="{!this}" name="init" action="{!c.init}"/> 
+    <aura:handler name="RefreshUAListView" event="c:RefreshUAListView" action="{!c.init}"/>
+    <aura:handler name="RefreshViewEvent" event="c:RefreshViewEvent" action="{!c.init}"/>
+    <div class="slds-m-around_xxx-large">
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.isOpen1}">            
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open fitDynamicUI">
+                <div class="slds-modal__container nurse_forms">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel1 }"
+                                              alternativeText="close"
+                                              disabled="{!v.RestrictButtons}"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                            <aura:if isTrue="{!v.initButtons}">
+                                Forms
+                            </aura:if>
+                        </h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium prescription-order" id="modal-content-id-1"  aura:id="bodyDiv">
+                        <div> 
+                            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                            <aura:if isTrue="{!v.isOpen}">
+                                <div class="mglist-p">
+                                    <div class ="mgList">   
+                                        <div class="slds-grid slds-p-around_small slds-p-bottom_none">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <span>
+                                                    <!-- heading -->
+                                                    <h5 class="slds-text-heading_large"><b>{!v.headingTitle}</b></h5> 
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-4"></div>
+                                            <div class="slds-col slds-size_1-of-4">
+                                                <ui:inputCheckbox aura:id="checkbox" label="Patient Mode" value="{!v.isRestrict}" change="{!c.onCheck}"/>
+                                            </div> 
+                                        </div>      
+                                    </div>                                    
+                                    <!--List Status-->
+                                    <div class="slds-grid l-status">
+                                        <div class="slds-col slds-size_4-of-12 lpr-p">
+                                            <div class="lpr-c">
+                                                {! v.listDetails.length }  items . Sorted by {!v.sortedBy} 
+                                                <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                                    <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>                                         
+                                        <div class="slds-col slds-size_8-of-12 slds-m-left_small slds-m-bottom_small pdf-set">
+                                            <aura:if isTrue="{!v.enableExportAsPdf}">
+                                                <lightning:button label="Export As PDF" disabled="{!v.RestrictButtons}"  variant="brand" onclick="{!c.exportAsPDF}"/>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.showDeleteButton}">
+                                                <lightning:button label="Delete Selected"  variant="brand" onclick="{!c.deleteSelectedRows}" disabled="{!v.deletionAbility}"/>
+                                            </aura:if>
+                                            
+                                            <lightning:buttonicon iconName="utility:refresh" disabled="{!v.RestrictButtons}" size="medium" variant ="neutral" onclick="{!c.init}" aura:id ="refreshing" class="btncss"/> 
+                                            <aura:if isTrue="{!v.initButtons}">
+                                                <lightning:button variant ="neutral" disabled="{!v.RestrictButtons}" label ="+New Form" onclick = "{!c.New}" class="inline-buttons left-margin btncss"/>                         
+                                            </aura:if>
+                                        </div>
+                                    </div> 
+                                    <div class="table-scroll">         
+                                        <!--to display list of saved forms in datatable-->
+                                        <div class="slds-grid">
+                                            <div aura:id="dataTable" class="slds-col">
+                                                <lightning:datatable data="{! v.listDetails }"  
+                                                                     class = "abc"
+                                                                     aura:id="myCol"
+                                                                     columns="{! v.mycolumns }" 
+                                                                     keyField="id"
+                                                                     hideCheckboxColumn="false"
+                                                                     onsort="{!c.updateColumnSorting}"
+                                                                     sortedBy="{!v.sortedBy}" 
+                                                                     showRowNumberColumn="true"
+                                                                     selectedRows="{!v.selectedRows}"
+                                                                     onrowselection="{!c.selectedRows}"
+                                                                     sortedDirection="{!v.sortedDirection}"
+                                                                     onrowaction="{! c.handleRowAction }"
+                                                                     resizeColumnDisabled="false" />
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </aura:if>
+                            <!-- Edit Form Component Pops Form Here  -->
+                            <aura:if isTrue="{!v.editScreen}">
+                                <c:ElixirOEM_FormEditComponent accName="{!v.accName}" recordVal="{!v.recordVal}" editScreen="{!v.editScreen}" PresId="{!v.PresId}" Title="{!v.Title}"
+                                                               parentSelectedValues="{!v.parentSelectedValues}" inputSelectedValues="{!v.inputSelectedValues}" AllFlag="{!v.AllFlag}"
+                                                               inputTextAreaSelectedValues="{!v.inputTextAreaSelectedValues}" inputDateTimeselectedValues="{!v.inputDateTimeselectedValues}"
+                                                               RefreshList="{!v.RefreshList}"/>
+                                <!--c:Elixir_UpdateForm isOpen = "{!v.openMedicationModal}" recordId="{!v.recordVal}" formUniqueId="{!v.PresId}" formName="{!v.selectedFormName}"/-->   
+                            </aura:if>
+                            <!-- New Form Component Pops Form Here  -->
+                            <aura:if isTrue="{!v.openMedicationModal}">     
+                                <c:Elixir_AllForms isOpen = "{!v.openMedicationModal}" categorized="{!v.categorized}" subCategorized="{!v.subCategorized}" patientID="{!v.recordVal}"/>   
+                                <!--c:Elixir_AllNewForms isOpen = "{!v.openMedicationModal}" categorized="{!v.categorized}" subCategorized="{!v.subCategorized}" patientID="{!v.recordVal}"/-->   
+                            </aura:if>
+                        </div>   
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here--> 
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          disabled="{!v.RestrictButtons}"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel1 }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--  modal for restricting user from accessing other things -->
+            <div>
+                <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+                <aura:if isTrue="{!v.isRestricted}">
+                    
+                    <!--###### MODAL BOX Start######--> 
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__containerr" >
+                            
+                            <!--###### MODAL BOX BODY Part Start######-->
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">Enter Security Keys</label>
+                                    <div class="slds-form-element__controller">
+                                        <ui:inputText class="slds-input" value="{!v.SecurityKeys}" aura:id="userName"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <lightning:button class="uu" variant="Neutral" 
+                                                  label="Submit"
+                                                  title="Submit"
+                                                  onclick="{! c.onSubmit }"/>
+                                <lightning:button class="uu" variant="destructive" 
+                                                  label="Cancel"
+                                                  title="Cancel"
+                                                  onclick="{! c.onCancel }"/>
+                                
+                            </div>
+                            
+                            
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                    <!--###### MODAL BOX Part END Here ######-->
+                    
+                </aura:if>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

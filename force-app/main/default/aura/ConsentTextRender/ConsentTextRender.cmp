@@ -1,0 +1,34 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="consentData" type="Object"/>   
+    <aura:attribute name="column" type="Object"/>   
+    <aura:attribute name="textArray" type="List" default="['#']"/>
+    <aura:attribute name="textValue" type="String"/>
+    <aura:attribute name="disabled" type="Boolean"/>
+    <aura:attribute name="onlyText" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+    <aura:if isTrue="{! !v.onlyText}">
+        <div class = "slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12 text">
+                    <aura:iteration items="{!v.column.consentValue}" var="item" indexVar="idx">          
+                        <aura:if isTrue="{!item.type == 'text'}">                         
+                            <ui:outputRichText value="{!item.text}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!item.type == 'input'}">
+                        <span>
+                            <input type="text" id="{!idx}" value="{!item.value}" disabled="{!v.disabled}" onblur="{!c.inputValue}"/>
+                        </span>
+                        </aura:if>                        
+                    </aura:iteration>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{! v.onlyText}">
+        <div class = "slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12 text">
+                <ui:outputRichText value="{!v.column.consentValue}"/>
+                <!--lightning:formattedRichText value="{!v.column.consentValue}"/-->
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

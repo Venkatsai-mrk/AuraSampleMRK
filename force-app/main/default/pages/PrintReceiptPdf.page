@@ -1,0 +1,252 @@
+<apex:page controller="PrintReceiptPdfHelper" renderAs="pdf">
+        <apex:param name="tranId" value="{!$CurrentPage.parameters.tranId}"/>
+        <apex:variable value="{!1}" var="rowNum"/> 
+        <table align="center" class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family:'Montserrat', sans-serif; width: 700px; margin: 0px auto; background-color: #f1f2f3; border: 1px solid #e1e2e3; background-color: #eee;">
+			
+            <thead>
+                <tr>
+					<td style="">
+                        <apex:image value="{!imagePdf}"  width="180" style="margin: 20px 0 0 15px;" />		  
+					</td>
+                    <td style="">
+						<table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; margin: 0 15px 0 0; width: 100%; text-align: right;">
+                            <thead>
+                                <tr><td style="height: 15px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                      
+                                        <h2 style="font-size: 22px; font-weight: 600; margin: 0 15px 0 0;">INVOICE</h2>
+                                    </td>
+                                </tr>
+                            	<tr><td style="height: 10px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_1__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_2__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Address_Field_3__c}</p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0 15px 0 0; font-size: 14px;">{!pdfData.ElixirSuite__Phone_Number__c}</p>
+                                    </td>
+                                </tr>
+                                
+                            </thead> 
+                        </table>  
+					</td>
+				</tr>
+                <tr><td colspan="2" style="height: 15px; border-bottom: 1px solid #fff;"></td></tr>
+				<tr>
+					<td style="">
+						<table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 335px; margin: 0 0 0 15px;">
+                            <thead>
+                                <tr><td style="height: 20px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                    	<p style="font-size: 14px; margin: 0;">Bill to: {!AccData.Name}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="">                                 
+                                        <p style="font-size: 12px; margin: 0;">Address: {!AccData.add}</p>
+                                    </td>
+                                </tr>
+                                
+                                <tr><td style="height: 3px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                    	<p style="font-size: 12px; margin: 0;">Phone: {!AccData.phn} </p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 3px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                    	<p style="font-size: 12px; margin: 0;">Email: {!AccData.email} </p>
+                                    </td>
+                                </tr>
+                        </thead>
+                        </table>
+                    </td>
+                    <td style="">
+						<table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 335px; margin: 0 15px 0 0; text-align: right;">
+                            <thead>
+                               <tr>
+                                    <!--td style="">
+                                         <apex:outputText style="margin: 0; font-size: 14px;" value="{0, date, MMMM d','  yyyy}">
+                                             <span style="margin: 0; font-size: 14px;">Invoice Date:</span><apex:param value="{!}" /> 
+                                 </apex:outputText>
+                                    </td-->
+                                </tr>       
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0; font-size: 14px;">Transaction time: {!transactionTime}</p>
+                                    </td>
+                                </tr>                         
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0; font-size: 14px;">Amount Due (USD): 
+                                            <apex:outputText value="{0, Number, Currency}" >
+                                                            <apex:param value="{!ROUND(AmountDue,2)}" />
+                                                        </apex:outputText>
+                                            </p>
+                                    </td>
+                                </tr >
+                                <tr><td style="height: 2px;"></td></tr>
+                                <tr>
+                                    <td style="">
+                                        <p style="margin: 0; font-size: 14px; color: #0000FF">Pay Securely Online</p>
+                                    </td>
+                                </tr>
+                            </thead> 
+                        </table>  
+					</td>
+                </tr> 
+              <tr>
+					<td style="" colspan="2">
+						<table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 700px; margin: 0;">
+                            <thead>
+                            	<tr><td style="height: 15px;" colspan="4"></td></tr>
+                                <tr>
+                                    <td style="width: 300px; background-color: #493266;">
+                                    	<p style="font-size: 14px; font-weight: 600; margin: 5px 0 5px 15px; color: #fff;">Items</p>
+                                    </td>
+                                    <td style=" background-color: #493266;">
+                                    	<p style="font-size: 14px; font-weight: 600; margin: 5px 0; color: #fff;">Quantity</p>
+                                    </td>
+                                    <td style=" background-color: #493266; text-align: right;">
+                                    	<p style="font-size: 14px; font-weight: 600;  margin: 5px 0; color: #fff;">Price</p>
+                                    </td>
+                                     <td style=" background-color: #493266; text-align: right;">
+                                    	<p style="font-size: 14px; font-weight: 600;  margin: 5px 15px 5px 0; color: #fff;">Amount Paid</p>
+                                    </td>
+                                </tr>
+                                <!--apex:repeat value="{!paymentInformation}" var="payment">
+                                <tr><td style="height: 10px;" colspan="4"></td></tr>
+                                <tr>
+                                    <td style="width: 300px;">
+                                    	<p style="font-size: 14px; margin: 0 0 0 15px;">{!payment.procedureName}</p>
+                                    </td>
+                                    <td style=" text-align: center;">
+                                    	<p style="font-size: 14px; margin: 0;">{!payment.quantity}</p>
+                                    </td>
+                                    <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; margin: 0;">${!payment.actualPrice}</p>
+                                    </td>
+                                     <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; margin: 0 15px 0 0;">${!payment.receivedAmount}</p>
+                                    </td>
+                                </tr>
+                                </apex:repeat-->
+                                <apex:repeat value="{!paymentInformationList}" var="payment">
+                                <tr><td style="height: 10px;" colspan="4"></td></tr>
+                                <tr>
+                                    <td style="width: 300px;">
+                                    	<p style="font-size: 14px; margin: 0 0 0 15px;">{!payment.procedureName}</p>
+                                    </td>
+                                    <td style=" text-align: center;">
+                                    	<p style="font-size: 14px; margin: 0;">{!payment.quantity}</p>
+                                    </td>
+                                    <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; margin: 0;">
+                                            <apex:outputText value="{0, Number, Currency}" >
+                                                            <apex:param value="{!ROUND(payment.actualPrice,2)}" />
+                                                        </apex:outputText>
+                                            </p>
+                                    </td>
+                                     <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; margin: 0 15px 0 0;">
+                                            <apex:outputText value="{0, Number, Currency}" >
+                                                            <apex:param value="{!ROUND(payment.AmountPaid,2)}" />
+                                                        </apex:outputText>
+                                            </p>
+                                    </td>
+                                </tr>
+                                </apex:repeat>
+                                <tr><td colspan="4" style="height: 8px; border-bottom: 1px solid #fff;"></td></tr>
+                                <tr><td style="height: 10px;" colspan="4"></td></tr>
+                                <tr>
+                                    <td style="width: 300px;"></td>
+                                    <td style=""></td>
+                                    <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; font-weight: 600; margin: 0;">Total Amount Paid:</p>
+                                    </td>
+                                     <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; margin: 0 15px 0 0;">
+                                            <apex:outputText value="{0, Number, Currency}" >
+                                                            <apex:param value="{!ROUND(TotalAmountPaid,2)}" />
+                                                        </apex:outputText>
+                                            </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 20px;" colspan="2"></td>
+                                    <td style="height: 20px; " colspan="2">
+                                        <hr style="margin: 0 15px 0 0; border: none; border-bottom: 1px solid #fff;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 300px;"></td>
+                                    <td style=""></td>
+                                    <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; font-weight: 600; margin: 0;">Credit Amount:</p>
+                                    </td>
+                                     <td style=" text-align: right;">
+                                    	<p style="font-size: 14px; font-weight: 600; margin: 0 15px 0 0;">
+                                            <apex:outputText value="{0, Number, Currency}" >
+                                                            <apex:param value="{!ROUND(TotalAmountCredited,2)}" />
+                                                        </apex:outputText>
+                                            </p>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 15px;"></td></tr>
+                                <tr>
+                                    <td style="width: 300px;"></td>
+                                    <td style=""></td>
+                                    <td style=" text-align: right;" colspan="2">
+                                        <apex:image url="{!$Resource.CardImage}" style="margin-right: 15px;" />
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="height: 15px; border-bottom: 1px solid #fff;"></td></tr>
+                
+            <tr><td style="height: 15px;"></td></tr>
+                                <tr>
+                                    <td style="" colspan="2">
+                                        <p style="font-size: 14px; font-weight: 600; margin: 0 0 0 15px;"><b> Notes/Terms</b></p>   
+                                    </td>
+                                </tr>
+               
+                <tr>
+					<td style="" colspan="2">
+						<table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 670px; margin-left: 15px;">
+                            <thead>
+                            	<tr><td style="height: 5px;" colspan="3"></td></tr>
+                                <tr>
+                                    <td>
+                                    	<p style="font-size: 13px; margin: 0;">Please note the out of pocket is only an estimate. By paying this you agree that the provider will bill these 
+                                            claims to your health insurance as credits against you out of pocket responsibility, and agree that in the event insurance does not cover the medical service claims rendered, that you will be responsible for the amount.</p>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 25px;" colspan="2"></td></tr>
+			</thead>
+		</table>
+ </apex:page>

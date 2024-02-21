@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Units_Procured__c</fullName>
+    <description>Captures the number of units procured for the order line item.</description>
+    <defaultValue>1</defaultValue>
+    <externalId>false</externalId>
+    <label>Units Procured</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

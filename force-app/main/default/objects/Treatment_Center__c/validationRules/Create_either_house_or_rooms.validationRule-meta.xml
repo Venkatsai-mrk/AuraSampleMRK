@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_either_house_or_rooms</fullName>
+    <active>false</active>
+    <errorConditionFormula>(Set_up_Houses__c = true) &amp;&amp;   NOT(ISBLANK( TEXT( room_to_create__c ) ) )</errorConditionFormula>
+    <errorMessage>If you check the checkbox for setup houses, you can only create house and not allowed to create rooms, If you want to create rooms along with houses also you can manually create number of rooms.</errorMessage>
+</ValidationRule>

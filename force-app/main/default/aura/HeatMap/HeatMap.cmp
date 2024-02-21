@@ -1,0 +1,4 @@
+<aura:component controller="FullCalendarController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access='global'>
+    
+   
+</aura:component>

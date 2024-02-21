@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template" >
+	<aura:attribute name="procedureList" type="List" default="" />
+    <aura:attribute name="Type" type="String" default=""/> 
+</aura:event>

@@ -1,0 +1,141 @@
+.THIS .slds-medium-show {
+      display: none;
+}
+/*comments */
+.THIS .slds-avatar--large{
+    
+    height:4.3rem;
+    width:4.3rem;
+}
+
+.THIS .slds-media__figure{
+    z-index: 1;
+}
+.THIS .slds-grid
+{
+        overflow: hidden !important;
+    height: auto;
+    min-width: 10rem;
+    width: 100%;
+    background: rgb(243, 242, 242);
+    padding: 1rem;
+    border: 1px solid;
+    border-color: rgb(224, 226, 229);
+    border-radius: 10px;
+    
+}
+.THIS .customheading
+{
+    width:90%;
+color:rgb(111, 112, 114);
+}
+.THIS .customcolor
+{
+   color:blue;
+    font-weight:bold; 
+}
+.THIS .changeNew{
+    padding-top:0px;
+    padding-bottom:0px;
+}
+.THIS .changeNew1{
+    margin-left:20%;
+}
+@media (max-width:767px) {
+    .THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+        padding: 0 3px;
+    }
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+    font-size: 12px;
+    padding: 0 5px;
+    height: 28px;
+    position: relative;
+    z-index: 0;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:hover {
+    background-color: #fff;
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:after {
+    z-index: 1;
+    content: "Upload Photo";
+    background-color: #fff;
+    color: #298BDA;
+    height: calc(100% - 2px);
+    width: calc(100% - 22px);
+    top: 1px;
+    right: 1px;
+    font-size: 11px;
+    line-height: 24px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .upload-btn .slds-form-element {
+    margin-bottom: 0 !important;
+}
+.THIS .upload-btn .slds-file-selector__dropzone {
+    border: none;
+    padding : 0;
+}
+.THIS .changeNew img{
+    height:100%;
+    width:100%;
+}
+ .THIS .license {
+    background: #f9fafc;
+    border: 1px solid #dedede;
+    padding: 10px 5px;
+}
+.THIS .p-name {
+    color: #493266;
+    font-size: 20px;
+}
+.THIS .dotFont{
+    display: inline-block;
+    width: 230px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.THIS .slds-media__body {
+   font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .patient-details  p {
+   font-size: 13px;
+}
+                        
+                        
+                        
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+    font-size: 12px;
+    padding: 0 5px;
+    height: 28px;
+    position: relative;
+    z-index: 0;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:hover {
+    background-color: #fff;
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:after {
+    position: absolute;
+    z-index: 1;
+    content: "Upload Photo";
+    background-color: #fff;
+    color: #298BDA;
+    height: calc(100% - 2px);
+    width: calc(100% - 22px);
+    top: 1px;
+    right: 1px;
+    font-size: 11px;
+    line-height: 24px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+
+.THIS .upload-btn .slds-form-element {
+    margin-bottom: 0 !important;
+}
+.THIS .upload-btn .slds-file-selector__dropzone {
+    border: none;
+    padding : 0;
+}

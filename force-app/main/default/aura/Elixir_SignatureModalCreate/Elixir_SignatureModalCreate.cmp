@@ -1,0 +1,107 @@
+<aura:component controller="SignatureCreateController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="formName" type="String"/>
+    <aura:attribute name="changedFormName" type="String"/>
+    <aura:attribute name="formId" type="String"/>
+    <aura:attribute name="openSignatureBox" type="Boolean" default="false"/>
+    <aura:attribute name="userValues" type="Object"/>
+    <aura:attribute name="currentLevel" type="Object"/>
+    <aura:attribute name="isEligible" type="Boolean" default="false"/>
+    <aura:attribute name="enableVerify" type="Boolean" default="false"/>
+    <aura:attribute name="comment" type="String" />
+    <aura:attribute name="code" type="String" />
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="flag" type="Boolean" default="false"/>    
+    <aura:attribute name="createForm" type="Boolean" default="false"/>
+    <aura:registerEvent name="FormSignatureRefresh" type="c:FormSignatureRefresh"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+     <aura:method name="saveSignature" action="{!c.saveSignature}" description="To Save Signature in form"> 
+        <aura:attribute name="formId" type="String"/>
+        <aura:attribute name="comment" type="String" /> 
+        <aura:attribute name="code" type="String" />
+    </aura:method>
+
+    <aura:attribute name="verifiedSuccessfully" type="Boolean"/>
+    <aura:attribute name="signatureId" type="Id"/>
+    <aura:attribute name="signedBy" type="String"/>
+
+    <div class="isEligible">
+        <aura:if isTrue="{!v.isEligible}">
+            <aura:if isTrue="{! and(v.flag == true, v.status == 'In Progress')}">
+            <img src="{!$Resource.UpdateSignAndApprove}" onclick="{!c.signAndApprove}"/>
+            <aura:if isTrue="{!v.label}">
+                <b>____________________________________________________</b> <br/>
+                <b> {!v.label} </b>
+                <aura:set attribute="else">
+                    <br/><br/>
+                </aura:set>
+                </aura:if>
+            </aura:if> 	
+            
+            <aura:if isTrue="{!v.flag == false}">
+            <img src="{!$Resource.SignAndApprove}" onclick="{!c.signAndApprove}"/>
+            <aura:if isTrue="{!v.label}">
+                <b>____________________________________________________</b> <br/>
+                <b> {!v.label} </b>
+                <aura:set attribute="else">
+                    <br/><br/>
+                </aura:set>
+                </aura:if>
+            </aura:if>
+            
+        </aura:if>
+    </div>
+
+    <div class="openSignatureBox">
+        <aura:if isTrue="{!v.openSignatureBox}">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="signature_modal slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.cancel }"
+                                            alternativeText="close"
+                                            variant="bare-inverse"
+                                            class="slds-modal__close backgroundBlack"/>
+                        <span class="slds-assistive-text">Close</span>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Verify Details</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <lightning:textarea label="Comments" value="{!v.comment}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <lightning:input type="password" label="Enter Verification Code" value="{!v.code}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick="{!c.cancel}">Cancel</button>
+                        <button class="slds-button slds-button_brand"  disabled="{!v.enableVerify}" onclick="{!c.verifySignature}">Verify</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+
+    <div class="verifiedSuccessfully">
+        <aura:if isTrue="{!v.verifiedSuccessfully}">
+            <div class="sign-img">
+                <center>
+                    <img src="{!v.currentLevel.ElixirSuite__Approv__c == 'Patient' ? '/servlet/servlet.FileDownload?file=' + v.signatureId : '/sfc/servlet.shepherd/document/download/' + v.signatureId}"/>
+                </center>
+            </div>
+            <div class="info">
+                <div>Signed By : {!v.signedBy}</div>
+                <div>Notes : <b>{!v.comment}</b></div>
+            </div>
+            <div class="info-footer">
+                <b>____________________________________________________</b> <br/>
+                <div><b>{!v.label}</b></div>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

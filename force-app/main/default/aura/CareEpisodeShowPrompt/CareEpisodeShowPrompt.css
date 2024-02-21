@@ -1,0 +1,9 @@
+.THIS .slds-modal__content {
+    min-height:70px;
+}
+.THIS .slds-modal__container{ 
+    width:5%!important;
+    height: 10%;
+    margin-top:20%;
+   
+}

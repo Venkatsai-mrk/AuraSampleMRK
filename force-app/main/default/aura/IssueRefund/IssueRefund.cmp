@@ -1,0 +1,114 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" 
+                controller="IssueRefundController">
+    <aura:attribute name="isModalOpen" type="boolean" default="true"/>
+    <aura:attribute name="DisableCreateRefund" type="boolean" default="true"/>
+    <aura:attribute name="PatmentTypesList" type="List"/>
+    <aura:attribute name="picklistOptions" type="List"/>
+    <aura:attribute name="selectedRow" type="List"/>
+    <aura:attribute name="procedureId" type="String"/>
+    <aura:attribute name="tabId" type="String"/>
+    <aura:attribute name="userName" type="String"/>
+    <aura:attribute name="patientName" type="String"/>
+    <aura:attribute name="Plist" type="list"/>
+    <aura:attribute name="FinalPlist" type="list"/>
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:method name="issueRefundRequest" action="{!c.save}" access="PUBLIC"/>
+    <aura:registerEvent name="changehandlerEvent" type="c:changehandlerEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="parentCSS"  aura:id="text">
+        <aura:if isTrue="{!v.isModalOpen}">
+            
+            <div class="slds-grid slds-gutters headingCSS">
+                <h5 id="modal-heading-01"><b>NEW REFUND</b></h5>&nbsp;{!v.greaterSign}&nbsp;<a href="javascript:void(0)" onclick="{!c.closeModel}">Back</a>
+            </div>
+            
+            <!--div class="slds-float_right">        
+            <lightning:button variant="neutral" class="" label="Go Back" title="Cancel" onclick="{!c.closeModel }" /> 
+                </div-->
+            <!--h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>NEW REFUND</b></h2-->
+            
+            <div class="slds-grid slds-gutters gridClass">
+                <aura:iteration items="{!v.selectedRow}" var="item">
+                    <div class="slds-col"> 
+                        <lightning:input    
+                                         aura:id="searchField"
+                                         label="Requesting Clinician"
+                                         value="{!v.userName}"
+                                         disabled="true" />
+                    </div>
+                    <div class="slds-col">
+                        <lightning:input    
+                                         aura:id="searchField"
+                                         label="Patient"
+                                         value="{!v.patientName}"
+                                         disabled="true" />
+                    </div>
+                    <div class="slds-col">
+                        <lightning:input    
+                                         aura:id="searchField"
+                                         label="Procedure"
+                                         value="{!item.ElixirSuite__Procedure_Name__c}"
+                                         disabled="true" />
+                    </div>
+                    <div class="slds-col">
+                        <lightning:input    
+                                         aura:id="searchField"
+                                         label="Date of Service"
+                                         value="{!item.ElixirSuite__Date_Of_Service__c}"
+                                         disabled="true" />
+                    </div>
+                </aura:iteration>
+            </div><br/>
+            <h2 class="slds-text-heading_medium instruction_head slds-theme_shade" >Refund Options</h2><br/>
+            <ui:scrollerWrapper class="">
+                <aura:if isTrue="{!v.Plist}">   
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mode of Payment</th>
+                                <th>Amount Paid by Patient</th>
+                                <th>Total Refunds Issued</th>
+                                <th>Refund Amount</th>
+                                <th>Reason for Refund</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.Plist}" var="item" indexVar="rowIndex">
+                                <tr data-rowId="{!rowIndex}">
+                                    <td>{!item.Mode_of_Payment}</td>
+                                    <td><lightning:formattedNumber aura:id="{!item.MasterTransaction}" value="{!item.Amount_Paid}" style="currency" currencyCode="USD" /></td>
+                                    <td><lightning:formattedNumber value="{!item.RefundIssued}" style="currency" currencyCode="USD" /></td>
+                                    <td>
+                                        <lightning:input type="number" formatter="currency" step="0.01" class="inp-border tdrInp" value="{!item.RefundAmount}" variant="icon-right" 
+                                                         aura:id="refundAmountInput" onchange="{!c.handleRefundAmount}" onblur="{!c.handleBlur}" data-rowIndex="{!rowIndex}"/>
+                                    </td>
+                                    <td>
+                                        <lightning:select name="{!item.ReasonForRefund}" value="{!item.ReasonForRefund}"
+                                                          class="slt-border my-select slds-p-bottom_medium slds-m-left_x-large" >
+                                            <aura:iteration items="{!v.picklistOptions}" var="item" >
+                                                <option value="{!item.label}" text="{!item.value}" />  
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                    <aura:set attribute="else">
+                        <h2>NO RECORDS FOUND</h2>
+                    </aura:set>
+                </aura:if>
+            </ui:scrollerWrapper>
+            
+            <div class="slds-grid slds-gutters footerCSS">
+                <div class="slds-col slds-size_12-of-12">  
+                    <!--lightning:button variant="brand" class="" disabled="{!v.DisableCreateRefund}" label="Create Refund Request" title="Save" onclick="{!c.save}" /-->                        
+                    
+                </div>
+                
+            </div>
+            
+        </aura:if>
+    </div>
+</aura:component>

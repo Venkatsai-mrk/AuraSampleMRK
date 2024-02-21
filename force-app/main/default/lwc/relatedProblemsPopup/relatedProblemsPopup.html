@@ -1,0 +1,24 @@
+<!--    .html -->
+<template>
+    <div class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container custom-modal-width">
+            <header class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">Patient Problems</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_small">
+                <lightning-datatable
+                    data={allProblems}
+                    columns={columns}
+                    key-field="id"
+                ></lightning-datatable>
+            </div>
+            <footer class="slds-modal__footer">
+                <div class="slds-m-top_medium">
+                    <lightning-button label="Cancel" class="marginclass"  onclick={handleCancel}></lightning-button>
+                    <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+</template>

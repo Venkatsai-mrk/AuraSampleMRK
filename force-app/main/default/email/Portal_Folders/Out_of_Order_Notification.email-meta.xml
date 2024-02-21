@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is used to notify the housekeeping team when a room, suite, or bed is marked as out of order.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Out of Order Notification</name>
+    <style>none</style>
+    <subject>{!Location__c.Name} is Out of Order</subject>
+    <textOnly>{!Location__c.Name} has been marked as Out of Order by {!Location__c.LastModifiedBy} and will be unavailable for any bookings from {!Location__c.Out_of_Order_Date__c}
+
+Reason is {!Location__c.Out_of_Order_Reason__c}.
+
+Please take necessary next steps.
+
+Regards,
+{!Organization.Name}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

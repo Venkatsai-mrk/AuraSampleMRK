@@ -1,0 +1,23 @@
+<apex:page>
+<!--apex:page Standardcontroller="Rooms__c" recordSetVar="room" sidebar="false" showHeader="false">
+   <apex:includeLightning />
+    <div id="theroom"/>	
+    
+    <script>
+    $Lightning.use("c:AddroomsApp",function(){
+    $Lightning.createComponent("c:AddroomComp",{},
+    "theroom",
+    function(cmp) {
+                    console.log("Component created!");
+                    console.log(cmp);
+        "{!JSENCODE($CurrentPage.parameters.id)}"
+        component.set("v.recordId" , '{!JSENCODE($CurrentPage.parameters.recId)}');
+                });
+    });
+    </script>
+
+    
+        
+    
+</apex:page-->
+</apex:page>

@@ -1,0 +1,9 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="labId" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+	<c:labTestBundleEditPage labBundleRecordId="{!v.recordId}" 
+                             labRecordId="{!v.labId}">
+    </c:labTestBundleEditPage>
+</aura:component>

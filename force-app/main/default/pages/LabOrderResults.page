@@ -1,0 +1,45 @@
+<apex:page controller="LabOrderDetails" applyHTMLTag="true" applyBodyTag="true" showHeader="false" cache="true" readOnly="true">
+    <iframe height="800px" id="Requisition Pdf" title ="Pdf Report" name="Pdf Report" src="{!URLFOR($Action.Attachment.Download, PdfReport.Id)}" width="100%"></iframe>
+    
+
+</apex:page>
+                  <!--  <div>
+        <img src="{!$Resource.Result_CHC}"  width="190" height="45" />
+    </div>
+       <apex:outputPanel rendered="{!d.Observation_Value_Numeric__c != NULL}">
+                        <tr class="trHeader">
+                            <td style="text-align: center" >{!d.Test_Result_Detail_Name__c} </td>
+                            <td style="text-align: center">{!d.Observation_Value_Numeric__c} </td>
+                            <td style="text-align: center">{!d.References_Range__c}</td>
+                            <td style="text-align: center">{!d.Units__c} </td>
+                            <td style="text-align: center">{!d.Observation_Value__c}</td>
+                            
+                      </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!d.Observation_Value_TextAREA__c != ''}">
+                        <tr class="trHeader">
+                            <td >{!d.Test_Result_Detail_Name__c} </td>
+                            <td colspan="3" style="padding-top: 3px;padding-bottom: 3px">{!d.Observation_Value_TextAREA__c} </td>
+                            <td >{!d.Observation_Value__c}</td>
+                            
+                      </tr>
+                    </apex:outputPanel>-->
+                    
+               
+    <!--<apex:includeLightning />    
+    
+    <div id="LightningComponentid" />   
+ the Id of div tag which will be used to render your LWC component 
+    <script>
+        $Lightning.use("c:TestResultCHC", function() {
+            $Lightning.createComponent("c:labOrderResultTable",
+            { 
+                rid   : '', // You can pass the value to @api attributes if you have inside JavaScript Class.
+                //recordId : '{!$CurrentPage.parameters.id}'
+            },
+            "LightningComponentid", // the Id of div tag where your component will be rendered
+            function(cmp) {
+                console.log('Calling the LWC Component');
+            });
+        });
+    </script> -->

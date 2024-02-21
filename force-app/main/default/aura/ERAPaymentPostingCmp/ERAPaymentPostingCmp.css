@@ -1,0 +1,105 @@
+.THIS body, .THIS .slds-form-element__label {
+    font-size: 12px;
+}
+.THIS .slds-form-element__label{
+    width: 100px;
+}
+.THIS .slds-th__action{
+    background-color : #f3f3f3;
+    color : #444444;
+    font-weight : 600;
+}
+.THIS .customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
+    padding-left: 10px;
+}
+.THIS .slds-th__action:hover {
+  /* background-color: white;
+    color: #501e70;*/
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .slds-grid_align-end {
+    justify-content: flex-start;
+}
+.THIS .slds-card{
+    padding: 1% !important;
+}
+.THIS .select-auto-width > .slds-form-element__control > .slds-select_container{
+    display: inline-block;
+}
+
+.THIS .masterTableCss{
+    border-radius : 3px;
+}
+.THIS .claimTableCss{
+    border-radius : 3px;
+}
+.THIS .slds-table_header-fixed_container
+{
+    border-radius : 5px;
+    border: 1px solid #EDEAEA;
+}
+.THIS .eliInputCss
+{
+    width : 75% !important;
+}
+.THIS .modInputCss
+{
+    width: 60%;
+}
+.THIS 
+.slds-card{
+    padding: 1% !important;
+}
+.THIS .slds-input[disabled]{
+    background-color: white !important;
+}
+.THIS .slds-input{
+    padding: 0 1% 0 1%!important;
+}
+.THIS .parentCSS_1{
+    background: #EDEAEA; padding: 1%; border-radius: 5px;
+}
+.THIS .parentCSS_2{
+    padding : 0 !important;
+}
+.THIS .table_parent{
+    background : white;
+}
+.THIS .table_header{
+    padding: 1% !important; width: 8% !important;
+}
+.THIS .table_header_th{
+    padding: 1% !important;
+}
+.THIS .table_td{
+    padding: 1% !important;
+}
+.THIS .table_td_tbody_td{
+    width: 18%;
+}
+.THIS .tbody_inside{
+    width: 18%;
+}
+.THIS .tbody_inside_td_1{
+    padding: 1% !important;
+}
+.THIS .fotter_CSS{
+    padding: 1% !important;
+}
+.THIS .fotter_CSS_1{
+    float: right; 
+}
+/* changes */
+.THIS .changeheight{
+    max-height:500px;height:500px;
+}
+.THIS .datepadding .slds-form-element__control {
+    padding-left:28%;
+}

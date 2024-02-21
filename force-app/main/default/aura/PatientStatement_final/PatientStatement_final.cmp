@@ -1,0 +1,326 @@
+<aura:component controller = "PatientStatementHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="statementID" type="String"/>
+    <aura:attribute name="statementRecord" type="String"/>
+    <aura:attribute name="accountDetails" type="String"/>
+    <aura:attribute name="billDate" type="String"/>
+    <aura:attribute name="totalSum" type="Integer"/>
+    <aura:attribute name="newCharges" type="Integer"/>
+    <aura:attribute name="prevBal" type="Integer"/>
+    <aura:attribute name="newBalance" type="Integer"/>
+    <aura:attribute name="PrivateProcedures" type="List"/>
+    <aura:attribute name="InsuranceProcedures" type="List"/>
+    <aura:attribute name="mapProcedures" type="object"/>
+    <aura:attribute name="paymentAdjustments" type="Integer"/> 
+    <aura:attribute name="recordId" type="String" default= ""/>
+    <aura:attribute name="payFullBy" type="Date" default= ""/>
+    <aura:attribute name="providerName" type="String" default= ""/>
+    <aura:attribute name="primaryInsuranceName" type="Date" default= ""/>
+    <aura:attribute name="secInsuranceName" type="String" default= ""/>
+    <aura:attribute name="headerLogo" type="String" default= ""/>
+    <div aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open bg-grey">
+            <div class="slds-modal__container hideDiv">
+                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <header class="slds-modal__header slds-text-heading_large">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">PATIENT STATEMENT</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="StatementCustom">
+                        <div class="slds-grid slds-gutters defaultBackground">
+                            <div class="slds-col slds-size_6-of-12 fixedHeight logo"><img src="{!'/resource/'+'ElixirSuite__'+v.headerLogo}"/></div>
+
+                            <div class="slds-col slds-size_6-of-12 fixedHeight">
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Patient Name:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.Name}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Guarantor Name:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.Name}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>MRN Number #:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">{!v.accountDetails.ElixirSuite__MRN_Number_New__c}</div>
+                                </div>
+                                <div class="slds-grid slds-gutters defaultBackground">  
+                                    <div class="slds-col slds-size_4-of-12  fixedHeight"><b>Bill Date:</b></div>
+                                    <div class="slds-col slds-size_8-of-12  fixedHeight">
+                                        <ui:outputDateTime aura:id="oDateTime" value="{!v.billDate}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-grid slds-gutters "> 
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="slds-section slds-is-open" aura:id="task2">
+                                    <div class="bill_summry">
+                                        <h3 class="slds-section__title">
+                                            <span class="slds-truncate" title="PHYSICIAN SERVICES STATEMENT SUMMARY">SERVICES STATEMENT SUMMARY</span>
+                                        </h3>
+                                        <div class="slds-section__content" id="TaskList2" >
+                                            <div class="widthForAll slds-p-bottom_medium " id="TaskList2">
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12  fixedHeight pre_bal">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12  fixedHeight">Previous Balance :</div>
+                                                            <div class="slds-col slds-size_6-of-12  fixedHeight">  
+                                                                <lightning:input type="text" name="" value="{!v.prevBal}" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">New Charges :</div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight sign">  
+                                                                <b>+</b><lightning:input type="text" name="" value="{!v.newCharges}" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground "  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">Payments/Adjustments : </div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small slds-p-bottom_xx-small  fixedHeight sign">  
+                                                                <b>-</b><lightning:input type="text" name="" value="{!v.paymentAdjustments}" placeholder="N/A"  disabled= "true"/>
+                                                                <hr/>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">New Balance :</div>
+                                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">  
+                                                                <lightning:input type="text" name="" value="{!v.newBalance}" placeholder="N/A"  disabled= "true"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12 slds-text-align--center pre_bal fixedHeight">
+                                                        <div class="slds-grid slds-gutters  defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12  fixedHeight">  
+                                                                Your Insurance Has Been Billed.
+                                                                Your Responsibility To Pay Is
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12  fixedHeight">  
+                                                                <h2 class="slds-text-heading_large slds-m-top_x-small "><b>$ {!v.newBalance}</b></h2>
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12 slds-text-align--center fixedHeight">
+                                                        
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12   fixedHeight">  
+                                                                Please Pay In Full By
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            <div class="slds-col slds-size_12-of-12 fixedHeight">  
+                                                                <h2 class="slds-text-heading_large slds-m-top_x-small "><b>{!v.payFullBy}</b></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12 fixedHeight"> 
+                                                        <p class="tq-stmt">Thank you for choosing us. The amount due represents your responsibility.</p>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="slds-grid slds-gutters">
+                                                    <div class="slds-col slds-size_12-of-12  hor-line"><hr/></div>
+                                                </div>
+                                                
+                                                
+                                                <!--div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_12-of-12 fixedHeight"> 
+                                                        <p class="tq-stmt"><u>Insurance Information On File</u></p> 
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    
+                                                    <div class="slds-col slds-size_3-of-12 slds-m-top_small fixedHeight">
+                                                        Primary : 
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-m-top_small fixedHeight">
+                                                        {!v.primaryInsuranceName}
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                    <div class="slds-col slds-size_3-of-12 slds-m-top_small fixedHeight">
+                                                        Secondary :
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-m-top_small fixedHeight">
+                                                        {!v.secInsuranceName}
+                                                    </div>
+                                                </div-->           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="bill_summry bill_summry1">          	
+                                <aura:iteration items="{!v.PrivateProcedures}" var="item" indexVar = "key">
+                                    <table class="changewidth">
+                                        <tr>
+                                            <td>
+                                    <h3 class="slds-section__title">
+                                        <span class="slds-truncate">Procedure Name &nbsp;: {!item.procedureName}</span>
+                                    </h3>
+                                    <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Provider:</b> &nbsp;{!item.providerName}
+                                        </span>
+                                    </h3> 
+                                    <h3 class="slds-section__title">
+                                        <span class="slds-truncate">Date of service &nbsp;: {!item.dos}</span>
+                                    </h3>
+                                            </td>
+                                            <td>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Charges:</b> &nbsp;$ {!item.charges}
+                                        </span>
+                                    </h3>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Patient Payments:</b> &nbsp;$ {!item.patientPayments}
+                                        </span>
+                                    </h3>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Amount You will need to Pay:</b> &nbsp;$ {!item.amountToPay}
+                                        </span>
+                                    </h3>
+                                            </td>
+                                            </tr>
+                                        </table>
+                                    <aura:if isTrue="{!item.transactions.length == 0}">
+                                      <p class="centerAlign"><lightning:formattedText value="No Payments made" /></p>
+                                     </aura:if>
+                                    <aura:iteration items="{!item.transactions}" var="subitem" indexVar = "idx">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-p-top_small ">
+                                                <b>Transaction Date :</b> &nbsp; <ui:outputDateTime aura:id="oDateTime" value="{!subitem.CreatedDate}"/>
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12 slds-m-top_small slds-m-bottom_small">
+                                                <p class="slds-m-top_small">Patient Payments:<span class="slds-float_right">$ {!subitem.ElixirSuite__Amount_Paid__c}</span></p>
+                                            </div>                                        
+                                        </div>
+                                    </aura:iteration>
+                                </aura:iteration>                               
+                            </div>
+                             <div class="bill_summry bill_summry1">          	
+                                <aura:iteration items="{!v.InsuranceProcedures}" var="item" indexVar = "key">
+                                      <table class="changewidth">
+                                        <tr>
+                                            <td>
+                                    <h3 class="slds-section__title">
+                                        <span class="slds-truncate">Procedure Name &nbsp;: {!item.procedureName}</span>
+                                    </h3>
+                                    <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Provider:</b> &nbsp;{!item.providerName}
+                                        </span>
+                                    </h3>
+                                      <h3 class="slds-section__title">
+                                        <span class="slds-truncate">Date of service &nbsp;: {!item.dos}</span>
+                                    </h3>
+                                            </td>
+                                            <td>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Charges:</b> &nbsp;$ {!item.charges}
+                                        </span>
+                                    </h3>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Patient Payments:</b> &nbsp;$ {!item.patientPayments}
+                                        </span>
+                                    </h3>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Insurance Payments/Adjustments:</b> &nbsp;$ {!item.insurancePayments}
+                                        </span>
+                                    </h3>
+                                            </td>
+                                          </tr>
+                                    </table>
+                                     <h3 class="slds-section__title">
+                                        <span class="slds-truncate">
+                                            <b>Amount You will need to Pay:</b> &nbsp;$ {!item.amountToPay}
+                                        </span>
+                                    </h3>
+                                    <aura:if isTrue="{!item.transactions.length == 0}">
+                                        <p class="centerAlign"><lightning:formattedText value="No Payments made" /></p>
+                                    </aura:if>
+                                    <aura:iteration items="{!item.transactions}" var="subitem" indexVar = "idx">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-p-top_small ">
+                                                <b>Transaction Date :</b> &nbsp; <ui:outputDateTime aura:id="oDateTime" value="{!subitem.CreatedDate}"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12 slds-m-top_small slds-m-bottom_small">
+                                                <p class="slds-m-top_small">Insurance Payments:<span class="slds-float_right">$ {!subitem.ElixirSuite__Amount_Paid__c}</span></p>
+                                            </div>                                        
+                                        </div>
+                                    </aura:iteration>
+                                </aura:iteration>                               
+                            </div>
+                            <div class="bill_summry bill_summry1 bill_summry2">
+                                <div class="slds-grid slds-gutters an-grid">
+                                    <div class="slds-col slds-size_6-of-12  ">
+                                        <h3 class="slds-section__title">Payment Due : <span class="slds-float_right slds-p-left_small">$ {!v.newBalance}</span>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-left_none ">
+                                        <h3 class="slds-section__title"><span class="slds-truncate" >Please Pay In Full By {!v.payFullBy}</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters slds-text-align_center">
+                        <div class="slds-col slds-size_12-of-12">  
+                            <!--lightning:button variant="brand" label="Save" title="Save" onclick="{! c.save }" /-->
+                            <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                        </div>
+                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+    </div>
+</aura:component>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>clinical_Notes_type__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Type Of Note</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Individual Session Notes</fullName>
+                <default>false</default>
+                <label>Individual Session Notes</label>
+            </value>
+            <value>
+                <fullName>Family Session Notes</fullName>
+                <default>false</default>
+                <label>Family Session Notes</label>
+            </value>
+            <value>
+                <fullName>Missed Individual Notes</fullName>
+                <default>false</default>
+                <label>Missed Individual Notes</label>
+            </value>
+            <value>
+                <fullName>Missed Family Notes</fullName>
+                <default>false</default>
+                <label>Missed Family Notes</label>
+            </value>
+            <value>
+                <fullName>General Notes (AMA interventions, statements patients make, etc.)</fullName>
+                <default>false</default>
+                <label>General Notes (AMA interventions, statements patients make, etc.)</label>
+            </value>
+            <value>
+                <fullName>Collateral Notes</fullName>
+                <default>false</default>
+                <label>Collateral Notes</label>
+            </value>
+            <value>
+                <fullName>Detox Daily Note</fullName>
+                <default>false</default>
+                <label>Detox Daily Note</label>
+            </value>
+            <value>
+                <fullName>Residential Daily Note</fullName>
+                <default>false</default>
+                <label>Residential Daily Note</label>
+            </value>
+            <value>
+                <fullName>PHP Weely Note</fullName>
+                <default>false</default>
+                <label>PHP Weely Note</label>
+            </value>
+            <value>
+                <fullName>Transfer Notes</fullName>
+                <default>false</default>
+                <label>Transfer Notes</label>
+            </value>
+            <value>
+                <fullName>Patient needs assessments</fullName>
+                <default>false</default>
+                <label>Patient needs assessments</label>
+            </value>
+            <value>
+                <fullName>Discharge Planning Notes</fullName>
+                <default>false</default>
+                <label>Discharge Planning Notes</label>
+            </value>
+            <value>
+                <fullName>Aftercare Note</fullName>
+                <default>false</default>
+                <label>Aftercare Note</label>
+            </value>
+            <value>
+                <fullName>AMA/ACA Progress Notes</fullName>
+                <default>false</default>
+                <label>AMA/ACA Progress Notes</label>
+            </value>
+            <value>
+                <fullName>Family Contact Notes</fullName>
+                <default>false</default>
+                <label>Family Contact Notes</label>
+            </value>
+            <value>
+                <fullName>Financial Needs Progress Notes</fullName>
+                <default>false</default>
+                <label>Financial Needs Progress Notes</label>
+            </value>
+            <value>
+                <fullName>Group Notes</fullName>
+                <default>false</default>
+                <label>Group Notes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

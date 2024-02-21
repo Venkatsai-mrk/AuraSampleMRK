@@ -1,0 +1,80 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to Salesforce Pipeline
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches:
+      - Develop 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Setup Node
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+          node-version: '16.x'
+          
+    # Install SFDX CLI
+    - name: Install SFDX CLI
+      run: npm install sfdx-cli --global
+
+    # Authorize SF Org
+    - name: Authorize SF Org
+      env:
+        CLIENT_ID: ${{ secrets.SALESFORCEPRODCLIENTID }}
+        USERNAME: ${{ secrets.SALESFORCEPRODUSERNAME }}
+        INSTANCE_URL: ${{ secrets.SALESFORCEPRODINSTANCEURL }}
+      run: sfdx force:auth:jwt:grant --clientid $CLIENT_ID --jwtkeyfile ./buildfiles/server.key --username $USERNAME --instanceurl $INSTANCE_URL -a prod
+    
+    #create delta
+    - name: Install App and create Delta
+      run: |
+        echo 'y' | sfdx plugins:install sfdx-git-delta
+        git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+        git fetch --all
+
+    # Convert to diff
+    - name: Diff
+      run: |
+        sfdx sgd:source:delta --to origin/Develop --from origin/master --repo .  --output .
+        
+    # Open package.xml
+    - name: Open package.xml
+      run: cat package/package.xml
+
+    # Delete pipeline in package.xml
+    - name: Delete pipeline in package.xml
+      run: |
+        sed -i '/Workflows/{N;d;}' package/package.xml 
+        sed -i 'N;/pipeline.yml/!P;D' package/package.xml
+
+    # Open package.xml
+    - name: Open package.xml
+      run: cat package/package.xml
+
+    # Convert to Deploy Source
+    - name: Convert to Deploy Source
+      run: sfdx force:source:convert --manifest=package/package.xml --outputdir=convert
+
+    # Run  Deploy Source
+    - name: Run  Deploy Source
+      env:
+        USERNAME: ${{ secrets.SALESFORCEPRODUSERNAME }}
+      run: sfdx force:mdapi:deploy --deploydir=convert -u $USERNAME --json --loglevel fatal -w 30
+    
+    
+    
+   

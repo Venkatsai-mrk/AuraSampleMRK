@@ -1,0 +1,22 @@
+.THIS.abc {
+    overflow:hidden;
+    height: auto;
+    min-width: 10rem;
+    width: 100%; 
+    background: rgb(243, 242, 242);
+    padding: 1rem;
+    border: 1px solid;
+    border-color:rgb(224, 226, 229);
+    border-radius: 10px;
+}
+.THIS .def{
+    background: rgb(243, 242, 242);
+}
+.THIS .abc2{
+    color:blue;
+    font-weight:bold;
+}
+.THIS .def2{
+    width:90%;
+    color:rgb(111, 112, 114);
+}

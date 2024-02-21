@@ -1,0 +1,12 @@
+<aura:event type="APPLICATION" description="Event template" >
+  <aura:attribute name="allergyData" type="Medical_Examination__c[]"
+                  default= "{ 
+                             'sobjectType': '',
+           'Substance__c': '',
+            'Substance_Code__c': '',
+            'Reaction__c': '', 
+            'Account__c' : '',
+             'Id' : ''                
+                            } "/> 
+     <aura:attribute name="hideAllergyComponent" type="Boolean"/> 
+</aura:event>

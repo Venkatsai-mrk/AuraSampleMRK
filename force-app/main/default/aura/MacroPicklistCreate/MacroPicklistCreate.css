@@ -1,0 +1,75 @@
+.THIS .ms-filter-input{
+    margin: 0px 5%;
+    width: 50%;
+    height: 30px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: thin;
+    border-color: darkgray;
+    padding: 2px 5px;
+}
+.THIS .customCssForm{
+    font-weight : bold;
+    font-size:13px;
+}
+.THIS .ms-input{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    display: inline-block;
+    padding: 0 1rem 0 .75rem;
+    line-height: 1.875rem;
+    min-height: calc(1.875rem + (1px * 2));
+}
+.THIS .ms-dropdown{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.THIS .customCss{
+    
+    height: auto;
+    max-height:130px;
+    overflow-y: scroll;
+}
+.THIS .slds-textarea {
+    height: 178px;
+    margin-top:2%;
+}
+.THIS .slds-pill__remove {
+    display: none !important;
+}
+.THIS .parent_CSS_1{
+    margin-top:3%;
+}
+.THIS .parent_CSS_2{
+    width: 250px; 
+}
+.THIS .parent_CSS_3{
+    margin-top: 10px;
+}
+.THIS .parent_CSS_9{
+    margin-top:3%;
+}
+.THIS .parent_CSS_10{
+    width: 100%; 
+}
+.THIS .boxCss .slds-button-group-list li button.slds-button {
+    width: 25px;
+}
+.THIS .boxCss .slds-rich-text-editor__select {
+    float: left;
+}
+.THIS .boxCss .slds-rich-text-editor__select.slds-size_xx-small {
+    float: left;
+}
+.THIS .boxCss .slds-form-element__control {
+    padding-left: 0 !important;
+}
+.THIS .boxCss .ql-editor.ql-blank.slds-rich-text-area__content.slds-text-color_weak.slds-grow{
+    height:500px;
+}
+.THIS .customCss{
+    margin-left:0;
+}

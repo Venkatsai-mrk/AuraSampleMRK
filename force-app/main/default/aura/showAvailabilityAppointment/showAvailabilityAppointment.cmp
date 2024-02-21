@@ -1,0 +1,188 @@
+<aura:component controller="showAvailabilityAppointmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="headingTitle" type="String" default="Schedule Appointment"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="minDate" type="Date"/>
+    <aura:attribute name="maxDate" type="Date"/>
+    <aura:attribute name="maxDateAvail" type = "Boolean" default = "false"/>
+    <aura:attribute name="pracName" type="String"/>
+    <aura:attribute name="locName" type="String"/>
+    <aura:attribute name="pracId" type="String"/>
+    <aura:attribute name="locId" type="String"/>
+    <aura:attribute name="accId" type="String"/>
+    <aura:attribute name="slotBtnVariant" type="String" default="brand-outline"/>
+    <aura:attribute name="aptTypevalue" type="String"/>
+     <aura:attribute name="aptTypeLabel" type="Map" default="{}"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="7"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="appTypeOptions" type="Object[]" />
+    <aura:attribute name="tableColumns" type="String[]"/>
+    <aura:attribute name="showAppointment" type="Boolean" default="false"/>
+    <aura:attribute name="confirmAppointment" type="Boolean" default="false"/>
+    <aura:attribute name="tableData" type="List"/>
+    <aura:attribute name="dateRange" type="String" />
+    <aura:attribute name="specName" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="selectedDateTime"  type="String"/>
+    <aura:attribute name="selectedSlot" type="Object" />
+    <aura:attribute name="route" type="String" default=""/>
+    <aura:attribute name="portalAccountId" type="string"/>
+    <aura:attribute name="portalTypeAppList" type="List"/>
+    <aura:if isTrue="{!v.showAppointment}">
+        
+        <c:ScheduleAppointmentAura recordId="{!v.accId}" showAvail = "false"/>
+        
+        
+        
+        <aura:set attribute="else">
+            <aura:if isTrue="{!v.confirmAppointment}">
+                <c:confirmAppointment practionerName="{!v.pracName}" 
+                                      locationName="{!v.locName}" 
+                                      practionerId="{!v.pracId}" 
+                                      locationId="{!v.locId}" 
+                                      startDateVal="{!v.startDate}" 
+                                      recordId="{!v.accId}"
+                                      appointmentTypeLabel = "{!v.aptTypeLabel}"
+                                      appointmentType = "{!v.aptTypevalue}"
+                                      selectedSlot ="{!v.selectedSlot}"
+                                      specialityName = "{!v.specName}"
+                                      route ="{!v.route}"/>
+                <aura:set attribute="else">
+                    <div class="parentCSS slds-is-relative">
+                        
+                        <div class="childAvailCSS">
+                           
+                            
+                                <!-- heading -->
+                                <h5 class="headingAvailCSS headerClass slds-p-top_medium"><b>{!v.headingTitle}</b></h5> 
+                            
+                            
+                            <div class = "slds-grid slds-gutters slds-m-bottom_medium">
+                                
+                                <div class="slds-col slds-size_2-of-12 slds-m-top_large leftPanel">
+                                    
+                                    <div class="borderClass">
+                                        <div class="quarter-screen">
+                                            <lightning:input type="date" label="Start search on" value="{!v.startDate}" onchange="{! c.handleDateChange }"/>
+                                            <br></br>
+                                            
+                                            <label>Practitioner</label>  <br></br> <ui:outputText value="{!v.pracName}"/>
+                                            <br></br>
+                                            <br></br>
+                                            
+                                            <label>Location</label>  <br></br> <ui:outputText value="{!v.locName}"/>
+                                            <br></br>
+                                            <br></br>
+                                            <aura:if isTrue = "{!v.portalAccountId}">
+                                                <aura:if isTrue="{!!empty(v.portalTypeAppList)}">
+                                                    <lightning:select name="selectAppTyp" label="Appointment Type" aura:id="appselectPortal" value="{!v.aptTypevalue}" onchange="{!c.onAppointmentTypChangeForPortal}">
+                                                        <aura:iteration items="{!v.portalTypeAppList}" var="option">
+                                                            <option text="{!option.Label}" value="{!option.value}" selected="{!option.selected}"/>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                </aura:if>
+                                                
+                                                <aura:set attribute="else">
+                                                    <lightning:select name="selectAppTyp" label="Appointment Type" aura:id="appselect" value="{!v.aptTypevalue}" onchange="{!c.onAppointmentTypChange}">
+                                                        <aura:iteration items="{!v.appTypeOptions}" var="option">
+                                                            <option text="{!option.Label}" value="{!option.value}" selected="{!option.selected}"/>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                </aura:set>
+                                            </aura:if>
+                                            
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size_10-of-12 slds-m-top_large">
+                                    
+                                    <div class="tabButtClass">
+                                        
+                                        <div class="gridAvailClass">
+                                            <div class = "slds-grid slds-gutters">
+
+                                                <div class="slds-col slds-size_8-of-12">
+
+                                                    <b class="dateRange">{!v.dateRange}</b>
+                                                </div>
+
+                                                <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                                                    
+                                            <lightning:button label="" iconName="utility:chevronleft" iconPosition="left"
+                                            onclick="{!c.handlePrevButton}" disabled="{! v.pageNumber == 1}"/>
+                          <lightning:button label="" iconName="utility:chevronright" iconPosition="right"
+                                            disabled="{! v.isLastPage}" onclick="{!c.handleNextButton}"/>
+                                                </div>
+
+
+                                            </div>
+                                                
+                                            
+                                        </div>
+                                    
+                                        <div class="slds-scrollable_y slds-col slds-size_12-of-12 slds-m-top_small slds-is-relative chnagehwidth">
+                                        <table class="slds-table slds-border slds-table_bordered" aura:id="table">
+                                            
+                                            <thead class="slotTable"> 
+                                                <tr>
+                                                    <aura:iteration items="{!v.tableColumns}" var="colVar" indexVar="index">
+                                                        
+                                                        <th class="colClass">{!colVar}</th>
+                                                        
+                                                    </aura:iteration>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!v.tableData}" var="wrapVar" indexVar="index">
+                                                    <tr id="{!index}">
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day0}"><lightning:button  label="{!wrapVar.day0.startTime}" title="{!wrapVar.day0.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day0}" aura:id="slotButton"/></aura:if></td>
+
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day1}"><lightning:button  label="{!wrapVar.day1.startTime}" title="{!wrapVar.day1.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day1}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day2}"><lightning:button  label="{!wrapVar.day2.startTime}" title="{!wrapVar.day2.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day2}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day3}"><lightning:button  label="{!wrapVar.day3.startTime}" title="{!wrapVar.day3.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day3}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day4}"><lightning:button  label="{!wrapVar.day4.startTime}" title="{!wrapVar.day4.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day4}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day5}"><lightning:button  label="{!wrapVar.day5.startTime}" title="{!wrapVar.day5.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day5}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                        <td class="colClass"><aura:if isTrue="{!wrapVar.day6}"><lightning:button  label="{!wrapVar.day6.startTime}" title="{!wrapVar.day6.startTime}" onclick="{! c.handleSlot }"  value="{!wrapVar.day6}" aura:id="slotButton"/></aura:if></td>
+                                                        
+                                                    </tr>
+                                                </aura:iteration>
+                                            </tbody>
+                                            
+                                        </table>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                
+                                
+                                
+                            </div>
+                            
+                            <div class="slds-text-align_right footer">            
+                                <lightning:button label="Modify Search" onclick="{!c.handlePrev}" />
+                                <lightning:button label="Confirm Appointment"  onclick="{!c.handleNext}"/>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </aura:set> 
+            </aura:if>
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

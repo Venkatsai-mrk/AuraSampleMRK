@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>procedure_should_not_change_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISCHANGED(Procedure_Codes__c)</errorConditionFormula>
+    <errorDisplayField>Procedure_Codes__c</errorDisplayField>
+    <errorMessage>You are not allowed to change procedure</errorMessage>
+</ValidationRule>

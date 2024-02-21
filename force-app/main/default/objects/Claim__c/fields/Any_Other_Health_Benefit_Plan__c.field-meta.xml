@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Any_Other_Health_Benefit_Plan__c</fullName>
+    <description>If the patient has coverage through another health insurance plan or not.</description>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Any Other Health Benefit Plan</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

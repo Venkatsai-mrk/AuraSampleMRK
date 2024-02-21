@@ -1,0 +1,228 @@
+.THIS .test-patient li.test-patient_prime-child {
+    width: calc(33.33% - 30px);
+    background-color: #f1f2f3;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 15px;
+  /*  min-height: 200px;*/
+    border: 1px solid #eee;
+}
+.THIS .btn{
+    background-color: rgb(157, 202, 182);
+    color: white;
+}
+.THIS .elemtRed{ 
+    font-weight: 500!important;
+background-color: #50cf97!important
+}
+.THIS .btn:hover { 
+    background-color: #38996e;
+}
+.THIS .defaultBtn .slds-button{
+     background-color:  #e2f2e8;
+    border: 1px solid #a8d7c2;
+    color: #333;
+}
+
+.THIS .slds-media__body>:last-child {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+.THIS .slds-text-body--small {
+    font-size: 12px;
+    line-height: 14px;
+}
+.THIS .slds-text-heading--small {
+    font-size: 16px;
+}
+
+.THIS .test-patient li.test-patient_prime-child .slds-card {
+    background-color: #fdfbfb;
+    box-shadow: .125rem .35rem rgba(0, 0, 0, .090) !important;
+    border-radius: 0rem 0rem .25rem .25rem !important;
+    border: none;
+}
+.THIS .test-patient li.test-patient_prime-child ul {
+    margin-top: 15px;
+    background-color: #fff;
+    font-size: 13px;
+    border-top: 1px solid #e3e3e1;
+}
+.THIS .test-patient li.test-patient_prime-child ul li {
+    height: 29px;
+    padding: 3px 0px 3px 20px;
+    border-bottom: 1px solid #faf9f9;
+    font-size: 13px;
+    color: #000;
+}
+.THIS .test-patient li.test-patient_prime-child ul li .slds-form-element__label {
+    font-size: 13px;
+    color: #a19e9e;
+}
+.THIS li.test-patient_prime-child .slds-avatar--large {
+    height: 92px;
+    width: 92px;
+}
+.THIS li.test-patient_prime-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    vertical-align: middle;
+}
+/*02-06-2020*/
+.THIS .test-patient_prime-child header.slds-card__header.slds-grid {
+    display: none;
+}
+.THIS .test-patient_prime-child .slds-media {
+    /* height: 75px;*/
+}
+.THIS .test-patient_prime-child .slds-card__body {
+    margin: 0;
+}
+.THIS .p_first button.slds-button.slds-button_neutral.btnclick {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #0467c2;
+    margin: 15px 0 5px;
+    line-height: 20px;
+}
+.THIS .p_second .residential {
+    border-radius: 24px;
+    background-color: #fff6e5;
+    border: none;
+    margin: 12px 10px 0 0;
+    color: #000;
+    padding: 0px 15px;
+}
+.THIS .p_second .detox {
+    border-radius: 24px;
+    background-color: #aca2e5;
+    border: none;
+    margin: 12px 10px 0 0;
+    color: #000;
+    padding: 0px 15px;
+}
+.THIS .p_second .other {
+    border-radius: 24px;
+    background-color: #eceaf8;
+    border: none;
+    margin: 12px 10px 0 0;
+    color: #000;
+    padding: 0px 15px;
+}
+.THIS .p_second .noLevelOfCare {
+    width: 120px;
+    border-radius: 24px;
+    background-color: #deecec;
+    border: none;
+    margin: 12px 10px 0 0;
+    color: #000;
+    padding: 0px 15px;
+}
+.THIS .p_second p {
+    font-size: 9px;
+    color: #a19e9e;
+}
+.THIS .p_second p i {
+    color: #000;
+}
+.THIS .p_second .p_second_1 {
+    float: right;
+    margin-top: 7px;
+}
+.THIS .p_second .p_second_1:first-child {
+    padding-left: 5px;
+    border-left: 1px solid #d7d8d9;
+    margin-right: 12px;
+}
+.THIS .p_second .p_second_1:last-child {
+    padding: 0 5px;
+}
+.THIS .dotFont{
+    display: inline-block;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.THIS .alignPage{
+    text-align:center;
+}
+.THIS .pl-532 {
+    padding-left: 532px;
+}
+.THIS .show-btn .slds-button {
+    background-color: #a8d7c2;
+    border: 1px solid #a8d7c2;
+    color: #333;
+
+}
+.THIS .show-btn .slds-button+.slds-button {
+    margin-left: 30px;
+}
+.THIS .admit_btn .slds-is-absolute {
+    top: 12px;
+    right: 0px;
+}
+.THIS .admit_btn .slds-is-absolute .slds-icon {
+    fill: #000;
+    height: 24px;
+    width: 24px;
+}
+.THIS .admit_btn .slds-button {
+    background-color: #fff;
+    border: none;
+    color: #333;
+    padding: 0;
+    font-size: 11px;
+}
+.THIS .admit_btn .slds-button:focus {
+    border: none;
+    box-shadow: none;
+}
+@media(max-width: 1300px) {
+    .THIS .test-patient li.test-patient_prime-child {
+        width: calc(50% - 30px);
+    }
+}
+@media(max-width: 992px) {
+    .THIS .test-patient li.test-patient_prime-child {
+        width: calc(50% - 30px);
+    }
+    .THIS .total_btn .slds-size_2-of-12 {
+        width: 30%;
+    }
+    .THIS .p_first button.slds-button.slds-button_neutral.btnclick {
+        font-size: 14px;
+        text-align: left;
+    }
+    .THIS .p_second .p_second_1:first-child {
+        margin-right: 2px;
+    }
+}
+@media(max-width: 767px) {
+    .THIS .test-patient li.test-patient_prime-child {
+        width: calc(100% - 30px);
+    }
+    .THIS .total_btn .slds-size_2-of-12 {
+        width: 35%;
+    }
+    .THIS .total_btn {
+        display: block;
+    }
+    .THIS .total_btn .slds-size_2-of-12 {
+        width: 49%;
+        margin: 10px 0;
+        float: left;
+    }
+}
+@media(max-width: 576px) {
+    .THIS .test-patient li.test-patient_prime-child {
+        width: calc(100% - 30px);
+    }
+    .THIS .total_btn .slds-size_2-of-12 {
+        width: 49%;
+    }
+}

@@ -1,0 +1,152 @@
+<aura:component controller="ElixirOEM_ExternalComponentsHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ExternalcmpParentAuraIf" type="Object" />
+    <!--Event handler for Add and Delete Row Event -->    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:handler  event="c:startExtSaving" action="{!c.save}"/>
+    <aura:registerEvent name="AllergyData" type="c:AllergyData"/>
+    <aura:registerEvent name="AddAllergyToCreateForm" type="c:AddAllergyToCreateForm"/>
+    <aura:registerEvent name="hideAllergysection" type="c:hideAllergySection"/>
+    <!--Aura Attribute for store Allergy Object List as Array-->    
+    <aura:attribute name="allergyList" type="Medical_Examination__c[]"/> 
+    <aura:attribute name="allergyListCopyToSave" type="Medical_Examination__c[]"/> 
+    <aura:attribute name="patientID" type="String"/> 
+    <aura:attribute name="column" type="Object"/> 
+    <aura:attribute name="windowNotCancelled" type="Boolean" default="true"/> 
+    <aura:attribute name="ExternalcmpData" type="Object" />
+    <aura:attribute name="notesSpecificData" type="Object"/>
+    <aura:attribute name="formUniqueId" type="String"/>
+    <aura:attribute name="showNewAllergy" type="Boolean" default="false"/>
+    <!-- AURA METHOD-->
+    <!--aura:method name="allergyMethod" action="{!c.save}"
+                 description="Sample method with parameters" access="public">  
+        <aura:attribute name="formID" type="String" default="parameter 1"/> 
+        <aura:attribute name="patientID" type="String" /> 
+    </aura:method-->
+    <!--END-->
+  
+    
+    <!--Header Part-->        
+    
+    
+    <!--Table Part-->        
+    <aura:if isTrue="{!v.showNewAllergy}">
+        <div class="tableAlignment">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small allergy_table"> 
+                <thead>
+                    <tr class="slds-text-title_small">
+                        <th scope="col" class="slds-p-left_none pr5 bg-white">
+                            <div class="slds-truncate">S.No</div>
+                        </th>
+                        <th scope="col" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Allergy Name"> Allergy Name</div>
+                        </th>
+                        <th scope="col" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Substance"> Substance</div>
+                        </th>
+                        <th scope="col" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Substance Code">Substance Code</div>
+                        </th>
+                        <th scope="col" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Reaction">Reaction</div>
+                        </th>
+                        <th scope="col" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Severity">Severity</div>
+                        </th>
+                        <th scope="col" colspan ="2" class="pl5 pr5 bg-white">
+                            <div class="slds-truncate" title="Notes">Notes</div>
+                        </th>
+                    </tr>
+                </thead>   
+                <tbody>
+                    
+                    <aura:iteration items="{!v.allergyList}" var="allergyInstance" indexVar="rowIndex">
+                        <tr>
+                            <td> 
+                                {!rowIndex + 1}
+                            </td>
+                            <td class = "paddingForColumn">
+                                <c:lookupComponent
+                                                   objectName="ElixirSuite__Master_Object__c"
+                                                   fieldName="Name"
+                                                   value="{!allergyInstance.AllergyName}"
+                                                   filterClause = "RecordType.DeveloperName='Allergy'"
+                                                   placeholder="Search Allergy Name"
+                                                   forSearchCharLimit ='3'
+                                                   />
+                            </td>
+                            <td class = "paddingForColumn">
+                                <c:lookupComponent
+                                                   objectName="ElixirSuite__Master_Object__c"
+                                                   fieldName="Name"
+                                                   value="{!allergyInstance.Substance}"
+                                                   filterClause = "RecordType.DeveloperName='Substance'"
+                                                   placeholder="Search Substance"
+                                                   substanceCode="{!allergyInstance.SubstanceCode}"
+                                                   />
+                            </td>
+                            
+                            <td>
+                                <lightning:input disabled="true" class="small-placeholder-text substain" value="{!allergyInstance.SubstanceCode}" placeholder="Substance Code" />
+                            </td>
+                            <td class = "paddingForColumn">
+                                <!--ui:inputPhone class="slds-input" value="{!allergyInstance.Reaction}"/-->
+                                <c:lookupComponent
+                                                   objectName="ElixirSuite__Master_Object__c"
+                                                   fieldName="Name"
+                                                   value="{!allergyInstance.Reaction}"
+                                                   filterClause = "RecordType.DeveloperName='Reaction'"
+                                                   placeholder="Search Reaction"
+                                                   />
+                            </td>
+                            <td class = "paddingForColumn">
+                                <c:lookupComponent
+                                                   objectName="ElixirSuite__Master_Object__c"
+                                                   fieldName="Name"
+                                                   value="{!allergyInstance.Severity}"
+                                                   filterClause = "RecordType.DeveloperName='Severity'"
+                                                   placeholder="Search Severity"
+                                                   />
+                            </td>
+                             <td>
+                                <lightning:textarea class="small-placeholder-text substain" value="{!allergyInstance.Notes}" placeholder="Notes" />
+                            </td>
+                            <td class="slds-text-align_center">
+                                <aura:if isTrue="{!rowIndex == 0}">
+                                    <aura:if isTrue="{!lessthanorequal(v.allergyList.length,9)}">
+                                        <a onclick="{!c.addNewRow}">
+                                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                            <span class="slds-assistive-text">Add Icon</span>
+                                        </a>
+                                        <aura:set attribute="else">
+                                            <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                        </aura:set>
+                                    </aura:if>   
+                                    
+                                    <aura:set attribute="else">
+                                        <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                            <span class="slds-assistive-text">Delete Icon</span>
+                                        </a>
+                                    </aura:set> 
+                                </aura:if>
+                            </td> 
+                        </tr>
+                        
+                        
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+        
+        <br/>
+        <div class="slds-text-align_right slds-p-right_x-small slds-m-bottom_small">
+            <!--Save Button which is call Save js function on click --> 
+            <button class="slds-button slds-button_neutral" onclick="{!c.Cancel}">Cancel</button>
+            <button class="slds-button slds-button_brand slds-m-right_medium" onclick="{!c.addAllergyToMainCompoennt}">Add</button>
+        </div>
+    </aura:if>
+</aura:component>

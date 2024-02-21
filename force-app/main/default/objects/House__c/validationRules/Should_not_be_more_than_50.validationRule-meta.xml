@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Should_not_be_more_than_50</fullName>
+    <active>true</active>
+    <description>Capping the number of rooms at 50</description>
+    <errorConditionFormula>OR(No_Of_Room_s__c &gt; 50,No_Of_Room_s__c &lt; 0)</errorConditionFormula>
+    <errorDisplayField>No_Of_Room_s__c</errorDisplayField>
+    <errorMessage>The number of rooms should not be less than 0 or more than 50. If there are more than 50 rooms in a house you can add and configure them manually from the related lists.</errorMessage>
+</ValidationRule>

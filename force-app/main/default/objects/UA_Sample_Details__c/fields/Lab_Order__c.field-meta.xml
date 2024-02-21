@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lab_Order__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Select Test</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Procedure__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Template Lab Test</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>UA Sample Details</relationshipLabel>
+    <relationshipName>UA_Sample_Details</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

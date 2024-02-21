@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Set_Prevent_Patient_Save_Field_As_True</name>
+        <label>Set Prevent Patient Save Field As True</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ElixirSuite__Prevent_Patient_Save__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_If_Matching_Patient_Present_in_Group</name>
+        <label>Check If Matching Patient Present in Group</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Matched_Patient_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Group_Patient_With_Matching_Patient</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Prevent_Patient_Save_Field_As_True</targetReference>
+            </connector>
+            <label>Matched Patient Exists?</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Prevent Duplicate Group Patients Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Prevent Duplicate Group Patients Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Group_Patient_With_Matching_Patient</name>
+        <label>Get Group Patient With Matching Patient</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_If_Matching_Patient_Present_in_Group</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Group_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Group_Name__r.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Current_Patient_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Current_Patient_Name__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group_Patient__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Group_Patient_With_Matching_Patient</targetReference>
+        </connector>
+        <object>Group_Patient__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,319 @@
+<aura:component controller="COCHelper" 
+                implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="acctDetails" type="String"/>
+     <aura:registerEvent name="RefreshEstimatesListView" type="c:RefreshEstimatesListView"/>
+    <aura:attribute name="estmateRecordId" type="String"/>
+    <aura:attribute name="insuranceDetails" type="String" />
+     <aura:attribute name="recordName" type="String" />
+    <aura:attribute name="isProceduresSelected" type="Boolean" default="false"/> 
+     <aura:attribute name="saveButtonAbility" type="Boolean" default="false"/>
+     <aura:attribute name="inUseStatus" type="Boolean" default="false"/>
+    <aura:attribute name="isProceduresAvailable" type="boolean" default="FALSE"/>
+    <aura:attribute name="hasCalculationCompleted" type="boolean" default="FALSE"/>
+     <aura:attribute name="isOpen" type="boolean" default="FALSE"/>
+    <aura:attribute name="OrgWideNameSpace" type="String"/>
+    <aura:attribute name="procedureTotal" type="Integer"/>
+    <aura:attribute name="PatientResposibility" type="Integer"/>
+    <aura:attribute name="InsuranceResposibility" type="Integer"/>
+    <aura:attribute name="PatientResposibilityRoundedOff" type="Integer"/>  
+    <aura:attribute name="InsuranceResposibilityRoundedOff" type="Integer"/>  
+    <aura:attribute name="mapOfProcedures" type="Object"/>
+    <aura:attribute name="selectedValues" type="List"/>  
+    <aura:attribute name="allProceduresSelectedToOperate" type="List"/>
+     <aura:registerEvent name="CocViewRefresh" type="c:CocViewRefresh" />
+   
+     
+    <div class="slds-modal__container"></div>
+   
+    <div class="changesHeight" aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open changeBack">
+            <div class="slds-modal__container hideDiv">
+               
+                <header class="slds-modal__header changeFont">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>{!v.recordName}</b></h2>
+                   
+                </header>
+               
+                <div class="slds-modal__content slds-p-around_medium changePad" id="modal-content-id-1" >
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="widthForAll">
+                       
+                        <div class="slds-modal__content slds-p-around--x-small slds-size_1-of-1 slds-is-relative customParentModal" aura:id="modalbody" id="modalbody">
+                            <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                            <div class="calpage">
+                                <div class="slds-grid slds-gutters ">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        
+                                    </div>
+                                </div>
+                                <!--div class="slds-grid slds-gutters ">
+            <div class="slds-col slds-size_12-of-12">
+     <lightning:layout>
+                   
+                     <lightning:layoutItem size="3">
+                        <lightning:input                                        
+                           aura:id="searchField"
+                           value="{!v.searchKeyword}"
+                           name="searchKnowledgeInput"
+                           label="" type="search"
+                           placeholder="Patient Contact"
+                           isLoading="{!v.issearching }"
+                           onchange="{!c.Search}"
+                         
+                           />
+                     </lightning:layoutItem>
+                  </lightning:layout>
+           </div>
+        </div-->
+                                <div class="slds-grid slds-gutters ">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <h3 class="slds-section__title InfoHead">
+                                            <div class="slds-grid slds-gutters changeWid">
+                                                <div class="slds-col slds-size_6-of-12">
+                                                       <span class="slds-truncate" title="INSURANCE INFORMATION">INSURANCE INFORMATION</span>
+                                                </div>
+                                                <div class="slds-col slds-size_6-of-12 slds-text-align_right">
+                                                  <lightning:input type="checkbox" label="In-Use" checked="{!v.insuranceDetails.ElixirSuite__In_Use__c}" onchange="{!c.isCOCinUsed}"/>
+                                                </div>
+                                          </div>
+                                        </h3>
+                                        <div class="patient_heading">
+                                        <div class="slds-section slds-is-open" aura:id="task2">
+                                             <div class="slds-section__content" id="TaskList2" >
+                                                <div class="" id="TaskList2">
+                                                    <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                       
+                                                        <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                            <lightning:input type="text" name="" label="Patient Name" value="{!v.acctDetails.ElixirSuite__Account__r.Name}" placeholder="N/A"  disabled= "true"/>
+                                                           
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                            <lightning:input type="text" name="" label="DOB" value="{!v.acctDetails.ElixirSuite__Account__r.ElixirSuite__Patient_s_Birth_Date__c}" placeholder="N/A"  disabled= "true"/>
+                                                           
+                                                        </div>
+                                                        <div class="slds-col slds-size_4-of-12  fixedHeight">
+                                                            <lightning:input type="text" name="" label="Gender" value="{!v.acctDetails.ElixirSuite__Account__r.ElixirSuite__Gender__c}" placeholder="N/A" disabled= "true"/>
+                                                           
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters defaultBackground">
+                                                       
+                                                       
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters ">
+                                <div class="slds-col slds-size_12-of-12 slds-p-bottom_x-small">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Opportunity Name">Insurance Type</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Account Name">Insurance Name</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Close Date">Copay</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Stage">Co-Insurance (%)</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Confidence">Remaining Deductible</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Amount">OOP Max</div>
+                                                </th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                            <tr class="slds-hint-parent">
+                                                <td data-label="Insurance Type" scope="row">
+                                                    <div class="slds-truncate" title="Insurance Type">
+                                                        Primary
+                                                    </div>
+                                                </td>
+                                                <td data-label="Insurance Name">
+                                                    <div class="slds-truncate" title="Insurance Name">{!v.insuranceDetails.ElixirSuite__Insurance_Name__c}</div>
+                                                </td>
+                                                <td>
+                                                    $ {!v.insuranceDetails.ElixirSuite__Co_Pay__c}
+                                                   
+                                                </td>
+                                                
+                                                <td data-label="Co-Insurance">
+                                                    <div class="slds-truncate" title="Co-Insurance"> {!v.insuranceDetails.ElixirSuite__Co_Insurance__c}%</div>
+                                                </td>
+                                                <td data-label="Remianing Deductible">
+                                                    <div class="slds-truncate" title="Remianing Deductible">$ {!v.insuranceDetails.ElixirSuite__Deductible__c}</div>
+                                                </td>
+                                                <td data-label="OOP Max">
+                                                    <div class="slds-truncate" title="OOP Max">$ {!v.insuranceDetails.ElixirSuite__OOP_Max__c}</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                           
+                                                        <div class="slds-m-top_large">
+                                <!--div class="slds-grid slds-gutters slds-m-top_large">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <lightning:button class="slds-button slds-button_neutral slds-is-absolute" onclick="{!c.openProcedures}">Add Procedure</lightning:button>
+                                    </div>
+                                </div-->
+                            </div>
+                          
+                            <aura:if isTrue="{!v.isProceduresSelected}">
+                                <div class="slds-grid slds-gutters slds-m-top_large">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered reportTableCustom slds-is-absolute">
+                                            <thead>
+                                               
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Opportunity Name">ICT - CODE</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Account Name">Procedure</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Close Date">Unit</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Stage">Contracted Rate</div>
+                                                    </th>
+                                                    <th class="" scope="col">
+                                                        <div class="slds-truncate" title="Confidence">Total Contracted Price</div>
+                                                    </th>
+                                                   
+                                                   
+                                                </tr>
+                                               
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!v.allProceduresSelectedToOperate}" var="item" indexVar ="idx">
+                                                    <tr class="slds-hint-parent">
+                                                        <td data-label="Opportunity Name" scope="row">
+                                                            <div class="slds-truncate" title="CPT-CODES">
+                                                                {!item.ElixirSuite__ICT_CODE__c}
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Procedure Name">
+                                                            <div class="slds-truncate">{!item.ElixirSuite__Procedure_Name__c}</div>
+                                                        </td>
+                                                        <td data-label="Close Date">
+                                                            {!item.ElixirSuite__Unit__c}
+                                                           
+                                                        </td>
+                                                        <td data-label="Prospecting">
+                                                            <div class="slds-truncate" ><lightning:formattedNumber value="{!item.ElixirSuite__Contracted_Rate__c != null ? item.ElixirSuite__Contracted_Rate__c : 0.0}" style="currency"/></div>
+                                                        </td>
+                                                        <td data-label="Confidence">
+                                                            <div class="slds-truncate" title="20%"> <lightning:formattedNumber value="{!item.ElixirSuite__Total_Contracted_Price__c != null ? item.ElixirSuite__Total_Contracted_Price__c : 0.0}" style="currency"/> </div>
+                                                        </td>
+                                                        
+                                                       
+                                                       
+                                                    </tr>
+                                                </aura:iteration>
+                                                <tr>
+                                                    <td colspan="3"></td>
+                                                    <td><b>Total</b></td>
+                                                    <td><b>$ {!v.procedureTotal}</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                   
+                                   
+                                </div>
+                               
+                               
+                            </aura:if>
+                            <aura:if isTrue="{!v.hasCalculationCompleted}">
+                                <!-- <div class="slds-grid slds-gutters slds-m-top_large footerArea">
+            <div class="slds-col slds-size_6-of-12">
+    <b>Approx Insurance Responsibility : $ {!v.InsuranceResposibility}</b>                
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <b>Approx Patient Responsibility : $ {!v.PatientResposibility}</b>
+            </div>
+        </div>-->
+                                <div class="slds-grid slds-gutters slds-m-top_large ">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="footerArea">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_12-of-12">
+                                                	<h3>COST OF CARE CALCULATIONS</h3>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_7-of-12 changeMargin">
+                                                    <b>Patient Responsibility : </b>
+                                                </div>
+                                                <div class="slds-col slds-size_5-of-12 changeMargin changeMargin">
+                                                    <b>$ {!v.PatientResposibilityRoundedOff}</b>
+                                                </div>
+                                                     
+                                            </div>
+                                             <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_7-of-12 changeMargin">
+                                                <b>Insurance Responsibility : </b>                
+                                                </div>
+                                                 <div class="slds-col slds-size_5-of-12 changeMargin">
+                                                     <b>$ {!v.InsuranceResposibilityRoundedOff}</b>   
+                                                 </div>
+                                            </div></div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                           
+                           
+                        </div>
+                       
+                         
+                    </div>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters changeTextAlign">
+                        <div class="slds-col slds-size_12-of-12">  
+                              <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                            <aura:if isTrue="{!v.saveButtonAbility}">
+                            <lightning:button variant="brand" label="Update" title="Update" onclick="{! c.save }"/>
+                            </aura:if>
+                          
+                        </div>
+                       
+                    </div>
+                   
+                </footer>
+            </div>
+        </section>
+    </div>
+   
+   
+</aura:component>

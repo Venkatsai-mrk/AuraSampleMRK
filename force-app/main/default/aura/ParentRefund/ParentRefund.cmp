@@ -1,0 +1,72 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" controller="RefundController" >
+    
+    <aura:attribute name="isProcessButtonDisabled" type="boolean" />
+    <aura:attribute name="billingOpenIssueRefund" type="boolean" default="false"/>
+    <aura:attribute name="billingDisableCreateRefund" type="boolean" default="true"/>
+    <aura:attribute name="sendPatientStatements" type="boolean" default="false"/>
+    <aura:attribute name="refundScreenTab" type="String"/>
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:attribute name="accName" type="String" default="Account Name"/>
+    <aura:attribute name = "headingTitle" type="String" default="Refunds"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{! this }" action="{! c.myAction }"/>
+    
+    <div class="parentCSS;headingCSS">
+        <aura:if isTrue="{!v.billingOpenIssueRefund}">
+            
+            <aura:set attribute="else">
+        <div class="gridParentRefClass"> 
+        <div class ="mgList slds-p-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_4-of-12">
+                        
+                        <ol class="olRefClass"><li>
+                            <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a>&nbsp;{!v.greaterSign}&nbsp;
+                            <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                            </li>
+                        </ol>
+                        
+                        <span>
+                            <!-- heading -->
+                            <h5 class="headingParentCSS"><b>{!v.headingTitle}</b></h5> 
+                        </span>
+                        
+                    </div>
+                    <br></br>
+                </div>
+            </div>
+        </div>
+                </aura:set>
+            </aura:if>
+        
+    <c:ElixirOEM_Refund aura:id="processRefund" selTabId="{!v.refundScreenTab}" isProcessButtonDisabled="{!v.isProcessButtonDisabled}" 
+                                                    recordId = "{!v.recordId}" PatientId = "{!v.recordId}" openIssueRefund="{!v.billingOpenIssueRefund}"
+                                                    OEMdisableCreateRefund="{!v.billingDisableCreateRefund}" sendPatientStatements="{!v.sendPatientStatements}" />
+        
+        <aura:if isTrue="{!v.refundScreenTab == 'tab2'}">
+                            <div class="slds-float_right gridParentRefClass"> 
+                                <div class="slds-grid slds-gutters floatRightClass">
+                                    
+                                    <lightning:input type="checkbox" label="Generate Receipt" checked="{!v.sendPatientStatements}"
+                                                 onchange="{!c.generateRefundStatement}"/>
+                                    <div class="marginClass">
+                                <lightning:button variant="brand" label="Process Refund" disabled="{!v.isProcessButtonDisabled}"
+                                                  onclick="{!c.processRefunds}"/>
+                                </div>
+                                    </div>
+                                
+                            </div>
+                        </aura:if>
+        <aura:if isTrue="{!v.billingOpenIssueRefund}">
+            <div class="slds-float_right gridParentRefClass"> 
+                                <div class="slds-grid slds-gutters floatRightClass">
+                                    <div class="marginClass">
+                            <lightning:button variant="brand" class="" disabled="{!v.billingDisableCreateRefund}" label="Create Refund Request" title="Save" onclick="{!c.createRefundReq}" />  
+                    </div>
+                            </div>
+                </div>
+                        </aura:if>
+        
+        </div>
+	
+</aura:component>

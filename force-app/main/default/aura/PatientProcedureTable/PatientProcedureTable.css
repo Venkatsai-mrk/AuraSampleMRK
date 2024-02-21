@@ -1,0 +1,42 @@
+.THIS .subheading{
+     font-size: 14px;
+    margin-top: 5px;
+    
+}
+
+.THIS .remove_label .slds-form-element__label {
+	display: none;
+}
+
+.THIS .tableclass {
+    margin-top: 15px;
+}
+
+.THIS .checkboxspace{
+    padding:1px;
+}
+.THIS .byProcTableCss .th
+{
+    width:100px; 
+    word-wrap:break-word;
+}
+
+.THIS .changescroll{
+    height:100%;
+}
+
+.THIS .payment-table thead th {
+    border-left: 1px solid lightgrey; 
+    border-right: 1px solid lightgrey;
+    text-align: center; 
+    
+}
+.THIS .slds-scrollable_y {
+    max-height: 355px; /* Set your desired max height */
+    overflow-y: auto;
+}
+
+.THIS .slds-table th,
+.THIS .slds-table td {
+    white-space : pre-line;
+}

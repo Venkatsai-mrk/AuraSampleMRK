@@ -1,0 +1,53 @@
+<aura:component controller="FormsImageUpload" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="patientName" type="String"/>
+    <aura:attribute name="uniqueName" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="column" type="Object"/>
+    <aura:attribute name="multiple" type="Boolean" default="false"/>
+    <aura:attribute name="uploadDocumentIds" type="List" default="[]"/>
+    <aura:attribute name="removedDocumentIds" type="List" default="[]"/>
+    <aura:attribute name="recentlyUploadedFileIds" type="List" default="[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:handler event="c:FormsRefreshEvt" action="{!c.saveAndUpdateImages}"/>
+    <div class="file_upload">
+        <lightning:fileUpload label="{! 'Please upload '+v.column.ElixirSuite__IMG_File_Name__c}"
+                              name="fileUploader"
+                              multiple="{!v.multiple}"
+                              accept="['.png', '.jpg', '.jpeg','.pdf']"
+                              recordId="{!v.patientId}"
+                              disabled="{!v.disabled}"
+                              onuploadfinished="{!c.handleUploadFinished}" />
+    </div>
+    <div class="slds-form--compound">
+        <aura:if isTrue="{!not(empty(v.uploadDocumentIds))}">
+            <div class="slds-grid slds-wrap">
+                <ul class="parent_list_items">
+                    <aura:iteration items="{!v.uploadDocumentIds}" var="image">  
+                        <aura:if isTrue="{!not(image.Remove)}">
+                            <li class="list_items">  
+                                <span class="filecard">
+                                    <lightning:fileCard fileId="{!image.Id}" description=""/> 
+                                </span>
+                                <span>
+                                    <table>
+                                        <tr>
+                                            <td class="false_width">&nbsp;</td>
+                                            <td>{!image.Name}</td>
+                                            <td class="remove_btn"><lightning:button name="{!image.Id}"  
+                                                                                     variant="base" 
+                                                                                     label="Remove"  
+                                                                                     onclick="{!c.openRemoveFile}"/>
+                                            </td>
+                                            <td class="false_width">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                </span>
+                            </li>  
+                        </aura:if>
+                    </aura:iteration>   
+                </ul>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

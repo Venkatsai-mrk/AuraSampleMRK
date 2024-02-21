@@ -1,0 +1,219 @@
+.THIS.group_header {
+background-color: #fafafa;
+z-index: 1;/*9*/
+top: 34px;
+width: 100%;
+left: 0;
+border-radius: 5px 5px 0 0;
+padding: 0px 10px;
+font-size: 18px;
+font-weight: 600;
+text-align: center;
+border-bottom: 1px solid #f1f2f3;
+/*position: absolute;*/
+}
+.THIS.group-footer {
+background-color: #f1f2f3;
+/*  position: absolute;*/
+z-index: 1;/*9*/
+bottom: 0px;
+width: 100%;
+border-radius: 0 0 5px 5px;
+padding: 11px 15px;
+text-align: right;
+left: 0;
+}
+.THIS.group_header h4 {
+color: #000;
+font-size: 16px;
+font-weight: 600;
+padding: 5px;
+}
+.THIS .time-box {
+padding: 6px 0px 6px 16px;
+}
+.THIS .group-header{
+margin-right: 15px;
+margin-top: 11px;
+}
+.THIS .time-box p {
+font-size: 12px;
+line-height: 22px;
+}
+.THIS .time-box p b {
+margin-right: 10px;
+}
+.THIS .time-box p .slds-icon {
+width: 14px;
+height: 14px;
+fill: #6d6d6f;
+}
+.THIS .group_form {
+width: 100%;
+padding:  0 25px;
+}
+.THIS .group_form h3 {
+color: #000;
+font-weight: 500;
+font-size: 14px;
+margin: 6px 0 12px;
+}
+.THIS .group_form label.slds-form-element__label {
+color: #a3a3a3 !important;
+font-size: 12px;
+margin-bottom: 6px;
+}
+.THIS .header{
+color: #a3a3a3!important;
+font-size: 12px;
+padding-bottom: 6px;
+}
+.THIS .group_attendents {
+border-bottom: 2px solid #eee;
+padding: 15px 0;
+}
+.THIS .group_attendents h2 {
+color: #333;
+font-size: 16px;
+}
+.THIS .group_attendents h2 .slds-icon {
+height: 12px;
+width: 12px;
+margin-right: 5px;
+margin-top: 0px;/*-3*/
+}
+.THIS .group_attendents h2.act {
+color: #1e80d7;
+}
+.THIS .remove_btn .slds-button {
+color: #b9b5b4;
+border: 1px solid #b9b5b4;
+padding: 0px 10px;
+line-height: 26px;
+}
+.THIS span.uiOutputText {
+color: #1e80d7;
+font-size: 16px;
+display: block;
+margin-bottom: 9px;
+}
+.THIS .timeclass{
+margin-left:5px ;
+}
+.THIS   .cuf-content {
+padding: 0 0rem !important;
+}
+.THIS .slds-p-around--medium {
+padding: 0rem !important;
+}       
+.THIS .slds-modal__content{
+
+height:unset !important;
+max-height:unset !important;
+
+}
+.THIS .round-input .slds-input, .THIS .round-input .slds-select {
+border-radius: 20px;
+}
+.THIS .round-input .slds-textarea {
+border-radius: 40px;
+}
+.THIS .faciliatorCSS .slds-form-element__label {
+display: none;
+}
+.THIS .faciliatorCSS{
+/*   margin-top: -10px;*/
+}
+.THIS .modal-container.slds-modal__container {
+width: 70%;
+max-width: 70%;
+}
+.THIS.slds-modal__content {
+overflow: visible;
+}
+.THIS .facilitator_heading {
+color: #a3a3a3;
+font-size: 12px;
+margin-bottom: 6px;
+text-transform: uppercase;
+}
+/*changes*/
+.THIS .cuf-content {
+padding: 0 0rem !important;
+}
+.THIS .slds-p-around--medium {
+padding: 0rem !important;
+}       
+.THIS .slds-modal__content{
+
+height:unset !important;
+max-height:unset !important;
+
+}
+.THIS .slds-modal__container {
+max-width: 60%;
+min-width: 60%;
+}
+.THIS .parentCSS{
+    height:100%;
+}
+.THIS .childCSS {
+    width: 100%;
+    background-color: rgb(243, 242, 242);
+    height: 100%;
+    padding: 30px 30px 15px;    
+}
+.THIS .pateint_list li {
+    background-color: #fdfbfc;
+    width: 100%;
+    margin-left: 0px;/*-30*/
+    padding: 0px 0px 30px;
+    margin-top: 1px;
+}
+.THIS .pateint_list li:nth-child(2n){
+    background-color: #fff;
+}
+.THIS .pateint_list li img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    vertical-align: middle;
+    max-width: 100%;
+    border-radius: 50%;
+}
+.THIS div.Message {
+    width: 110px;
+    color: #ffffff;
+    background-color: #0176d3;
+    padding: 8px;
+    margin-top: 15px;
+    border-radius: 20px;
+    text-align: center;
+}
+.THIS div.Message .expandCollapse {
+    cursor:pointer;
+}
+.THIS .buttonclass button.slds-button.slds-button_reset.slds-accordion__summary-action {
+    background-color: #009ddc;
+    width: 110px!important;
+    display: unset!important;
+    max-width: 140px;
+    border-radius: 25px;
+    color: #fff;
+    text-align: center;
+}
+.THIS .buttonclass {
+    padding-left: 0 !important;
+}
+.THIS .buttonclass svg.slds-accordion__summary-action-icon.slds-button__icon.slds-button__icon_left.slds-icon.slds-icon-text-default.slds-icon_x-small {
+    fill: #fff;
+}
+.THIS .tb1 {
+    text-align: center;
+    font-weight: bold !important;
+    font-size: 150% !important;
+}
+.THIS .titlegrp {
+    font-weight: bold !important;
+    font-size: 120% !important;
+}

@@ -1,0 +1,32 @@
+.dummy{
+	color : black;
+}
+.marginclass{
+    margin-right: 10px;
+}
+.mrg{
+    margin: 1px;
+}
+.button-container{
+  margin: auto;  
+}
+.slds-modal__container.custom-modal-width {
+    padding: 0 !important;
+    width: 60% !important;
+}
+
+.slds-modal__header {
+    padding: 1rem; /* Adjust the header padding */
+}
+
+.slds-modal__content {
+    padding: 1rem; /* Adjust the content padding */
+}
+
+.slds-modal__footer {
+    padding: 1rem; /* Adjust the footer padding */
+}
+
+.customClass svg.slds-button__icon.slds-button__icon_left {
+    margin: 0;
+}

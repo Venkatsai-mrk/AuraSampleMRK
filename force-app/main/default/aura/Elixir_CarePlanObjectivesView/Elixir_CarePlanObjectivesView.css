@@ -1,0 +1,140 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;   
+}
+.THIS .spaceEdit{
+	margin-left:10px;
+}
+.THIS.accordian_header {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.THIS.accordian_header .chevron_btn {
+    margin-top: 0px;
+    width: 30px;
+    background-color: transparent;
+    padding: 0;
+    float: left;
+    border: none;
+    margin-left: 20px;
+}
+.THIS.accordian_header .chevron_btn svg.slds-button__icon.slds-button__icon_left {
+    height: 16px;
+    width: 16px;
+    fill: #777;
+}
+.THIS .editStyle textarea{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+.THIS .colorChange .btncss {
+    background:#466bac;
+    border:1px solid #466bac;
+}
+.THIS .c-point {
+    cursor: pointer;
+    width: calc(100% - 50px);
+    float: right;
+}
+.THIS .btncss1 {
+    padding: 0;
+    background-color: transparent !important;
+    border: none !important;
+}
+.THIS .right-side_bar .slds-input {
+    width: 100px;
+    text-align: left;
+    padding: 0 0 0 20px;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+    color:#333;
+}
+.THIS .right-side_bar label.slds-form-element__label {
+    display: none;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0;
+    top: 4px;
+    fill: #ccc;
+}
+.THIS .right-side_bar button.btncss {
+    font-size: 12px;
+    color: #333;
+    min-height: 14px;
+    height: 14px;
+    line-height: 0;
+    padding: 0;
+    margin-bottom: 0;
+}
+.THIS .third_accordian h3 {
+    color: #48c3cc!important;
+    font-size: 16px;
+}
+.THIS .third_accordian1 {
+    margin-left: 44px;
+    padding-right: 15px;
+}
+.THIS .food_icon svg.slds-icon.slds-icon-text-default {
+    fill: #48c3cc;
+}
+.THIS .slds-page-header.c-point .c-point {
+    background-color: #fff;
+}
+.THIS.care-plan_header {
+    width: calc(100% - 50px);
+    float: right;
+    padding: 0 0 0px;
+}
+.THIS.care-plan_header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000 !important;
+}
+.THIS h3.obj-head {
+    color: #48c3cc;
+    font-size: 18px;
+    line-height: 15px;
+    margin-bottom: 7px
+}
+.THIS .inter_btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+.THIS .inter_btn {
+    background-color: #fff !important;
+    border: 1px solid #999 !important;
+    color: rgb(1, 118, 211) !important;
+    padding: 5px 15px !important;
+    margin-bottom: 10px;
+}
+.THIS.problem_parent .care-plan_header {
+    display: none;
+}
+@media (max-width: 576px) {
+ 	.THIS .slds-page-header.c-point {
+        padding-right: 0 !important;
+        width: 100%;
+    }
+    .THIS .slds-float--right.right-side_bar.right-side_bar1 {
+        margin: 8px 0;
+    } 
+}
+.THIS .due_date svg.slds-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.THIS .due_date span.uiOutputDate {
+    font-size: 13px;
+    margin-left: 5px;
+    color: #000;
+}

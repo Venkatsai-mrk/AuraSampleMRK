@@ -1,0 +1,50 @@
+<aura:component controller="FormApproval" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="formName" type="String"/>
+<aura:attribute name="changedFormName" type="String"/>
+<aura:attribute name="formId" type="String"/>
+<aura:attribute name="patientId" type="String"/>
+<aura:attribute name="approvedValues" type="Object"/>
+<aura:attribute name="currentLevel" type="Object"/>
+<aura:attribute name="userValues" type="Object"/>
+<aura:attribute name="flag" type="Boolean" default="false"/>
+<aura:attribute name="comment" type="String" />
+<aura:attribute name="code" type="String" />
+<aura:handler name="FormSignatureRefresh" event="c:FormSignatureRefresh" action="{!c.myAction}"/>
+<aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:method name="saveSign" action="{!c.saveSign}" description="To Save Signature in form"> 
+        <aura:attribute name="formId" type="String"/>
+    </aura:method>
+    <div class="slds-grid slds-wrap">
+        <ul class="parent_list_items">
+
+        <!--div class="slds-col" -->
+            <aura:if isTrue="{! not(empty(v.currentLevel.ElixirSuite__Approval_Level__c))}">
+                <li class="list_items">
+                <c:Elixir_SignatureModalCreate aura:id="signModalId"  changedFormName="{!v.changedFormName}"
+                                    formName="{!v.formName}"
+                                    formId="{!v.formId}"
+                                    userValues="{!v.userValues}"
+                                    currentLevel="{!v.currentLevel}"
+                                    flag = "{!v.flag}"
+                                  	label = "{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}" 
+                                    comment = "{!v.comment}"
+                                    code = "{!v.code}"
+                                    />
+                    
+                    <!--Adding for custom label start here-->
+                    <!--<aura:if isTrue="{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}">
+                         <b>____________________________________________________</b> <br/>
+                    <b> {!v.currentLevel.ElixirSuite__Approver_Custom_Label__c} </b>
+                        <aura:set attribute="else">
+                            <br/><br/>
+                             </aura:set>
+                    </aura:if>-->
+                    
+                    <!--Custom label addition ends here-->
+                 </li>
+           </aura:if>
+        </ul>
+        <!--/div-->
+    </div>
+     
+</aura:component>

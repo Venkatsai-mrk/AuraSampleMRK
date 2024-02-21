@@ -1,0 +1,26 @@
+.thickerBorder {
+    border-bottom-width: 1px;
+    border-color: rgb(201, 201, 201);
+  }
+
+.slds-table label.slds-form-element__label {
+    display: none;
+}
+
+.slds-table tr td:nth-child(5) .slds-form-element {
+  width: 50%;
+  float: left;
+  padding-right: 10px;
+}
+
+.srWidth {
+  width: 5%;
+}
+
+.priceBook {
+  width: 25%;
+}
+
+.discount {
+  width: 16%;
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Status__c</fullName>
+    <description>The status of the client associate with the insurance, such as prospect client, discharged, referred, termed.</description>
+    <externalId>false</externalId>
+    <label>Client Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>prospect</fullName>
+                <default>false</default>
+                <label>prospect</label>
+            </value>
+            <value>
+                <fullName>client</fullName>
+                <default>false</default>
+                <label>client</label>
+            </value>
+            <value>
+                <fullName>discharged</fullName>
+                <default>false</default>
+                <label>discharged</label>
+            </value>
+            <value>
+                <fullName>referred</fullName>
+                <default>false</default>
+                <label>referred</label>
+            </value>
+            <value>
+                <fullName>termed</fullName>
+                <default>false</default>
+                <label>termed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

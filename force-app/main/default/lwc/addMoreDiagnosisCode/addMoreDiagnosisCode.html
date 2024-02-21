@@ -1,0 +1,73 @@
+<template>
+    <template if:true={showModal}>
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open slds-modal_large"
+      >
+        <div class="slds-modal__container">
+          <!-- Header Start -->
+          <header class="slds-modal__header">
+            <lightning-button-icon
+              class="slds-modal__close"
+              title="Close"
+              icon-name="utility:close"
+              icon-class="slds-button_icon-inverse"
+              onclick={handleDialogClose}
+            ></lightning-button-icon>
+  
+            <h2 class="slds-text-heading_medium slds-hyphenate header-string headerCss">
+              Add More Diagnosis Codes
+            </h2>
+          </header>
+          <!-- Header End -->
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+          >
+            <slot>
+              <!--<p>This is a custom modal popup component.</p>-->
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12 padding1">
+                  <span>
+                    <lightning-input type="search" label="Enter Diagnosis Name:" placeholder="Search Diagnosis" value={searchValue} onchange={handleSearchKey}></lightning-input>
+                  </span>
+                </div>
+                
+                <div class="slds-col slds-size_3-of-12 padding2">
+                    <span>
+                        <button class="slds-button slds-button_brand position" onclick={handleSearch} style="" >Search</button>
+                    </span>
+                  </div>
+              </div>
+
+              
+            </slot>
+
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}>
+            </lightning-datatable>
+          
+            <template if:false={count}>
+              <center>No items to display</center>
+            </template>
+          
+          </div>
+          
+        <div>
+        <footer class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" onclick={handleDialogClose}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={getSelectedDiagnosisRecords}>Add Selected Codes</button>
+        </footer>
+      </div>
+        </div>
+    
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+  </template>

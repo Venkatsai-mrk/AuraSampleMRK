@@ -1,0 +1,48 @@
+.THIS .modifyselect{
+    margin:auto; 
+    width:140%;
+}
+.THIS .parentCSS{
+    height:100%;
+}
+.THIS .childCSS {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+    min-height: 570px!important;    
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+.THIS .headingCSS {
+    font-size:20px;
+}
+.THIS .gridClass {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.THIS .tableClass {
+    height: 350px; 
+}
+.THIS .noRecordClass {
+    margin-top: 50px;
+}
+.THIS .text-button > button {
+    cursor: default;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #080707;
+    text-align: left;
+}
+
+.THIS .text-button > button:hover {
+    color: #080707;
+}
+.THIS .textWidth > text {
+    width: 20%;
+}

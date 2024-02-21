@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Schedule_Wednesday__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Schedule Wednesday</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Creative Outlet at 10:30AM</fullName>
+                <default>false</default>
+                <label>Creative Outlet at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Creative Primary Group A at 09:00AM</fullName>
+                <default>false</default>
+                <label>Creative Primary Group A at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Creative Primary Group B at 09:00AM</fullName>
+                <default>false</default>
+                <label>Creative Primary Group B at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Creative Primary Group C at 09:00AM</fullName>
+                <default>false</default>
+                <label>Creative Primary Group C at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Creativity Caseload Crystal at 09:00AM</fullName>
+                <default>false</default>
+                <label>Creativity Caseload Crystal at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Group 1 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 1 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 2 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 2 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 5 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 5 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group A at 06:00AM</fullName>
+                <default>false</default>
+                <label>Group A at 06:00AM</label>
+            </value>
+            <value>
+                <fullName>Group B at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group B at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group C at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group C at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group D at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group D at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group E at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group E at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>In-House 12 Step Meeting at 07:00PM</fullName>
+                <default>false</default>
+                <label>In-House 12 Step Meeting at 07:00PM</label>
+            </value>
+            <value>
+                <fullName>Lunch at 12:00PM</fullName>
+                <default>false</default>
+                <label>Lunch at 12:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Creative Outlet at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Creative Outlet at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW: Creative Primary A at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Creative Primary A at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Creative Primary B at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Creative Primary B at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Creative Primary C at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Creative Primary C at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LWD: Creativity in Recovery at 01:30PM</fullName>
+                <default>false</default>
+                <label>LWD: Creativity in Recovery at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LWD: Mic Check at 10:15AM</fullName>
+                <default>false</default>
+                <label>LWD: Mic Check at 10:15AM</label>
+            </value>
+            <value>
+                <fullName>LW: Open Mic at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Open Mic at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>Morning Check-in: 1 at 10:30AM</fullName>
+                <default>false</default>
+                <label>Morning Check-in: 1 at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>OP Community at 06:00PM</fullName>
+                <default>false</default>
+                <label>OP Community at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>OP Group at 06:00PM</fullName>
+                <default>false</default>
+                <label>OP Group at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Community Group at 12:20PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Community Group at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Group at 09:30AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Group at 09:30AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Group 2 at 11:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Group 2 at 11:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Group: Open Mic at 12:20PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Group: Open Mic at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Psycho-education: Teambuilding: 1 at 01:30PM</fullName>
+                <default>false</default>
+                <label>Psycho-education: Teambuilding: 1 at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>Recreational Therapy/Gym at 04:00PM</fullName>
+                <default>false</default>
+                <label>Recreational Therapy/Gym at 04:00PM</label>
+            </value>
+            <value>
+                <fullName>Yoga at 04:30PM</fullName>
+                <default>false</default>
+                <label>Yoga at 04:30PM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

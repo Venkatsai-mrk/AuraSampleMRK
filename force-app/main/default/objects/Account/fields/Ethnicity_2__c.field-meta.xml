@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ethnicity_2__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to associate patient with the record object, which stores the concept code of Ethnicity.</description>
+    <externalId>false</externalId>
+    <label>Ethnicity 2</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Master_Object__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Ethnicity</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Master_Object__c</referenceTo>
+    <relationshipLabel>Accounts (Ethnicity 2)</relationshipLabel>
+    <relationshipName>Accounts5</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Schedule_Zoom_Meeting__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>On enabling it will schedule the meeting</description>
+    <externalId>false</externalId>
+    <label>Schedule Zoom Meeting</label>
+    <type>Checkbox</type>
+</CustomField>

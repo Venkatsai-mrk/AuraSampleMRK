@@ -1,0 +1,56 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="inValue" type="List"/>
+    <aura:attribute name="checkTableSizeZero" type="boolean" default="false"/>
+    
+    <aura:if  isTrue="{!v.checkTableSizeZero}">
+    
+         <h1>No Inventory found</h1>
+        
+        <aura:set attribute="else">
+    
+    
+    
+    <h1 class="slds-page-header__title">Inventory List</h1>
+    <br/>
+    <div class="scrollHeight">
+    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer">
+        
+        <thead>          
+            <tr class="slds-text-heading--small">
+                <th scope="col"><span class="slds-truncate">S.No  </span></th> 
+                <th scope="col"><span class="slds-truncate">Inventory Item  </span></th>
+                <th scope="col"><span class="slds-truncate">Lot Name</span></th>
+                <!--th scope="col"><span class="slds-truncate">Units Available</span></th-->
+                <th scope="col"><span class="slds-truncate">Units Required</span></th>
+                <th scope="col"><span class="slds-truncate">Total Price</span></th>
+                
+                
+            </tr>
+            
+        </thead>
+        
+        
+        <tbody>
+            <aura:iteration items="{!v.inValue}" var="gm" indexVar="index">
+                {!v.inValue}
+                <tr>
+                    <td>
+                        {!index+1}
+                    </td>
+                    <th scope="row">{!gm.Name}</th>
+                    <td>{!gm.Lot}</td>                      
+                    <!--td>{!gm.Avail}</td-->                
+                    <td>{!gm.req}</td>
+                    <td>{!gm.totalPrice}</td>
+                    
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    </div>
+            </aura:set>
+        </aura:if>
+    
+</aura:component>

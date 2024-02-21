@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Select_Form_Component__c</fullName>
+    <externalId>false</externalId>
+    <label>Select Form Component</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Enable Templates For Notes</fullName>
+                <default>false</default>
+                <label>Enable Templates For Notes</label>
+            </value>
+            <value>
+                <fullName>Enable Consent</fullName>
+                <default>false</default>
+                <label>Enable Consent</label>
+            </value>
+            <value>
+                <fullName>Form Specific Data</fullName>
+                <default>false</default>
+                <label>Form Specific Data</label>
+            </value>
+            <value>
+                <fullName>Enable Problems</fullName>
+                <default>false</default>
+                <label>Enable Problems</label>
+            </value>
+            <value>
+                <fullName>Enable Diagnoses</fullName>
+                <default>false</default>
+                <label>Enable Diagnoses</label>
+            </value>
+            <value>
+                <fullName>Enable Table</fullName>
+                <default>false</default>
+                <label>Enable Table</label>
+            </value>
+            <value>
+                <fullName>Enable Procedure</fullName>
+                <default>false</default>
+                <label>Enable Procedure</label>
+            </value>
+            <value>
+                <fullName>Enable Draw And Annotate</fullName>
+                <default>false</default>
+                <label>Enable Draw And Annotate</label>
+            </value>
+            <value>
+                <fullName>Enable Upload And Annotate</fullName>
+                <default>false</default>
+                <label>Enable Upload And Annotate</label>
+            </value>
+            <value>
+                <fullName>Enable Inventory Order</fullName>
+                <default>false</default>
+                <label>Enable Inventory Order</label>
+            </value>
+            <value>
+                <fullName>Enable Prescription Order</fullName>
+                <default>false</default>
+                <label>Enable Prescription Order</label>
+            </value>
+            <value>
+                <fullName>Enable Modular Table</fullName>
+                <default>false</default>
+                <label>Enable Modular Table</label>
+            </value>
+            <value>
+                <fullName>Enable Notes for Medical Coding</fullName>
+                <default>false</default>
+                <label>Enable Notes for Medical Coding</label>
+            </value>
+            <value>
+                <fullName>Enable Lab Order</fullName>
+                <default>false</default>
+                <label>Enable Lab Order</label>
+            </value>
+            <value>
+                <fullName>Enable Medications List</fullName>
+                <default>false</default>
+                <label>Enable Medications List</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

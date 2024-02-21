@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="column" type="Object"/>
+    <aura:attribute name="row" type="String" />
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+	<aura:attribute name="cssRecords" type="Object"/>  
+    <span class="picklist_cls">
+        <lightning:select class="{!v.column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}" disabled="{!v.disabled}" label="{!v.column.ElixirSuite__Field_Label_Long__c}" value="{!v.column.value}" name = "{! v.column.ElixirSuite__Field_Name__c + '#' + v.column.ElixirSuite__Data_Type__c}" onchange="{!c.showDependentValues}">
+            <option value="">-- None --</option>
+            <aura:iteration items="{!v.column.PicklistValues}" var="cnt">
+                <option value="{!cnt}" text="{!cnt}"></option>
+            </aura:iteration>
+        </lightning:select>     
+    </span>
+</aura:component>   

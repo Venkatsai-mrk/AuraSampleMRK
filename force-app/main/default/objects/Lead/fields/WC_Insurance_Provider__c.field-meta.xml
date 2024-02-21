@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WC_Insurance_Provider__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Worker&apos;s Comp Insurance Provider</label>
+    <referenceTo>Payor__c</referenceTo>
+    <relationshipLabel>Leads (Worker&apos;s Comp Insurance Provider)</relationshipLabel>
+    <relationshipName>Leads4</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

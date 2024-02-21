@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Elixir_Payment__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>If this custom setting is enabled, then on clicking &apos;collect payment &quot; button the old payment screen should open up.</description>
+    <externalId>false</externalId>
+    <label>Elixir Payment</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

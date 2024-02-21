@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Email Template</title>
+</head>
+<body>
+  <p>Hello {!Referring_Contact_Referring_Organization},</p>
+  <p>{!Account.Name} has been referred from {!Provider__c.Name}. Please take the next steps as required.</p>
+Thanks, <br/>
+{!Provider__c.Name}
+</body>
+</html>

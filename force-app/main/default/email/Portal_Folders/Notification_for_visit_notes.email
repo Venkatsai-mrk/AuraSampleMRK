@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>Hello {!Account.Name},</p>
+    <p>{!Organization.Name} has shared the visit note related to {!Event.Subject} held on {!Event.ActivityDate} with {Practitioner}.</p>
+    <p>Please login into your portal {Patientportallink} to review the visit note. </p>
+    <p>Regards,<br>{!Organization.Name}</p>
+</body>
+</html>

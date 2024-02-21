@@ -1,0 +1,8 @@
+<p>Hi Team ,</p>
+
+<p> This Room - <a href="{!Rooms__c.Link}" >{!Rooms__c.Name}</a> is Out of Service and needs some actions to be performed before it can be allocated.</p>
+
+<p><b>Reasons for marking the room out of service</b>:{!Rooms__c.Reasons_for_marking_out_of_service__c}</p>
+
+<p>Thanks</p>
+Admin

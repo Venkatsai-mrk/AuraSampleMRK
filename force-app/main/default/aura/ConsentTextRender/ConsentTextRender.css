@@ -1,0 +1,19 @@
+.THIS .text input{
+    width:25%;
+    margin: 5px 5px;
+}
+.THIS .text label{
+    display:none;
+}
+.THIS .text input{
+    display: inline;
+}
+.THIS .uiOutputRichText{
+    margin-right:6px;
+    display: contents;
+}
+/*
+.THIS lightning-formatted-rich-text.slds-rich-text-editor__output{
+    margin-right:6px;
+    display: inline-block;
+}*/

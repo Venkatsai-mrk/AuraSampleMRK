@@ -1,0 +1,768 @@
+<aura:component controller="UtilizationReviewController" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="patientID" type="String"/> 
+    <aura:attribute name="allProgrmsOffered" type="list"/> 
+    <aura:attribute name="allProblemsForPatient" type="list"/> 
+    <aura:attribute name="purchasePlan" type="list"/> 
+    <aura:attribute name="planBenifit" type="list"/>
+    <aura:attribute name="carePreAuth" type="list"/>
+    <aura:attribute name="memberPlan" type="list"/>  
+    <!--Added by Anmol for LX3-5961-->
+    <aura:attribute name="UtilizationRecordToSave" type="Utilization_Review__c" default="{ 
+    'sobjectType': 'Utilization_Review__c',                                                                         
+    'ElixirSuite__Approved_LOC__c': '' ,
+    'ElixirSuite__Approved_Number_of_Days__c': '',
+    'ElixirSuite__Authorization_Number__c': '',
+    'ElixirSuite__Discharge__c' : false,
+    'ElixirSuite__Date_Time_of_Review__c' : '',
+    'ElixirSuite__Approved_Number_of_Sessions__c' : '',
+    'ElixirSuite__Sessions_Completed__c' : '',
+    'ElixirSuite__Sessions_Available__c' : ''
+    }"/>
+    <aura:attribute name="checkTableSizeOfProblem" type="boolean" default="false"/>
+    <aura:attribute name="checkTableSizeOfProcedure" type="boolean" default="false"/>
+    <aura:attribute name="checkTableSizeOfDiagnosis" type="boolean" default="false"/>
+    <aura:attribute name="sessionCompleted" type="Integer"/>
+<!--End by Anmol for LX3-5961-->
+
+    <aura:attribute name="URRecordCopy" type="Utilization_Review__c"/>
+    <aura:attribute name="OrgWideNameSpace" type="String"/>
+    <aura:attribute name="preAssesAnswers" type="list"/>
+    <aura:attribute name="masterDataForUR" type="Object"/>
+    <aura:attribute name="PatientDetails" type="Account"/>
+    <aura:attribute name="NextReviewDate" type="String"/> 
+    <aura:attribute name="recordValue" type="String"/> 
+    <aura:attribute name="isLastURForm" type="Boolean"/>
+    <aura:attribute name="showLastReviewInfo" type="Boolean"/>
+    <aura:attribute name="lastCreatedReview" type="String" />
+    <aura:attribute name="isOpen" type="Boolean" />
+    <aura:attribute name="VOBDetails" type="list" />
+    <!--aura:attribute name="OrgWideNameSpace" type="String"/-->
+    <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:attribute name="viewflag" type="boolean" default="FALSE"/>
+    <aura:attribute name="isEnabledEditButton" type="boolean" default="FALSE"/>
+    <aura:attribute name="showEditButton" type="boolean" default="true"/>
+    <aura:attribute name="statusValues" type="List"/> 
+    <aura:attribute name="OpenAsMode" type="String" default="VIEW"/>
+    <aura:attribute name="birthDate" type="String"/>
+    <aura:attribute name="PatientProblem" type="list"/>
+    <aura:attribute name="ProcedureInfo" type="list"/>
+    <aura:attribute name="recordDetail" type="list"/>
+    
+<aura:attribute name="selectedRecordOfVob" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+
+    
+    <div class="parentCSS"  aura:id="text" onscroll="{!c.scrollBottom}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"  aria-describedby="modal-content-id-1" class="childCSS slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv">
+                
+                <header class="slds-modal__header headerCSS">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate colPayHeader changeNew" ><b>{!v.OpenAsMode} UTILIZATION REVIEW</b></h2>
+                    
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium spinnerCSS" id="modal-content-id-1">
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <!-- <aura:if isTrue="{!v.IsSpinner}">
+       <lightning:spinner variant="brand"  size="large" />
+      </aura:if>-->
+                    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                    <div class="widthForAll">
+                        <!-- for tapers -->
+                        <div class="slds-col slds-size_12-of-12">
+                            
+                            <div class="slds-section slds-is-open" aura:id="task2">
+                                <h3 class="slds-section__title">
+                                    <button aria-controls="TaskList2" class="slds-button slds-section__title-action">
+                                        <span onclick="{!c.toggleSection}" data-auraId="task2" >
+                                            <lightning:icon iconName="utility:switch"
+                                                            size="x-small"
+                                                            class="slds-section__title-action-icon slds-button__icon_left"
+                                                            alternativeText="button icon" 
+                                                            />
+                                        </span>
+                                        <span class="slds-truncate" title="Demographic Information">Demographic Information</span>
+                                    </button>
+                                </h3>
+                                <div class="slds-section__content" id="TaskList2" >
+                                    <div class="widthForAll slds-p-bottom_medium slds-p-top_x-small" id="TaskList2">
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                            
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Patient Name" value="{!v.PatientDetails.Name}" disabled= "true"/>
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="date" name="" label="DOB" value="{!v.PatientDetails.ElixirSuite__DOB__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters defaultBackground">
+                                            
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="date" name="" label="Admit Date" value="{!v.PatientDetails.ElixirSuite__Admit_Date__c}" placeholder="N/A" disabled= "true"/>
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="date" name="" label="Discharge Date" value="{!v.PatientDetails.ElixirSuite__dischargeDateNew__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters defaultBackground">
+                                            
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="State" value="{!v.PatientDetails.BillingState}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="City" value="{!v.PatientDetails.BillingCity}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters defaultBackground">
+                                            
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Postal Code" value="{!v.PatientDetails.BillingPostalCode}"  placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Country" value="{!v.PatientDetails.BillingCountry}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!-- for PRN Data -->
+                        <div class="slds-col slds-size_12-of-12">
+                            
+                            <div class="slds-section slds-is-open" aura:id="task1">
+                                <h3 class="slds-section__title">
+                                    <button aria-controls="TaskList1" class="slds-button slds-section__title-action">
+                                        <span onclick="{!c.toggleSection}" data-auraId="task1" >
+                                            <lightning:icon iconName="utility:switch"
+                                                            size="x-small"
+                                                            class="slds-section__title-action-icon slds-button__icon_left"
+                                                            alternativeText="button icon" 
+                                                            />
+                                        </span>
+                                        <span class="slds-truncate" title="Insurance Information">Insurance Information </span>
+
+                                    </button>
+                                </h3>
+                                <div class="slds-section__content" id="TaskList1" >
+                                    <div class="widthForAll slds-p-bottom_medium slds-p-top_x-small" id="TaskList1">
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList1">
+
+                                            <div class="slds-col slds-size_6-of-12">
+
+                                                <lightning:layoutItem >
+                                                    <c:customLookupForVob 
+                                                                  IconName="standard:account"
+                                                                  selectedRecord="{!v.selectedRecordOfVob}"
+                                                                  label="Select VOB"
+                                                                  patientId="{!v.patientID}"/>
+                                                </lightning:layoutItem>    
+                                            </div>
+    
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Insurance Provider" value="{!v.selectedRecordOfVob.ElixirSuite__Insurance_Provider_Sec__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+    
+                                        </div>
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList1">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Insurance Phone" value="{!v.selectedRecordOfVob.ElixirSuite__InsPhone__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Insurance Type" value="{!v.selectedRecordOfVob.ElixirSuite__Insurance_Type_Sec__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList1">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Member Id" value="{!v.selectedRecordOfVob.ElixirSuite__Member_Id__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+    
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="text" name="" label="Group No." value="{!v.selectedRecordOfVob.ElixirSuite__Group_Number__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+    
+                                            
+                                        </div>
+
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList1">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <h1>Verification Status</h1>
+                                                <lightning:inputRichText  label="Verification Status" value="{!v.selectedRecordOfVob.ElixirSuite__VOB_Verification_Status__c}" placeholder="N/A"  disabled= "true"/>
+                                                
+                                            </div>
+                                        
+                                    </div>
+                                        
+                                    </div>
+                                </div>
+
+                                
+                                <!--div class="slds-section__content widthForAll" id="TaskList1" >
+                                    
+                                    <div class="abc" >
+                                        <div class="member_plan">
+                                            <h4>Section 1  :</h4>
+                                            <div class="widthForAll slds-p-bottom_medium slds-p-top_xx-small">
+                                                <aura:if isTrue="{!not(empty(v.memberPlan))}">
+                                                    <aura:iteration items="{!v.memberPlan}" var="item">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Name" value="{!item.ElixirSuite__Member_Plan_Name__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Member Number" value="{!item.ElixirSuite__Member_Number__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Group Number" value="{!item.ElixirSuite__Group_Number__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Verification Status" value="{!item.ElixirSuite__Verification_Status__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <h3><center>NO MEMBER PLAN DEFINED FOR {!v.PatientDetails.Name} YET! </center></h3>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                        <div class="member_plan">
+                                            <h4>Section 2 :</h4>
+                                            <div class="widthForAll slds-p-bottom_medium slds-p-top_xx-small">
+                                                <aura:if isTrue="{!not(empty(v.carePreAuth))}">
+                                                    <aura:iteration items="{!v.carePreAuth}" var="item">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Name" value="{!item.ElixirSuite__PreAuth_Name__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Pre-Auth Identifier" value="{!item.ElixirSuite__PreAuth_Identifier__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="date" name="" label="Effective From" value="{!item.ElixirSuite__Effective_From_PreAuth__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="date" name="" label="Effective To" value="{!item.ElixirSuite__Effective_To_PreAuth__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <h3><center>NO PRE-AUTH DEFINED FOR {!v.PatientDetails.Name} YET! </center></h3>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                        <div class="member_plan">
+                                            
+                                            <h4>Section 3  :</h4>
+                                            <div class="widthForAll slds-p-bottom_medium slds-p-top_xx-small">
+                                                <aura:if isTrue="{!not(empty(v.planBenifit))}">
+                                                    <aura:iteration items="{!v.planBenifit}" var="item">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Name" value="{!item.ElixirSuite__Plan_Benefit_Name__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Status" value="{!item.ElixirSuite__Status__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="date" name="" label="Effective From" value="{!item.ElixirSuite__Effective_From__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="date" name="" label="Effective To" value="{!item.ElixirSuite__Effective_To__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <h3><center>NO PLAN BENIFIT DEFINED FOR {!v.PatientDetails.Name} YET! </center></h3>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <div class="member_plan">
+                                            <h4>Section 4 : </h4>
+                                            <div class="widthForAll slds-p-bottom_medium slds-p-top_xx-small">
+                                                <aura:if isTrue="{!not(empty(v.purchasePlan))}">
+                                                    <aura:iteration items="{!v.purchasePlan}" var="item">
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Name" value="{!item.ElixirSuite__Purchase_Plan_Name__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Plan Number" value="{!item.ElixirSuite__Plan_Number__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                            
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Service Type" value="{!item.ElixirSuite__Service_Type__c}" disabled= "true"/>
+                                                                
+                                                            </div>
+                                                            <div class="slds-col slds-size_6-of-12">
+                                                                <lightning:input type="text" name="" label="Plan Type" value="{!item.ElixirSuite__Plan_Type__c}"  disabled= "true"/>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <h3><center>NO PURCHASE PLAN DEFINED FOR {!v.PatientDetails.Name} YET! </center></h3>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div-->
+                                
+                            </div>
+                        </div> 
+
+                        <!--Problem Table by Anmol-->
+					<div class="slds-col slds-size_12-of-12">
+			            <div class="slds-section slds-is-open" aura:id="task3">
+								<h3 class="slds-section__title">
+									<button aria-controls="TaskList3" class="slds-button slds-section__title-action">
+										<span onclick="{!c.toggleSection}" data-auraId="task3" >
+											<lightning:icon iconName="utility:switch"
+															size="x-small"
+															class="slds-section__title-action-icon slds-button__icon_left"
+															alternativeText="button icon"
+															/>
+										</span>
+
+						<span class="slds-truncate" title="Problems">Problems</span>
+					</button>
+				</h3>
+                <aura:if  isTrue="{!v.checkTableSizeOfProblem}">
+					<h1 class="slds-text-align_center">There are no Problem Records to display</h1>
+        <aura:set attribute="else">
+             <div class="slds-section__content" id="TaskList3" >
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+
+        
+                <thead>          
+                    <tr class="slds-line-height_reset">
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate" >Problem Name</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate" >SNOMED CT Code</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate" >Problem Type</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate">Date Onset</div>
+                        </th>
+                    </tr>
+                </thead>
+                
+                
+                <tbody>
+                    <aura:iteration items="{!v.PatientProblem}" var="gm">
+                        
+                        <tr class="slds-hint-parent">
+                            <td class="width200"><div scope="row" class="slds-truncate">{!gm.Name}</div></td>
+                            <td class="width200"><div class="slds-truncate" >{!gm.ElixirSuite__SNOMED_CT_Code__c}</div></td>
+                            <td class="width200"><div class="slds-truncate" >{!gm.ElixirSuite__Problem_Type__c}</div></td>
+                            <td class="width200"><div class="slds-truncate" ><p><lightning:formattedDateTime value="{!gm.ElixirSuite__Date_Onset__c}" day="numeric" month="numeric" year="numeric" /></p></div></td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+                 </div>
+                    </aura:set>
+                </aura:if>
+
+					</div>
+					</div>
+					<!--End of Problem Table by Anmol-->
+                    <!--Diagnoses Table by Anmol-->
+
+					<div class="slds-col slds-size_12-of-12">
+						<div class="slds-section slds-is-open" aura:id="task4">
+							<h3 class="slds-section__title">
+								<button aria-controls="TaskList4" class="slds-button slds-section__title-action">
+									<span onclick="{!c.toggleSection}" data-auraId="task4" >
+										<lightning:icon iconName="utility:switch"
+														size="x-small"
+														class="slds-section__title-action-icon slds-button__icon_left"
+														alternativeText="button icon"
+														/>
+									</span>
+
+					<span class="slds-truncate" title="Diagnoses">Diagnoses</span>
+				</button>
+			</h3>
+            <aura:if  isTrue="{!v.checkTableSizeOfDiagnosis}">
+				<h1 class="slds-text-align_center">There are no Diagnoses Records to display</h1>
+        <aura:set attribute="else">
+		<div class="slds-section__content" id="TaskList4" >
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                            
+            <thead>          
+                    <tr class="slds-line-height_reset slds-cell-wrap">
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate slds-cell-wrap" >ICD-CM Code</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate slds-cell-wrap" >Code Description</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate slds-cell-wrap" >Diagnosis Type</div>
+                        </th>
+                        <th class="width200" scope="col">
+                            <div class="slds-truncate slds-cell-wrap">Date Diagnosed</div>
+                        </th>
+                    </tr>
+                </thead>
+        
+            <tbody>
+                <aura:iteration items="{!v.recordDetail}" var="gm">
+                    
+                    <tr class="slds-hint-parent slds-cell-wrap">
+                            <td class="width200"><div scope="row" class="slds-truncate slds-cell-wrap">{!gm.Name}</div></td>
+                            <td class="width200"><div class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Code_Description1__c}</div></td>
+                            <td class="width200"><div class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Diagnosis_Type__c}</div></td>
+                            <td class="width200"><div class="slds-truncate slds-cell-wrap" ><p><lightning:formattedDateTime value="{!gm.ElixirSuite__Effective_Date__c}" day="numeric" month="numeric" year="numeric" /></p></div></td>
+                        </tr>
+
+                </aura:iteration>
+            </tbody>
+        </table>
+            </div>
+                    </aura:set>
+				</aura:if>
+						</div>
+
+						
+					</div>
+					<!--End of Diagnoses Table by Anmol-->
+
+					<!--Procedure Table by Anmol-->
+					<div class="slds-col slds-size_12-of-12">
+						<div class="slds-section slds-is-open" aura:id="task5">
+							<h3 class="slds-section__title">
+								<button aria-controls="TaskList5" class="slds-button slds-section__title-action">
+									<span onclick="{!c.toggleSection}" data-auraId="task5" >
+										<lightning:icon iconName="utility:switch"
+														size="x-small"
+														class="slds-section__title-action-icon slds-button__icon_left"
+														alternativeText="button icon"
+														/>
+									</span>
+
+					<span class="slds-truncate" title="Procedure">Procedures</span>
+				</button>
+			</h3>
+            <aura:if  isTrue="{!v.checkTableSizeOfProcedure}">
+				<h1 class="slds-text-align_center">There are no Procedure Records to display</h1>
+        <aura:set attribute="else">
+             <div class="slds-section__content" id="TaskList5" >
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                            
+                <thead>          
+                        <tr class="slds-line-height_reset slds-cell-wrap">
+                            <th class="width200" scope="col">
+                                <div class="slds-truncate slds-cell-wrap">Procedure Code</div>
+                            </th>
+                            <th class="width200" scope="col">
+                                <div class="slds-truncate slds-cell-wrap">Procedure Description</div>
+                            </th>
+                            <th class="width200" scope="col">
+                                <div class="slds-truncate slds-cell-wrap" >Place Of Service</div>
+                            </th>
+                            <th class="width200" scope="col">
+                                <div class="slds-truncate slds-cell-wrap">Units/Duration</div>
+                            </th>
+                        </tr>
+                    </thead>
+            
+                <tbody>
+                    <aura:iteration items="{!v.ProcedureInfo}" var="gm">
+                        
+                        <tr class="slds-hint-parent slds-cell-wrap">
+                                <td class="width200"><div scope="row" class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Code_Category__c}</div></td>
+                                <td class="width200"><div class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Code_Description__c}</div></td>
+                                <td class="width200"><div class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Place_Of_Service_Picklist__c}</div></td>
+                                <td class="width200"><div class="slds-truncate slds-cell-wrap" >{!gm.ElixirSuite__Days_Units__c}</div></td>
+                            </tr>
+
+                    </aura:iteration>
+                </tbody>
+            </table>
+            </div>
+                    </aura:set>
+                </aura:if>
+						</div>
+
+						
+					</div>
+
+					<!--End of Procedure Table by Anmol-->
+
+
+					
+                      
+                        <aura:if isTrue="{!v.showLastReviewInfo}">
+						<div class="slds-col slds-size_12-of-12">
+							
+							<div class="slds-section slds-is-open" aura:id="task6">
+								<h3 class="slds-section__title">
+									<button aria-controls="TaskList6" class="slds-button slds-section__title-action">
+										<span onclick="{!c.toggleSection}" data-auraId="task6" >
+											<lightning:icon iconName="utility:switch"
+															size="x-small"
+															class="slds-section__title-action-icon slds-button__icon_left"
+															alternativeText="button icon"
+															/>
+										</span>
+										<span class="slds-truncate" title="LAST REVIEW INFORMATION">Last Review Information</span>
+									</button>
+								</h3>
+								
+								<div class="slds-section__content" id="TaskList6" >
+									<div class="abc">
+										<div class="widthForAll">
+											<div class="slds-grid slds-gutters defaultBackground"  id="TaskList6">
+	
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="datetime" name="" label="Date/Time of Review" value="{!v.lastCreatedReview.ElixirSuite__Date_Time_of_Review__c}"  disabled= "true"/>
+													
+												</div>
+												
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="text" name="" label="Authorization Number" value="{!v.lastCreatedReview.ElixirSuite__Authorization_Number__c}" placeholder="N/A"  disabled="true"/>
+													
+												</div>
+											</div>
+	
+											<div class="slds-grid slds-gutters defaultBackground"  id="TaskList6">
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="text" name="" label="Approved Program" value="{!v.lastCreatedReview.ElixirSuite__Approved_LOC__c}" placeholder="N/A"  disabled="true"/>
+												</div>
+	
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="number" name="" label="Approved Number of Sessions"  value="{!v.lastCreatedReview.ElixirSuite__Approved_Number_of_Sessions__c}" placeholder="N/A"  disabled="true"/>
+												</div>
+												
+											</div>
+											
+											<div class="slds-grid slds-gutters defaultBackground"  id="TaskList6">
+												
+	
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="number" name="" label="Sessions Completed"  value="{!v.lastCreatedReview.ElixirSuite__Sessions_Completed__c}" placeholder="N/A"  disabled= "true"/>
+												</div>
+	
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="number" name="" label="Sessions Available"  value="{!v.lastCreatedReview.ElixirSuite__Sessions_Available__c}"  placeholder="N/A" disabled= "true"/>
+												</div>
+											</div>
+	
+											<div class="slds-grid slds-gutters defaultBackground"  id="TaskList6">
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="number" name="" label="Approved Number of Days"  value="{!v.lastCreatedReview.ElixirSuite__Approved_Number_of_Days__c}" placeholder="N/A" disabled= "true"/>
+												</div>
+	
+												<div class="slds-col slds-size_6-of-12">
+													<lightning:input type="date" name="" label="Next Review Date" value="{!v.lastCreatedReview.ElixirSuite__Next_Review_Date__c}" placeholder="N/A"  disabled="true"/>
+												</div>
+											</div>
+											
+											<!--div class="slds-grid slds-gutters defaultBackground"  id="TaskList5">
+												
+												<div class="slds-col slds-size_6-of-12">
+													
+													<lightning:input type="checkbox" name="" label="Discharge" checked="{!v.UtilizationRecordToSave.ElixirSuite__Discharge__c}" onchange="{!c.handleNextReviewDate}"/>  
+												</div>
+												<div class="slds-col slds-size_6-of-12">
+													
+													
+												</div>
+											</div-->
+											
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</aura:if>
+                        <!--Added by Anmol for Lx3-5961-->
+                        <div class="slds-col slds-size_12-of-12">
+                            
+                            <div class="slds-section slds-is-open" aura:id="task7">
+                                <h3 class="slds-section__title">
+                                    <button aria-controls="TaskList7" class="slds-button slds-section__title-action">
+                                        <span onclick="{!c.toggleSection}" data-auraId="task7" >
+                                            <lightning:icon iconName="utility:switch"
+                                                            size="x-small"
+                                                            class="slds-section__title-action-icon slds-button__icon_left"
+                                                            alternativeText="button icon" 
+                                                            />
+                                        </span>
+                                        <span class="slds-truncate" title="Utilization Review">Utilization Review Details</span>
+                                    </button>
+                                </h3>
+                                
+                                <div class="slds-section__content" id="TaskList7" >
+                                    <div class="abc" >
+                                        <div class="widthForAll">
+                                            <div class="slds-grid slds-gutters defaultBackground"  id="TaskList7">
+
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <lightning:input type="datetime" aura:id="review-time" name="" label="Date/Time of Review" required="true" value="{!v.UtilizationRecordToSave.ElixirSuite__Date_Time_of_Review__c}"  disabled= "{!v.viewflag}" onchange="{!c.reviewDate}"/>
+                                                    
+                                                </div>
+                                                
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <lightning:input type="text" name="" label="Authorization Number" maxlength="20"   required="true"  aura:id="URFiledsValid" value="{!v.UtilizationRecordToSave.ElixirSuite__Authorization_Number__c}"  disabled="{!v.viewflag}"/>
+                                                    
+                                                </div>
+                                            </div>
+
+
+                                            <div class="slds-grid slds-gutters defaultBackground"  id="TaskList7">
+
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:select name="" label="Approved Program"  aura:id="URFiledsValid"   required="true" value="{!v.UtilizationRecordToSave.ElixirSuite__Approved_LOC__c}"  disabled="{!v.viewflag}" >
+                                                    
+                                                    <aura:iteration items="{!v.allProgrmsOffered}" var="val">
+                                                        <option value="{!val.ElixirSuite__Program_Name__c}"  selected="{!val.ElixirSuite__Program_Name__c == v.UtilizationRecordToSave.ElixirSuite__Approved_LOC__c}">
+                                                            {!val.ElixirSuite__Program_Name__c}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select> 
+                                                
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="number" name="" label="Approved Number of Sessions" aura:id="approved-session" value="{!v.UtilizationRecordToSave.ElixirSuite__Approved_Number_of_Sessions__c}" disabled="{!v.viewflag}"
+                                                                 onchange="{!c.changeApprovedSession}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList7">
+
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="number" name="" label="Sessions Completed" aura:id="URFiledsValid" value="{!v.UtilizationRecordToSave.ElixirSuite__Sessions_Completed__c}"
+                                                                  disabled= "true"/>
+                                            </div>
+
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning:input type="number" name="" label="Sessions Available" aura:id="URFiledsValid" value="{!v.UtilizationRecordToSave.ElixirSuite__Sessions_Available__c}"
+                                                                 onchange="{!c.changeApprovedSession}" disabled= "true"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-grid slds-gutters defaultBackground"  id="TaskList7">
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <lightning:input type="number" name="" label="Approved Number of Days"  aura:id="URFiledsValid" 
+                                                                     value="{!v.UtilizationRecordToSave.ElixirSuite__Approved_Number_of_Days__c}"  disabled="{!v.viewflag}"   onchange="{!c.calulateNextReviewDate}"/>
+                                                </div>
+                                                
+                                                <div class="slds-col slds-size_6-of-12">   
+                                                    <aura:if isTrue="{! !v.isLastURForm}">
+                                                        <lightning:input type="text" name="" label="Next Review Date" value="{!v.NextReviewDate}" disabled="true"/>  
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <!--div class="slds-grid slds-gutters defaultBackground"  id="TaskList5">
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    
+                                                    <lightning:input type="checkbox" name="" label="Discharge" checked="{!v.UtilizationRecordToSave.ElixirSuite__Discharge__c}" onchange="{!c.handleNextReviewDate}"  disabled="{!v.viewflag}"/>    
+                                                </div>
+                                                <div class="slds-col slds-size_6-of-12">                                                   
+                                                    
+                                                </div>
+                                            </div-->
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                        </div> 
+                        <!--End by Anmol for Lx3-5961--> 
+                        
+                        
+                    </div>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters footerCSS">
+                        <div class="slds-col slds-size_12-of-12">  
+                            <aura:if isTrue="{!!v.viewflag}">
+                                <lightning:button variant="brand" class="colPayHeader1" label="Update" title="Update" onclick="{!c.saveAfterEdit }" />
+                            </aura:if>
+                            <!--aura:if isTrue="{!v.viewflag}">
+                                <lightning:button variant="brand" label="Edit" title="Edit" onclick="{!c.openAsEdit}" />
+                            </aura:if-->
+                            <lightning:button variant="neutral" class="colPayHeader1" label="Cancel" title="Cancel" onclick="{!c.closeModel }" />
+                        </div>
+                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+    </div>
+    
+</aura:component>

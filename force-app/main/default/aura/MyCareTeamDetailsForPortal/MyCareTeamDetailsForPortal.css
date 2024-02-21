@@ -1,0 +1,61 @@
+.THIS.care-main_box {
+    border: 1px solid #eee;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 154px;
+    background-color: #f9fafc;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS.care-main_box .care-head  {
+    padding: 0.5rem;
+    color: #493266;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #f9fafc;
+    z-index: 1;
+}
+.THIS.care-main_box .slds-text-heading_small {
+    font-weight: 600;
+    font-size: 16px;
+}
+.THIS .care_team-box div .slds-box {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #dedede;
+    padding: 5px 0.5rem;
+    font-size: 12px;
+    line-height: 16px;
+}
+.THIS .care_team-box div:last-child .slds-box { 
+	border-bottom: none;
+}
+.THIS .care_team-box .slds-box h2 {
+    font-weight: 600;
+    color: #000;
+    font-size: 12px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .care_team-box .slds-box p {
+    color: #999;
+    font-size: 12px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .care_team-box .slds-button.slds-button_neutral {
+    padding: 0;
+    line-height: 0;
+    border:none;
+    margin-top: 28px;
+    margin-left: 15px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .care_team-box .slds-button.slds-button_neutral:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .care_team-box svg.slds-button__icon.slds-button__icon_left {
+    margin-right: 0;
+    height: 18px;
+    width: 18px;
+    fill: #878789;
+}

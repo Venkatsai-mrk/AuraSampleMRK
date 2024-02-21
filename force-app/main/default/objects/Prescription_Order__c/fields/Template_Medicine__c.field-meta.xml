@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Template_Medicine__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>It is used to connect patient medicine with template medicine.</description>
+    <externalId>false</externalId>
+    <label>Template Medicine</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Prescription_Order__c.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Template Medicine</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Prescription_Order__c</referenceTo>
+    <relationshipLabel>Prescription Order (Template Medicine)</relationshipLabel>
+    <relationshipName>Prescription_Order1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,7 @@
+.THIS .showLbl .slds-form-element__label {
+    display: inline-block !important;
+}
+/* changes */
+.THIS .changepoinert{
+    cursor: pointer;
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Tile_Entity__c</fullName>
+    <externalId>false</externalId>
+    <label>Patient Tile Entity</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account</fullName>
+                <default>false</default>
+                <label>Account</label>
+            </value>
+            <value>
+                <fullName>Opportunity</fullName>
+                <default>false</default>
+                <label>Opportunity</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Medication</fullName>
+                <default>false</default>
+                <label>Medication</label>
+            </value>
+            <value>
+                <fullName>Visit Summary</fullName>
+                <default>false</default>
+                <label>Visit Summary</label>
+            </value>
+            <value>
+                <fullName>Portal Definition</fullName>
+                <default>false</default>
+                <label>Portal Definition</label>
+            </value>
+            <value>
+                <fullName>Visit Notes</fullName>
+                <default>false</default>
+                <label>Visit Notes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

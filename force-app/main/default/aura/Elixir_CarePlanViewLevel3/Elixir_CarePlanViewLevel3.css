@@ -1,0 +1,159 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #f3f2f2;
+    border: none;
+     
+ }
+ .THIS.accordian_header {
+     float: left;
+     width: 100%;
+ }
+ .THIS.accordian_header .chevron_btn {
+     margin-top: 15px;
+ }
+ .THIS .right-side_bar1 .btncss {
+     background-color: transparent;
+     border: none;
+     padding: 0;
+     line-height: 0;
+ }
+ .THIS .right-side_bar1 .slds-float--left svg{
+    height: 13px !important;
+    width:13px !important;
+    padding:2px;
+}
+ .THIS .accordian_open .right-side_bar button.btncss:hover {
+     border: none;
+     background-color: transparent;
+ }
+ .THIS .third_accordian {
+     float: right;
+     width: calc(100% - 50px);
+     background-color: #f8fcf9;
+     border-radius: 0;
+     padding-top: 0;
+ }
+ .THIS .third_accordian .slds-page-header {
+     background-color: #fff;
+     width: calc(100% - 38px);
+     padding-right: 30px;
+ }
+ .THIS.accordian_header .slds-icon_container_circle svg{
+    height: 24px !important;
+    width: 24px !important;
+    border-radius: 4px !important;
+    padding: 3px !important;
+ }
+ .THIS .third_accordian .btncss {
+     background-color: #48c3cc;
+     border: 1px solid #48c3cc;
+     margin-right: 15px;
+ }
+ .THIS .third_accordian .right-side_bar1 .btncss {
+     background-color: transparent;
+     border: none;
+     margin-right: 0;
+ }
+ .THIS .third_accordian .btncss:hover {
+     background-color: transparent;
+     color: #48c3cc;
+ }
+ .THIS .third_accordian h3 {
+     color: #48c3cc !important;
+ }
+ .THIS .third_accordian .slds-icon-utility-food-and-drink {
+     background-color: #48c3cc;
+     padding: 5px;
+     margin-right: 10px;
+     margin-bottom: 15px;
+ }
+
+ .THIS .third_accordian .slds-icon-utility-food-and-drink .slds-icon {
+    height: 15px ;
+    width: 15px ;
+    border-radius: 4px ;
+    padding: 1px ;
+    fill : #fff;
+}
+
+ .THIS .third-accordian_bl {
+     height: 20px;
+     width: 2px;
+     background-color: #48c3cc;
+     float: left;
+     margin-left: 61px;
+ }
+ .THIS .third_accordian .third-accordian_bl:last-child {
+     display:none;
+ }
+.THIS .fourthaccordian {
+    margin-bottom: 10px;
+}
+.THIS .fourthaccordian .slds-page-header {
+    background-color: #fff;
+    width: calc(100% - 38px);
+    padding-right: 30px;
+}
+.THIS .fourthaccordian .btncss {
+    background-color: #48c3cc;
+    border: 1px solid #48c3cc;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+.THIS .fourthaccordian .right-side_bar1 .btncss {
+    background-color: transparent;
+    border: none;
+    margin-right: 0;
+}
+.THIS .fourthaccordian .btncss:hover {
+    background-color: transparent;
+    color: #466bac;
+}
+.THIS .fourthaccordian h3 {
+    color: #466bac !important;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink {
+    background-color: #466bac;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink .slds-icon {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+}
+.THIS .fourthaccordian .third-accordian_bl:last-child {
+    display:none;
+}
+ .THIS .slds-icon-action-goal{
+     margin-top: 2px;
+     padding: 2px;
+     background-color: #4bc076;
+     margin-bottom: 12px;
+     margin-right: 13px;
+ }
+ .THIS.goal_header .btns svg{
+    margin-top: 0 !important;
+    margin-bottom: 6px;
+ }
+.THIS .editStyle textarea{
+    margin-bottom: 10px;
+    margin-left: 13px;
+}
+.THIS .readStyle textarea{
+    margin-bottom: 13px;
+}
+.THIS .c-point {
+    cursor: pointer;
+    background-color: #fff;
+}
+.THIS button.slds-button.slds-button_neutral.btn_add-note {
+    margin-left: 35px;
+}
+@media (max-width: 576px) {
+    .THIS .elx-des {
+        margin-top: 15px;
+    }
+}

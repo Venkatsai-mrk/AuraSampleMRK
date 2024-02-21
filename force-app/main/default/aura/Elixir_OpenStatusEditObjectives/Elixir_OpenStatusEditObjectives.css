@@ -1,0 +1,43 @@
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #f3f2f2;
+   border: none;   
+}
+.THIS .spaceEdit{
+    margin-left:10px;
+}
+.THIS.accordian_header {
+    float: left;
+    width: 100%;
+}
+.THIS.accordian_header .chevron_btn {
+    margin-top: 15px;
+}
+.THIS .editStyle textarea{
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+.THIS button.slds-button.slds-button_neutral.btncss.colorChange {
+    background:#466bac;
+    border:1px solid #466bac;
+}
+.THIS .c-point {
+    cursor: pointer;
+}
+.THIS .third_accordian .slds-icon-utility-food-and-drink {
+    margin-bottom: 100%;
+}
+@media (max-width: 576px) {
+ 	.THIS .third_accordian .slds-icon-utility-food-and-drink {
+        margin-bottom: 100%;
+    }   
+    .THIS .slds-page-header.c-point {
+        padding: 10px 0 5px 5px;
+    }
+    .THIS .right-side_bar .slds-input {
+        width: 90px;
+        padding: 0 0px 0 0;
+        margin-right: 5px;
+    }
+}

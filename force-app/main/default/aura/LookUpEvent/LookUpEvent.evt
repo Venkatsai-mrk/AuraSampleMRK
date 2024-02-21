@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="lookUpData" type="String"/>
+    <aura:attribute name="objectName" type="String"/>
+    <aura:attribute name="actionStatus" type="String"/>
+    <aura:attribute name="dosageJsonList" type="String"/>
+</aura:event>

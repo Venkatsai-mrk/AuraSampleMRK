@@ -1,0 +1,14 @@
+.THIS.slds-modal.slds-fade-in-open.slds-modal_small .signature_modal.slds-modal__container{
+    max-width: 600px!important;
+    background-color: transparent!important;
+}
+
+.THIS.slds-modal.slds-fade-in-open.slds-modal_small {
+    background-color: transparent!important;
+   
+}
+
+.THIS.slds-modal.slds-fade-in-open.slds-modal_small .signature_modal .slds-modal__content{
+    min-height: auto;
+    height : 31%;
+}

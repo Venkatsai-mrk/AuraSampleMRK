@@ -1,0 +1,16 @@
+<apex:page standardController="Event">
+  <apex:includeLightning />
+  <div id="compContainer" />
+  <script>
+    $Lightning.use("c:EventDeleteApp", function () {
+      $Lightning.createComponent("c:EventDeletion",
+        { PassesValueFromVF: "Micro System" },
+
+        "compContainer",
+        function (component) {
+          console.log("c:VFPageApp loaded successfully in VF page");
+        }
+      );
+    });    
+  </script>
+</apex:page>

@@ -1,0 +1,22 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #ffffff;
+     
+ }
+ .THIS .list_modal.slds-modal__container{
+     width:50%!important;
+ }
+.THIS .headerCSS{
+    font-size: x-large;
+}
+@media (max-width: 767px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}
+@media (max-width: 576px) {
+  	.THIS .list_modal.slds-modal__container{
+     	width:90% !important;
+ 	}  
+}

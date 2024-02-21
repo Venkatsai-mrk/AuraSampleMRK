@@ -1,0 +1,451 @@
+<aura:component access="global"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="SavedCardsPaymentSquare" >
+    <aura:attribute name="procedures" type="List" />
+    <aura:attribute name="totalAmount" type="Decimal" />
+    <aura:attribute name="totalBilledAmount" type="Decimal" />
+    <aura:attribute name="otherTransactionId" type="Id" />
+    <aura:attribute name="discountAmount" type="Decimal" />
+    <aura:attribute name="discountPercent" type="Decimal" />
+    <aura:attribute name="amountProcedure" type="Decimal" />
+    <aura:attribute name="transactionDate" type="Date" />
+    <aura:attribute name="Account" type="Account" />
+    <aura:attribute name="PaymentInfo" type="Payment_Information__c" />
+    <aura:attribute name="paymentSFId" type="String" />
+    <aura:attribute name="strModeOfPayment" type="String" />
+    <aura:attribute name="otherModeOptions" type="List" default=""/>
+    <aura:attribute name="selectedValue" type="String"/>
+    <aura:attribute name="referenceNumber" type="String" />
+    <aura:attribute name="data" type="Object" />
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="PaymentTypeinCollect" type="String" default=""/>
+    <aura:attribute name="cheque" type="boolean" default="False"/>
+    <aura:attribute name="openPaymentPage" type="boolean" default="true"/>
+    <aura:attribute name="openSavedCards" type="boolean" default="false"/>
+    <aura:attribute name="othersOpen" type="boolean" default="false"/>
+    <aura:attribute name="paymentOptions" type="List" default="[
+                                                               {'label': 'Pay using Terminal(Card/Gift)', 'value': 'Terminal'},
+                                                               {'label': 'Cash Payments', 'value': 'CashPayment'},
+                                                               {'label': 'Credit Card Payments', 'value': 'creditCard'},
+                                                               {'label': 'Others', 'value': 'others'}
+                                                               ]"/>
+    <aura:attribute name="paymentCardOptions" type="List" />
+    <aura:attribute name="transactionList" type="List" />
+    <aura:attribute name="transactionIds" type="Id" />
+    <aura:attribute name="maintainState" type="List" />
+    <aura:attribute name="paymentValue" type="String"/>
+    <aura:attribute name="cardValue" type="String"/>
+      
+    <aura:attribute name="valueForPrivatePayment" type="String" default="Register a Payment"/>
+    <aura:attribute name="makePay" type="boolean" default="true"/>
+    <aura:attribute name="AllocPay" type="boolean" default="false"/>
+    <aura:attribute name="paySched" type="boolean" default="false"/>
+    
+    <aura:attribute name="Allocate" type="boolean" default="False"/> 
+    <aura:attribute name="Credit" type="boolean" default="False"/>
+    <aura:attribute name="Plist" type="list" default=""/>
+    
+    <aura:attribute name="Tdate" type="Date" default=""/>
+    <aura:attribute name="Tdate2" type="Date" default=""/>
+    
+    <aura:attribute name="myCurrency" type="Decimal" default="0.0"/>
+    <aura:attribute name="myCurrency2" type="Decimal" default="0.0"/>
+    
+    <aura:attribute name="NetAmount" type="integer" default="0"/>
+    
+    <aura:attribute name="AmountDue" type="integer" default="0"/>
+    <aura:attribute name="AmountApplied" type="integer" default="0"/>
+    <aura:attribute name="totalUnAllocatedAmount" type="Decimal" default="0.0"/>
+    
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    
+    
+    <aura:attribute name="Infolist" type="list" default=""/>
+    <aura:attribute name="PaySchedulist" type="list" default=""/>
+    <aura:attribute name="scheduleList" type="list" default=""/>
+    
+    <aura:attribute name="hideSchedule" type="boolean" default="false"/>
+    
+    <aura:attribute name="PayTransId" type="List" default=""/>
+    <aura:attribute name="Patient" type="Account" default=""/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="columns3" type="List"/>
+    
+    <aura:attribute name="currentValue" type="String"/>
+    
+    <aura:attribute name="makeAPaymentScreen" type="Boolean"/>
+    
+    <aura:attribute name="PaymentType" type="String" default="Unallocated"/>
+    <aura:attribute name="paySchedule" type="Boolean"/>
+    
+    <aura:attribute name="isAllocatedAmtExceed" type="Boolean" default="false"/>
+    <aura:attribute name="isAllocatedAmtExceedPaSh" type="Boolean" default="false"/>
+    
+    <aura:attribute name="value" type="String" default="Make a Payment"/>
+    <aura:attribute name="amountAllocated" type="Decimal" default="0"/>
+    <aura:attribute name="makePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="currentActiveID" type="String" default=""/>	
+    <aura:handler name="discountEvent" event="c:discountEvent" action="{!c.handleDiscountCmpEvent}"/>
+    <aura:attribute name="totalDiscount" type="Decimal" default="0.00"/>
+    <aura:attribute name="totalAmountAfterDiscount" type="integer" default="0"/>
+    <aura:attribute name="totalAmountPaid" type="integer" default="0"/>	
+    <aura:attribute name="maxAmountforDiscount" type="integer" default="0"/>	
+    <aura:attribute name="maxPercentageforDiscount" type="integer" default="0"/>
+    <aura:attribute name="showErrormsg" type="Boolean" default="false"/>
+    <!-- AK-->
+    <aura:attribute name="isDiscountModalOpen" type="boolean" default="false"/>
+    
+    <aura:attribute name="isModalOpen" type="boolean" />
+    <aura:attribute name="isPaymentTab" type="boolean" default="true"/>
+    <!-- EB-345 Attributes START-->
+
+    <aura:attribute name="toggleValue" type="String" default="By Procedure"/>
+    <aura:attribute name="ClaimsList" type="list" default=""/>
+    <aura:attribute name="cardOptions" type="list" default=""/>
+    <aura:attribute name="ClaimsColumns" type="List"/>
+    <aura:attribute name="hideOrShowClaims" type="boolean" default="false"/>
+    <aura:attribute name="selectAllClaims" type="boolean" default="false"/>
+    <aura:attribute name="selectClaimAllProc" type="boolean" default="false"/>
+    <aura:attribute name="NoOfClaimsSelected" type="Integer" default="0"/>
+    <!-- EB-345 Attributes END-->
+    <!-- EB-362 Attributes START -->
+    <aura:attribute name="disableCheckbox" type="boolean" default="false"/>
+    <aura:attribute name="payReasonVal" type="String" default=""/>
+    <aura:attribute name="ReceivedFrom" type="String" default=""/>
+    <aura:attribute name="addNote" type="String" />
+    
+    <!-- EB-362 Attributes END -->
+    <!-- EB-363 START-->
+    <aura:attribute name="generateReceipt" type="boolean" default="false"/>
+    <!-- EB-363 END-->
+    
+    <!-- LX3-5300 START-->
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="PInsurancePaylist" type="list" default=""/>
+    <aura:attribute name="selectedRowsOfProc" type="list" default=""/>
+    <aura:attribute name="selectedInsurancePaylist" type="list" default=""/>
+    <aura:attribute name="TNumber" type="String" default=""/>
+    <aura:attribute name="columns4" type="List"/>
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <!-- LX3-5300 END-->
+    
+    <!-- LX-3 5343 -->
+    
+    <aura:attribute name="TotalAppliedForAllocatePayment" type="integer" default="0"/>
+    <aura:attribute name="TotalUnallocatedForAllocatePayment" type="integer" default="0"/>
+    <aura:attribute name="allocatePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="disableNextButton" type="Boolean" default="true"/>
+    
+    <aura:attribute name="disablePayNowButton" type="Boolean" default="true"/>
+    <aura:attribute name="showConfirmDialogForAllocatePayment" type="Boolean" default="false"/>
+    <aura:attribute name="showConfirmDialogMessage" type="String" default=""/>
+    <!-- LX-3 5343 -->
+    
+    <!-- LX3-5118 START-->
+    <aura:attribute name="paymentTypeList" type="List"/>
+    <aura:attribute name="typeOfPayment" type="String" default=""/> 
+    <aura:attribute name="TotalAppliedAmountInsurance" type="Decimal" default="0.00"/>
+    <aura:attribute name="TotalUnallocatedAmountInsurance" type="Decimal" default="0.00"/>
+
+    <aura:attribute name="teminalSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="remainingTime" type="String"/>
+    <aura:attribute name="paySuccess" type="String" default="##"/>
+    <aura:attribute name="deviceId" type="String"/>
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:if isTrue="{!v.isModalOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv">
+                <header class="slds-modal__header slds-text-heading_large colPayHeader">
+                <aura:if isTrue="{!!v.teminalSpinner}">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                </aura:if>  
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>COLLECT PAYMENT</b></h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   <aura:if isTrue="{!!v.teminalSpinner}">
+                    <div class="pvt-pay" aura:id="paymentTypeAura">
+                    </div>
+                    <lightning:card>
+                        <aura:if isTrue="{!v.openPaymentPage}">
+                            <div class="slds-form-element__control">
+                                <ul class="payment-list">
+                                    <li class="first-cart">
+                                        <div class="slds-grid slds-gutters">
+                                            <aura:if isTrue="{!v.isPaymentTab}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Patient Name: </span>
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_8-of-12 ">
+                                                            <c:CustomLookup aura:id="customLookupCmp"></c:CustomLookup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <!-- Patient's details will is shown only if the Patient record is selected -->
+                                            <aura:if isTrue="{!v.PatientId != ''}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Name   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">DOB  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__DOB__c}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">MRN Number   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__MRN_Number_New__c}"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </aura:if>
+                                        </div>
+                                    </li>
+                                    <li class="second-cart">
+                                        <aura:if isTrue="{!v.Allocate}">
+                                            <div class="slds-m-top_medium">
+                                                <aura:if isTrue="{!v.isPaymentTab == true}">
+                                                    <div class="slds-m-bottom_small">
+                                                        <b class="slds-text-heading_medium">Patient Procedures</b>
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.isPaymentTab == false}">
+                                                    <div class="changeDis">
+                                                        <div class="slds-m-bottom_small">
+                                                            <b class="slds-text-heading_medium">Patient Procedures</b>
+                                                        </div> 
+                                                    </div>
+                                                    
+                                                    <aura:if isTrue="{!v.makeAPaymentScreen}">
+                                                        <c:ElixirOEM_NewProcedure isView="{!v.makeAPaymentScreen}" accountId="{!v.PatientId}"/> 
+                                                    </aura:if>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.showErrormsg == false}">
+                                                    <aura:if isTrue="{!v.hideOrShowClaims == false}">
+                                                        <aura:if isTrue="{!v.disableCheckbox == false}">
+                                                            <ui:scrollerWrapper class="scrollerSize">
+                                                                <lightning:datatable
+                                                                                    keyField="Id"
+                                                                                    data="{! v.PInsurancePaylist }"
+                                                                                    columns="{! v.columns4 }"
+                                                                                    onrowselection="{!c.selectedRows}"
+                                                                                    hideCheckboxColumn="false"
+                                                                                    class="byProcTableCss"
+                                                                                    minColumnWidth="100"
+                                                                                    sortedBy="{!v.sortBy}"
+                                                                                    sortedDirection="{!v.sortDirection}"
+                                                                                    onsort="{!c.handleSort}"
+                                                                                    selectedRows="{!v.selectedRowsOfProc }"
+                                                                                    onrowaction="{! c.handleRowAction }"
+                                                                                    />
+                                                            </ui:scrollerWrapper>
+                                                        </aura:if>
+                                                    </aura:if>
+                                                    <br/>
+                                                    <div class="ml-75">
+                                                        <b>Amounts of Selected Procedure(s)</b>
+                                                        <aura:if isTrue="{!v.makePay}">
+                                                            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                                
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Total Amount">Total Amount</div>
+                                                                        
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Total Amount">${!v.TotalAppliedAmountInsurance}</div>
+                                                                    </th>
+                                                                </tr>
+                                                                
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Discount">Total Discount</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Discount">${!v.totalDiscount}</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Amount after Discount">Total Amount after Discount</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Amount after Discount">${!v.totalAmountAfterDiscount}</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Amount Paid">Total Amount Paid</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Amount Paid">${!v.totalAmountPaid}</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Total Amount to be Paid">Total Amount to be Paid</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <!-- <input type="number" class="slds-truncate" title="Account Name" value="{!v.TotalUnallocatedAmountInsurance}">${!v.TotalUnallocatedAmountInsurance}</input> -->
+                                                                            <lightning:input type="number" class="slds-truncate" name="input7" value="{!v.TotalUnallocatedAmountInsurance}" formatter="currency" onchange="{! c.AmountToPayEditable }" step="0.01" min="0" max="{!v.TotalUnallocatedAmountInsurance}" messageWhenRangeOverflow="{!'Amount cant be greater than '+ v.TotalUnallocatedAmountInsurance}"  />
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </aura:if>
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.showErrormsg == True}">
+                                                    <center><b class="slds-text-heading_small">No Procedures Available for Payment</b></center>
+                                                </aura:if>
+                                            </div>
+                                        </aura:if>
+                                    </li>
+                                </ul>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                    <lightning:button  class="btn" label="Cancel" title="Cancel" onclick="{! c.closeModel }"/>
+                                    <lightning:button  variant="brand" label="Next" title="Next"   disabled="{!v.disableNextButton}" onclick="{! c.openPaymentOptions }" />
+                            </footer>
+                            <aura:set attribute="else">
+                                <ul class="payment-list">
+                                    <li class="first-cart ">
+                                        <div class="slds-grid slds-gutters slds-text-body_small">
+                                            <div class="slds-col slds-size_7-of-12 slds-text-align_center changeNew" >
+                                                <lightning:radioGroup
+                                                                      aura:id="mygroup"
+                                                                      label="Pay Through"
+                                                                      options="{! v.paymentOptions }"
+                                                                      value="{! v.paymentValue }"
+                                                                      onchange="{! c.handlepaymentChange }"
+                                                                      type="radio"
+                                                                      class="slds-text-align_center slds-text-heading_large"
+                                                                      />
+                                            </div>
+                                        </div>
+                                        <aura:if isTrue="{!v.othersOpen}">
+                                            <div class="picklist_values">
+                                                     <lightning:select name="OthersMode" aura:id="OthersMode"
+                                                                       value="{!v.selectedValue}">
+                                                         <aura:iteration items="{!v.otherModeOptions}" var="otherMode">
+                                                             <option value="{!otherMode.value}" 
+                                                                     text="{!otherMode.label}"
+                                                                     selected="otherMode.selected"></option>
+                                                         </aura:iteration>
+                                                </lightning:select>
+                                                </div>
+                                            <div class="slds-form-element_other">
+                                            <lightning:input aura:id="referenceId" 
+                                        label="Reference Number"
+                                        value="{!v.referenceNumber}" onchange="{!c.printValues}">
+                                        </lightning:input>
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.openSavedCards}">
+                                            <table class="slds-table slds-table_cell-buffer slds-p-around_small slds-no-row-hover cardlist">
+                                                <tbody>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col">
+                                                            <div class="change386">View Saved Cards</div>
+                                                        </th>
+                                                         <th class="" scope="col">
+                                                            <lightning:button label="Add New Card" iconName="utility:add" title="Neutral action" onclick="{! c.addNewCard }"/>  
+                                                        </th>
+                                                    </tr>
+                                                    <tr class="slds-line-height_reset" >
+                                                        <th class="slds-text-heading_large" scope="col" colspan="2" >
+                                                            <lightning:radioGroup
+                                                                                  aura:id="cardgroup"
+                                                                                  options="{!v.paymentCardOptions }"
+                                                                                  value="{!v.cardValue }"
+                                                                                  onchange="{!c.handlecardChange }"
+                                                                                  type="radio"
+                                                                                  class="cardListFont"
+                                                                                  /> </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table> 
+                                        </aura:if>
+                                    </li>
+                                </ul>
+                                <footer class="slds-modal__footer">
+                                    <lightning:button  class="btn" label="Back" title="Back" onclick="{! c.RenderBack }"/>
+                                    <lightning:button  class="btn" label="Cancel" title="Cancel" onclick="{! c.closeModel }"/>
+                                    <!--<lightning:button  variant="brand" label="Pay Now" disabled="{!v.disablePayNowButton}" title="PayNow"  onclick="{! c.CollectPayment }" />-->
+                                     <lightning:button  variant="brand" label="Pay Now" title="PayNow" disabled="{!v.disablePayNowButton}"  onclick="{! c.CollectPayment }" />
+                                </footer>
+                            </aura:set>
+                            
+                        </aura:if>
+                    </lightning:card>
+                    </aura:if>
+                    <aura:if isTrue="{!v.teminalSpinner}">
+                    <aura:if isTrue="{!v.paySuccess == 'SUCCESS'}">
+                        <p class="pay_success">Payment Successful!</p>
+                    </aura:if>
+                    <aura:if isTrue="{!v.paySuccess == 'TIMEOUT'}">
+                        <span class="pay_info">
+                            <p class="pay_out">Payment Failed!</p>
+                            </span>
+                    </aura:if>
+                    <aura:if isTrue="{!v.paySuccess == '##'}">
+                        <span class="pay_info">
+                            <p class="pay_cls">Pay USD {!v.TotalUnallocatedAmountInsurance}</p>
+                                <p class="pay_disclaimer">
+                                    This page will automatically expire in
+                                </p>
+                                <p class="pay_disclaimer">
+                                    {!v.remainingTime}
+                                </p>
+                            </span>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isSpinner}">
+                        <lightning:spinner alternativeText="Loading" size="medium" />
+                    </aura:if>
+                    <footer class="slds-modal__footer terminal_footer">
+                        <lightning:button  class="btn" label="Cancel" title="Cancel" onclick="{! c.closeTerminal }"/>
+                    </footer>
+                    </aura:if>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        <aura:if isTrue="{!v.isDiscountModalOpen}">
+            <c:discountPopUpModal isModalOpen ="{!v.isDiscountModalOpen}" maxPercentageforDiscount="{!v.maxPercentageforDiscount}" maxAmountforDiscount="{!v.maxAmountforDiscount}"></c:discountPopUpModal>
+        </aura:if>
+    </aura:if>
+</aura:component>

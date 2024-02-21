@@ -1,0 +1,35 @@
+<template>
+  <lightning-card>
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12 div1">
+                  <span>
+                    <lightning-input class="searchBox" type="search" label="Search rows" placeholder="Search" onchange={handleSearchKey}></lightning-input>
+                  </span>
+                </div>
+                
+                <div class="slds-col slds-size_3-of-12 searchButtonDiv">
+                    <span>
+                        <button class="slds-button slds-button_brand searchButton" onclick={handleSearch} >Search</button>
+                    </span>
+                  </div>
+              </div>
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}>
+            </lightning-datatable>
+            <template if:false={count}>
+              <center>No items to display</center>
+            </template>
+            <template if:true={count}>
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_3-of-12">&nbsp;</div>
+                <div class="slds-col slds-size_3-of-12">&nbsp;</div>
+                <div class="slds-col slds-size_3-of-12">&nbsp;</div>
+              <div class="slds-col slds-size_3-of-12 addRowButton">
+                <button class="slds-button slds-button_neutral" onclick={getSelectedTestRecords}>Add Selected Rows</button>
+              </div>
+              </div>
+            </template>
+  </lightning-card>
+  </template>

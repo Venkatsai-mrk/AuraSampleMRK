@@ -1,0 +1,48 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-01-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<aura:component controller="VOBIntegrationController_Tanveer" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!-- <lightning:workspaceAPI aura:id="workspace" /> 
+    <aura:attribute name="VOB" type="VOB__c"/>
+    <aura:attribute name="Result" type="Result__c"/>
+    <aura:attribute name="recordId" type="String" access="global"/>
+    <aura:attribute name="patRelCode" type="String"/>
+    <aura:attribute name="benefitTypeCode" type="String"/>
+    <aura:attribute name='plannedStartDate' type="Date"/>
+    <aura:attribute name='plannedEndDate' type="Date"/>
+    <aura:attribute name='verifiedDate' type="Date"/>
+    <aura:attribute name='DateOfBirth' type="Date"/>
+    <aura:attribute name='LastUpdatedDate' type="Date"/>
+    <aura:attribute name='isButtonClick' type="Boolean"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name='verifiedTime' type="Integer"/>
+    <aura:attribute name='IntegrationOpen' type="Boolean"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name='openVF' type="Boolean" default="true"/>
+    <lightning:messageChannel type="ElixirSuite__LMSDemoWin__c"
+                              aura:id="sampleMessageChannel"/>
+    <aura:attribute name="visualforceDomain" type="String"
+                    default="elixirintegratedorg-dev-ed.my.salesforce.com"/>
+    <aura:attribute name="vfHost" type="String"
+                    default="elixirintegratedorg-dev-ed elixirsuite.visualforce.com/"/>
+    <aura:registerEvent name="IntegCmpEvent" type="c:VobIntegrationEvent" />
+    <lightning:card title="">
+       
+            <lightning:layout>
+                <lightning:layoutItem size="12">
+                    The Visualforce page to send data to 
+                    <lightning:card title="VF FROM LIGHTNING" class="vf-card">
+                        iframe aura:id="vfFrame"  frameborder="0" width="100%" height="200" 
+                                src="/apex/ElixirSuite__ElixirOEM_VOBDetailPDF"
+                                
+                    </lightning:card>
+                </lightning:layoutItem>
+            </lightning:layout>
+       
+    </lightning:card> -->
+</aura:component>

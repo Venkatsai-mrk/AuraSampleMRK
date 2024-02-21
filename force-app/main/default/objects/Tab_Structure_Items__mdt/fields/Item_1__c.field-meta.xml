@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Item_1__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Item 1</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Vital Signs</fullName>
+                <default>true</default>
+                <label>Vital Signs</label>
+            </value>
+            <value>
+                <fullName>Lab Orders</fullName>
+                <default>false</default>
+                <label>Lab Orders</label>
+            </value>
+            <value>
+                <fullName>Past Medical Surgical History</fullName>
+                <default>false</default>
+                <label>Past Medical Surgical History</label>
+            </value>
+            <value>
+                <fullName>Physical Exam</fullName>
+                <default>false</default>
+                <label>Physical Exam</label>
+            </value>
+            <value>
+                <fullName>Review of System</fullName>
+                <default>false</default>
+                <label>Review of System</label>
+            </value>
+            <value>
+                <fullName>Social History</fullName>
+                <default>false</default>
+                <label>Social History</label>
+            </value>
+            <value>
+                <fullName>Weight History</fullName>
+                <default>false</default>
+                <label>Weight History</label>
+            </value>
+            <value>
+                <fullName>History of Present Illness</fullName>
+                <default>false</default>
+                <label>History of Present Illness</label>
+            </value>
+            <value>
+                <fullName>Family History</fullName>
+                <default>false</default>
+                <label>Family History</label>
+            </value>
+            <value>
+                <fullName>Dietary History</fullName>
+                <default>false</default>
+                <label>Dietary History</label>
+            </value>
+            <value>
+                <fullName>Chief Complaints</fullName>
+                <default>false</default>
+                <label>Chief Complaints</label>
+            </value>
+            <value>
+                <fullName>Prescriptions</fullName>
+                <default>false</default>
+                <label>Prescriptions</label>
+            </value>
+            <value>
+                <fullName>Current Medication</fullName>
+                <default>false</default>
+                <label>Current Medication</label>
+            </value>
+            <value>
+                <fullName>Allergy/MedicalAlerts</fullName>
+                <default>false</default>
+                <label>Allergy/MedicalAlerts</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

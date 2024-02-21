@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="problemDiagnosesDataToSave" type="Object"
+                 /> 
+      <aura:attribute name="IncomingRoute" type="String"
+                 /> 
+    
+</aura:event>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Frequency__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Used to select the master data of type = Frequency</description>
+    <externalId>false</externalId>
+    <label>Frequency Name</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Master_Object__c.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Frequency</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Master_Object__c</referenceTo>
+    <relationshipLabel>Prescription Order (Frequency)</relationshipLabel>
+    <relationshipName>Prescription_Order2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

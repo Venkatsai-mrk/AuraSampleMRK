@@ -1,0 +1,38 @@
+<aura:component controller="SendClaimController" implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="callClaimSubmit" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isPopUp" type="Boolean" default="true"/>
+    <!-- Modal/Popup Box starts here-->
+    <aura:if isTrue="{!v.isPopUp}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container"><!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header modal-header">
+                    <h1 class="slds-text-heading--medium">Confirmation</h1>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <center> <p>This will get the ERA selected claims from the clearing house. Are you sure you want to proceed?</p></center>
+                </div><!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="No" title="No" onclick="{!c.closePopUp}"/>
+                    <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.submitDetails}"/>
+                </footer>
+            </div>
+        </section>
+    </aura:if>
+    <aura:if isTrue="{!v.callClaimSubmit}">
+        <c:GetERAcmp callClaimSubmit = "{!v.callClaimSubmit}" loaded="{!v.loaded}"></c:GetERAcmp>
+    </aura:if>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    <aura:if isTrue="{!v.loaded }">
+        <div>
+            <div role="status" class="slds-spinner slds-spinner_large slds-spinner_inverse"
+                 >
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

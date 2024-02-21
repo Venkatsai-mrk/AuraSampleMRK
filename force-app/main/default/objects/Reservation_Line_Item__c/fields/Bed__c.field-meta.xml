@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bed__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to store the bed for line item.</description>
+    <externalId>false</externalId>
+    <label>Bed</label>
+    <referenceTo>Location__c</referenceTo>
+    <relationshipLabel>Reservation Line Items (Bed)</relationshipLabel>
+    <relationshipName>Reservation_Line_Items3</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

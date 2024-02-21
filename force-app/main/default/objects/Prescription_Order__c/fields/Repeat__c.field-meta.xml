@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Repeat__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Repeat</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Scheduled_Not_Scheduled__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>times in a day</fullName>
+                <default>false</default>
+                <label>&apos;n&apos;  times in a day</label>
+            </value>
+            <value>
+                <fullName>After every &apos;n&apos; hours</fullName>
+                <default>false</default>
+                <label>After every &apos;n&apos; hours</label>
+            </value>
+            <value>
+                <fullName>After every &apos;n&apos; weeks</fullName>
+                <default>false</default>
+                <label>After every &apos;n&apos; weeks</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Scheduled</controllingFieldValue>
+            <valueName>times in a day</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scheduled</controllingFieldValue>
+            <valueName>After every &apos;n&apos; hours</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scheduled</controllingFieldValue>
+            <valueName>After every &apos;n&apos; weeks</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

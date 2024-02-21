@@ -1,0 +1,371 @@
+<aura:component controller="AppointmentScheduleCtrl"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride"
+    access="global">
+
+    <aura:attribute name="StartDateTime" type="DateTime" />
+    <aura:attribute name="EndDateTime" type="DateTime" />
+    <aura:attribute name="StartDate" type="Date" default="" />
+    <aura:attribute name="EndDate" type="Date" default="" />
+    <aura:attribute name="TimeZones" type="String" default="" />
+    <aura:attribute name="Subject" type="String" default="" />
+
+    <aura:attribute name="StartDt" type="Date" default="" />
+    <aura:attribute name="EndDt" type="Date" default="" />
+    <aura:attribute name="StartTime" type="DateTime" default="" />
+    <aura:attribute name="EndTime" type="DateTime" default="" />
+
+    <aura:attribute name="GMTTimeZone" type="String" default="" />
+    <aura:attribute name="eventObj" type="Event" default="{'sobjectType':'Event'}" />
+    <aura:attribute name="timeZoneListItems" type="Event[]" />
+
+    <aura:attribute name="FixedMessagePart" type="String" default=" are not available for the requested time frame" />
+    <aura:attribute name="AllDayEvent" type="boolean" default="false" />
+    <aura:attribute name="ByPassEvent" type="boolean" default="false" />
+    <aura:attribute name="showByPassErr" type="boolean" default="false" />
+    <aura:attribute name="ByPassErrMessage" type="String"
+        default="To bypass conflicting appointments for users, patients, patient groups, equipment, rooms and business accounts; please check 'Bypass existing bookings' option" />
+    <aura:attribute name="loaded" type="boolean" default="false" />
+    <aura:attribute name="showByPassErrForMultiSelect" type="boolean" default="false" />
+    <aura:attribute name="showByPassErrForLookupSelect" type="boolean" default="false" />
+
+    <aura:attribute name="ConflictMessage" type="string" default="" />
+    <aura:attribute name="patientErr" type="boolean" default="false" />
+    <aura:attribute name="groupErr" type="boolean" default="false" />
+    <aura:attribute name="coFaciltatorErr" type="boolean" default="false" />
+    <aura:attribute name="bussinessAccountErr" type="boolean" default="false" />
+    <aura:attribute name="roomErr" type="boolean" default="false" />
+    <aura:attribute name="equipmentErr" type="boolean" default="false" />
+
+    <aura:attribute name="bussinessAccountList" type="list" />
+    <aura:attribute name="accountList" type="list" />
+    <aura:attribute name="cofacilitatorList" type="list" />
+    <aura:attribute name="groupList" type="list" />
+	<aura:attribute name="options" type="list" />
+    <aura:attribute name="AssignedTo" type="User" default="" />
+    <aura:attribute name="isModalOpen" type="boolean" default="true" />
+    <aura:attribute name="isDailyClick" type="boolean" default="false" />
+    <aura:attribute name="showButton" type="Boolean" default="false" />
+    <aura:attribute name="selectedRecords" type="List" />
+    <aura:attribute name="selectedBussinessAccountsRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="equipList" type="sObject[]" default="[]" />
+
+    <aura:attribute name="selectedGroupRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="selectedAccountRecords" type="sObject[]" default="[]" />
+
+    <aura:attribute name="selectedWeekDaysRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="weekDays" type="String[]" default="" />
+    <aura:attribute name="timeZone" type="TimeZone" default="" />
+
+    <aura:attribute name="selectedCoFacilitatorsRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="selectedEquipmentRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="selectedSubjectRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="selectedRecordOfLocation" type="sObject" default="{}"
+        description="Use,for store SELECTED sObject Record" />
+    <aura:attribute name="selectedRecordOfRoom" type="sObject" default="{}"
+        description="Use,for store SELECTED sObject Record" />
+    <aura:attribute name="selectedRecordOfEquipment" type="sObject" default="{}"
+        description="Use,for store SELECTED sObject Record" />
+    <aura:attribute name="selectedRecordOfAssignedTo" type="sObject" default="{}"
+        description="Use,for store SELECTED sObject Record" />
+
+    <aura:attribute name="selectedRecordOfPatientGroup" type="sObject" default="{}"
+        description="Use,for store SELECTED sObject Record" />
+    <aura:attribute name="selectedContactRecords" type="sObject[]" default="[]" />
+    <aura:attribute name="PractitionerMessage" type="string" default="" />
+    <aura:attribute name="event" type="Event" default="{ 'sobjectType': 'Event' }" />
+
+    <aura:attribute name="lookupUser" type="Boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="CreateEventModal" type="boolean" default="false" />
+    <aura:attribute name="eventDataRecordId" type="String" default="" />
+
+    <aura:attribute name="starttimeSelected" type="DateTime" />
+    <aura:attribute name="endtimeSelected" type="DateTime" />
+
+    <aura:attribute name="assignee" type="String" default="" />
+
+    <aura:attribute name="byPassMessage" type="string" default="" />
+    <aura:attribute name="PatientMessage" type="string" default="" />
+    <aura:attribute name="GroupMessage" type="string" default="" />
+    <aura:attribute name="coFaciltatorMessage" type="string" default="" />
+    <aura:attribute name="bussinessAccountMessage" type="string" default="" />
+    <aura:attribute name="roomMessage" type="string" default="" />
+    <aura:attribute name="equipMessage" type="string" default="" />
+    <aura:attribute name="recId" type="String" />
+
+    <!--aura:if isTrue="{!v.CreateEventModal}">
+        <c:CreateEvent satime="{!v.starttimeSelected}" evtime="{!v.endtimeSelected}" assignedTo="{!v.assignee}" eventDataobjectId="{!v.eventDataRecordId}"
+                       allDayEvent="{!v.AllDayEvent}" byPassCheck="{!v.ByPassEvent}" ></c:CreateEvent>
+    </aura:if -->
+    <div aura:id="conflictingEvent">
+        <center> {!v.byPassMessage}</center>
+    </div>
+    <aura:if isTrue="{!v.isModalOpen}">
+
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container edit_container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Appointment</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:input label="Subject" class="dynamic" aura:id="InputSubject"  value="{!v.Subject}" required="true"/>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <aura:renderIf isTrue="{!v.AllDayEvent == false}">
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input aura:id = "startdate" type="DateTime" label="Start Date and Time" value="{!v.StartDate}" required ="true"  onchange="{!c.starttimeChange}"/>
+
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input type="DateTime" label="End Date and Time"
+                                            value="{!v.EndDateTime}" required="true" onchange="{!c.endtimeChange}" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </aura:renderIf>
+
+                        <aura:renderIf isTrue="{!v.AllDayEvent == true}">
+                            <div class="slds-col slds-size_12-of-12">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input type="date" label="Start Date" value="{!v.StartDate}" required ="true" onchange="{!c.starttimeChange}"/>                                   
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <lightning:input type="date" label="End Date" value="{!v.EndDateTime}"
+                                            required="true" onchange="{!c. enddateChange}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:renderIf>
+                    </div>
+
+
+                    <div class="slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                        <lightning:select label="Time Zone" aura:id="statusId" value="{!v.eventObj.Event}"
+                            onchange="{!c.statusListItemsView}">
+                            <option label=" "></option>
+                            <aura:iteration items="{!v.timeZoneListItems}" var="statusVar">
+                                <option value="{!statusVar}">{!statusVar}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+
+
+                    <div class="slds-col slds-size_6-of-12 slds-p-top_large">
+                        <lightning:input type="checkbox" label="All Day event" aura:id="alldaycheck"
+                            value="{!v.AllDayEvent}" onchange="{!c.checkboxSelect}" />
+
+                    </div>
+
+
+                    <div class="slds-grid slds-gutters">
+
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:customLookupForAppointmentSchedule objectAPIName="ElixirSuite__Provider__c"
+                                    IconName="standard:account" selectedRecord="{!v.selectedRecordOfLocation}"
+                                    label="Location" selectedRoomRecord="{!v.selectedRecordOfRoom}" />
+
+                            </lightning:layoutItem>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:customLookupForAppointmentSchedule objectAPIName="ElixirSuite__Rooms__c"
+                                    IconName="standard:account" selectedRecord="{!v.selectedRecordOfRoom}"
+                                    selectedRecordOfLocation="{!v.selectedRecordOfLocation}" label="Room"
+                                    SelectedStartTime="{!v.StartTime}" SelectedEndTime="{!v.EndTime}"
+                                    SelectedStartDate="{!v.StartDate}" SelectedEndDate="{!v.EndDate}"
+                                    AllDayEvent="{!v.AllDayEvent}"
+                                    showByPassErrForLookupSelect="{!v.showByPassErrForLookupSelect}"
+                                    roomMessage="{!v.roomMessage}" />
+                            </lightning:layoutItem>
+                        </div>
+                    </div>
+
+
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:AppointmentreUsableMultiSelectLookup objectAPIName="ElixirSuite__Account_Group__c"
+                                    IconName="standard:account" lstSelectedRecords="{!v.selectedGroupRecords}"
+                                    label="Patient Groups" SelectedStartTime="{!v.StartTime}"
+                                    SelectedEndTime="{!v.EndTime}" SelectedStartDate="{!v.StartDate}"
+                                    SelectedEndDate="{!v.EndDate}" AllDayEvent="{!v.AllDayEvent}"
+                                    showByPassErrForMultiSelect="{!v.showByPassErrForMultiSelect}"
+                                    GroupMessage="{!v.GroupMessage}" accountList="{!v.accountList}"
+                                    bussinessAccountList="{!v.bussinessAccountList}"
+                                    cofacilitatorList="{!v.cofacilitatorList}" groupList="{!v.groupList}"
+                                    selectedRecord="{!v.selectedRecordOfPatientGroup}" />
+                            </lightning:layoutItem>
+                        </div>
+
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:AppointmentreUsableMultiSelectLookup objectAPIName="Account"
+                                    IconName="standard:account" lstSelectedRecords="{!v.selectedAccountRecords}"
+                                    label="Patients" SelectedStartTime="{!v.StartTime}" SelectedEndTime="{!v.EndTime}"
+                                    SelectedStartDate="{!v.StartDate}" SelectedEndDate="{!v.EndDate}"
+                                    AllDayEvent="{!v.AllDayEvent}"
+                                    showByPassErrForMultiSelect="{!v.showByPassErrForMultiSelect}"
+                                    PatientMessage="{!v.PatientMessage}" showByPassErr="{!v.showByPassErr}"
+                                    accountList="{!v.accountList}" bussinessAccountList="{!v.bussinessAccountList}"
+                                    cofacilitatorList="{!v.cofacilitatorList}" groupList="{!v.groupList}" />
+
+                            </lightning:layoutItem>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:PractitionerMultiLookup objectAPIName="Contact" IconName="standard:contact"
+                                    lstSelectedContactRecords="{!v.selectedContactRecords}"
+                                    lstSelectedRecords="{!v.selectedAccountRecords}" accountList="{!v.accountList}"
+                                    label="Practitioner" />
+
+                            </lightning:layoutItem>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:AppointmentreUsableMultiSelectLookup objectAPIName="Contact"
+                                    IconName="standard:contact" lstSelectedRecords="{!v.selectedCoFacilitatorsRecords}"
+                                    label="Co-Facilitators" SelectedStartTime="{!v.StartTime}"
+                                    SelectedEndTime="{!v.EndTime}" SelectedStartDate="{!v.StartDate}"
+                                    SelectedEndDate="{!v.EndDate}" AllDayEvent="{!v.AllDayEvent}"
+                                    showByPassErrForMultiSelect="{!v.showByPassErrForMultiSelect}"
+                                    coFaciltatorMessage="{!v.coFaciltatorMessage}"
+                                    selectedAssignedToRecord="{!v.selectedRecordOfAssignedTo}"
+                                    accountList="{!v.accountList}" bussinessAccountList="{!v.bussinessAccountList}"
+                                    cofacilitatorList="{!v.cofacilitatorList}" groupList="{!v.groupList}" />
+                            </lightning:layoutItem>
+                        </div>
+
+                    </div>
+
+                    <div class="slds-grid slds-gutters">
+
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:AppointmentreUsableMultiSelectLookup objectAPIName="Account1"
+                                    IconName="standard:account"
+                                    lstSelectedRecords="{!v.selectedBussinessAccountsRecords}"
+                                    label="Related Business Accounts" SelectedStartTime="{!v.StartTime}"
+                                    SelectedEndTime="{!v.EndTime}" SelectedStartDate="{!v.StartDate}"
+                                    SelectedEndDate="{!v.EndDate}" AllDayEvent="{!v.AllDayEvent}"
+                                    showByPassErrForMultiSelect="{!v.showByPassErrForMultiSelect}"
+                                    bussinessAccountMessage="{!v.bussinessAccountMessage}"
+                                    accountList="{!v.accountList}" bussinessAccountList="{!v.bussinessAccountList}"
+                                    cofacilitatorList="{!v.cofacilitatorList}" groupList="{!v.groupList}" />
+                            </lightning:layoutItem>
+                        </div>
+
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:customLookupForAppointmentSchedule objectAPIName="User" IconName="standard:user"
+                                    selectedRecord="{!v.selectedRecordOfAssignedTo}" label="Assigned To" />
+
+                            </lightning:layoutItem>
+                        </div>
+
+                    </div>
+                    <div class="slds-grid slds-gutters">
+
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:EquipmentMultiLookup objectAPIName="ElixirSuite__Procedure__c"
+                                    IconName="standard:contact" selectedRecord="{!v.equipList}"
+                                    lstSelectedRecords="{!v.equipList}" label="Equipments" />
+
+
+
+                            </lightning:layoutItem>
+                        </div>
+                        <!--div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                            <lightning:layoutItem>
+                                <c:MultiSelectLookup 
+                                                     objectName="ElixirSuite__Procedure__c"
+                                                     fieldName="Name"
+                                                     label="Equipments"
+													 iconName="standard:contact"
+                                                     whereClause="RecordType.Name='Template Equipment'"
+                                                     selectedRecords="{!v.equipList}"
+                                                     placeholder="Enter Equipment"/>
+                                
+                            </lightning:layoutItem> 
+                        
+                        </div-->
+                    </div>
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_6-of-12 slds-p-top_x-large slds-p-bottom_x-large">
+                            <lightning:input type="checkbox" label="Bypass existing bookings" aura:id="bypasscheck"
+                                value="{!v.ByPassEvent}" onchange="{!c.bypassSelect}" />
+
+                        </div>
+                    </div>
+                    <lightning:layoutItem>
+
+                        <lightning:input type="checkbox" label="Repeat Event" name="Repeat Event"
+                            onchange="{!c.toggleButton}" />
+                        <br></br>
+                        <aura:if isTrue="{!v.showButton}">
+                            <div>
+                                <lightning:buttonGroup>
+                                    <lightning:button variant="brand" label="Daily" title="Brand action"
+                                        onclick="{! c.handleClick }" />
+
+                                    <!-- lightning:button label="Weekly" Variant="Brand" / -->
+                                </lightning:buttonGroup>
+                            </div>
+
+                            <aura:if isTrue="{!v.isDailyClick}">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-12">
+
+                                            <!-- lightning:input type="date" label="Start Date" value="{!v.StartDateTime}" required ="true" onchange="{!c. startdateChange}"/ -->
+                                            <!--   <lightning:input type="datetime" label="Start Date and Time" value="{!v.StartDateTime}" required ="true" onchange="{!c.starttimeChange}"/> -->
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <!-- lightning:input type="date" label="End Date" value="{!v.EndDateTime}" required ="true" onchange="{!c. enddateChange}"/ -->
+                                            <!-- lightning:input type="datetime" label="End Date and Time" value="{!v.EndDateTime}" required ="true" onchange="{!c.endtimeChange}"/ -->
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+                                        <lightning:layoutItem>
+                                            <c:MultiSelectForWeekDays selectedGenreList="{!v.weekDays}" />
+
+                                        </lightning:layoutItem>
+                                    </div>
+                                </div>
+
+                            </aura:if>
+                        </aura:if>
+                    </lightning:layoutItem>
+
+                </div>
+
+
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+
+                    <lightning:button variant="brand" label="Save" disabled="{!v.equipmentErr}" title="Save"
+                        onclick="{!c.mySave1}"></lightning:button> <!--moveNext--> <!--mySave1-->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

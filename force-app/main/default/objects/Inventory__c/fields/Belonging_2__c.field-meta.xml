@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Belonging_2__c</fullName>
+    <description>Represents the second belonging associated with the order line item.</description>
+    <externalId>false</externalId>
+    <label>Belonging 2</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Credit card</fullName>
+                <default>false</default>
+                <label>Credit card</label>
+            </value>
+            <value>
+                <fullName>Debit card</fullName>
+                <default>false</default>
+                <label>Debit card</label>
+            </value>
+            <value>
+                <fullName>Documents</fullName>
+                <default>false</default>
+                <label>Documents</label>
+            </value>
+            <value>
+                <fullName>Jwellery</fullName>
+                <default>false</default>
+                <label>Jwellery</label>
+            </value>
+            <value>
+                <fullName>Keys</fullName>
+                <default>false</default>
+                <label>Keys</label>
+            </value>
+            <value>
+                <fullName>Laptop</fullName>
+                <default>false</default>
+                <label>Laptop</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Wallet</fullName>
+                <default>false</default>
+                <label>Wallet</label>
+            </value>
+            <value>
+                <fullName>Watch</fullName>
+                <default>false</default>
+                <label>Watch</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

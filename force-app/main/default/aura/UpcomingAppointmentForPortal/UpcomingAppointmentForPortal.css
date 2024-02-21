@@ -1,0 +1,152 @@
+.THIS.upapp_port {
+    border: 1px solid #eee;
+    height: 208px;
+    background-color: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+} 
+.THIS.upapp_port .care-head  {
+    padding: 0.5rem;
+    color: #493266;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #f9fafc;
+    z-index: 1;
+}
+        .THIS .fontSize{
+            font-size: 16px;   
+        }
+        .THIS .iconAlign{
+            text-align: center;  
+        }
+
+.THIS.upapp_port .slds-text-heading_small {
+    font-weight: 600;
+    color:#493266;
+    font-size: 16px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .care_team-box {
+    padding: 5px 0.5rem;
+}
+.THIS .slds-box {
+    border-radius: 0;
+    border: none;
+}
+.THIS .care_team-box .slds-button.slds-button_neutral {
+    padding: 0;
+    line-height: 0;
+    border:none;
+    margin-top: 8px;
+}
+.THIS .care_team-box .slds-button.slds-button_neutral:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .care_team-box svg.slds-button__icon.slds-button__icon_left {
+    margin-right: 0;
+    height: 24px;
+    width: 24px;
+    fill: #493266;
+}
+.THIS .new {
+    background-color: #fff;
+    border: none;
+    box-shadow: 2px 4px 8px 0 #ccc;
+    font-size: 10px;
+    border-radius: 3px;
+    padding: 2px 10px;
+}
+.THIS .appointment_list {
+    border: 1px solid #dedede;
+    margin: 5px 0;
+}
+.THIS .appointment_list .slds-size_2-of-12 {
+    padding-right: 0;
+}
+.THIS .appointment_list .slds-size_6-of-12 {
+    padding: 0;
+}
+.THIS .appointment_list .slds-size_4-of-12 {
+    padding-left: 0;
+}
+.THIS .appointment_list .appoint_datge {
+    background-color: #f3f1f2;
+    color: #000;
+    font-weight: 600;
+    font-size: 10px;
+    padding: 8px 5px;
+    line-height: 14px;
+    height: 100%;
+}
+.THIS .appointment_list .appoint_name {
+    background-color: #fff;
+    padding: 5px 10px;
+    height: 100%;
+}
+.THIS .appointment_list .appoint_name h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    font-family: var(--lwc-navigationFontFamily,Work Sans);
+}
+.THIS .appointment_list .appoint_name p {
+    font-size: 12px;
+    color: #7f7f7f;
+}
+.THIS .appointment_list .appoint_btn {
+    background-color: #fff;
+    padding: 12px 15px;
+    height: 100%;
+}
+.THIS .edit {
+    background-color: #564370;
+    color: #fff;
+    margin-left: 15px;
+    padding: 1px 15px;
+    border: 1px solid #564370;
+    border-radius: 3px;
+    font-size: 12px;
+    transition: all 500ms;
+}
+.THIS .edit:hover {
+    background-color: #fff;
+    color: #564370;
+    transition: all 500ms;
+}
+.THIS .edit.cancel {
+    background-color: #7f7f7f;
+    border: 1px solid #7f7f7f;
+    transition: all 500ms;
+}
+.THIS .edit.cancel:hover {
+    color: #7f7f7f;
+    background-color: #fff;
+    transition: all 500ms;
+}
+.THIS .new_appoint {
+    border: 1px solid #00a1df;
+    font-size: 12px;
+    padding: 7px 10px;
+    line-height: 14px;
+    color: #000;
+    font-weight: 600;                                  
+}
+.THIS .ma_btn {
+    position: sticky;
+    z-index: 1;
+    bottom: -1px;
+    left: 0;
+    background-color: #fff;
+    padding: 10px;
+}
+/*.THIS .ma_btn button {
+    background-color: #00a1e2;
+    border: 1px solid #00a1e2;
+    display: block;
+    width: 144px;
+    padding: 5px 0;
+    color: #fff;
+}*/

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Reservation__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Immediate parent of the current reservation</description>
+    <externalId>false</externalId>
+    <label>Parent Reservation</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Reservation__c.Id</field>
+            <operation>notEqual</operation>
+            <valueField>$Source.Id</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Reservation__c</referenceTo>
+    <relationshipLabel>Parent Reservation</relationshipLabel>
+    <relationshipName>Reservations1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

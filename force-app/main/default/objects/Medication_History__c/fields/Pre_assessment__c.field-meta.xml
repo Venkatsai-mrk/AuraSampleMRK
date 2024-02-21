@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_assessment__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is a lookup to the Pre-assessment object, allowing the association of specific pre-assessment records with the Medication History entry.</description>
+    <externalId>false</externalId>
+    <label>Pre-assessment</label>
+    <referenceTo>Pre_assessment__c</referenceTo>
+    <relationshipLabel>Medication History</relationshipLabel>
+    <relationshipName>Medication_History</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

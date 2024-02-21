@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Room_Attributes__c</fullName>
+    <externalId>false</externalId>
+    <label>Attributes</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Occupancy - Single</fullName>
+                <default>false</default>
+                <label>Occupancy - Single</label>
+            </value>
+            <value>
+                <fullName>Occupancy - Double</fullName>
+                <default>false</default>
+                <label>Occupancy - Double</label>
+            </value>
+            <value>
+                <fullName>Type - Balcony</fullName>
+                <default>false</default>
+                <label>Type - Balcony</label>
+            </value>
+            <value>
+                <fullName>Type - Private</fullName>
+                <default>false</default>
+                <label>Type - Private</label>
+            </value>
+            <value>
+                <fullName>Type - Semi Private</fullName>
+                <default>false</default>
+                <label>Type - Semi Private</label>
+            </value>
+            <value>
+                <fullName>View - Lake View</fullName>
+                <default>false</default>
+                <label>View - Lake View</label>
+            </value>
+            <value>
+                <fullName>View - Mountain View</fullName>
+                <default>false</default>
+                <label>View - Mountain View</label>
+            </value>
+            <value>
+                <fullName>View - Riverside View</fullName>
+                <default>false</default>
+                <label>View - Riverside View</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

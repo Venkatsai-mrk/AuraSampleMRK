@@ -1,0 +1,162 @@
+.THIS .heading{
+    font-size:13px;
+    font-weight: bold;
+    
+}
+.THIS .slds-tabs_scoped__nav{
+    border : none;
+}
+.THIS .slds-tabs_scoped__content{
+    background-color : #f1f2f3;
+    border : none;
+}
+.THIS .slds-tabs_scoped__link{
+    border : none;
+    border-left : none;
+    border-right : none;
+    background-color: lightgray;
+    margin-left: 20px;
+}
+.THIS .marLef {
+    margin-left: 5px;
+}
+
+.THIS .attach_button {
+    font-weight: bold;
+    border: 1px solid black; 
+}
+
+.THIS .dos-box .slds-form-element__label {
+    display : none;
+}
+.THIS .dos-box .slds-col.slds-size_1-of-12, .THIS .dos-box .slds-col.slds-size_2-of-12,
+.THIS .dos-box .slds-col.slds-size_4-of-12{
+    margin: 10px 0;
+}
+.THIS .byProcTableCss .th
+{
+    width:100px; 
+    word-wrap:break-word;
+}
+.THIS .byProcTableCss .slds-table tbody td {
+    padding-left: 16px!important;
+}
+.THIS .byProcTableCss .slds-table tbody td .slds-grid{
+
+    justify-content: flex-start;
+}
+ .THIS .byProcTableCss .th:nth-child(2),
+    .THIS .byProcTableCss .td:nth-child(2) {
+        width: 30px;
+    }
+
+    .THIS .byProcTableCss .th:nth-child(3),
+    .THIS .byProcTableCss .td:nth-child(3) {
+        width: 250px;
+    }
+.THIS .pvt-box {
+    background-color: #f1f2f3;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+}
+.THIS .payment-list {
+    width: 100%;
+    margin: 0 auto;
+}
+.THIS .no-record {
+    font-size:15px;
+    color:red;
+}
+.THIS .table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.THIS .th{
+    text-align: center; 
+    vertical-align: middle; 
+    color: black;
+}
+.THIS .td {
+    text-align: center; 
+    vertical-align: middle;
+    height:5px;
+    
+}
+.THIS .A{
+     color: black; 
+}
+.THIS .td .slds-select_container {
+    border:  none;
+    box-shadow: none;
+    padding: 0;
+}
+.THIS .td .slds-form-element{
+    display: flex;
+    justify-content: center;
+    padding-right: 10px;
+}
+.THIS .MaxHeight{
+    max-height: 380px;
+}
+.THIS .thead {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 5px;
+    background-color: #f2f2f2;
+    border: 1px solid lightgray;
+    z-index: 1;
+}
+.THIS .th {
+    background-color: #f2f2f2;
+}
+.THIS .process-button {
+    margin-top: 20px;
+}
+
+.THIS .send-statements-checkbox {
+    margin-top: 10px;
+}
+
+.THIS .slds-align_absolute-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.THIS .era_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.THIS .era_table th, .THIS .era_table td {
+    font-size: 12px;
+    white-space: normal !important;
+    border: 1px solid lightgray;
+    padding: 2px;
+    position: inherit;
+}
+.THIS .era_table td {
+    text-align: center;
+    background-color: white;
+}
+.THIS .era_table th {
+    background-color: #f2f2f2;
+    
+}
+
+/*.THIS .era_table tbody tr:nth-child(odd) td {
+    background-color: white;
+}
+
+.THIS .era_table tbody tr:nth-child(even) td {
+    background-color: white;
+}*/
+
+.THIS .era_table tbody td:not(:last-child) {
+    border-right-color: white;
+}
+.THIS .era_table th:last-child, .THIS .era_table td:last-child {
+    text-align: center
+}

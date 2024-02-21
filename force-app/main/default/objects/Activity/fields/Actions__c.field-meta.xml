@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actions__c</fullName>
+    <description>Represents the actions associated with the appointment, such as Check-in, In waiting or cancel.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+(ISPICKVAL(ActivitySubtype, &apos;Event&apos;)), 
+    IF(
+        AND(ISPICKVAL(Status__c, &apos;Cancelled&apos;), ISBLANK(Care_Episode__c)),
+        IMAGE(&quot;/resource/ElixirSuite__GreyoutCheckIn&quot;, &quot;Cancel&quot;, 32, 32),
+        IF(
+            AND(ISPICKVAL(Status__c, &apos;Cancelled&apos;), NOT(ISBLANK(Care_Episode__c))),
+            IMAGE(&quot;/resource/ElixirSuite__GreyoutWaitingRoomIcon&quot;, &quot;Cancel&quot;, 32, 32),
+            IF(
+                ISPICKVAL(Status__c, &apos;Scheduled&apos;),
+                HYPERLINK(&quot;/lightning/cmp/ElixirSuite__CreateCareEpisode?ElixirSuite__recordId=&quot; + Id + &quot;&amp;ElixirSuite__status=Checked in&quot;, IMAGE(&quot;/resource/ElixirSuite__CheckInIcon&quot;, &quot;Checked in&quot;, 32, 32), &apos;_self&apos;),
+                IF(
+                    ISPICKVAL(Status__c, &apos;Checked-In&apos;),
+                    HYPERLINK(&quot;/lightning/cmp/ElixirSuite__CreateCareEpisode?ElixirSuite__recordId=&quot; + Id + &quot;&amp;ElixirSuite__status=In Waiting Room&quot;, IMAGE(&quot;/resource/ElixirSuite__WaitingRoomIcon&quot;, &quot;In Waiting Room&quot;, 32, 32), &apos;_self&apos;),
+                    IMAGE(&quot;/resource/ElixirSuite__GreyoutWaitingRoomIcon&quot;, &quot;In Waiting Room&quot;, 32, 32)
+                )
+            )
+        )
+    ),&apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Actions</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

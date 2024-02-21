@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category10__c</fullName>
+    <description>Used to store semi-colon seperated form categories. Ensure that no trailing or consecutive semi-colons are present</description>
+    <externalId>false</externalId>
+    <label>Category10</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

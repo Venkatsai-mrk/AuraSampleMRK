@@ -1,0 +1,108 @@
+.THIS .slds-medium-show {
+      display: none;
+}
+
+.THIS .slds-media__figure{
+    z-index: 1;
+    width: 90%;
+}
+.THIS .patient-ac {
+    width: 100%;
+    background: #aaa;
+    padding: 15px;
+    margin: 10px 0;
+}
+.THIS .dotFont{
+    display: inline-block;
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.THIS .new{
+    width: 100%;
+}
+.THIS.patacc{
+    background-color: #f0f0f0;
+    color: black;
+    width: 100%;
+    padding: 15px 5px 15px 5px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 0 #666;
+}
+.THIS .patLedger2{
+    width: 100%;
+    height: 100%;
+}
+.THIS .patRow{
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.THIS .patNextRow {
+    font-size: 14px;
+}
+.THIS .patNextRow .slds-grid .slds-size_6-of-12:nth-child(odd) {
+    float:left;
+    width: 100px;
+}
+.THIS .patNextRow .slds-grid .slds-size_6-of-12:nth-child(even) {
+    float:right;
+    width: calc(100% - 100px);
+}
+/*.THIS .profilepicRelocation{
+    padding-top: 55%;
+}*/
+.THIS .change25{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.THIS .changeNew{
+    padding-top: 15px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+.THIS .changeNew img{
+    height:100%;
+    width:100%;
+}
+@media (max-width:767px) {
+    .THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+        padding: 0 3px;
+    }
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral {
+    font-size: 10px;
+    padding: 0 2px;
+    height: 28px;
+    position: relative;
+    z-index: 0;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:hover {
+    background-color: #fff;
+}
+.THIS .upload-btn span.slds-file-selector__button.slds-button.slds-button_neutral:after {
+    position: absolute;
+    z-index: 1;
+    content: "Upload Photo";
+    background-color: #fff;
+    color: #298BDA;
+    height: calc(100% - 2px);
+    width: calc(100% - 16px);
+    top: 1px;
+    right: 1px;
+    font-size: 10px;
+    line-height: 24px;
+    font-family: var(--lwc-navigationFontFamily,Work Sans); 
+}
+
+.THIS .upload-btn .slds-file-selector__dropzone {
+    border: none;
+    padding : 0;
+}
+.THIS .slds-media__figure img {
+    max-width: 100%;
+    height: inherit;
+}

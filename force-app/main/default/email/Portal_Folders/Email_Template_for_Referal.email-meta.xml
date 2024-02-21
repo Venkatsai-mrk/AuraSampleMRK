@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This Email template is for Referral</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Email Template for Referal</name>
+    <style>none</style>
+    <subject>{!Account.Name} has been referred from {!Provider__c.Name}</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

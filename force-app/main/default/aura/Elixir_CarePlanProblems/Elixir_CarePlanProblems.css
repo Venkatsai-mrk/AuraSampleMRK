@@ -1,0 +1,314 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #f3f2f2;
+    border: none;    
+}
+.THIS.accordian_header {
+    float:left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.THIS.accordian_header:last-child:after {
+    display: none;
+} 
+.THIS.accordian_header .slds-page-header {
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+.THIS.accordian_header .chevron_btn {
+    width: 25px;
+    height: 25px;
+    border: none;
+    text-align: right;
+    background-color: transparent;
+    color: #706e6b;
+    float: left;
+}
+.THIS.accordian_header .chevron_btn:focus {
+    box-shadow: none;
+}
+.THIS.accordian_header .chevron_btn .slds-button__icon {
+    height: 22px;
+    width: 22px;
+}
+.THIS.accordian_header .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #c2403b;
+    fill: #fff;
+    padding: 5px;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.THIS.accordian_header h3 {
+    font-size: 18px;
+    color: #c2403b;
+    line-height: 15px;
+    margin-bottom: 7px;
+}
+.THIS.accordian_header p {
+    font-size: 12px;
+    color: #333;
+}
+.THIS .right-side_bar button.btncss {
+    font-size: 12px;
+    color: #333;
+    min-height: 14px;
+    height: 14px;
+    line-height: 0px;
+    padding: 0;
+    margin-bottom: 0;
+}
+.THIS .right-side_bar button.btncss:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .right-side_bar .slds-form-element__label {
+    display: none;
+}
+.THIS .right-side_bar .slds-input {
+    width: 100px;
+    text-align: left;
+    padding: 0 0 0 20px;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+    color: #333;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0px;
+    top: 4px;
+    fill:#ccc;
+}
+.THIS .right-side_bar svg.slds-button__icon.slds-button__icon_left {
+    fill: #666;
+}
+.THIS .accordian_open {
+    background-color: #f1f2f3;
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 24px;
+}
+.THIS .accordian_open .btncss {
+    background-color: #fff!important;
+    border: 1px solid #999!important;
+    color: rgb(1, 118, 211)!important;
+    padding: 5px 15px!important;
+    margin-bottom: 10px;
+}
+.THIS .accordian_open .right-side_bar1 .btncss {
+    margin-right: 0;
+    border: none !important;
+    color: #333 !important;
+    background-color: transparent !important;
+}
+.THIS .accordian_open .btncss:hover {
+    color: #4bc076;
+    background-color: #fff;
+}
+.THIS .accordian_open .slds-button__icon {
+    width: 20px;
+    height: 20px;
+}
+.THIS .accordian_open .slds-page-header {
+    background-color: #f8fcf9;
+    margin: 0;
+	padding-right: 45px;
+}
+.THIS .accordian_open .right-side_bar1 .slds-button__icon {
+    height: 15px;
+    width: 15px;
+}
+.THIS.accordian_header .accordian_open .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #4bc076;
+}
+.THIS.accordian_header .accordian_open h3.goals-head {
+    color: #4bc076;
+}
+.THIS.accordian_header .accordian_open h3.obj-head {
+    color: #48c3cc;
+}
+.THIS .first-inner-dl {
+    height: 20px;
+    width: 2px;
+    float: left;
+    margin-left: 75px;
+    background-color: #4bc076;
+}
+.THIS.accordian_header .first-inner-dl:last-child {
+    display: none;
+}
+/*.THIS.accordian_header:last-child .down-line {
+    display: none;
+}*/
+.THIS.slds-show {
+    transition: all 1000ms;
+}
+.THIS.slds-hide {
+    transition: all 500ms;
+}
+.THIS .editStyle textarea{
+    height:80px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.THIS .slds-icon-utility-edit.slds-icon_container{
+    height:25px;
+}
+.THIS .third_accordian {
+    float: right;
+    width: calc(100% - 50px);
+    background-color: #f8fcf9;
+    border-radius: 0;
+    padding-top: 0;
+}
+.THIS .third_accordian .slds-page-header {
+    background-color: #fff;
+    width: calc(100% - 38px);
+    padding-right: 30px;
+}
+.THIS .editStyle label.slds-form-element__label {
+    display: none !important;
+}
+.THIS .third_accordian .btncss {
+   
+    background-color: #48c3cc;
+    border: 1px solid #48c3cc;
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.THIS .third_accordian .right-side_bar1 .btncss {
+    background-color: transparent;
+    border: none;
+    margin-right: 0;
+    margin-top: 0px;
+}
+.THIS .third_accordian .btncss:hover {
+   
+    background-color: transparent;
+    color: black;
+}
+.THIS .third_accordian h3 {
+    color: #48c3cc !important;
+}
+.THIS .third_accordian .slds-icon-utility-food-and-drink {
+    background-color: #48c3cc;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.THIS .third_accordian .slds-icon-utility-food-and-drink .slds-icon {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+}
+.THIS .third-accordian_bl {
+    height: 20px;
+    width: 2px;
+    background-color: #48c3cc;
+    float: left;
+    margin-left: 61px;
+}
+.THIS .third_accordian .third-accordian_bl:last-child {
+    display:none;
+}
+.THIS .fourthaccordian {
+    margin-bottom: 10px;
+}
+.THIS .fourthaccordian .slds-page-header {
+    background-color: #fff;
+    width: calc(100% - 38px);
+    padding-right: 30px;
+}
+.THIS .fourthaccordian .btncss {
+    background-color: #48c3cc;
+    border: 1px solid #48c3cc;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+.THIS .fourthaccordian .right-side_bar1 .btncss {
+    margin-top: 0px;
+    background-color: transparent;
+    border: none;
+    margin-right: 0;
+}
+.THIS .fourthaccordian .btncss:hover {
+    background-color: transparent;
+    color: #466bac;
+}
+.THIS .fourthaccordian h3 {
+    color: #466bac !important;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink {
+    background-color: #466bac;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.THIS .fourthaccordian .slds-icon-utility-food-and-drink .slds-icon {
+    fill: #fff;
+    height: 21px;
+    width: 21px;
+}
+.THIS .fourthaccordian .third-accordian_bl:last-child {
+    display:none;
+}
+.THIS .colorChange .btncss {
+    background:#466bac;
+    border:1px solid #466bac;
+}
+.THIS span.slds-pill.pill-class {
+    background-color: #019Eff;
+    color: #FFF;
+    padding: 7px 13px;
+    border-radius: 20px;
+    border: 1px solid #019Eff;
+}
+.THIS span.slds-pill.pill-class svg.slds-button__icon {
+    fill:#FFF;
+}
+.THIS .cusr_point {
+    cursor: pointer;
+}
+.THIS .diagnosis {
+    margin-left:60px;
+    padding: 10px; 
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.THIS.care-plan_header {
+    width: calc(100% - 50px);
+    float: right;
+    padding: 0 0 0px;
+}
+.THIS.care-plan_header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000 !important;
+}
+.THIS.problem_parent .care-plan_header {
+    display: none;
+}
+@media (max-width:576px) {
+    .THIS .accordian_open .btncss {
+        padding: 5px 2px;
+        margin-right: 3px;
+        font-size: 10px;
+    }
+    .THIS .accordian_header h3 {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    .THIS .right-side_bar .slds-input {
+        width: 88px;
+    }
+}

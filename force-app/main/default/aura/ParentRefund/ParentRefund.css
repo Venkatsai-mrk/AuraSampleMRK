@@ -1,0 +1,46 @@
+.THIS .parentCSS {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+    min-height: 400px!important;    
+}
+.THIS .gridParentRefClass {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .processRefClass {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+    float: right;
+}
+.THIS .headingCSS {
+    margin-left: 22px;
+    font-size:15px;
+    padding-top: 18px;
+}
+.THIS .headingParentCSS {
+    margin-left: 5px;
+    font-size:15px;
+}
+
+.THIS .parentMargin {
+    margin-left: 5px;
+}
+.THIS .olRefClass {
+    margin-left: 5px;
+}
+.THIS .floatRightClass {
+    float: right;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+.THIS .marginClass {
+    margin-left: 10px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMG__c</fullName>
+    <description>Stands for emergency and should be completed only to indicate an emergency service. Enter a “Y” to indicate an emergency service. Leave it blank if services were non-emergent.</description>
+    <externalId>false</externalId>
+    <label>EMG</label>
+    <length>4</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

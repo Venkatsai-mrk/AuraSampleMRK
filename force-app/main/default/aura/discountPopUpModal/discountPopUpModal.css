@@ -1,0 +1,22 @@
+.THIS .slds-modal__container  {
+    max-width:40% !important;
+}
+.THIS .headerCSS {
+    background-color: #0176D3;
+    color: White;
+}
+.THIS .parentCSS {
+    background-color: #FDFDFF;
+}
+.THIS .slds-modal__footer {
+    background-color: #A9A9A9;
+}
+.THIS.bgmodal {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS .changeBack{
+    background-color: #0176D3;color: White;
+}
+.THIS .changeBackColor{
+    background-color: #D3D3D3;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allow_Patient_Diagnosis_On_RCM_Proceduer__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field allow to Template Diagnosis on RCM procedure screen</description>
+    <externalId>false</externalId>
+    <label>Enable Template Diagnosis search in RCM</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

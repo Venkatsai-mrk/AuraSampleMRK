@@ -1,0 +1,285 @@
+<apex:page controller="DataDisplayController" renderAs="pdf">
+    <apex:form >
+    <apex:param name="orderId" value="{!$CurrentPage.parameters.orderId}"/>
+    <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 100%; margin: 0 auto; background-color: #fafafa; font-family: 'Noto Sans JP', sans-serif;">
+        <thead>
+        	<tr>
+                <th style="background-color: #fff; padding: 0px 0px 0;">
+                    <table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 0px;">
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0px 25px 0px 20px; width: 200px;"><apex:image url="{!$Resource.completCareLogo}" width="180"/></td>
+                                <td style="width: 430px; ">
+                                    <table  border="0" cellspacing="0" cellpadding="0" style="text-align: right; width: 410px; ">
+                                        <tbody>
+                                            <tr><td><p style="margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">ELIXIR CARE CENTERS, LLC dba</p></td></tr>
+                                            <tr><td><p style="margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">PHYSICAL MEDICINE OF CALIFORNIA</p></td></tr>
+                                            <tr><td><p style="margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">2206 EAST COLONIAL DRIVE,</p></td></tr>
+                                            <tr><td><p style="margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Phone: 4079-8239-1045</p></td></tr>
+                                            <tr><td><p style="margin:0; font-size: 12px; font-weight: 400; color: #222;">Tax ID: 900883498</p></td></tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <!--<td style="width: 180px;">
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 180px; text-align: left;">
+                                <tbody>
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">Patient:</p></td></tr>
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">8 S OSCEOLA AVE APT</p></td></tr>
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">2203, ORLANDO FL</p></td></tr>
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">DOB: </p></td></tr>
+                                <tr><td><p style="margin:0; font-size: 12px; font-weight: 700; color: #222;">Date of Services: 5/8/2020</p></td></tr>
+                                </tbody>
+                                </table>
+                                </td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+				</th>
+            </tr>
+        </thead>
+        
+        <center><h4 style="margin: 10px 0;">LABORATORY ORDER</h4></center>
+        
+        <thead >
+            
+            <td style="padding: 5px 10px;">
+                
+                <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%;">
+                    
+                    <tbody>
+                        <tr>
+                           <td colspan="2"> 
+                                <h4 style="margin: 0 0; font-size: 20px;">{!accounts.Name}</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td style="width: 120px;">
+                                <p style="margin: 3px 0; font-size: 16px; font-weight:600;">Date Of Birth :</p>
+                            </td>
+                            <td>
+                            	<p style="margin: 3px 0; font-size: 16px;">
+                                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                          <apex:param value="{!contacts.birthdate}" />
+                                    </apex:outputText>
+                                    <span> </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td style="width: 120px;">
+                            	<p style="margin: 3px 0; font-size: 16px; font-weight:600;">Age :</p>
+                            </td>
+                            <td>
+                            	<p style="margin: 3px 0; font-size: 16px;">{!age} years<span> </span></p>
+                            </td>
+                        </tr>
+                                
+                                 
+                                    
+                                
+                                
+                                
+                                <!--<p style="margin: 3px 0; font-size: 14px;">Problem : <span> </span></p>
+                                
+                                <p style="margin: 3px 0; font-size: 14px;">Allergy : <span> </span></p>-->
+                                
+                            
+                        
+                    </tbody>
+                    
+                </table>
+                
+            </td>
+            
+        </thead>
+        
+        <tbody>
+            
+            <tr>
+                
+                <td style="padding: 5px 10px;">
+                    
+                    <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%;">
+                        
+                        <tbody>
+                            
+                          
+                            
+                        </tbody>
+                        
+                    </table>
+                    
+                </td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td style="padding: 5px 10px;">
+                    
+                    <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%;">
+                        
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <h4 style="margin: 0 0 10px 0; font-size: 20px;">ORDERED TESTS</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td style="width: 120px;">
+                                	<p style="margin: 3px 0; font-size: 16px; font-weight:600;">Medical Test :  <span> </span></p>
+                                </td>
+                                <td>
+                                    <p style="margin: 3px 0; font-size: 16px;">                                    
+                                    	<apex:outputText value="{!labOrder.Medical_Test__c}"/>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td style="width: 120px;">
+                                	<p style="margin: 3px 0; font-size: 16px; font-weight:600;">Start Date :</p>
+                                </td>
+                                <td>
+                                    <p style="margin: 3px 0; font-size: 16px;">
+                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                              <apex:param value="{!labOrder.Start_Date__c}" />
+                                        </apex:outputText>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td style="width: 120px;">
+                                	<p style="margin: 3px 0; font-size: 16px; font-weight:600;">Frequency  :</p>
+                                </td>
+                                <td>
+                                    <p style="margin: 3px 0; font-size: 16px;">
+                                    	<apex:outputText value="{!labOrder.Frequency__c}"/>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td style="width: 120px;">
+                                	<p style="margin: 3px 0; font-size: 16px; font-weight:600;">On Admission  :</p>
+                                </td>
+                                <td>
+                                	<p style="margin: 3px 0; font-size: 16px;">
+                                        <apex:outputPanel rendered="{!labOrder.On_Admission__c == true}">
+                                            <apex:image url="{!URLFOR($Resource.IconsForFormsPDF, 'checked.png')}" style="width: 14px; margin-top: 0px;"/>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!labOrder.On_Admission__c==false}">
+                                            <apex:image url="{!URLFOR($Resource.IconsForFormsPDF, 'unchecked.png')}" style="width: 14px; margin-top: 0px;"/>
+                                        </apex:outputPanel> 
+                                    </p>
+                                </td>
+                            </tr>
+                             <tr>
+                            	<td style="width: 120px;">
+                                    <p style="margin: 3px 0; font-size: 16px; font-weight:600;">Fax  :</p>
+                            	</td>
+                                 <td>
+                                 	<p style="margin: 3px 0; font-size: 16px;">
+                                        <apex:outputText value="{!labOrder.Fax__c}"/>
+                                     </p>
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                
+                <td style="padding: 5px 10px;">
+                    
+                    <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%; ">
+                        
+                        <tbody>
+                            
+                            <tr>
+                                
+                                <td>
+                                    
+                                    <h4 style="margin: 0 0 20px 0; font-size: 20px;">STATEMENT OF MEDICAL NECESSITY</h4>
+                                    
+                                </td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                <td style="border: 1px solid #ccc; padding: 5px 10px;">
+                                    <apex:outputText style="font-style:italic" value="{!labOrder.Necessity_Details__c}"/>
+                                    
+                                </td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                    
+                </td>
+                
+            </tr>
+            
+            <tr>
+                
+                <td style="padding: 5px 10px;">
+                    
+                    <table border="0" cellspacing="0" cellpadding="0" style="padding: 10px 15px; background-color: #f1f2f3; margin: 5px 0; width: 100%; ">
+                        
+                        <tbody>
+                            
+                            <tr>
+                                
+                                <td style="padding: 0 5px;">
+                                    
+                                    <p style="margin: 3px 0; font-size: 16px; font-weight: 600;"><span style="color: #f00;">*</span>Ordered By</p>
+                                    
+                                    <apex:outputText style="font-style:italic" value="{!labOrder.ElixirSuite__Order_By__r.name}"/>
+                                    
+                                </td>
+                                <td style="padding: 0 5px;">
+                                    
+                                    <p style="margin: 3px 0; font-size: 16px; font-weight: 600;"><span style="color: #f00;">*</span>Ordered Via</p>
+                                    
+                                   <apex:outputText style="font-style:italic" value="{!labOrder.Ordered_Via__c}"/>
+                                    
+                                </td>
+                            </tr>
+                            <tr><td colspan="2" style="height: 30px;"></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                         <apex:outputPanel layout="block"  rendered="{!NOT(ISNULL(labOrder.Signature_Link__c))}">
+                                         
+                                               <p style="margin:0px;">
+                                                <img class="imgCls" src="{!labOrder.Signature_Link__c}" width="180" height="100"/>
+                                            </p>
+                                                <p style="margin:0px;"><span style="font-weight: 600; width: 90px; display: inline-block;"> Signed On :</span> {!labOrder.Signed_Date__c}</p>
+                                            <p style="margin:0px;">
+                                                <span style="font-weight: 600; width: 90px; display: inline-block;">Signed By : </span> {!labOrder.ElixirSuite__Account__r.Name}
+                                            </p> 
+                                            <p style="margin:0px;">
+                                                <span style="font-weight: 600; width: 90px; display: inline-block;">Notes :</span>  <apex:outputText value="{!labOrder.Signature_Comments__c}" rendered="{!NOT(ISNULL(labOrder.Signature_Comments__c))}"/>
+                                                 <apex:outputText value="--" rendered="{!(ISNULL(labOrder.Signature_Comments__c))}"/>
+                                               
+                                            </p>
+                                       
+                                        </apex:outputPanel>
+                                             </td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+                    
+                </td>
+                
+            </tr>
+            
+        </tbody>
+        
+    </table>
+        </apex:form>
+</apex:page>

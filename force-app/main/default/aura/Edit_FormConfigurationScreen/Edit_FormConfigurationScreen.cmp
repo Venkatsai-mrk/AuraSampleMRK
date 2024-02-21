@@ -1,0 +1,833 @@
+<aura:component controller="ElixirOEM_FormConfigurationHelper" 
+                implements="force:appHostable,lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <!-- updated-->
+    <aura:attribute name="essentialLookupFields" type="List"/> 
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="afterRecordTypeSelection" type="Boolean" default="true"/>
+    <aura:attribute name="sectionData" type="List" />
+    <aura:attribute name="sectionLength" type="Integer" />
+    <aura:attribute name="attributeContainer" type="List"/>  
+    <aura:attribute name="columnTypes" type="List"/>
+    <aura:attribute name="AllFields" type="List"/>
+    <aura:attribute name="allRecordTypes" type="List"/>
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:attribute name="columnDefault" type="String"/>
+    <aura:attribute name="sectionLstLength" type="List"/>
+    <aura:attribute name="windowSwapSectionData" type="Boolean" default="false"/>
+    <aura:attribute name="currentSection" type="String"/> 
+    <aura:attribute name="swapSectionIndex" type="String"/> 
+    <aura:attribute name="allAvailableSections" type="List"/> 
+    <aura:attribute name="isConsent_AccountFields" type="List"/> 
+    <aura:attribute name="AllFlag" type="Boolean" default="false"/>    
+    <aura:attribute name="swapAbility" type="Boolean" default="true"/>
+    <aura:attribute name="swapsectionToWhatIndex" type="String"/>
+    <aura:attribute name="GoToSectionData" type="List"/> 
+    <aura:attribute name="selectedStatus" type="String" default="1"/>
+    <aura:attribute name="formNameReflectedAsRecordType" type="String"/>  
+    <aura:attribute name="objectMatchingInfo" type="Boolean" default="false"/> 
+    <aura:attribute name="allMatchingObjects" type="list" />
+    <aura:attribute name="isSwapUsed" type="Boolean" default="false"/> 
+    <aura:attribute name="Title" type="String"/>
+    <aura:attribute name="accountChildObjectLabel" type="List"/>
+    <aura:attribute name="accountChildObjectFields" type="List"/>
+    <aura:attribute name="allLookupApi" type="List"/>
+    <aura:attribute name="allFields_lookupApi" type="List"/>
+    <aura:attribute name="mapOfObject" type="String"/>
+    <aura:attribute name="mapOfquery" type="String" />
+    <aura:attribute name="fieldLstIndex" type="String" />
+    <aura:attribute name="AllFieldsNetInstanceCopy" type="List"/> 
+    <aura:attribute name="formCategory" type="String"/>
+    <aura:attribute name="isOpen" type="Boolean" />
+    <aura:attribute name= "formRecordID" type="String"/>
+    <aura:attribute name= "formRecordName" type="String"/> 
+    <aura:attribute name="parentSectionToDelete" type="List"/>
+    <aura:attribute name="allRecTypesOnMDTObject" type="Object"/> 
+    <aura:attribute name="acctChildObjects" type="Object"/>
+    <!--section 1 will be automatically opened in accordion(accordion has attribute activeSectionName='1'), so adding 1 by default in allOpenedSections-->
+    <aura:attribute name="allOpenedSections" type="List" default="['1']"/>
+    <aura:attribute name="isConsent_allFields" type="Object"/>
+    <aura:attribute name="isConsent_allFields_Copy" type="Object"/>
+    <aura:attribute name="allAPIFieldsForAutoText" type="List"/>
+    <aura:attribute name="allFieldAPIs" type="String" default=""/>
+    <aura:attribute name="allFieldAPIsArray" type="list"/>
+    <aura:attribute name="ConsentObjArray" type="List"/> 
+    <aura:registerEvent name="FormsRefreshEvt" type="c:FormsRefreshEvt"/>
+    <aura:attribute name="disableAfterSave" type="Boolean" default="false"/>   
+    <aura:attribute name="addInventoryContainer" type="List"/>
+    <aura:attribute name="loaded" type="Boolean" default="true"/>
+    <aura:attribute name="myBool" type="Boolean" default="true"/>
+    <aura:attribute name="invValue" type="String" default="other"/>
+    <aura:attribute name="showAutoPoulate" type="Boolean" default="false"/>
+    <aura:attribute name="enableTime" type= "Boolean" default="false"/>
+    <aura:attribute name="allImageNamesInStaticResource" type="List"/>
+    <aura:attribute name="tableRecordsToDel" type="List"/> 
+    <aura:attribute name="arrofApi" type="List"/>
+    <div class="">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{!v.Title} - {!v.formRecordName}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-p-around_medium">
+                        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <aura:if isTrue="{! v.loaded }">
+                                    <div>
+                                        <lightning:layout multipleRows="true">
+                                            
+                                            <!--lightning:layoutItem size="2">
+                                                <div class="chnageswight">
+                                                    Select Form<span class="chnagecolor">*</span>
+                                                </div>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem size="4">
+                                                <div>
+                                                    <lightning:combobox name="Select Form" 
+                                                                        label=""    
+                                                                        value="{!v.formNameReflectedAsRecordType}"
+                                                                        placeholder="Select Form" 
+                                                                        options="{!v.allRecordTypes}" 
+                                                                        onchange="{!c.handleRecordTypeSelection}"
+                                                                        />
+                                                </div>
+                                            </lightning:layoutItem-->
+                                            <aura:if isTrue="{!!v.swapAbility}">
+                                                <div class="slds-col slds-size_4-of-12 slds-text-align_right slds-p-top_large">
+                                                    <b  class="slds-truncate slds-text-heading_small">Total Sections : {!v.sectionLength}</b>
+                                                </div>
+                                                
+                                                <div class="slds-col slds-size_1-of-12 slds-p-top_large slds-text-align_right slds-p-right_medium">
+                                                    <lightning:layoutItem>
+                                                        <b  class="slds-truncate slds-text-heading_small"> Open Section : </b>
+                                                    </lightning:layoutItem>
+                                                </div>
+                                                <lightning:layoutItem size="1">
+                                                    <b>
+                                                        <lightning:select name=""   onchange="{!c.handleSetActiveSection}">
+                                                            <option value="">NONE</option>
+                                                            <aura:iteration items="{!v.GoToSectionData}" var="item">
+                                                                <option value="{!item}" label="{!item}">                                               
+                                                                </option> 
+                                                            </aura:iteration>                                        
+                                                        </lightning:select>
+                                                        
+                                                        
+                                                    </b>
+                                                </lightning:layoutItem>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!v.afterRecordTypeSelection}">
+                                                <div  class="slds-text-heading_medium slds-p-top_large slds-float_right">
+                                                    <lightning:input type="checkbox" label="Enable Time Tracking" checked="{!v.enableTime}" disabled="{!v.AllFlag}"/>
+                                                </div>
+                                                <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true" activeSectionName="1" onsectiontoggle="{!c.handleSectionToggle }">
+                                                    <aura:iteration items="{!v.sectionData}" var="sectionInstance" indexVar="rowIndex">
+                                                        <aura:if isTrue="{!not(empty(sectionInstance.serialNumber))}">
+                                                            <table class="slds-table slds-table_cell-buffer slds-m-top_small form_config"> 
+                                                                
+                                                                <tbody>
+                                                                    <div class="allWidgets">
+                                                                        <aura:if isTrue="{!!v.AllFlag}">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    
+                                                                                    <aura:if isTrue="{!rowIndex == 0}">
+                                                                                        <aura:if isTrue="{!lessthanorequal(v.sectionData.length,99)}">
+                                                                                            
+                                                                                            <a onclick="{!c.addNewRow}">
+                                                                                                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                                                <span class="slds-assistive-text">Add Icon</span>
+                                                                                            </a>
+                                                                                            
+                                                                                            
+                                                                                            <aura:set attribute="else">
+                                                                                                <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                                                                            </aura:set>
+                                                                                        </aura:if>   
+                                                                                        
+                                                                                        <aura:set attribute="else">
+                                                                                            
+                                                                                            <a onclick="{!c.removeDeletedRow}" data-value="{!sectionInstance.serialNumber}">
+                                                                                                <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" 
+                                                                                                                alternativeText="icon"/>
+                                                                                                <span class="slds-assistive-text">Delete Icon</span>
+                                                                                            </a>
+                                                                                            
+                                                                                        </aura:set> 
+                                                                                    </aura:if>
+                                                                                </li>
+                                                                                <li> 
+                                                                                    <lightning:buttonIcon name ="{!rowIndex}" iconName="utility:arrowup" variant="bare" onclick="{!c.moveSectionUp}"  />
+                                                                                </li>
+                                                                                <li>
+                                                                                    <lightning:buttonIcon name ="{!rowIndex}" iconName="utility:arrowdown" variant="bare" onclick="{!c.moveSectionDown}"  /> 
+                                                                                </li>
+                                                                                
+                                                                                <!--li>
+                                                                            <lightning:buttonIcon iconName="utility:reassign"  disabled="{!v.swapAbility}" name="{!rowIndex}" onclick="{! c.swtichSectionTo }"/>
+                                                                        </li-->
+                                                                            </ul>
+                                                                            
+                                                                        </aura:if>	                                                                        
+                                                                        
+                                                                    </div>
+                                                                    <lightning:accordionSection name="{!sectionInstance.serialNumber}" label="{! 'Section '+sectionInstance.serialNumber}">
+                                                                        <table>
+                                                                            <tr class="">
+                                                                                
+                                                                                <td class="form_data">
+                                                                                    
+                                                                                    <div class="slds-grid slds-gutters">
+                                                                                        <!--div class="slds-col slds-size_1-of-12 slds-p-right_none;">
+                                                                        <lightning:input class="text-truncate" label="Sr. No." name="" value="{!sectionInstance.serialNumber}" disabled="true"/>
+                                                                    </div--> 
+                                                                                        <aura:if isTrue="{!sectionInstance.defaultFiledLstVisibility}">
+                                                                                            <div class="slds-col slds-size_3-of-12">
+                                                                                                <lightning:select name="{!rowIndex}" disabled="{!v.AllFlag}" label="Column Type"  required="true" aura:id="footerbtn" value="{!sectionInstance.typeOfColumn}" onchange="{!c.handlecolumnChange}">
+                                                                                                    
+                                                                                                    <aura:iteration items="{!v.columnTypes}" var="item">
+                                                                                                        <option value="{!item.value}" label="{!item.label}" >
+                                                                                                            
+                                                                                                        </option>
+                                                                                                    </aura:iteration>
+                                                                                                    
+                                                                                                </lightning:select>
+                                                                                            </div>
+                                                                                        </aura:if>
+                                                                                    </div>
+                                                                                    <div class="slds-grid slds-gutters slds-m-top_xx-small">
+                                                                                        <div class="slds-col slds-size_3-of-12">
+                                                                                            <lightning:select  value="{!sectionInstance.formComponentVal}" name="{!rowIndex}" 
+                                                                                                              onchange="{!c.handleFormComponentChange}" 
+                                                                                                              label="Select Form Component ">
+                                                                                                <option text="NONE" value="" />
+                                                                                                <aura:iteration items="{!v.attributeContainer}" var="Option">
+                                                                                                    <option text="{!Option.label}" value="{!Option.value}" />
+                                                                                                </aura:iteration>
+                                                                                            </lightning:select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="slds-grid slds-gutters slds-m-top_small slds-p-bottom_small">
+                                                                                        <div class="slds-col slds-size_12-of-12">
+                                                                                            <lightning:inputRichText disabled="{!v.AllFlag}" formats="['font', 'size', 'bold', 'italic', 'underline', 'strike',
+                                                                                                                                                      'list', 'indent', 'align', 'link', 'image', 'clean', 'table',
+                                                                                                                                                      'header', 'color', 'background']" aura:id="lastfocus" label="Section Name" value="{!sectionInstance.sectionName}" placeholder="Section Name..."> <lightning:insertImageButton/>
+                                                                                            </lightning:inputRichText>
+                                                                                            <!--lightning:input label="Section Name" name="" disabled="{!v.AllFlag}" value="{!sectionInstance.sectionName}"/-->
+                                                                                        </div>
+                                                                                        
+                                                                                    </div>
+                                                                                    
+                                                                                </td>
+                                                                                
+                                                                                
+                                                                                
+                                                                            </tr>
+                                                                            
+                                                                            <aura:if isTrue="{!sectionInstance.enableAutoText}">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <lightning:input type="checkbox" disabled="{!v.AllFlag}" label="Hide Sections" checked="{!sectionInstance.hideSctionsForAutotext}" name="{!rowIndex}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    
+                                                                                    <td>
+                                                                                        <div class="slds-grid slds-gutters">
+                                                                                            <div class="slds-col slds-size_8-of-12">
+                                                                                                <lightning:inputRichText disabled="{!v.AllFlag}" formats="['font', 'size', 'bold', 'italic', 'underline', 'strike',
+                                                                                                                                                          'list', 'indent', 'align', 'link', 'image', 'clean', 'table',
+                                                                                                                                                          'header', 'color', 'background']" aura:id="lastfocus" label="Enter Paragraph" value="{!sectionInstance.autoTextValue}" 
+                                                                                                                         onblur = "{!c.checkValidityForFieldsApi}"
+                                                                                                                         placeholder="Enter text for auto generation using '+'  '*'  '@'"> <lightning:insertImageButton/>
+                                                                                                </lightning:inputRichText>  
+                                                                                            </div>
+                                                                                            <div class="slds-col slds-size_4-of-12 heightForFieldApi">
+                                                                                                <lightning:input type="Text" label="Field APIs" name="{!rowIndex}" value="{!sectionInstance.allFieldAPIs}"/>  
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                    </td>
+                                                                                </tr> 
+                                                                            </aura:if>
+                                                                        </table>
+                                                                        <aura:if isTrue="{!sectionInstance.defaultFiledLstVisibility}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        
+                                                                                        <b> <lightning:input type="checkbox" disabled="{!v.AllFlag}" label="Enable Auto Text" checked="{!sectionInstance.enableAutoText}" name="{!rowIndex}" onchange="{!c.enaleAutoTextGeneration}"/></b>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="">
+                                                                                    <div class="child-box">
+                                                                                        <aura:iteration items="{!sectionInstance.FieldsLst}" var="fieldInstance" indexVar="rowIndexFieldList">
+                                                                                            
+                                                                                            <table class="slds-table slds-table_cell-buffer slds-m-top_small form_config form_config-1"> 
+                                                                                                
+                                                                                                <tbody>
+                                                                                                    <tr class="">
+                                                                                                        <td class="w-120">
+                                                                                                            <lightning:input label="Row Number" required="true" aura:id="footerbtn"  name="" value="{!fieldInstance.RowNumber}" disabled="true"/>
+                                                                                                        </td> 
+                                                                                                        
+                                                                                                        <aura:if isTrue="{!fieldInstance.isMatrixAvailable}">
+                                                                                                            <td class="w-120">
+                                                                                                                <lightning:input label="Column Number" required="true" aura:id="footerbtn"  name="" value="{!fieldInstance.ColNumber}" disabled="true"/>
+                                                                                                            </td> 
+                                                                                                        </aura:if>
+                                                                                                        <td>                                                                                          
+                                                                                                            <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Type" required="true" disabled="{!v.AllFlag}"  value="{!fieldInstance.typeSelected}">
+                                                                                                                <aura:iteration items="{!fieldInstance.typeSelectOption}" var="item">
+                                                                                                                    <option value="{!item.value}" label="{!item.label}"/>
+                                                                                                                </aura:iteration>
+                                                                                                            </lightning:select>
+                                                                                                        </td>
+                                                                                                        <aura:if isTrue="{!fieldInstance.typeSelected=='Field'}">
+                                                                                                            <td >
+                                                                                                                <!--x-->
+                                                                                                                <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" disabled="{!v.AllFlag}" label="Select Fields" required="true" aura:id="footerbtn"  value="{!fieldInstance.selectedField}" onchange="{!c.openDefaultTextBox}">
+                                                                                                                    <option value="">NONE</option>
+                                                                                                                    <aura:iteration items="{!sectionInstance.allFields}" var="item">
+                                                                                                                        <option value="{!item.value}" label="{!item.label}">
+                                                                                                                            
+                                                                                                                        </option>
+                                                                                                                    </aura:iteration>
+                                                                                                                    
+                                                                                                                </lightning:select>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <lightning:input class="slds-m-top_x-small" type="checkbox" label="No Label" checked="{!fieldInstance.noLabel}" name="{! rowIndex + '$'+rowIndexFieldList}"/>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <lightning:input class="slds-m-top_x-small" type="checkbox" disabled="{!v.AllFlag}" label="Is Common" checked="{!fieldInstance.isCommon}" name="{! rowIndex + '$'+rowIndexFieldList}"/>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <lightning:input class="slds-m-top_x-small" type="checkbox" label="Auto Populate" checked="{!fieldInstance.autoPopulate}" name="{! rowIndex + '$'+rowIndexFieldList}" disabled="{!!fieldInstance.showAutoPopulation}"/>
+                                                                                                            </td>
+                                                                                                            <aura:if isTrue="{!fieldInstance.recordTypeExists}">
+                                                                                                                <td>
+                                                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" disabled="{!v.AllFlag}" label="Select RecordType" required="true" aura:id="footerbtn"  value="{!fieldInstance.selectedRecordType}">
+                                                                                                                        <option value="">NONE</option>
+                                                                                                                        <aura:iteration items="{!fieldInstance.ObjectRecordTypes}" var="item">
+                                                                                                                            <option value="{!item.value}" label="{!item.label}">
+                                                                                                                                
+                                                                                                                            </option>
+                                                                                                                        </aura:iteration>
+                                                                                                                        
+                                                                                                                    </lightning:select>
+                                                                                                                </td>
+                                                                                                            </aura:if>
+                                                                                                            <aura:if isTrue="{!fieldInstance.selectedField != ''}">
+                                                                                                                <td class="w-400">
+                                                                                                                    <lightning:input maxlength="1000" label="Default Label"  disabled="{!v.AllFlag}" name="{! rowIndex + '$'+rowIndexFieldList}" value="{!fieldInstance.defaultLabel}" onblur="{!c.handleLabelIfEmpty}"/>
+                                                                                                                </td> 
+                                                                                                                
+                                                                                                            </aura:if>
+                                                                                                            <!-- Formala enabled object field mapping-->
+                                                                                                            <aura:if  isTrue="{!fieldInstance.switchDecision}">
+                                                                                                                <td> 
+                                                                                                                    <div class="align-icons">
+                                                                                                                        <lightning:icon iconName="utility:formula"/>                                                                                               
+                                                                                                                        <lightning:input type="checkbox"  disabled="{!v.AllFlag}" checked="{!fieldInstance.switchFormulaEnabled}" name="{! rowIndex + '$'+rowIndexFieldList}" 
+                                                                                                                                         onchange="{!c.enableFormulaMapping}"/>
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                            </aura:if>
+                                                                                                            <!-- Formaula enabled field mapping end -->                
+                                                                                                            <aura:if isTrue="{!fieldInstance.displayPicklistAsRadio}">
+                                                                                                                <td class="slds-m-top_large">
+                                                                                                                    <lightning:input type="checkbox" label="Display as radio" disabled="{!v.AllFlag}" checked="{!fieldInstance.isPicklistAsRadio}" name="{!rowIndex}"/>
+                                                                                                                </td> 
+                                                                                                                <td>
+                                                                                                                    <div class="slds-m-top_large">
+                                                                                                                        <lightning:input type="checkbox" label="Vertical Align" disabled="{!v.AllFlag}"
+                                                                                                                                         checked="{!fieldInstance.verticalAlignForRadio}" name="{!rowIndex}"/>
+                                                                                                                    </div>
+                                                                                                                </td> 
+                                                                                                            </aura:if>
+                                                                                                            <aura:if isTrue="{!fieldInstance.displayMultiPicklistAsCheckbox}">
+                                                                                                                <td>
+                                                                                                                    <lightning:input type="checkbox" label="Display as CheckBox" disabled="{!v.AllFlag}" checked="{!fieldInstance.isMultiPicklistAsCheckbox}" name="{!rowIndex}"/>
+                                                                                                                </td> 
+                                                                                                                <td>
+                                                                                                                    <lightning:input type="checkbox" label="Vertical Align" disabled="{!v.AllFlag}" checked="{!fieldInstance.verticalAlignForMultiPicklist}" name="{!rowIndex}"/>
+                                                                                                                </td>
+                                                                                                            </aura:if>
+                                                                                                            <aura:set attribute="else">
+                                                                                                                <td>
+                                                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Type of upload" disabled="{!v.AllFlag}" required="true" aura:id="footerbtn" value="{!fieldInstance.typeOfUploadSelected}">
+                                                                                                                        <aura:iteration items="{!fieldInstance.typeOfUpload}" var="item">
+                                                                                                                            <option value="{!item.value}" label="{!item.label}"/>
+                                                                                                                        </aura:iteration>
+                                                                                                                    </lightning:select>
+                                                                                                                </td>
+                                                                                                                <td class="w-400">
+                                                                                                                    <lightning:input label="File Name" required='true' name="" disabled="{!v.AllFlag}" aura:id="footerbtn" value="{!fieldInstance.fileName}"/>
+                                                                                                                </td>
+                                                                                                                <td class="w-400">
+                                                                                                                    <lightning:input label="File Unique Name"  name="" disabled="{!v.AllFlag}" value="{!fieldInstance.fileUploadButtonDefaultLabel}"/>
+                                                                                                                </td>
+                                                                                                            </aura:set>
+                                                                                                        </aura:if>
+                                                                                                        <td class="child-add_btn">
+                                                                                                            
+                                                                                                            <aura:if isTrue="{!rowIndexFieldList == 0}">
+                                                                                                                <aura:if isTrue="{!lessthanorequal(sectionInstance.FieldsLst.length,89)}">
+                                                                                                                    <aura:if isTrue="{!!v.AllFlag}">
+                                                                                                                        <a onclick="{!c.addNewRowForFieldList}" data-value="{! rowIndex + '$'+rowIndexFieldList}">
+                                                                                                                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                                                                            <span class="slds-assistive-text">Add Icon</span>
+                                                                                                                        </a>
+                                                                                                                    </aura:if>
+                                                                                                                    <aura:set attribute="else">
+                                                                                                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                                                                                                    </aura:set>
+                                                                                                                </aura:if>   
+                                                                                                                
+                                                                                                                <aura:set attribute="else">
+                                                                                                                    <aura:if isTrue="{!!v.AllFlag}">
+                                                                                                                        <a onclick="{!c.removeDeletedRowFieldList}" data-value="{! rowIndex + '$'+rowIndexFieldList}">
+                                                                                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                                                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                                                                                        </a>
+                                                                                                                    </aura:if>
+                                                                                                                </aura:set> 
+                                                                                                            </aura:if>
+                                                                                                        </td> 
+                                                                                                        <!--td class="child-swap_btn">
+                                                                             <lightning:buttonIcon iconName="utility:reassign"  disabled="{!v.swapAbility}" name="{!rowIndex}" onclick="{! c.swtichSectionTo }"/>
+                                                                            </td-->
+                                                                                                    </tr>
+                                                                                                    <!--New Changes by Deepak Meshram-->
+                                                                                                    <tr>
+                                                                                                        <td colspan="11" class="additional_col">
+                                                                                                            <table class="additional_row">
+                                                                                                                <tr>
+                                                                                                                    <aura:if isTrue="{!fieldInstance.isSwitchedToFormula}">
+                                                                                                                        <td class="slds-p-left_none slds-p-right_none">
+                                                                                                                            <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" disabled="{!v.AllFlag}" label="Select Object" required="true" aura:id="footerbtn"  value="{!fieldInstance.selectedObjectForFormula}" 
+                                                                                                                                              onchange="{!c.openFieldsForSelectedObject}">
+                                                                                                                                <option value="">NONE</option>
+                                                                                                                                <aura:iteration items="{!v.accountChildObjectLabel}" var="item">
+                                                                                                                                    <option value="{!item.value}" label="{!item.label}" ></option>
+                                                                                                                                </aura:iteration>
+                                                                                                                            </lightning:select>
+                                                                                                                        </td> 
+                                                                                                                    </aura:if>
+                                                                                                                    <aura:if isTrue="{!fieldInstance.fieldsAfterFormula}">
+                                                                                                                        <td class="w-400">
+                                                                                                                            <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Field" disabled="{!v.AllFlag}"
+                                                                                                                                              required="true" aura:id="footerbtn"  value="{!fieldInstance.selectedFieldForFormulaMapping}" 
+                                                                                                                                              onchange="{!c.afterFiledSelection}">
+                                                                                                                                <option value="">NONE</option>
+                                                                                                                                <aura:iteration items="{!fieldInstance.fieldListForFormulaMapping}" var="item">
+                                                                                                                                    <option value="{!item.value}" label="{!item.label}"></option>
+                                                                                                                                </aura:iteration>
+                                                                                                                            </lightning:select>
+                                                                                                                        </td> 
+                                                                                                                        <td class="">
+                                                                                                                            <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Account lookup API" 
+                                                                                                                                              aura:id="footerbtn"  value="{!fieldInstance.accountLookupAPI}" 
+                                                                                                                                              >
+                                                                                                                                <option value="">NONE</option>
+                                                                                                                                <aura:iteration items="{!fieldInstance.accountLookupFieldLst}" var="item">
+                                                                                                                                    <option value="{!item}" label="{!item}">                                                          
+                                                                                                                                    </option>
+                                                                                                                                </aura:iteration>                                                                     
+                                                                                                                            </lightning:select> 
+                                                                                                                            
+                                                                                                                        </td> 
+                                                                                                                        <td class="slds-p-right_none">
+                                                                                                                            <lightning:input type="text" label="WHERE CLAUSE" name="{!rowIndex}"  value="{!fieldInstance.whereClause}" />
+                                                                                                                            
+                                                                                                                        </td>
+                                                                                                                    </aura:if>
+                                                                                                                    
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            
+                                                                                        </aura:iteration>
+                                                                                    </div>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!sectionInstance.isConsentForm}">
+                                                                            <aura:iteration items="{!sectionInstance.FieldsLst}" var="fieldInstance" indexVar="rowIndexFieldList">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>   
+                                                                                            <div class="slds-grid slds-gutters">
+                                                                                                <div class="slds-col slds-size_3-of-12">
+                                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Object" required="true" 
+                                                                                                                      aura:id="footerbtn" value="{!sectionInstance.isConsent_SelectedObject}"
+                                                                                                                      onchange="{!c.isConsent_fetchFields}"
+                                                                                                                      >
+                                                                                                        <aura:iteration items="{!v.ConsentObjArray}" var="item">
+                                                                                                            <option value="{!item.value}" label="{!item.label}"/>
+                                                                                                        </aura:iteration>
+                                                                                                    </lightning:select>
+                                                                                                </div>
+                                                                                                <aura:if isTrue="{!sectionInstance.isConsent_showMultiSelectPicklist}">
+                                                                                                    <div class="slds-col slds-size_5-of-12">
+                                                                                                        <div class="slds-grid slds-gutters">
+                                                                                                            <div class="slds-col slds-size_8-of-12">
+                                                                                                                <c:ElixirOEM_FormConfigMultiSelect options ="{!sectionInstance.isConsent_allFieldAPIs}" 
+                                                                                                                                                   countOfAlreadySelectedValues = "{!sectionInstance.isConsent_lengthOfSelectedValues}"
+                                                                                                                                                   values="{!sectionInstance.isConsent_selected_allFieldAPIs}"
+                                                                                                                                                   label="Select Fileds" multiSelect="true"/>  
+                                                                                                            </div>
+                                                                                                            <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                                                                                                <lightning:button variant="brand" label="Generate API" title="Generate API"  name="{! rowIndex + '$'+rowIndexFieldList}" 
+                                                                                                                                  onclick="{!c.isConsent_generateListOfApi}" />
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        
+                                                                                                        
+                                                                                                        
+                                                                                                        
+                                                                                                    </div>
+                                                                                                </aura:if>
+                                                                                                <aura:if isTrue="{!sectionInstance.isConsent_showFieldApi}">
+                                                                                                    <div class="slds-col slds-size_4-of-12 heightForFieldApi">
+                                                                                                        <!--lightning:textarea name="input1" label="Enter some text" /-->
+                                                                                                        <lightning:textarea type="Text" label="Field APIs" name="{!rowIndex}" 
+                                                                                                                            value="{!sectionInstance.isConsent_allFieldAPIStringified}"/>  
+                                                                                                    </div>
+                                                                                                </aura:if>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        
+                                                                                    </tr>
+                                                                                    <tr class="">
+                                                                                        <div class="child-box">
+                                                                                            <lightning:inputRichText formats="['font', 'size', 'bold', 'italic', 'underline', 'strike',
+                                                                                                                              'list', 'indent', 'align', 'link', 'image', 'clean', 'table',
+                                                                                                                              'header', 'color', 'background']" aura:id="lastfocus"  
+                                                                                                                     value="{!sectionInstance.consentTextValue}"
+                                                                                                                     placeholder="Type here...">
+                                                                                                <lightning:insertImageButton/>
+                                                                                            </lightning:inputRichText>
+                                                                                            
+                                                                                            
+                                                                                        </div>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </aura:iteration>
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!sectionInstance.enableTable}">
+                                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium slds-p-left_large">
+                                                                                
+                                                                                <div class="slds-col slds-size_4-of-12">
+                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Columns : " 
+                                                                                                      value="{!sectionInstance.table_colSelected}"  disabled="{!v.AllFlag}"
+                                                                                                      onchange="{!c.handletableColumnChange}">
+                                                                                        <option value="">NONE</option>
+                                                                                        <aura:iteration items="{!sectionInstance.table_rowDropDown}" var="item">
+                                                                                            <option value="{!item}" label="{!item}">                                                                                           
+                                                                                            </option>
+                                                                                        </aura:iteration>                                                                                    
+                                                                                    </lightning:select>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <aura:if isTrue="{!not(empty(sectionInstance.table_colSelected))}">
+                                                                                <!--checkbox box to show/hide heading row-->
+                                                                                <lightning:input type="checkbox" label="Show Table Heading" name="{! rowIndex + '$'+rowIndexFieldList}" checked="{!sectionInstance.showHeading}" onchange="{!c.clearHeading}" class="chnagemargin"/>
+                                                                                
+                                                                                <table border="0" cellspacing="0" cellpadding="0" class="customMatrixTable">
+                                                                                    <!--conditionally show this heading depending on checkbox value above-->
+                                                                                    <aura:if isTrue="{!sectionInstance.showHeading}">
+                                                                                        <tr> 
+                                                                                            <aura:iteration items="{!sectionInstance.table_HeadingArr}" var="headingVar">
+                                                                                                <th>   
+                                                                                                    <lightning:input type="text" value="{!headingVar.heading}"  disabled="{!v.AllFlag}" placeholder="Enter Heading" name="{!rowIndex}"/>
+                                                                                                </th>
+                                                                                            </aura:iteration>    
+                                                                                        </tr>
+                                                                                    </aura:if>
+                                                                                    
+                                                                                    <aura:iteration items="{!sectionInstance.table_fieldLst}" var="table_rowItem" indexVar="tableRowLstIndex">                                                                   
+                                                                                        <tr>
+                                                                                            <aura:iteration items="{!table_rowItem.colLst}" var="table_colItem" indexVar="tableColLstIndex">
+                                                                                                
+                                                                                                <td class="slds-is-relative"> 
+                                                                                                    <!--span class="slds-is-absolute mySpan"> {!table_rowItem.RowNumber},{!table_colItem.ColNumber}</span-->   
+                                                                                                    <lightning:select  label="Select Fields"   
+                                                                                                                      value="{!table_colItem.table_fieldSelected}"
+                                                                                                                      name="{! rowIndex + '$'+rowIndexFieldList}"  disabled="{!v.AllFlag}"
+                                                                                                                      >
+                                                                                                        <option value="">NONE</option>
+                                                                                                        <option value="ONLYTEXT;ONLYTEXT;ONLYTEXT;ONLYTEXT">ONLYTEXT</option>
+                                                                                                        <!--option value="ONLYTEXT">ONLYTEXT</option-->
+                                                                                                        <aura:iteration items="{!sectionInstance.allFields}" var="item">
+                                                                                                            <option value="{!item.value}" label="{!item.label}">
+                                                                                                                
+                                                                                                            </option>
+                                                                                                        </aura:iteration>                                                                                  
+                                                                                                    </lightning:select>
+                                                                                                    <lightning:input type="text" label="Enter label" value="{!table_colItem.defaultLabel}"  disabled="{!v.AllFlag}"
+                                                                                                                     name="{!rowIndex}"/>
+                                                                                                </td>   
+                                                                                                <aura:if isTrue="{!table_colItem.isLast}">
+                                                                                                    <td class="child-add_btn">
+                                                                                                        
+                                                                                                        <a onclick="{!c.removeDeletedRowForTable}" data-value="{! rowIndex + '$'+ tableRowLstIndex + '$'+tableColLstIndex}">
+                                                                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                                                                        </a>
+                                                                                                    </td>
+                                                                                                </aura:if>
+                                                                                            </aura:iteration>      
+                                                                                            <td class="child-add_btn">
+                                                                                                <aura:if isTrue="{!tableRowLstIndex == 0}">
+                                                                                                    <aura:if isTrue="{!lessthanorequal(sectionInstance.table_fieldLst.length,11)}">
+                                                                                                        <a onclick="{!c.addNewRowForMatrixTable}" data-value="{!rowIndex}">
+                                                                                                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                                                            <span class="slds-assistive-text">Add Icon</span>
+                                                                                                        </a>
+                                                                                                        <aura:set attribute="else">
+                                                                                                            <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                                                                                        </aura:set>
+                                                                                                    </aura:if>   
+                                                                                                    
+                                                                                                    
+                                                                                                </aura:if>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                    </aura:iteration>
+                                                                                </table>
+                                                                            </aura:if> 
+                                                                        </aura:if>
+                                                                        
+                                                                        <aura:if isTrue="{!sectionInstance.formComponentVal == 'Enable Modular Table'}">
+                                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium slds-p-left_large">
+                                                                                
+                                                                                <div class="slds-col slds-size_4-of-12">
+                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Columns : " 
+                                                                                                      value="{!sectionInstance.table_colSelected}" onchange="{!c.handletableColumnChange}">
+                                                                                        <option value="">NONE</option>
+                                                                                        <aura:iteration items="{!sectionInstance.table_rowDropDown}" var="item">
+                                                                                            <option value="{!item}" label="{!item}">                                                                                           
+                                                                                            </option>
+                                                                                        </aura:iteration>                                                                                    
+                                                                                    </lightning:select>
+                                                                                </div>
+                                                                            </div> 
+                                                                            <aura:if isTrue="{!not(empty(sectionInstance.table_colSelected))}">
+                                                                                
+                                                                                
+                                                                                <table border="0" cellspacing="0" cellpadding="0" class="customMatrixTable">
+                                                                                    
+                                                                                    <tr> 
+                                                                                        <aura:iteration items="{!sectionInstance.table_HeadingArr}" var="headingVar">
+                                                                                            <th>   
+                                                                                                <lightning:input type="text" value="{!headingVar.heading}"  placeholder="Enter Heading" name="{!rowIndex}"/>
+                                                                                            </th>
+                                                                                        </aura:iteration>    
+                                                                                    </tr>
+                                                                                    
+                                                                                    
+                                                                                    <aura:iteration items="{!sectionInstance.table_fieldLst}" var="table_rowItem" indexVar="tableRowLstIndex">                                                                   
+                                                                                        <tr>
+                                                                                            <aura:iteration items="{!table_rowItem.colLst}" var="table_colItem" indexVar="tableColLstIndex">
+                                                                                                
+                                                                                                <td class="slds-is-relative"> 
+                                                                                                    <!--span class="slds-is-absolute mySpan"> {!table_rowItem.RowNumber},{!table_colItem.ColNumber}</span-->   
+                                                                                                    <lightning:select  label="Select Data Type"   
+                                                                                                                      value="{!table_colItem.table_fieldSelected}"
+                                                                                                                      name="{! rowIndex + '$'+rowIndexFieldList}"
+                                                                                                                      >
+                                                                                                        <option value="">NONE</option>
+                                                                                                        <option value="text" label="Text"/>
+                                                                                                        <option value="textarea" label="TextArea"/>
+                                                                                                        <option value="number" label="Number"/>
+                                                                                                        <option value="date" label="Date"/>
+                                                                                                        <option value="datetime" label="DateTime"/>                                                                                
+                                                                                                    </lightning:select>
+                                                                                                    <!--lightning:input type="text" label="Enter label" value="{!table_colItem.defaultLabel}" 
+                                                                                                     name="{!rowIndex}"/-->
+                                                                                                </td>   
+                                                                                            </aura:iteration>      
+                                                                                            
+                                                                                        </tr>
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                    </aura:iteration>
+                                                                                </table>
+                                                                            </aura:if>
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!sectionInstance.formComponentVal == 'Enable SOQL'}">
+                                                                            <div class="child-box">
+                                                                                <lightning:textarea name="{! rowIndex + '$'+rowIndexFieldList}"  disabled="{!v.AllFlag}"
+                                                                                                    label="Enter SOQL" value="{!sectionInstance.freeTextSOQL}" onblur="{!c.checkSOQLValidation}"/>
+                                                                            </div>
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!sectionInstance.enableProblemForNotes}">
+                                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium slds-p-left_large">
+                                                                                
+                                                                                <div class="slds-col slds-size_4-of-12">
+                                                                                    <lightning:select name="{! rowIndex + '$'+rowIndexFieldList}" label="Select Type Of Note : " 
+                                                                                                      value="{!sectionInstance.typeOfNote}" disabled="{!v.AllFlag}"> 
+                                                                                        <option value="">NONE</option>
+                                                                                        <option value="Problem">Problem</option>
+                                                                                        <option value="Procedure">Procedure</option>
+                                                                                        <option value="Diagnosis">Diagnosis</option>
+                                                                                        
+                                                                                    </lightning:select>
+                                                                                </div>
+                                                                            </div> 
+                                                                        </aura:if>
+                                                                        
+                                                                        
+                                                                        <aura:if isTrue="{!sectionInstance.formComponentVal=='Enable Draw And Annotate'}">
+                                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium slds-p-left_large">
+                                                                                
+                                                                                <div class="slds-col slds-size_4-of-12">
+                                                                                    <lightning:input type="text" label="Static Resource File Name" value="{!sectionInstance.staticFieldLabel}" name="{!rowIndex}" required="true"/>   
+                                                                                </div>
+                                                                            </div> 
+                                                                        </aura:if>
+                                                                        <aura:if isTrue="{!sectionInstance.swapSectionVisibility}">
+                                                                            <!--Modal Box Start-->
+                                                                            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                                                                                <div class="slds-modal__container">
+                                                                                    <!--Modal Box Header Start-->
+                                                                                    <header class="slds-modal__header">
+                                                                                        <h1 class="slds-text-heading--medium">Swap Sections</h1>
+                                                                                    </header>
+                                                                                    <div class="slds-modal__content slds-p-around_medium swap-modal_body">
+                                                                                        <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                                                            <div class="slds-col slds-size_2-of-12"></div>
+                                                                                            <div class="slds-col slds-size_8-of-12">
+                                                                                                <lightning:input label="Switch section from : " name="" value="{!v.currentSection}"/>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                                                            <div class="slds-col slds-size_2-of-12"></div>
+                                                                                            <div class="slds-col slds-size_8-of-12">
+                                                                                                <lightning:select name="" label="Switch section to :" value="{!v.swapsectionToWhatIndex}">
+                                                                                                    <option value="">NONE</option>
+                                                                                                    <aura:iteration items="{!v.allAvailableSections}" var="item">
+                                                                                                        <option value="{!item}" label="{!item}">
+                                                                                                            
+                                                                                                        </option>
+                                                                                                    </aura:iteration>
+                                                                                                    
+                                                                                                </lightning:select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <footer class="slds-modal__footer slds-text-align_center swap_footer">
+                                                                                        <lightning:button name='Back' label='Back' onclick='{!c.handleConfirmDialogNo}'/>
+                                                                                        <lightning:button  variant="brand" name='Swap' label='Swap' onclick='{!c.handleConfirmDialogYes}'/>
+                                                                                    </footer>
+                                                                                    <!--Modal Box Button End-->
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="slds-backdrop slds-backdrop--open"></div> 
+                                                                            
+                                                                            
+                                                                        </aura:if>
+                                                                    </lightning:accordionSection>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </aura:if>
+                                                    </aura:iteration>
+                                                </lightning:accordion>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.objectMatchingInfo}">
+                                                <!--Modal Box Start-->
+                                                <div role="dialog" class="slds-modal slds-fade-in-open ">
+                                                    <div class="slds-modal__container objectMatchingInfo">
+                                                        <!--Modal Box Header Start-->
+                                                        <header class="slds-modal__header">
+                                                            <h1 class="slds-text-heading--medium obj-match">OBJECT MATCHING INFORMATION</h1>
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_medium">
+                                                            
+                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                                <div class="slds-col slds-size_12-of-12" >
+                                                                    <p class="selected-form"> Selected Form is found on more than 1 object : </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                                                                <div class="slds-col slds-size_12-of-12">
+                                                                    <ol class="slds-m-left_medium">
+                                                                        <aura:iteration items="{!v.allMatchingObjects}" var="item" indexVar="rowIndexObjectMatching">
+                                                                            
+                                                                            <li class="lst-de">
+                                                                                <option value="{!item}" label="{!item}">
+                                                                                    
+                                                                                </option>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                        </aura:iteration>
+                                                                    </ol>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <footer class="slds-modal__footer slds-text-align_center swap_footer">
+                                                            <lightning:button name='OK' label='OK' onclick='{!c.closeObjectMatchingInfoWindow}'/>
+                                                            
+                                                        </footer>
+                                                        <!--Modal Box Button End-->
+                                                    </div>
+                                                </div>
+                                                <div class="slds-backdrop slds-backdrop--open"></div> 
+                                                
+                                                
+                                            </aura:if>
+                                            
+                                        </lightning:layout>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                    
+                                    
+                                    <aura:set attribute="else">
+                                        <div class="slds-is-relative spiinner">
+                                            <lightning:spinner alternativeText="Loading" />
+                                        </div>
+                                    </aura:set>
+                                    
+                                    
+                                </aura:if>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <footer class="slds-modal__footer slds-text-align_center">
+                    <lightning:button variant="neutral" label="Cancel" title="" onclick="{! c.cancelModal }"/>
+                    <aura:if isTrue="{!!v.AllFlag}">
+                        <lightning:button variant="brand" label="Update"  title="" onclick="{! c.updateConfigurationForForm }"/>
+                    </aura:if>
+                </footer> 
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</aura:component>

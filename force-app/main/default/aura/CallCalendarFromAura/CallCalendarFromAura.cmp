@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="jsonToSave" type="list[]"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    Aura component
+    <c:fullCalendarByLwc calendarJson="{!v.jsonToSave}"></c:fullCalendarByLwc>
+</aura:component>

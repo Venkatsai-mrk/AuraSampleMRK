@@ -1,0 +1,310 @@
+<template>
+    <article class={createRes}>
+        <div
+            class="slds-text-heading_medium text slds-text-align_center slds-var-p-around_medium slds-border_bottom thickerBorder">
+            New Reservation
+        </div>
+
+        <div class="slds-card__body slds-card__body_inner">
+            <div style="height: 110px">
+                <lightning-record-edit-form object-api-name={reservationObjectApi}>
+                    <lightning-messages class="myLightningMessage"> </lightning-messages>
+                    <div class="slds-grid slds-gutters slds-grid_align-spread">
+                        <div class="slds-col">
+                            <template lwc:if={isAccountIdPrePopulated}>
+                                <lightning-input-field class="alignAccountField" field-name={accountField}
+                                    value={privateAccountId} onchange={onChangeRecordEditForm} disabled="true">
+                                </lightning-input-field>
+                            </template>
+                            <template lwc:else>
+                                <lightning-input-field required class="alignAccountField" field-name={accountField}
+                                    value={accountId} name="accountId" onchange={onChangeRecordEditForm}>
+                                </lightning-input-field>
+                            </template>
+
+                        </div>
+
+                        
+
+                        <div class="slds-col">
+                            
+                            <lightning-input class="startDate" type="date" name="startDate" label="Start Date"
+                                value={startDate} onchange={onChangeRecordEditForm} required="true"></lightning-input>
+                            <div class="startDateError" style="color:red"></div>
+                        </div>
+
+                        <div class="slds-col">
+                            <!-- <lightning-input-field name="endDate" field-name={endDateField} onchange={onChangeRecordEditForm}>
+                            </lightning-input-field> -->
+                            <lightning-input class="endDate" type="date" name="endDate" label="End Date"
+                                value={endDate} onchange={onChangeRecordEditForm} required="true"></lightning-input>
+                            <div class="endDateError" style="color:red"></div>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-select
+                            name="reservationType"
+                            label={labelValue}
+                            value={selectedValue}
+                            options={picklistOptions}
+                            onchange={handleChange}>
+                            </lightning-select>
+                            </div>
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+
+            <div>
+                <!-- Only show rooms/suites with all beds available -->
+                <!-- <lightning-input type="checkbox" label="Show only Rooms/Suites with all available beds" name="input1" onchange={toggleOnlyFullyAvailableRoomsAndSuites}></lightning-input> -->
+                 <!-- Only show rooms with all beds available -->
+                 <lightning-input type="checkbox" label="Show only Rooms with all available beds" name="input2" onchange={toggleOnlyFullyAvailableRooms}></lightning-input>
+                  <!-- Only show suites with all beds available -->
+                <lightning-input type="checkbox" label="Show only Suites with all available beds" name="input3" onchange={toggleOnlyFullyAvailableSuites}></lightning-input>
+            </div>
+
+            <div class="divFirst">
+                <lightning-accordion class="A" onsectiontoggle={handleToggleSectionGuarantor}
+                    allow-multiple-sections-open>
+                    <lightning-accordion-section name="Advanced Filters" label="Advanced Filters"
+                        class="slds-accordion__summary-heading">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <!--<lightning-input type="text" label="Building" name="Buildings" variant="label-stack"
+                                    disabled={filterState}></lightning-input>
+                                <template if:false={filterState}>
+                                    <div class="child slds-align_absolute-center">
+                                        <p>Building 1</p>
+                                        <p>Building 2</p>
+                                        <p>Building 3</p>
+                                    </div>
+                                </template> -->
+                                <c-multi-select-combobox
+                                        class="multi-select-combobox"
+                                        label="Building"
+                                        name="Building"
+                                        options={options}
+                                        is-disabled={filterState}
+                                        onchange={handleChangeForBuilding}
+                                    ></c-multi-select-combobox>
+                            </div>
+                            <div class="slds-col">
+                                <!-- <lightning-input type="text" label="Type of room" name="Type of room"
+                                    variant="label-stack" disabled={filterState}></lightning-input> -->
+                                    <c-multi-select-combobox
+                                        class="multi-select-roomType"
+                                        label="Type of room"
+                                        name="Type of room"
+                                        options={options2}
+                                        is-disabled={filterState}
+                                        onchange={handleChangeForRoomType}
+                                    ></c-multi-select-combobox>
+                            </div>
+                            <div class="slds-col parent">
+                                <lightning-input class="my-input" placeholder="Please select the features" type="text" label="Filter by features" name="Filter by features"
+                                    variant="label-stack" disabled={filterState}></lightning-input>
+                                    <template if:false={filterState}>
+                                        <div class="child">
+                                            <ul class="slds-listbox slds-listbox_vertical slds-is-absolute value-list">
+                                            <template if:true={showSuite}>
+                                                <li class="div1">
+                                                    Suite
+                                                </li>
+                                                <!-- <lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"></lightning-icon> -->
+                                                <li role="presentation" for:each={suiteFeatures}  data-value={item.value} for:item="item" key={item} class="slds-listbox__item ">
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option"  data-value={item.value} onclick={handleItemClick}>
+                                                        <div class="slds-media__figure divWidth">
+                                                          <lightning-icon
+                                                            data-features-icon={item.value}
+                                                            icon-name="utility:check"
+                                                            size="x-small"
+                                                            alternative-text="Selected"
+                                                            class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small"
+                                                            style="display:none"
+                                                          >
+                                                          </lightning-icon>
+                                                        </div>
+                                                        <span class="slds-media__body">
+                                                            <span data-value={item.value}>{item.label}</span>
+                                                        </span>
+                                                    </div>
+                                                  
+                                                </li>
+                                            </template>
+                                            <template if:true={showRoom}>
+                                                <li class="div1">
+                                                    Room
+                                                </li>
+                                                <li role="presentation" for:each={roomFeatures}  data-value={item.value} for:item="item" key={item} class="slds-listbox__item ">
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option"  data-value={item.value} onclick={handleItemClick}>
+                                                        <div class="slds-media__figure divWidth">
+                                                          <lightning-icon
+                                                            data-features-icon={item.value}
+                                                            icon-name="utility:check"
+                                                            size="x-small"
+                                                            alternative-text="Selected"
+                                                            class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small"
+                                                            style="display:none"
+                                                          >
+                                                          </lightning-icon>
+                                                        </div>
+                                                        <span class="slds-media__body">
+                                                            <span data-value={item.value}>{item.label}</span>
+                                                        </span>
+                                                    </div>
+                                                  
+                                                </li>
+                                            </template>
+                                            <template if:true={showBed}>
+                                                <li class="div1">
+                                                    Bed
+                                                </li>
+                                                <li role="presentation" for:each={bedFeatures}  data-value={item.value} for:item="item" key={item} class="slds-listbox__item ">
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option"  data-value={item.value} onclick={handleItemClick}>
+                                                        <div class="slds-media__figure divWidth">
+                                                          <lightning-icon
+                                                            data-features-icon={item.value}
+                                                            icon-name="utility:check"
+                                                            size="x-small"
+                                                            alternative-text="Selected"
+                                                            class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small"
+                                                            style="display:none"
+                                                          >
+                                                          </lightning-icon>
+                                                        </div>
+                                                        <span class="slds-media__body">
+                                                            <span data-value={item.value}>{item.label}</span>
+                                                        </span>
+                                                    </div>
+                                                  
+                                                </li>
+                                            </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </div>
+
+            <div class="searchResultsTableParent" onscroll={handleTableScroll}>
+                
+                    <!-- <h2 id="element-with-table-label" class="slds-text-heading_small slds-m-bottom_xx-small slds-m-top_small "> 
+                      Search Results
+                   </h2> -->
+                    <h2>
+                        <div id="element-with-table-label" class="s-text">
+                            Search Results
+                        </div> 
+                        <div class="t-icon">i
+                        <div class="t-text slds-is-absolute">Click on Bed/Room/Suite to make a selection</div>
+                        <div class="t-carot slds-is-absolute"></div>
+                        </div>
+                        </h2>
+                
+                
+                <!-- <h3 id="other-element-with-table-label" class="slds-text-title slds-m-bottom_small">Using
+                    <code>aria-labelledby</code>, instead of aria-label
+                </h3> -->
+                <template lwc:if={areTableRowsAvailable}>
+                    
+                    <table class="slds-table slds-table_cell-buffer column-width-fixed slds-m-top_medium"
+                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th data-label="building-col" class="heading" scope="col">
+                                    <div class="slds-truncate" title="Building">Building</div>
+                                </th>
+                                <th data-label="suite-col" class="heading" scope="col">
+                                    <div class="slds-truncate" title="Suite">Suite</div>
+                                </th>
+                                <th data-label="rooms-col" class="heading" scope="col">
+                                    <div class="slds-truncate" title="Room">Room</div>
+                                </th>
+                                <th data-label="beds-col" class="heading" scope="col">
+                                    <div class="slds-truncate" title="Bed">Bed</div>
+                                </th>
+                                <th data-label="features-col" class="heading" scope="col">
+                                    <div class="slds-truncate" title="Features">Features</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr class="slds-hint-parent">
+                                            <th data-label="Building" scope="row">
+                                                <div class="slds-truncate">
+                                                    <a href="#" tabindex="-1">My First Building</a>
+                                                </div>
+                                            </th>
+                                            <td data-label="Suite-Room">
+                                                <div class="slds-truncate">My First Room</div>
+                                            </td>
+                                            
+                                        </tr> -->
+                            <template for:each={allTableRows} for:item="tableRow">
+                                <tr key={tableRow.bedId} class={tableRow.styleClass}>
+                                    <th data-label="Building" scope="row">
+                                        <div class="wrap-column-values">
+                                            {tableRow.buildingName}
+                                        </div>
+                                    </th>
+                                    <td data-label="Suite">
+                                        <div class="wrap-column-values" data-value={tableRow.suiteId} style="cursor:pointer" onclick={handleSuiteSelected}>{tableRow.suiteName}</div>
+                                    </td>
+                                    <td data-label="Room">
+                                        <div class="wrap-column-values" data-suite-id={tableRow.suiteId} data-value={tableRow.roomId} data-room-id={tableRow.roomId} style="cursor:pointer" onclick={handleRoomSelected}>{tableRow.roomName}</div>
+                                    </td>
+                                    <td data-label="Bed">
+                                        <!-- <div class="slds-truncate">{tableRow.bedName}</div> -->
+                                        <div class="wrap-column-values" onclick={toggleBedColor} style="cursor:pointer" data-bed-id={tableRow.bedId} data-room-id={tableRow.roomId} id={tableRow.bedId}>{tableRow.bedName}</div>
+                                    </td>
+                                    <td data-label="Features">
+                                        <div class="wrap-column-values">{tableRow.features}</div>
+                                    </td>
+
+                                </tr>
+                            </template>
+                
+                        </tbody>
+                    </table>
+                    <div style="height: 50px" class="slds-is-relative">
+                        <template if:true={loadingMoreRecords}>
+                            <lightning-spinner alternative-text="Loading" size="x-small" variant="brand"></lightning-spinner>
+                        </template>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="slds-p-around_medium">
+                        <c-open-road-illustration></c-open-road-illustration>
+                    </div>
+                </template>
+                
+            </div>
+        </div>
+
+
+        <footer class="slds-card__footer">
+            <div class="slds-grid slds-grid_align-center slds-gutters_x-small">
+                <div class="slds-col">
+                    <lightning-button label="Cancel" variant="Neutral"  onclick={handleCancel}></lightning-button>
+                </div>
+                <!-- <div class="slds-col">
+                    <lightning-button label="Save &amp; New" variant="Neutral" type="submit" disabled={isSaveAndNewButtonDisabled} onclick={handleSaveAndNew}></lightning-button>
+
+                  </div>
+                  <div class="slds-col">
+                    <lightning-button label="Save" variant="brand" type="submit" disabled={isSaveButtonDisabled} onclick={handleSave}></lightning-button>
+                  </div> -->
+                  <div class="slds-col">
+                    <lightning-button label="Next" variant="brand" type="submit" onclick={handleNextButton}></lightning-button>
+                  </div>
+            </div>
+            
+        </footer>
+    </article>
+    <template lwc:if={showReviewScreen}>
+    <div class={ReviewRes}>
+        <c-review-reservation onmodify={modifyReservation} onsave={updateMessage} onsaveandnew={closeReviewAndOpenCreate} selected-value={selectedValue} account-id={privateAccountId} start-date={startDate} end-date={endDate} billable-entity={arrayExample} selected-bed-ids={selectedBedIds}></c-review-reservation>
+    </div>
+    </template>
+</template>

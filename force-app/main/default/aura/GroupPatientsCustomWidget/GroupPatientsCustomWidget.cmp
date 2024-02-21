@@ -1,0 +1,22 @@
+<aura:component controller="GroupPatientsCustomWidgetCtrl"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="groupPatientList" type="List"/>
+    <aura:attribute name="column" type="List"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <lightning:card title="{! 'Group Patients (' + v.groupPatientList.length + ')'}" class="slds-is-relative" iconName="standard:entity">
+       
+        <!--lightning:buttonIcon class="slds-is-absolute refreshButton" iconName="utility:refresh" variant="brand" onclick="{! c.doInit }" alternativeText="Refresh" iconClass="dark"/ -->
+        
+        <div aura:id="dataTable" class="slds-col">
+            <lightning:datatable
+                                 data="{! v.groupPatientList }"
+                                 columns="{! v.column}"
+                                 hideCheckboxColumn="true"
+                                 keyField="Id"
+                                 onrowaction="{!c.handleRowAction}"
+                                 />
+        </div>
+    </lightning:card>
+    
+</aura:component>

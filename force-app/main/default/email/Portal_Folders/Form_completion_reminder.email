@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>Hello {!Account.Name},</p>
+    <p>{!Organization.Name} has requested to complete the following forms:</p>
+   {!Form_Value__c.Form_Name__c}
+    <p>Please complete and submit it to {!Organization.Name}</p>
+    <p>Please login into your portal {Patientportallink} to complete these forms. </p>
+    <p>Please get in touch with us for any queries.</p>
+    <p>Regards,<br>{!Organization.Name}</p>
+</body>
+</html>

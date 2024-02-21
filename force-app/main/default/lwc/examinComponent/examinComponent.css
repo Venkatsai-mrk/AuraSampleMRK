@@ -1,0 +1,54 @@
+/* Add this CSS to your Lightning Web Component's CSS file */
+
+.textalg {
+   text-align: center;
+        background-color :#F3F3F3; /* Grey background color */
+        padding: 5px;
+            margin-top: 7px;
+            font-size: 1.25rem !important;
+}
+
+.container {
+    margin: 20px; /* Adjust the margin as needed */
+}
+
+.customClass {
+    border: none;
+    width: 45%; /* Optionally set a specific width for the table */
+}
+
+.input-wrapper {
+    margin-bottom: 10px; /* Adjust the margin as needed to control the distance between label and input */
+}
+
+.slds-form-element__label {
+    font-size: 12px; /* Adjust the font size as needed */
+    margin-bottom: 0px; /* Adjust the margin as needed to control the distance between label and input */
+     margin-top: 3px;
+}
+
+.input-field {
+        font-size: 12px;
+padding: 4px 8px; /* Adjust padding as needed */
+    width: 50px; /* Adjust width as needed */
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right side */
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.marginclass {
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.thClass {
+  
+    font-size: 14px;
+    padding-left: 6px;
+    padding-bottom: 14px;
+}
+.spClass{
+    padding-left: 232px;
+}

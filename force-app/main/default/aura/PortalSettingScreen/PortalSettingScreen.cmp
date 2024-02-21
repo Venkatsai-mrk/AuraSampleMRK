@@ -1,0 +1,45 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute type="id" name="recordId" />
+    
+    <aura:attribute name="openInsuranceEmailSetting" type="Boolean" /> 
+    <aura:attribute name="openMedicationEmailSetting" type="Boolean" />    
+   	<aura:attribute name="portalMessage" type="Boolean" />
+    <aura:attribute name="openPortalMessaging" type="Boolean" />
+    <aura:attribute name="visitSummaryTemplate" type="Boolean" />
+    <aura:attribute name="enableAppointmentBooking" type="Boolean" />
+     <aura:attribute name="enableVisitNotes" type="Boolean" />
+    <div class="parentCSS">
+        <div class="parentCSS_Header">
+            <ul>
+                <li><button class="parentCSS_1" aura:id="insuranceSetting" onclick="{!c.handleClickForInsurance}">Insurance Email Setting</button></li>
+                <li><button class="parentCSS_1" aura:id="medicationSetting" onclick="{!c.handleClickForMedication}">Medication Email Setting</button></li>
+                <li><button class="parentCSS_1" aura:id="portalMessageSetting" onclick="{!c.handleClickForPortalMessaging}">Patient Portal Message Settings</button></li>
+                <li><button class="parentCSS_1" aura:id="visitSummaryTemplate" onclick="{!c.handleClickFovisitSummaryTemplate}">Visit Summary Settings</button></li>                
+                <li><button class="parentCSS_1" aura:id="appointmentBooking" onclick="{!c.handleClickForEnableAppointmentBooking}">Appointment Settings</button></li>
+                <li><button class="parentCSS_1" aura:id="visitNotesSetting" onclick="{!c.handleClickForVisitNotes}">Visit Notes Settings</button></li>
+                
+            </ul>
+        </div>
+        <div class="parent_content">
+            <aura:if isTrue="{!v.openInsuranceEmailSetting}">
+                <c:InsuranceEmailSetting emailSettingName="Insurance"/>         
+            </aura:if>
+            <aura:if isTrue="{!v.openMedicationEmailSetting}">
+                <c:MedicationEmailSetting emailSettingName="Medication"/>         
+            </aura:if>
+            <aura:if isTrue="{!v.openPortalMessaging}">
+                <c:PatientPortalMessaging portalMessage="{!v.portalMessage}"/>         
+            </aura:if>
+            <aura:if isTrue="{!v.visitSummaryTemplate}">
+                <c:VisitSummaryTemplate emailSettingName="Visit Summary"/>         
+            </aura:if>
+            <aura:if isTrue="{!v.enableAppointmentBooking}">
+               <c:EnableAppointmentBooking appointmentBooking="{!v.enableAppointmentBooking}"/>       
+            </aura:if>
+            <aura:if isTrue="{!v.enableVisitNotes}">
+               <c:EnableVisitNotes visitNotes="{!v.enableVisitNotes}"/>       
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

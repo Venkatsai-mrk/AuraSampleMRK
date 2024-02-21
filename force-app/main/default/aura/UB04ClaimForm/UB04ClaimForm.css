@@ -1,0 +1,166 @@
+.THIS .cms_box {
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 4px 0px #ccc;
+    font-size: 10px;
+}
+.THIS .slds-modal__header {
+    padding: 0;
+}
+.THIS .cms_box label.slds-form-element__label {
+    display: none;
+}
+.THIS .cms_box .mendate-field {
+    color: #f00;
+}
+.THIS .pr-5 {
+    padding-right: 5px;
+}
+.THIS .pl-5 {
+    padding-left: 5px;
+}
+.THIS .pr-0 {
+    padding-right: 0;
+}
+.THIS .pl-5 .slds-input, .THIS .pr-5 .slds-input {
+    padding-right: 10px;
+    padding-left: 5px;
+}
+.THIS .patient-table th, .THIS .patient-table td {
+    white-space: inherit;
+    font-size: 10px;
+    height: 28px;
+}
+.THIS .patient-table1 td {
+    padding: 5px;
+}
+.THIS .patient-table1 td:first-child {
+    padding-left: 0px;
+}
+.THIS .patient-table1 td:last-child {
+    padding-right: 0px;
+}
+.THIS .patient-table1 td .slds-input {
+    margin-bottom: 3px;
+}
+.THIS .patient-table1.slds-table tbody tr:hover td {
+    background-color: transparent !important;
+}
+.THIS .pl-5 .slds-input__icon, .THIS .pr-5 .slds-input__icon {
+    right: 5px;
+}
+.THIS .pt-15 {
+    padding-top: 15px;
+} 
+.THIS .h-50 .slds-input {
+    height: 50px;
+}
+.THIS .h-91 .slds-textarea {
+    height: 91px;
+}
+.THIS .h-130 .slds-textarea {
+    height: 135px;
+}
+.THIS .gender .slds-form-element {
+    display: block !important;
+}
+.THIS .gender span.slds-radio {
+    display: inline-block !important;
+    margin-top: 7px;
+}
+.THIS .gender span.slds-radio_faux {
+    margin-right: 4px !important;
+}
+.THIS .gender span.slds-form-element__label {
+    font-size: 11px !important;
+    margin-right: 10px;
+}
+.THIS .colPayHeader {
+    color: white;
+    background-color: #493266;
+    padding: 10px;
+    font-weight: bold;
+ }
+.THIS .colPayHeader1 {
+    color: white;
+    background-color: #493266;
+ }
+.THIS .slds-input[readonly] {
+    padding-left: 6px;
+    border-color: #cac8c8;
+    background-color: #f3f3f3
+}
+.THIS .slds-form-element {
+    display: inline !important ;
+}
+.THIS .cms_box .heading h2 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+}
+.THIS .cms_box .heading p {
+    font-size: 12px;
+}
+.THIS .check_row label.slds-checkbox__label {
+    display: block;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.THIS .check_row span.slds-checkbox_faux {
+    margin-right: calc(100% - 20px) !important;/*its positive */
+}
+.THIS .check_row span.slds-form-element__label {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px !important;
+    padding-right: 0;
+    margin-right: 0;
+}
+.THIS .check_row .slds-col {
+    padding-right: 0;
+}
+.THIS .abc { 
+  /*  border-right: 2px solid black;
+    height: 12px; */
+    padding-right: 0px;
+    padding-left: 4px;
+}
+.THIS .abcd { 
+  /*  border-right: 2px solid black;
+    height: 12px;*/
+    padding-right: 8px;
+    padding-left: 4px;
+}
+.THIS .slds-checkbox {
+display: inline !important;
+}
+.THIS .slds-modal__container {
+    width: 80% !important;
+    max-width: 85% !important;
+}
+.THIS .h-40 {
+    height: 40px;
+}
+@media (max-width: 767px) {
+    .THIS .slds-grid.slds-gutters {
+        display: block
+    }
+    .THIS .slds-grid.slds-gutters .slds-size_1-of-12, .THIS .slds-grid.slds-gutters .slds-size_2-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_3-of-12, .THIS .slds-grid.slds-gutters .slds-size_4-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_5-of-12, .THIS .slds-grid.slds-gutters .slds-size_6-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_7-of-12, .THIS .slds-grid.slds-gutters .slds-size_8-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_9-of-12, .THIS .slds-grid.slds-gutters .slds-size_10-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_11-of-12 {
+        width: 100%;
+    }
+    .THIS .slds-grid.slds-gutters .slds-size_1-of-8, .THIS .slds-grid.slds-gutters .slds-size_1-of-4 {
+        width: 24%;
+        display: inline-block;
+    }
+    .THIS .slds-modal__content{
+        height:84% !important;
+        max-height:84% !important;
+    }
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </customValue>
+    <customValue>
+        <fullName>M</fullName>
+        <default>false</default>
+        <label>Male</label>
+    </customValue>
+    <customValue>
+        <fullName>F</fullName>
+        <default>false</default>
+        <label>Female</label>
+    </customValue>
+    <customValue>
+        <fullName>Female-to-Male(FTM)</fullName>
+        <default>false</default>
+        <label>Female-to-Male(FTM)</label>
+    </customValue>
+    <customValue>
+        <fullName>Transgender Male</fullName>
+        <default>false</default>
+        <label>Transgender Male</label>
+    </customValue>
+    <customValue>
+        <fullName>Trans Man</fullName>
+        <default>false</default>
+        <label>Trans Man</label>
+    </customValue>
+    <customValue>
+        <fullName>Male-to-Female(MTF)</fullName>
+        <default>false</default>
+        <label>Male-to-Female(MTF)</label>
+    </customValue>
+    <customValue>
+        <fullName>Transgender Female</fullName>
+        <default>false</default>
+        <label>Transgender Female</label>
+    </customValue>
+    <customValue>
+        <fullName>Trans Woman</fullName>
+        <default>false</default>
+        <label>Trans Woman</label>
+    </customValue>
+    <customValue>
+        <fullName>Genderqueer</fullName>
+        <default>false</default>
+        <label>Genderqueer</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Choose not to disclose</fullName>
+        <default>false</default>
+        <label>Choose not to disclose</label>
+    </customValue>
+    <customValue>
+        <fullName>U</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <masterLabel>Gender</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

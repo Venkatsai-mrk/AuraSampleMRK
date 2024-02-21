@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ordered_Via__c</fullName>
+    <externalId>false</externalId>
+    <label>Ordered Via</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Phone, read back and verified</fullName>
+                <default>false</default>
+                <label>Phone, read back and verified</label>
+            </value>
+            <value>
+                <fullName>Verbal, read back and verified</fullName>
+                <default>false</default>
+                <label>Verbal, read back and verified</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Fax</fullName>
+                <default>false</default>
+                <label>Fax</label>
+            </value>
+            <value>
+                <fullName>Paper</fullName>
+                <default>false</default>
+                <label>Paper</label>
+            </value>
+            <value>
+                <fullName>Previously prescribed medication approved by doctor</fullName>
+                <default>false</default>
+                <label>Previously prescribed medication approved by doctor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

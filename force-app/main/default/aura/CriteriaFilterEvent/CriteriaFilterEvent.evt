@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="On Click Of Save Criteria, will pass the filter logic to CriteriaFilterSubmit input field" >
+
+    <aura:attribute name="filterLogic" type="String"/>
+</aura:event>

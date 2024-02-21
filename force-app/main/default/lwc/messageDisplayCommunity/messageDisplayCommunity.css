@@ -1,0 +1,204 @@
+/* .slds-media__body {
+    width: 140px;
+    flex: none;
+}
+.slds-card__header-title{
+    color:#F00
+}
+
+.msg-console lightning-input.slds-form-element {
+    width: 200px;
+    float: left;
+    margin-right: 175px;
+}
+
+.msg-console label.slds-form-element__label {
+    display: none;
+}
+
+.msg-console lightning-icon.slds-icon-utility-filterList.slds-icon_container {
+ 
+    margin-top: 22px;
+}
+.msg-console lightning-icon.slds-icon-utility-filterList.slds-icon_container .slds-icon {
+ 
+    width: 20px;
+}
+
+.msg-body{
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 0;
+}
+
+.scroll{
+    height: 20rem;
+    overflow: scroll;
+}
+.send-msg-content{
+background-color: #493266;
+color: #fff;
+padding: 5px 10px;
+margin: 5px 10px;
+float: right;
+border-radius: 10px 0 10px 10px;
+font-size: 14px;
+}
+
+.send-msg-content-portal{
+    background-color: #d3d3d3;
+    color: #000000;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    float: left;
+    border-radius: 10px 0 10px 10px;
+    font-size: 14px;
+}
+.time-body-portal{
+    padding: 0px 10px;
+    margin: 0px 10px 10px;
+    float: left;
+    border-radius: 10px 0 10px 10px;
+}
+.time-body{
+    padding: 0px 10px;
+    margin: 0px 10px 10px;
+    float: right;
+    border-radius: 10px 0 10px 10px;
+}
+
+.compose-msg{
+    background-color:#fff;
+    padding: 8px 15px;
+    font-weight: 700;
+    color:#000;
+    
+}
+.compose-msg h3{
+font-size: 15px !important;
+margin-top: 5px;
+}
+
+
+.phi-msg{
+    background-color:#fff;
+    padding: 8px 15px;
+    font-weight: 700;
+    
+}
+
+.send-msg-send{
+
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    background-color: #493266;
+    z-index: 2;
+    top: 75px;
+    right: 30px;
+    transform: rotate(303deg);
+     
+}
+
+.color-white{--lwc-colorTextIconDefault: #fff;
+}
+.rich-text-msg{
+    
+--slds-c-textarea-sizing-max-width: 80%;
+}
+.send-msg-sending {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background-color: #493266;
+    z-index: 2;
+    top: 3px;
+    right: 0;
+    transform: rotate(318deg)
+}
+
+.send-preview-le{
+    border-radius: 10px 0 10px 10px;
+    padding: 5px 8px;
+    margin: 5px;
+    width: 100%;
+    text-align: left;
+    clear: both;
+}
+
+.send-preview{
+   
+    border-radius: 10px 0 10px 10px;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    text-align: right;
+    clear: both;
+}
+.text-msgsize{
+    width: 100%;
+}
+lightning-icon.search-icon.slds-icon-utility-search.slds-icon_container {
+    position: absolute;
+    right: 155px;
+    top: 35px;
+}
+
+.search-icon svg.slds-icon.slds-icon-text-default {
+    height: 25px;
+    width: 25px;
+}
+.filter-button {
+    right: 100px;
+    z-index: 1;
+    top: 31px;
+}
+.archive-blank{
+    
+    border-radius: 10px 10px 0 10px;
+    padding : 8px 15px;
+    width: max-content;
+}
+.displayOption{
+    display: none;
+    right: 10px;
+    top: calc(100% + 36px);
+    text-align: center;
+    z-index: 2;
+    background-color: #fff;
+    border-radius: 10px 0 10px 10px;
+    padding: 5px 0;
+}
+.display_Option_CRM{
+    display: none;
+    left: 10px;
+    top: calc(100% + 36px);
+    text-align: center;
+    z-index: 2;
+    background-color: #fff;
+    border-radius: 10px 0 10px 10px;
+    padding: 5px 0;
+}
+.display_Option_CRM hr{
+    margin: 5px 0;
+}
+.display:hover .display_Option_CRM{
+    display: block;
+}
+.display:hover .displayOption{
+    display: block;
+}
+.displayOption hr{
+    margin: 5px 0;
+}
+.msgBody {
+    height: 20rem; 
+    overflow-y: scroll; 
+    scrollbar-width: thin;
+}
+.createdByName {
+    font-style: italic;
+}
+.sendTd {
+    width:70px;
+} */

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pt_disabled_unable_to_work_from_AA__c</fullName>
+    <description>Represents the date from which the patient is unable to work due to disability.</description>
+    <externalId>false</externalId>
+    <label>Patient&apos;s disabled(unable to work) from:</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

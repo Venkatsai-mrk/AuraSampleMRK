@@ -1,0 +1,261 @@
+<aura:component controller="CollectPaymentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+    <aura:attribute name ="accName" type = "String"/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="modeOfPaymentLst" type="List"/>
+    <aura:attribute name="myCurrency" type="Decimal" default="0.0"/>
+    <aura:attribute name="payReasonVal" type="String" default=""/>
+     <aura:attribute name="TNumber" type="String" default=""/>
+    <aura:attribute name="addNote" type="String" />
+    <aura:attribute name="Tdate" type="Date" default=""/> 
+    <aura:attribute name="cheque" type="boolean" default="False"/>
+    <aura:attribute name="Credit" type="boolean" default="False"/>
+    <aura:attribute name="chequeNo" type="String" default=""/>
+     <aura:attribute name="Infolist" type="list" default=""/>
+    <aura:attribute name="creditCardId" type="String" default=""/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="makePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="makeDiscountButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="TotalAppliedAmount" type="integer" default="0"/>
+    <aura:attribute name="TotalAmount" type="integer" default="0"/>
+    <aura:attribute name="TotalUnallocatedAmount" type="integer" default="0"/>
+    <aura:attribute name="TotalCreditAmount" type="integer" default="0"/>
+    <aura:attribute name="selectedProcedures" type="List" default="[]"/>
+    <aura:attribute name="creditSelectedRows" type="List" default="[]"/> 
+    <aura:attribute name="creditMemoSelectedRows" type="List" default="[]"/> 
+    <aura:attribute name="disableCheckbox" type="boolean" default="false"/>
+    <aura:attribute name="toggleValue" type="String" default=""/>
+     <aura:attribute name="generateReceipt" type="boolean" default="false"/>
+    <aura:handler name="changehandlerEvent" event="c:changehandlerEvent" action="{!c.calculateCreditAmount}"/>
+	<aura:handler name="procedurehandlerEvent" event="c:procedurehandlerEvent" action="{!c.handleProcedureSelected}"/>
+    
+    <lightning:card>
+         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-text-align_center"><b>New Payment</b></h2>
+         <div class="slds-p-left_medium"> 
+             <div> 
+                 <ol>
+                     <li>
+                        <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a> {!v.greaterSign} <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                     </li>
+                 </ol>
+              </div>
+          </div>
+        <lightning:card title="Payment Information"> 
+        	<div class="mgList">
+				<div class="mglist-c1">
+                	<div class="mglist-c2">
+                        <div class="slds-grid slds-gutters topsection">
+                          	<div class="slds-col slds-size_6-of-12">
+                              <div class="slds-grid slds-gutters">
+                                  <div class="slds-col slds-size_4-of-12">
+                                      <span class="slds-form-element__static slds-form-element__label">Mode of Payment  : </span>
+                                  </div>
+                                  <div class="slds-col slds-size_8-of-12 remove_label">
+                                      <lightning:select aura:id="select1" name="select1" label="" onchange="{!c.getField}" value="{!v.modeOfPayment}">
+                                          <option value="">Choose one..</option>
+                                           <aura:iteration items="{!v.modeOfPaymentLst}" var="paymentItem">
+                                               <option value="{!paymentItem.label}" label="{!paymentItem.label}">                                               
+                                               </option> 
+                                          </aura:iteration>
+                                      </lightning:select>
+                                  </div>
+                              </div>
+                        	</div>
+                        	<div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <span class="slds-form-element__static slds-form-element__label">Amount Paid   : </span>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 remove_label">
+                                        <lightning:input type="number"  formatter="currency" value="{!v.myCurrency}" onchange="{!c.setValue}"/>
+                                       
+                                    </div>
+                                </div>
+                        	</div>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters topsection">
+                          	<div class="slds-col slds-size_6-of-12">
+                              <div class="slds-grid slds-gutters">
+                                  <div class="slds-col slds-size_4-of-12">
+                                      <span class="slds-form-element__static slds-form-element__label">Reason  : </span>
+                                  </div>
+                                  <div class="slds-col slds-size_8-of-12 remove_label">
+                                      <lightning:select aura:id="payReason" name="payReason" label="" onchange="{!c.getPaymentReason}" value="{!v.payReasonVal}">
+                                          <option value="">Choose one..</option>
+                                          <option value="Applied Payment">Applied Payment</option>
+                                          <option value="Unallocated Payment">Unallocated Payment</option>
+                                      </lightning:select>
+                                  </div>
+                              </div>
+                        	</div>
+                        	<div class="slds-col slds-size_6-of-12 topsection">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <span class="slds-form-element__static slds-form-element__label">Payment Transaction Number  : </span>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 remove_label">
+                                       <lightning:input type="text"   value="{!v.TNumber}" />
+                                       
+                                    </div>
+                                </div>
+                        	</div>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters">
+                          	<div class="slds-col slds-size_6-of-12">
+                              <div class="slds-grid slds-gutters">
+                                  <div class="slds-col slds-size_4-of-12">
+                                      <span class="slds-form-element__static slds-form-element__label">Date of Payment   : </span>
+                                  </div>
+                                  <div class="slds-col slds-size_8-of-12 remove_label">
+                                      <lightning:input type="date" value="{!v.Tdate}"></lightning:input>
+                                  </div>
+                              </div>
+                        	</div>
+                        	<div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <span class="slds-form-element__static slds-form-element__label">Note  : </span>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 remove_label">
+                                       <lightning:textarea name="Note" label="Note" placeholder="Add Note..." value="{!v.addNote}"/>
+                                       
+                                    </div>
+                                </div>
+                        	</div>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <aura:if isTrue="{!or(v.payReasonVal == 'Applied Payment')}">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <span class="slds-form-element__static slds-form-element__label">Generate Receipt </span>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                            <lightning:input type="checkbox" checked="{!v.generateReceipt}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters topsection">
+                            <aura:if isTrue="{!v.cheque}">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <span class="slds-form-element__static slds-form-element__label">Cheque No   : </span>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                            <lightning:input  value="{!v.chequeNo}"></lightning:input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                        <aura:if isTrue="{!v.Credit}">
+                            <div class="slds-m-top_xxx-small">
+                                <div class="slds-m-bottom_none">
+                                    <b class="slds-text-heading_small">Card Details</b> 
+                                </div>
+                                <br></br>
+                                <div>
+                                	<lightning:datatable
+                                                     keyField="id"
+                                                     data="{! v.Infolist}"
+                                                     columns="{! v.columns1}"
+                                                     hideCheckboxColumn="false"
+                                                     onrowselection="{!c.handleCreditSelectedRow}"
+                                                     selectedRows="{!v.selectedRows}"
+                                                     maxRowSelection="{! v.maxRowSelection }"/>
+                                </div>
+                                
+                                
+                            </div>
+                        </aura:if>
+                        
+                         <div class = "tableclass">
+                        <c:CreditDetails checkbox="{!v.disableCheckbox}" recordId = "{!v.recordId}"></c:CreditDetails>
+                        </div>
+                        
+                        <div class = "tableclass">
+                        <c:PatientProcedureTable checkbox = "{!v.disableCheckbox}" recordId = "{!v.recordId}"></c:PatientProcedureTable>
+                        </div>
+                        
+                         <footer class="slds-modal__footer">
+                             <div class = "ml-80">
+                                 <b>Amounts of Selected Procedure</b>
+                                 <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                                
+                                     <tr class="slds-line-height_reset">
+                                         <th class="" scope="col">
+                                             <div class="slds-truncate" title="Opportunity Name">Total Applied Amount</div>
+                                             
+                                         </th>
+                                         <th class="" scope="col">
+                                             <div class="slds-truncate" title="Account Name">
+                                                 <lightning:formattedNumber value="{!v.TotalAppliedAmount}" style="currency" />
+                                             </div>
+                                         </th>
+                                     </tr>
+                                     
+                                     <tbody>
+                                         <tr class="slds-line-height_reset">
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="Opportunity Name">Total Unallocated Amount</div>
+                                             </th>
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="Account Name">
+                                                     <lightning:formattedNumber value="{!v.TotalUnallocatedAmount}" style="currency" />
+                                                 </div>
+                                             </th>
+                                         </tr>
+                                         
+                                     </tbody>
+                                       <tbody>
+                                         <tr class="slds-line-height_reset">
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="Contact Name">Total Credits Applied</div>
+                                             </th>
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="Account Name">
+                                                     <lightning:formattedNumber value="{!v.TotalCreditAmount}" style="currency" />
+                                                 </div>
+                                             </th>
+                                         </tr>
+                                         
+                                     </tbody>
+                                 </table>
+                                 <br></br>
+                                 <div class="slds-grid slds-gutters cssbutton">
+
+                                     <lightning:button variant="brand" 
+                                                          label="Save Discount" 
+                                                          title="Save Discount" 
+                                                          disabled="{!v.makeDiscountButtonDisable}"
+                                                			onclick="{! c.addDiscountCtrl }"/>
+                                     
+                                     <lightning:button variant="brand" 
+                                                          label="Register Payment" 
+                                                          title="Register the  Payment" 
+                                                          disabled="{!v.makePaymentButtonDisable}"
+                                                			onclick="{! c.registerPayment }"/>
+                                 </div>
+                                 
+                                
+                             </div>
+                             
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        
+        </lightning:card>
+    </lightning:card>
+</aura:component>

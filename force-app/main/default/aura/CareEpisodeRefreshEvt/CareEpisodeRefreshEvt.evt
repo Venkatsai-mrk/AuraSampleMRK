@@ -1,0 +1,8 @@
+<aura:event type="APPLICATION" description="Event template" access="global" >
+    <aura:attribute name="route" type="String"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="finalColumnsApi" type="List"/>
+    <aura:attribute name="finalColumnsLabel" type="List"/>
+    <aura:attribute name="formUniqueId" type="String"/>
+    <aura:attribute name="cancel" type="Boolean" default="false"/>
+</aura:event>

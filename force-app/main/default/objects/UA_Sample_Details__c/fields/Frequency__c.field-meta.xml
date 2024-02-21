@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Frequency__c</fullName>
+    <externalId>false</externalId>
+    <label>Frequency</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Once</fullName>
+                <default>true</default>
+                <label>Once</label>
+            </value>
+            <value>
+                <fullName>Every Day</fullName>
+                <default>false</default>
+                <label>Every Day</label>
+            </value>
+            <value>
+                <fullName>Every 2 Days</fullName>
+                <default>false</default>
+                <label>Every 2 Days</label>
+            </value>
+            <value>
+                <fullName>Every 3 Days</fullName>
+                <default>false</default>
+                <label>Every 3 Days</label>
+            </value>
+            <value>
+                <fullName>Every 5 Days</fullName>
+                <default>false</default>
+                <label>Every 5 Days</label>
+            </value>
+            <value>
+                <fullName>Every 7 Days</fullName>
+                <default>false</default>
+                <label>Every 7 Days</label>
+            </value>
+            <value>
+                <fullName>Every 2 weeks</fullName>
+                <default>false</default>
+                <label>Every 2 weeks</label>
+            </value>
+            <value>
+                <fullName>Once a month</fullName>
+                <default>false</default>
+                <label>Once a month</label>
+            </value>
+            <value>
+                <fullName>On return from pass or outing</fullName>
+                <default>false</default>
+                <label>On return from pass or outing</label>
+            </value>
+            <value>
+                <fullName>When attending IOP/OP group</fullName>
+                <default>false</default>
+                <label>When attending IOP/OP group</label>
+            </value>
+            <value>
+                <fullName>Confirm positive analyzer results</fullName>
+                <default>false</default>
+                <label>Confirm positive analyzer results</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

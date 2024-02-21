@@ -1,0 +1,92 @@
+.THIS .disabledItem {
+    color: #bbb;
+    cursor: no-drop; 
+}
+.THIS .disabledPill .slds-pill__remove {
+    display: none !important;
+}
+.THIS .eachItem:hover {
+    background-color: #F1F1F1;
+    cursor: pointer;
+}
+.THIS .slds-input {
+    cursor: pointer;
+}
+.THIS .multiple-select_option .slds-dropdown_length-5 .recordListBox .eachItem {
+    padding: 1px 10px 1px 0px !important;
+    border: 1px solid #f1f2f3;
+}
+.THIS .customCss {
+    width: 100%;
+    margin-left: 0 !important;
+}
+.THIS .slds-listbox_vertical .slds-listbox__option_plain, 
+.THIS .slds-listbox_vertical .slds-listbox__option--plain, 
+.THIS .slds-listbox--vertical .slds-listbox__option_plain, 
+.THIS .slds-listbox--vertical .slds-listbox__option--plain {
+    padding : 2px 15px;
+}
+.THIS .slds-dropdown-trigger_click.slds-is-open .slds-dropdown, 
+.THIS .slds-dropdown-trigger--click.slds-is-open .slds-dropdown {
+    background-color: #f1f2f3;
+}
+
+
+
+
+
+
+
+
+
+
+
+.THIS .ms-filter-input{
+    margin: 0px 5%;
+    width: 50%;
+    height: 30px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: thin;
+    border-color: darkgray;
+    padding: 2px 5px;
+}
+
+.THIS .ms-input{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    display: inline-block;
+    padding: 0 1rem 0 .75rem;
+    line-height: 1.875rem;
+    min-height: calc(1.875rem + (1px * 2));
+}
+
+.THIS .ms-refresh-icon{
+}
+
+.THIS .ms-clear-icon{
+}
+
+.THIS .ms-dropdown{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.THIS .customCss{
+    background-color: white;
+    margin-left: 50%;
+    height: auto;
+    max-height:130px;
+    overflow-y: scroll;
+    margin-bottom:10px;
+}
+.THIS .slds-textarea {
+    height: 178px;
+    margin-top:2%;
+}
+/* chnages */
+.THIS .chnageindex{
+    z-index:1;/*10*/
+}

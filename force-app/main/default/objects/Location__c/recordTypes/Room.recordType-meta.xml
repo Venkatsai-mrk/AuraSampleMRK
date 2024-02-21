@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Room</fullName>
+    <active>true</active>
+    <label>Room</label>
+    <picklistValues>
+        <picklist>Bed_Attributes__c</picklist>
+        <values>
+            <fullName>Type - Double Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Single Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Lake View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Mountain View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Riverside View</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Common_Floor__c</picklist>
+        <values>
+            <fullName>First Floor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ground Floor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Floor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Third Floor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Common_Gender__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Specific</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    
+    <picklistValues>
+        <picklist>Program1__c</picklist>
+        <values>
+            <fullName>PHP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residential</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Room_Attributes__c</picklist>
+        <values>
+            <fullName>Occupancy - Double</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Occupancy - Single</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Semi Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Lake View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Mountain View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Riverside View</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Available</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Needs Cleaning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Occupied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Out of Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary Hold</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Suite_Attributes__c</picklist>
+        <values>
+            <fullName>Occupancy - Double</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Occupancy - Single</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Type - Semi Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Lake View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Mountain View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View - Riverside View</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,332 @@
+<aura:component controller="Census_GetAllPatient" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    <aura:attribute name="Patient_Name" type="Object" />
+    <aura:attribute name="PatientData" type="Object" />
+    <aura:attribute name="PatientDataCopy" type="Object" />
+    <aura:attribute name="dob" type="string" />
+    <aura:attribute name="age" type="string" />
+    <aura:attribute name="dataLength" type="Integer" />
+    <aura:attribute name="Profilepic" type="string" />
+    <aura:attribute name="totalAcc" type="integer" />
+    <aura:attribute name="totalAccReview" type="integer" />
+    <aura:attribute name="totalAccCurrent" type="integer" />
+    <aura:attribute name="totalAccDischarged" type="integer" />
+    <aura:attribute name="totalLead" type="integer" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="12"/>
+    <aura:attribute name="offset" type="Integer"  default="0"/>
+    <aura:attribute name="totalPages" type="Integer" default="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="noValue" type="string" default="--"/>
+    <aura:attribute name="noLevelOfCare" type="string" default="No LOC"/>
+    <aura:attribute name="currentButtonVal" type="String" default='All Patients'/> 
+    <aura:attribute name="cssClass_AllPatients" type="String" default=''/> 
+    <aura:attribute name="cssClass_PatientsInReview" type="String" default=''/> 
+    <aura:attribute name="cssClass_CurrentPatients" type="String" default=''/> 
+    <aura:attribute name="cssClass_DischargedPatients" type="String" default=''/> 
+    <aura:attribute name="initResponseData" type="Object"/> 
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    <aura:attribute name="enableDateSearchFilter" type="Boolean" default="true"/> 
+    <aura:attribute name="FilterByArr" type="List"/>
+    <aura:attribute name="FilterChildOptions" type="List"/>
+    <aura:attribute name="fieldsArr" type="List"/>
+    <aura:attribute name="filterByToFilterMap" type="Object"/> 
+    <aura:attribute name="searchMap" type="Object"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="searchOrDropdownSwap" type="Boolean" default="true"/>
+    <aura:attribute name="isCombinedFilterUsed" type="Boolean" default="false"/>
+    <aura:attribute name="isFilterByDateUsed" type="Boolean" default="false"/>
+    <aura:attribute name="showResultAvailable" type="Boolean" default="true"/>
+    <aura:attribute name="isProfilePicAllowed" type="Boolean" default="false"/> 
+    <aura:attribute name="fromDate" type="String"/>
+    <aura:attribute name="doubleFilterValue" type="String"/>
+    <aura:attribute name="filterValue" type="String"/>
+    <aura:attribute name="toDate" type="String"/>
+    <aura:attribute name="AdmitDate_Order" type="String" default="DEF"/> 
+    <aura:attribute name="DischargeDate_Order" type="String"  default="DEF"/>
+    <aura:attribute name="filterByDate" type="String"/>
+    <aura:if isTrue="{!v.Ehr}">
+        <lightning:card>   
+            <div class="slds-p-left_large slds-p-right_large">
+                <div class="slds-grid slds-gutters total_btn defaultBtn">
+                    <div class="slds-size_2-of-12 slds-p-left_large">
+                        <lightning:button class="{!v.cssClass_AllPatients}" name="All Patients" onclick="{! c.doInit }">All Patients ({!v.totalAcc})</lightning:button>
+                    </div>
+                    <div class="slds-size_2-of-12 ">
+                        <lightning:button class="{!v.cssClass_PatientsInReview}" name="Patients In Review" onclick="{! c.handleClickButtonReview }">Patients In Review ({!v.totalAccReview})</lightning:button>
+                    </div>
+                    <div class="slds-size_2-of-12 ">
+                        <lightning:button class="{!v.cssClass_CurrentPatients}" name="Current Patients" onclick="{! c.handleClickButtonCurrent }">Current Patients ({!v.totalAccCurrent})</lightning:button>
+                    </div>
+                    <div class="slds-size_2-of-12 ">
+                        <lightning:button  class="{!v.cssClass_DischargedPatients}" name="Discharged Patients" onclick="{! c.handleClickButtonDischarged }">Discharged Patients ({!v.totalAccDischarged})</lightning:button>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-size_4-of-12 slds-m-bottom_small slds-p-left_large">
+                        <lightning:input type="text" name="searchKey"  aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Search Patient" /> 
+                    </div>
+                    <div class="slds-size_2-of-12 slds-m-bottom_small slds-p-left_large">
+                        <lightning:select name="selectItem" label="Filter By Dates" onchange="{!c.dateFilter}"
+                                          value="{!v.filterByDate}">
+                            <option value="">choose one...</option>
+                            <option value="Admit Date">Admit Date</option>
+                            <option value="Discharge Date">Discharge Date</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-size_2-of-12 slds-m-bottom_small slds-p-left_large">
+                        <lightning:input disabled="{!v.enableDateSearchFilter}" type="Date" name="From" label="From" 
+                                         value="{!v.fromDate}" aura:id="fromFilter"/>
+                    </div>
+                    <div class="slds-size_2-of-12 slds-m-bottom_small slds-p-left_large">
+                        <lightning:input disabled="{!v.enableDateSearchFilter}" type="Date" name="To" label="To" 
+                                         value="{!v.toDate}" aura:id="toFilter" onchange="{!c.checkValidity_FromDate}"/>
+                    </div>
+
+                </div>
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-size_2-of-12 slds-m-bottom_small slds-p-left_large">
+                        <lightning:select name="selectItem" label="Filter By" onchange="{!c.parentFilter}" 
+                                          value="{!v.doubleFilterValue}">
+                            <option value="">choose one...</option>
+                            <aura:iteration items="{!v.FilterByArr}" var="item">
+                                <option value="{!item.value}">{!item.label}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+
+                    <div class="slds-size_2-of-12 slds-m-bottom_small slds-p-left_large">
+                        <aura:if isTrue="{!v.searchOrDropdownSwap}">
+                            <lightning:select name="selectItem" label="Filter" value="{!v.filterValue}" required="true"
+                                              disabled="{!!v.isCombinedFilterUsed}" aura:id="combinedFilterValidate">
+                                <option value="">choose one...</option>
+                                <aura:iteration items="{!v.FilterChildOptions}" var="subItem">
+                                    <option value="{!subItem.value}">{!subItem.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:set attribute="else">
+                                <lightning:input type="text" name="searchKey"  aura:id="searchKey" value="{!v.filterValue}" placeholder="Enter Value" /> 
+                            </aura:set>
+                        </aura:if> 
+
+                    </div>
+
+                    <div class="slds-size_4-of-12 slds-m-bottom_small slds-p-left_large slds-p-top_large show-btn">
+                        <lightning:button variant="brand" disabled="{!v.showResultAvailable}" label="Show Result" title="Show Result" onclick="{!c.fetchData_Combined}" />
+                        <lightning:button variant="brand" label="Clear All Filters" title="Clear All Filters" onclick="{!c.doInit}" class="slds-m-left_large" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 slds-m-bottom_small slds-is-relative admit_btn slds-p-top_small">
+                        <lightning:button variant="brand" label="Admit Date" title="Brand action" onclick="{!c.sortByAdmitDate}" class="slds-m-left_small" />
+                        <aura:if isTrue="{!v.AdmitDate_Order=='ASC'}">
+                            <div class="slds-is-absolute">
+                                <lightning:icon iconName="utility:arrowup" alternativeText="Utility image" title="Image"  />
+                            </div>
+
+                        </aura:if>
+                        <aura:if isTrue="{!v.AdmitDate_Order=='DSC'}">
+                            <div class="slds-is-absolute">
+                                <lightning:icon iconName="utility:arrowdown" alternativeText="Utility image" title="Image"  />
+                            </div>
+                        </aura:if>
+
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 slds-m-bottom_small slds-is-relative  admit_btn  slds-p-top_small">
+                        <lightning:button variant="brand" label="Discharge Date" title="Brand action" onclick="{!c.sortByDischargeDate}" />
+                        <aura:if isTrue="{!v.DischargeDate_Order=='ASC'}"> 
+                            <div class="slds-is-absolute">
+                                <lightning:icon iconName="utility:arrowup" alternativeText="Utility image" title="Image"  />
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.DischargeDate_Order=='DSC'}"> 
+                            <div class="slds-is-absolute">
+                                <lightning:icon iconName="utility:arrowdown" alternativeText="Utility image" title="Image"  />
+                            </div>
+                        </aura:if>
+                    </div>
+                    <div class="slds-size_4-of-12 slds-m-top_xx-small">
+                        <aura:if isTrue="{!v.totalPages >1}">
+                            <lightning:layoutItem padding="around-small" flexibility="auto">
+                                <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                                  onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                                <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                                  onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="1" 
+                                       class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+                                </span>
+                                <span class="slds-p-horizontal_xxx-small">
+
+                                </span>
+
+                                <aura:iteration items="{!v.pageList}" var="item">
+                                    <span class="slds-p-horizontal_x-small">
+                                        <a onclick="{!c.processMe}" name="{!item}"
+                                           class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                                    </span>
+                                </aura:iteration>
+
+                                <span class="slds-p-horizontal_xxx-small">
+                                    <a>...</a>
+                                </span>
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                                       class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+                                </span>
+                                <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                                <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                            </lightning:layoutItem>
+                        </aura:if>
+                    </div>
+                </div>
+
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12 slds-m-bottom_small ">
+
+                        <ul class="test-patient">
+                            <aura:if isTrue="{!not(empty(v.Patient_Name))}">
+                                <aura:iteration items="{!v.Patient_Name}" var="item">
+                                    <li class="test-patient_prime-child">
+                                        <lightning:card>
+                                            <div class="slds-media">
+                                                <div class="slds-media__figure">
+                                                    <aura:if isTrue="{!v.isProfilePicAllowed}">
+                                                        <span class="slds-avatar slds-avatar--large ">
+
+                                                            <aura:if isTrue="{!(item.ElixirSuite__Profile_Picture__c!=null)}">
+                                                                <img alt="Patient Image" src="{!'/sfc/servlet.shepherd/version/download/'+ item.ElixirSuite__Profile_Picture__c}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                                                <aura:set attribute="else">
+                                                                    <img alt="Patient Image" src="{!$Resource.DefaultProfilePic}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+
+                                                                </aura:set>
+                                                            </aura:if>
+
+                                                        </span>
+                                                    </aura:if>
+                                                </div>
+                                                <div class="slds-media__body" >
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_5-of-12 p_first slds-p-right_none">
+                                                            <h2 class="slds-truncate slds-text-heading--small"  aura:id="patName" title="{!v.item.pat.Name}" >
+                                                                <lightning:button class="btnclick" onclick="{!c.accDetails}"  value="{!item.Id}">{!item.Name}</lightning:button>
+                                                            </h2>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element__control slds-p-bottom_medium">
+                                                <ul>
+
+
+                                                    <aura:iteration items="{!item.dynamicKey.dynamicRec}" var="itemChild">
+                                                        <aura:if isTrue="{!itemChild.fieldApi=='ElixirSuite__Bed__c'}">
+
+                                                            <li>
+                                                                <div class="slds-grid slds-gutters">
+                                                                    <div class="slds-col slds-size_7-of-12">
+                                                                        <span class="slds-form-element__static slds-form-element__label">Bed Details : </span>
+                                                                    </div>
+                                                                    <div class="slds-col slds-size_5-of-12 dotFont">
+                                                                        {!itemChild.fieldValue_LV_1} 
+                                                                    </div>
+
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="slds-grid slds-gutters">
+                                                                    <div class="slds-col slds-size_7-of-12">
+                                                                        <span class="slds-form-element__static slds-form-element__label"> </span>
+                                                                    </div>
+                                                                    <div class="slds-col slds-size_5-of-12 dotFont">
+                                                                        {!itemChild.fieldValue_LV_2} 
+                                                                    </div>
+
+                                                                </div>
+                                                            </li>
+                                                            <aura:set attribute="else">
+
+                                                                <li>
+                                                                    <div class="slds-grid slds-gutters">
+                                                                        <div class="slds-col slds-size_7-of-12">
+                                                                            <span class="slds-form-element__static slds-form-element__label">  {!itemChild.fieldLabel} </span>
+                                                                        </div>
+                                                                        <div class="slds-col slds-size_5-of-12 dotFont">
+                                                                            {!itemChild.fieldValue}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </li>
+                                                            </aura:set>
+                                                        </aura:if>                                                        
+                                                    </aura:iteration>
+                                                    <!--BED DETAILS-->
+
+                                                </ul>
+                                            </div>
+                                        </lightning:card>
+                                    </li>
+                                </aura:iteration>                                                   
+                                <aura:set attribute="else">
+                                    <p class="pl-532"><b>No Results Found.</b></p>                                                        
+                                </aura:set>
+                            </aura:if>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="slds-size_12-of-12 slds-m-top_xx-small alignPage">
+                    <aura:if isTrue="{!v.totalPages >1}">
+                        <lightning:layoutItem padding="around-small" flexibility="auto">
+                            <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                            <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                              onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                            <span class="slds-p-horizontal_x-small">
+                                <a onclick="{!c.processMe}" name="1" 
+                                   class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+                            </span>
+                            <span class="slds-p-horizontal_xxx-small">
+
+                            </span>
+
+                            <aura:iteration items="{!v.pageList}" var="item">
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="{!item}"
+                                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                                </span>
+                            </aura:iteration>
+
+                            <span class="slds-p-horizontal_xxx-small">
+                                <a>...</a>
+                            </span>
+                            <span class="slds-p-horizontal_x-small">
+                                <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                                   class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">{!v.totalPages}</a>
+                            </span>
+                            <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                            <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                        </lightning:layoutItem>
+                    </aura:if>
+                </div>
+
+            </div>
+            <aura:if isTrue="{!! v.loaded }">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:if>
+        </lightning:card>
+    </aura:if>
+</aura:component>

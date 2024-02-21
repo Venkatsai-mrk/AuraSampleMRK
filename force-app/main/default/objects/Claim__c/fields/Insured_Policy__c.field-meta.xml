@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insured_Policy__c</fullName>
+    <description>Used to store identification number associated with the insured individual's health insurance policy, group plan, or Federal Employees' Compensation Act (FECA) coverage.</description>
+    <externalId>false</externalId>
+    <label>Insured Policy Group / FECA Number</label>
+    <length>28</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

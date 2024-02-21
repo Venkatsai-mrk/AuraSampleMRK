@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Equipment__c</fullName>
+    <description>Identifies the equipment associated with the order line item.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Equipment</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Equipment__c.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Inventory</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Equipment__c</referenceTo>
+    <relationshipLabel>Inventory</relationshipLabel>
+    <relationshipName>Inventory</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

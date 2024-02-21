@@ -1,0 +1,170 @@
+.THIS .new-referral_modal{
+    width: 80%;
+    max-width: 100.0625rem;
+}
+.THIS .new-referral_modal .slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse {
+    bottom: 0;
+}
+.THIS .new-referral_modal .slds-modal__header {
+    background-color: #493266;
+    color: #fff;
+    padding: 5px;
+}
+/*
+.THIS .new-referral_modal .slds-modal__content .slds-form-element__label {
+    display: none;
+}*/
+.THIS .new-referral_modal .slds-modal__content label {
+    font-weight: 600;
+}
+.THIS .new-referral_modal .instruction_head {
+    background-color: #eeeeee;
+    color: #000;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.THIS .new-referral_modal .slds-textarea {
+    height: 90px;
+}
+.THIS .new-referral_modal .slds-table {
+    border: 1px solid #ccc;
+}
+.THIS .new-referral_modal .slds-table th, .THIS .new-referral_modal .slds-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.THIS .new-referral_modal .slds-table th {
+    background-color: #e5e5e5;
+    padding: 7px 0;
+}
+.THIS .new-referral_modal .slds-table td:last-child input {
+    height: 20px;
+    width: 20px;
+    margin: 3px 0 0 0;
+}
+.THIS .referrals_footer {
+    text-align: center;
+}
+.THIS .referrals_footer button.slds-button.slds-button_neutral {
+    background-color: #ebebeb;
+    border: 1px solid #493266;
+    color: #493266;
+    padding: 0px 30px;
+    margin-right: 10px;
+}
+.THIS .referrals_footer button.slds-button.slds-button_brand {
+    background-color: #493267;
+    padding: 0 30px;
+    border: 1px solid #493267;
+    margin-left: 10px;
+}
+.THIS .new-referral_modal .slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse {
+    bottom: 0;
+}
+.THIS .new-referral_modal .slds-modal__header {
+    background-color: #493266;
+    color: #fff;
+    padding: 5px;
+}
+/*.THIS .new-referral_modal .slds-modal__content .slds-form-element__label {
+    display: none;
+}*/
+.THIS .new-referral_modal .slds-modal__content label {
+    font-weight: 600;
+}
+.THIS .new-referral_modal .slds-textarea {
+    height: 90px;
+}
+.THIS .new-referral_modal .slds-table {
+    border: 1px solid #ccc;
+}
+.THIS .new-referral_modal .slds-table th, .THIS .new-referral_modal .slds-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.THIS .new-referral_modal .slds-table th {
+    background-color: #e5e5e5;
+    padding: 7px 0;
+}
+.THIS .new-referral_modal input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    margin: 3px 10px 0 0;
+}
+.THIS .referrals_footer {
+    text-align: center;
+}
+.THIS .referrals_footer button.slds-button.slds-button_neutral {
+    background-color: #fff;
+    border: 1px solid #493266;
+    color: #493266;
+    padding: 0px 30px;
+    margin-right: 10px;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .referrals_footer button.slds-button.slds-button_neutral:hover {
+    background-color: #493266;
+    color: #fff;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .referrals_footer button.slds-button.slds-button_brand {
+    background-color: #493267;
+    padding: 0 30px;
+    border: 1px solid #493267;
+    margin-left: 10px;
+     transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .referrals_footer button.slds-button.slds-button_brand:hover {
+    background-color: #fff;
+    color: #493266;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .new-referral_modal .slds-table th:last-child {
+    width: 85px !important;
+}
+.THIS .new-referral_modal .slds-table td:last-child {
+    display: flex;
+    width: 80px;
+    padding-left: 32px;
+    border: none;
+}
+.THIS .new-referral_modal .slds-table td:last-child .slds-button__icon {
+    fill: #000;
+}
+.THIS .new-referral_modal .slds-table td:last-child .slds-button:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .parentCBCss .slds-form-element {
+    width: 150px;
+    float: left;
+    margin: 5px 15px;
+}
+.THIS .parentCBCss{
+    padding-left: 15px;
+}
+.THIS .referal-table thead tr th:first-child,
+.THIS .referal-table tbody tr td:first-child{
+    width: 220px;
+}
+.THIS  .slds-table.referal-table td {
+    white-space: normal;
+}
+.THIS .selectall span.slds-checkbox_faux {
+    float: right;
+    margin: 0 5px 0 0 !important;
+}
+.THIS .selectall span.slds-form-element__label {
+    float: left;
+    padding: 0 0 0 5px;
+}

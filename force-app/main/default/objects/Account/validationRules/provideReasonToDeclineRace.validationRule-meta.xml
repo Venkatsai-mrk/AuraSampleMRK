@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>provideReasonToDeclineRace</fullName>
+    <active>true</active>
+    <description>If decline to specify checkbox is true then provide Reason to Decline</description>
+    <errorConditionFormula>AND( NOT(Decline_to_Specify_Race__c) ,
+NOT(ISBLANK(TEXT(Reason_to_Decline_Race__c)))
+)</errorConditionFormula>
+    <errorDisplayField>Decline_to_Specify_Race__c</errorDisplayField>
+    <errorMessage>Decline to specify checkbox should be checked in case reason to decline is specified</errorMessage>
+</ValidationRule>

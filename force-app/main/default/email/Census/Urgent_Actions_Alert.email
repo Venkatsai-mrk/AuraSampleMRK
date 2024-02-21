@@ -1,0 +1,8 @@
+<p>Hi Team ,</p>
+
+<p>This Room - <a href="{!Rooms__c.Link}" >{!Rooms__c.Name} </a> needs some urgent actions to be performed.</p>
+
+<p><b>Details of urgent actions needed</b>: {!Rooms__c.Details_of_urgent_actions_needed__c}</p>
+
+<p>Thanks</p>
+Admin

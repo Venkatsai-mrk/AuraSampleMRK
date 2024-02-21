@@ -1,0 +1,585 @@
+<aura:component  controller="UpdateProcedureHandler"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">    
+    <aura:attribute name="isView" type="Boolean"/>
+    <aura:attribute name="AllFlag" type="Boolean" default="false"/> 
+    <aura:attribute name="AllFlag_Modfiers" type="Boolean" default="false"/> 
+    <aura:attribute name="newProcView" type="Boolean"/>  
+    <aura:attribute name="openProblem" type="Boolean"/> 
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="procedureRecordTypeFilter" type="String"/>
+    <aura:attribute name="bedRecordTypeFilter" type="String"/>
+    <aura:attribute name="roomRecordTypeFilter" type="String"/>
+    <aura:attribute name="suiteRecordTypeFilter" type="String"/>
+    <aura:attribute name="bedValue" type="String"/>
+    <aura:attribute name="roomValue" type="String"/>
+    <aura:attribute name="facilityValue" type="String"/>
+    <aura:attribute name="procedureName" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="selectRecordId" type="String"/> 
+    <aura:attribute name="ProcedureCodeLabel" type="String"/> 
+    <aura:attribute name="patientName" type="String"/> 
+    <aura:attribute name="selectRecordName" type="String"/> 
+    <aura:attribute name="mode" type="String" />
+    <aura:attribute name="AllFlag_Procedure" type="Boolean" default="true"/> 
+    <aura:attribute name="enableCareEpisode" type="Boolean" /> 
+    <aura:attribute name="recordDetail" type="String"/>
+    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="claimData" type="Object"/> 
+    <aura:attribute name ="RowId" type = "String" default=""/>
+    <aura:attribute name="modifierData" type="list"/>
+    <aura:attribute name="diagnosisData" type="list" default="[]"/>
+    <aura:attribute name="deleteDiagnosisData" type="list"/>
+    <aura:attribute name="claimType" type="list"/> 
+    <aura:attribute name="accountRelatedDiagnosisData" type="list"/>
+    <aura:attribute name="accountRelatedDiagnosisDataId" type="list"/>
+    <aura:attribute name="procedureRelatedDiagnosisDataId" type="list"/>
+    <aura:attribute name="codeCategory" type="list"/> 
+    <aura:attribute name="POSpicklist" type="list"/> 
+    <aura:attribute name="paymentType" type="List"/>
+    <aura:attribute name="careEpisodeSelectedRecord" type="Object" default=""/>
+    <aura:attribute name="parentProcedureSelectedRecord" type="Object" default=""/>
+    <aura:attribute name="surgeonSelectedRecord" type="Object" default=""/>
+    <aura:attribute name="bedSelectedRecord" type="Object" default=""/>
+    <aura:attribute name="roomSelectedRecord" type="Object" default=""/>
+    <aura:attribute name="facilitySelectedRecord" type="Object" default=""/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="duplicateModifier" type="Boolean" default="false" />
+    <aura:attribute name="isModifierCombination" type="Boolean" default="true"/>
+    <aura:attribute name="isDiagnosisCodeAvailableForThisAccount" type="Boolean" default="false"/>
+    <aura:attribute name="fieldSetData" type="List" />
+    <aura:attribute name="anesthesiaPicklistOptions" type="List" />
+    <aura:attribute name="consentCodePicklistOptions" type="List" />
+    <aura:attribute name="surgeonValue" type="String"/>
+    <aura:attribute name="practitionerRecordTypeFilter" type="String"/>
+    <aura:attribute name="parentProcedureValue" type="String"/>
+    <aura:attribute name="statusLst" type="list"/> 
+    <aura:attribute name="showConfirmation" type="Boolean" default="false" />
+    <aura:attribute name="errorMessage" type="string"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="ElixirOEM_ProblemColumnsEvent" type="c:ElixirOEM_ProblemColumnsEvent" />
+    <aura:handler event="c:diagnosisRemoveCmpEvent" action="{!c.renderDown}"/>
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.handleComponentEvent}"/> 
+    <aura:handler name="change" value="{!v.selectRecordId}" action="{!c.recordIdChange}"/>
+    <div class="parentCSS"  aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"  aria-describedby="modal-content-id-1" class="childCSS slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv new_procedure">
+                
+                <header class="slds-modal__header headerCSS ">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.mode} Procedure : {!v.procedureName}</h2>
+                    
+                </header>
+                
+                <div class="slds-modal__content slds-p-top_medium spinnerCSS" id="modal-content-id-1">
+                    <body>
+                        
+                        <div class="widthForAll slds-p-left_medium slds-p-right_medium">
+                            <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small p_name">
+                                    <label>Patient Name :</label> 
+                                    <div class="slds-m-top_small"></div>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name">
+                                    <lightning:input name="input1" value = "{!v.patientName}" disabled="true"/>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    
+                                    <div class="slds-m-top_small"></div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters"  id="TaskList2">
+                                <div class="slds-col slds-size_2-of-12 slds-m-top_small">
+                                    <label>Procedure Code</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name p-code slds-m-top_small">
+                                    <lightning:select onchange="{!c.handleCategoryChange}" value="{!v.recordDetail.codeCategorySelected}" disabled="{!v.AllFlag}" >
+                                        
+                                        <aura:iteration items="{!v.codeCategory}" var="item">
+                                            <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.codeCategorySelected}">                                               
+                                            </option> 
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <c:ElixirOEM_Procedure_GlobalSearch codeCategory = "{!v.recordDetail.codeCategorySelected}" AllFlag="{!v.AllFlag}"
+                                                                        selectRecordName = "{!v.recordDetail.procedureSelected}"  selectRecordDescription = "{!v.recordDetail.procedureDescription}"
+                                                                        selectRecordId="{!v.selectRecordId}" referenceCodeLabel="{!v.ProcedureCodeLabel}"/>                
+                                    <div class="slds-m-top_small"></div>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                                    <label>Procedure Description</label>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="text" disabled="{!v.AllFlag}"  value="{!v.recordDetail.procedureDescription}"/>
+                                    <div class="slds-m-top_small"></div>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        <div class="add-head">Add Modifiers</div>
+                        <div class="slds-p-around_medium">
+                            <table class="add-modi-table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Modifier</th>
+                                        <!--th>Description</th-->
+                                        <th>Notes</th>
+                                        <aura:if isTrue="{!v.AllFlag}">   
+                                            <aura:set attribute="else">
+                                                <th>Actions</th>
+                                            </aura:set>
+                                        </aura:if>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.modifierData}" var="parentInstance" indexVar="rowIndex">
+                                        <tr>
+                                            <th>{!rowIndex+1}</th>
+                                            <td><c:ModfierGlobalSearch AllFlag="{!v.AllFlag_Modfiers}" selectRecordName = "{!parentInstance.modfier}" codeCategory = "{!v.recordDetail.codeCategorySelected}"
+                                                                       modfierInstance = "{!parentInstance}"  selectReferenceCode="{!v.ProcedureCodeLabel}" modifierData="{!v.modifierData}" 
+                                                                       duplicateModifier="{!duplicateModifier}"/></td>
+                                            <!--td><lightning:input disabled="{!v.AllFlag_Modfiers}" type="text" name="" placeholder="" value="{!parentInstance.description}"/></td-->
+                                            <td><lightning:input  disabled="{!v.AllFlag_Modfiers}" type="text" name="" placeholder="" value="{!parentInstance.notes}"/></td>
+                                            
+                                            <aura:if isTrue="{!v.AllFlag}">                                                
+                                                <aura:set attribute="else">
+                                                    
+                                                    <td>
+                                                        <aura:if isTrue="{!lessthanorequal(v.modifierData.length,3)}">
+                                                            <a onclick="{!c.createObjectData}" data-value="{!rowIndex}">
+                                                                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                <span class="slds-assistive-text">Add Icon</span>
+                                                            </a> 
+                                                            <aura:set attribute="else">
+                                                                <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}" >
+                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                        </a>
+                                                    </td>
+                                                </aura:set>
+                                            </aura:if>
+                                            
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="add-head">Add Diagnosis Codes</div>
+                        <div class="slds-p-around_medium">
+                            <aura:if isTrue="{!not(empty(v.diagnosisData))}">
+                                <table class="add-modi-table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Diagnosis Code</th>
+                                            <th>Description</th>
+                                            <!-- <th>Diagnosis Pointer</th> -->
+                                            <th>Notes</th>
+                                            
+                                            <aura:if isTrue="{!v.AllFlag || !v.isDiagnosisCodeAvailableForThisAccount}">   
+                                                <aura:set attribute="else">
+                                                    <th>Actions</th>
+                                                </aura:set>
+                                            </aura:if>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.diagnosisData}" var="diagnosisInstance" indexVar="diagnosisRowIndex">   
+                                            <tr>
+                                                <th>{!diagnosisRowIndex+1}</th>
+                                                <!-- <td><lightning:input type="text" name="" disabled="true" value="{!diagnosisInstance.diagnosis}"/></td> -->
+                                                <td>
+                                                    <aura:if isTrue="{!v.AllFlag || !v.isDiagnosisCodeAvailableForThisAccount}">
+                                                        <lightning:input type="text" name="" disabled="true" value="{!diagnosisInstance.diagnosis}"/>
+                                                        
+                                                        <aura:set attribute="else">
+                                                            <c:diagnosisLookupComponentRCM 
+                                                                                        objectName="ElixirSuite__ICD_Codes__c" 
+                                                                                        fieldName="Name"
+                                                                                        selectedRecordId = "{!diagnosisInstance.Id}"
+                                                                                        selectedRecordName = "{!diagnosisInstance.diagnosis}"
+                                                                                        ICDSearchParam = "ICD 10"
+                                                                                        selectedRecordDescription = "{!diagnosisInstance.description}"
+                                                                                        accountId="{!v.accountId}"
+                                                                                        filterOnAccountId="true"
+                                                                                        value="{!diagnosisInstance.Id}"
+                                                                                        allDiagnosisData="{!v.diagnosisData}"           
+searchString="{!diagnosisInstance.diagnosis}"
+                                                                                        />
+                                                        </aura:set>
+                                                    </aura:if>
+                                                    
+                                                </td>
+                                                <td><lightning:input type="text"  disabled="{!v.AllFlag || !v.isDiagnosisCodeAvailableForThisAccount}"  value="{!diagnosisInstance.description}"/></td>   <!--onClick="{!c.RowUpdate}"-->
+                                                <!-- <td><lightning:select  variant="label-hidden" disabled="{!v.AllFlag}">
+                                                <option value="">Select an option...</option>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                                <option value="E">E</option>
+                                                <option value="F">F</option>
+                                                <option value="G">G</option>
+                                                <option value="H">H</option>
+                                                <option value="I">I</option>
+                                                <option value="J">J</option>
+                                                <option value="K">K</option>
+                                                <option value="L">L</option>
+                                            </lightning:select></td>  -->
+                                                <td><lightning:input type="text" disabled="{!v.AllFlag || !v.isDiagnosisCodeAvailableForThisAccount}"   value="{!diagnosisInstance.notes}"/></td>
+                                                
+                                                <!-- Display the delete record form -->
+                                                <aura:if isTrue="{!v.AllFlag || !v.isDiagnosisCodeAvailableForThisAccount}">   
+                                                    <aura:set attribute="else">
+                                                        <td>
+                                                            <aura:if isTrue="{!lessthanorequal(v.diagnosisData.length,7)}">
+                                                                <a onclick="{!c.callAddBlankRowInDiagnosisData}" data-value="{!diagnosisRowIndex}">
+                                                                    <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add" />
+                                                                    <span class="slds-assistive-text">Add Icon</span>
+                                                                </a>
+                                                                <aura:set attribute="else">
+                                                                    <lightning:buttonIcon size='large' iconName="utility:add" variant="bare" alternativeText="Add"
+                                                                                          disabled='true' />
+                                                                </aura:set>
+                                                            </aura:if>
+                                                            
+                                                            <a onclick="{!c.removeProcedureDiagnosis}" data-value="{!diagnosisInstance.Id}">   <!-- id="{!diagnosisInstance.Id}"-->
+                                                                <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                                <span class="slds-assistive-text">Delete Icon</span>
+                                                            </a>
+                                                        </td>
+                                                    </aura:set>
+                                                </aura:if>
+                                                
+                                                <!-- Display Lightning Data Service errors, if any -->
+                                                <aura:if isTrue="{!not(empty(v.recordError))}">
+                                                    <div class="recordError">
+                                                        {!v.recordError}</div>
+                                                </aura:if>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                                <aura:set attribute="else">
+                                    <div class="diagnosis-stmt">PLEASE ADD DIAGNOSIS</div> 
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <!-- <div class="slds-p-around_medium slds-p-top_none">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <p class="diagosis-text">**Please click on the diagnosis codes defined for the present from the list below to add it to the table above</p>
+                            </div>
+                        </div>
+                        <div class="slds-m-top_xx-small"></div>
+                        
+                        <div class="ar-diagnosis slds-gutters slds-clearfix">
+                            <aura:iteration items="{!v.accountRelatedDiagnosisData}" var="diagnosisInstance" indexVar="diagnosisRowIndex">
+                                <div class="slds-col slds-size_3-of-12">
+                                    <lightning:button variant="neutral" label="{!diagnosisInstance.Name}"  name="{!diagnosisRowIndex + '$'+diagnosisInstance.Id}"  
+                                                      onclick="{!c.addDiagnosisToProcedure }" disabled="{!diagnosisInstance.disabled}"/>
+                                </div>
+                            </aura:iteration>
+                        </div>
+                        
+                        <div class="slds-m-top_small slds-m-top_small"></div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_3-of-12 add-problem-btn">
+                                <lightning:button variant="brand" label="Add Problem &amp; Diagnosis" disabled="{!v.AllFlag}" onclick="{!c.openProcedure}" />
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.openProblem}">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <c:ElixirOEM_NewProblemInProcedure isView = "{!v.openProblem}" accountRelatedDiagnosisDataId = "{!v.accountRelatedDiagnosisDataId}"
+                                                                       accountRelatedDiagnosisData = "{!v.accountRelatedDiagnosisData}"
+                                                                       recordVal = "{!v.accountId}"/>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div> -->
+                        <div class="add-head">Procedure Details</div>
+                        <div class="slds-p-around_medium">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small ">
+                                    <label>Procedure start</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name ">
+                                    <lightning:input type="datetime" disabled="{!v.AllFlag}" value="{!v.recordDetail.procedureStart}"/>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">
+                                    <label>Procedure end</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name">
+                                    <lightning:input type="datetime" disabled="{!v.AllFlag}" value="{!v.recordDetail.procedureEnd}"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Place of service</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    
+                                    <lightning:select  value="{!v.recordDetail.placeOfService}" disabled="{!v.AllFlag}">
+                                        <!-- <option value="{!v.recordDetail.procedureEnd}" label="NONE"></option> NK21/02/23-->
+                                        <option value=" " label="NONE"></option>
+                                        <aura:iteration items="{!v.POSpicklist}" var="item">
+                                            <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.placeOfService}">                                               
+                                            </option> 
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Units/Duration</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="text" name="" value="{!v.recordDetail.unitsDuration}" disabled="{!v.AllFlag}"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-size_4-of-12 slds-p-top_xx-small slds-m-top_small">
+                                            <label>Status</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 p_name slds-m-top_small">
+                                            <lightning:select value="{!v.recordDetail.Status}" disabled="{!v.AllFlag}">
+                                                <aura:iteration items="{!v.statusLst}" var="item">
+                                                    <option value="{!item.value}" label="{!item.label}" selected="{!item.value == v.recordDetail.Status}">                                               
+                                                    </option> 
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-size_4-of-12 slds-p-top_xx-small slds-m-top_small">
+                                            <label>Is Processed</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 p_name slds-m-top_small">
+                                            <lightning:input type="text" disabled="true" value="N/A" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-size_4-of-12 slds-p-top_xx-small slds-m-top_small">
+                                            <label>Cancelation Reason</label>
+                                        </div>
+                                        <div class="slds-col slds-size_8-of-12 p_name slds-m-top_small h-50">
+                                            <lightning:textarea type="text" name="" value="{!v.recordDetail.cancelationReason}" disabled="{!v.AllFlag}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Claim Type</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name p-code claim-type slds-m-top_small">
+                                    <lightning:select value="{!v.recordDetail.claimType}" disabled="{!v.AllFlag}">
+                                        <option value="" label="NONE"> </option>
+                                        <aura:iteration items="{!v.claimType}" var="item">
+                                            <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.claimType}">                                               
+                                            </option> 
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Pre-auth Code</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="text" disabled="{!v.AllFlag}" value="{!v.recordDetail.preAuthCode}" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Claim Number</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="text" disabled="true" value="{!v.claimData.Name}" />
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Is Ready For Billing</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="checkbox" disabled="{!v.AllFlag}" id="checkbox-unique-id-81" checked="{!v.recordDetail.isReadyForBilling}"  />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Claim Generated</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="checkbox" disabled="true" id="" checked="{!v.recordDetail.claimGenerated}"/>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Claim Status</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name p-code claim-type slds-m-top_small">
+                                    <lightning:input type="text" disabled="true" value="{!v.claimData.ElixirSuite__Claim_Status__c}" />
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <aura:if isTrue="{!v.enableCareEpisode}">
+                                        <label>Care Episode</label>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small"> 
+                                    <aura:if isTrue="{!v.enableCareEpisode}">
+                                        <c:lookupComponent
+                                                           objectName="ElixirSuite__Visits__c"
+                                                           fieldName="Name"
+                                                           value = "{!v.recordDetail.careEpisode}"
+                                                           disabled="{!v.AllFlag}"
+                                                           filterClause = "ElixirSuite__Status__c='Active'"
+                                                           selectedRecord = "{!v.careEpisodeSelectedRecord}"
+                                                           accountId="{!v.accountId}"
+                                                           />
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                    <label>Is Billable</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                    <lightning:input type="checkbox" disabled="{!v.AllFlag}" id="" checked="{!v.recordDetail.isBillable}" onchange="{!c.isBillableChange}"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <aura:if isTrue="{!v.recordDetail.isBillable}">
+                                    <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                        <label>Type of Payment</label>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning:select name="" label="" value="{!v.recordDetail.typeOfPayment}" disabled="{!v.AllFlag}">
+                                            <!--option value="" label="NONE"> </option-->
+                                            <aura:iteration items="{!v.paymentType}" var="item">
+                                                <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.typeOfPayment}">                                               
+                                                </option> 
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!not(empty(v.fieldSetData))}">
+                                    <aura:iteration items="{!v.fieldSetData}" var="field">
+                                        <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                            <label>{!field.label}</label>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                            <aura:if isTrue="{!field.fieldType == 'PICKLIST'}">
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Anesthesia_code__c'}">
+                                                    <div>
+                                                        <lightning:select name="{!field.value}" value="{!v.recordDetail.anesthesiaCode}" disabled="{!v.AllFlag}">
+                                                            <option value="">None</option>
+                                                            <aura:iteration items="{!v.anesthesiaPicklistOptions}" var="item">
+                                                                <option value="{!item.value}" label="{!item.label}">                                               
+                                                                </option> 
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Consent_code__c'}">
+                                                    <div>
+                                                        <lightning:select name="{!field.value}" value="{!v.recordDetail.consentCode}" disabled="{!v.AllFlag}">
+                                                            <option value="">None</option>
+                                                            <aura:iteration items="{!v.consentCodePicklistOptions}" var="item">
+                                                                <option value="{!item.value}" label="{!item.label}">                                               
+                                                                </option> 
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                    </div>
+                                                </aura:if>
+                                            </aura:if>
+                                            <aura:if isTrue="{!field.fieldType == 'REFERENCE'}">
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Parent_Procedure__c'}">
+                                                    <div>
+                                                        <c:lookupComponent iconName="" disabled="{!v.AllFlag}" objectName="ElixirSuite__Procedure__c" fieldName="Name" selectedRecord = "{!v.parentProcedureSelectedRecord}" value = "{!v.recordDetail.parentProcedureValue}" filterClause = "{!v.procedureRecordTypeFilter}" searchString = "{!v.parentProcedureValue}" />
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Surgeon__c'}">
+                                                    <div>
+                                                        <c:lookupComponent iconName="" disabled="{!v.AllFlag}" objectName="Contact" fieldName="Name" selectedRecord = "{!v.surgeonSelectedRecord}" value = "{!v.recordDetail.surgeonValue}" filterClause = "{!v.practitionerRecordTypeFilter}" searchString = "{!v.surgeonValue}" />
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Bed_1__c'}">
+                                                    <div>
+                                                        <c:lookupComponent iconName="" disabled="{!v.AllFlag}" objectName="ElixirSuite__Location__c" selectedRecord = "{!v.bedSelectedRecord}" fieldName="Name" value = "{!v.recordDetail.bedValue}" filterClause = "{!v.bedRecordTypeFilter}" searchString = "{!v.bedValue}" />
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Room_1__c'}">
+                                                    <div>
+                                                        <c:lookupComponent iconName="" disabled="{!v.AllFlag}" objectName="ElixirSuite__Location__c" selectedRecord = "{!v.roomSelectedRecord}" fieldName="Name" value = "{!v.recordDetail.roomValue}" filterClause = "{!v.roomRecordTypeFilter}" searchString = "{!v.roomValue}" />
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!field.value == 'ElixirSuite__Facility_1__c'}">
+                                                    <div>
+                                                        <c:lookupComponent iconName="" disabled="{!v.AllFlag}" objectName="ElixirSuite__Location__c" selectedRecord = "{!v.facilitySelectedRecord}" fieldName="Name" value = "{!v.recordDetail.facilityValue}" filterClause = "{!v.suiteRecordTypeFilter}" searchString = "{!v.facilityValue}" />
+                                                    </div>
+                                                </aura:if>
+                                            </aura:if>
+                                        </div>
+                                    </aura:iteration>
+                                </aura:if>
+
+                                
+                                    <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small slds-m-top_small">
+                                        <label>Notes</label>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12 p_name slds-m-top_small">
+                                        <lightning:textarea type="text" name="" value="{!v.recordDetail.Notes}" disabled="{!v.AllFlag}"/>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                        
+                        <aura:if isTrue="{!! v.loaded }">
+                            <lightning:spinner alternativeText="Loading" />
+                        </aura:if>
+                    </body>
+                </div>
+                <footer class="slds-modal__footer">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">  
+                            <span class = "bottomfooter">
+                                <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.closeModel }" />                           
+                                <!--<lightning:button variant="neutral" label="Save &#38; New" title="Save &#38; New" onclick="{!c.updateAndNew}" disabled="{!v.AllFlag}"/> NK21/02/23-->                       
+                                <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.updateRecord }" disabled="{!v.AllFlag}"/>
+                            </span>
+                        </div>
+                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+        <!-- Confirmation popup -->
+        <aura:if isTrue="{!v.showConfirmation}">
+             <div class = "bottomsection">
+             <div role="dialog" class="slds-modal slds-fade-in-open ">
+             <div class="slds-modal__container">
+                 <header class="slds-modal__header">
+                     <h1 class="slds-text-heading--medium">Confirmation</h1>
+                 </header>
+                 <div class="slds-modal__content slds-p-around--medium">
+                    <center style="font-weight: normal">{!v.errorMessage}</center>
+                 </div>
+                 <footer class="slds-modal__footer">
+                     <lightning:button variant="Neutral" name='No' label='No' onclick='{!c.handleNo}'/>
+                     <lightning:button  variant="brand" name='Yes' label='Yes' onclick='{!c.handleYes}'/>
+                 </footer>
+                 
+             </div>
+         </div>
+                 </div>
+         <div class="slds-backdrop slds-backdrop--open"></div> 
+            
+        </aura:if>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </div>
+</aura:component>

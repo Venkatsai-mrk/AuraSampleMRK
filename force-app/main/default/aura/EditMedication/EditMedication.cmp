@@ -1,0 +1,626 @@
+<aura:component controller="EditMedicationApexController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="SelectedRecords" type="List" />
+     <aura:attribute name="SelectedRec" type="String" />
+    <!--aura:attribute name="SelectedRecords" type="Map" default="{ a: 'label1', b: 'label2' }" /-->
+    <aura:attribute name="ShowEditable" type="Boolean" default="false"/>
+    <aura:attribute type="id" name="recordId"/>
+    <aura:attribute type="id" name="accId"/>
+    <aura:attribute name="frequencyPicklistValues" type="String[]" default="Name"/>
+    <aura:attribute name="dosageFormPicklistValues" type="String[]" default="Name"/>
+    <aura:attribute name="typePicklistValues" type="String[]" default="Name"/>
+    <aura:attribute name="RepeatPicklistValues" type="String[]" />
+    <aura:attribute name="DosagePicklistValues" type="String[]" default="Name"/>
+    <aura:attribute name="DaysPicklistValues" type="String[]" />
+    <aura:attribute name="OpenPopUp" type="Boolean" default="true"/>
+    <aura:attribute name="DaysRepetitionList" type="Integer[]" />
+    <aura:attribute name="RouteList" type="String[]" />
+    <aura:attribute name="jsonList" type="String" default="Name"/>
+    <aura:attribute name="jsonListCopy" type="String" />
+    <aura:attribute name="jsonSize" type="String" />
+    <aura:attribute name="AllUsers" type="List" />
+    <aura:attribute name="OrderedViaList" type="List" />
+    <aura:attribute name="SelectedUser" type="String" />
+    <aura:attribute name="SelectedVia" type="String" />
+    <aura:attribute name="isDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="viewflag" type="Boolean" default="true"/>
+    <!--Strength attributes-->
+    <aura:attribute name="StrengthValues" type="String[]" default="Name"/>
+    
+    
+    <!--Units attributes-->
+    <aura:attribute name="UnitsValues" type="String[]" default="Name"/>
+    <!-- Modal attributes-->
+   
+    
+    <!--NoOfTimes attributes-->
+    <aura:attribute name="everyHourValues" type="String[]" default="['1','2','3','4','5','6','7','8','9','10','11','12']"/>
+    
+    <aura:if isTrue = "{!v.OpenPopUp}">
+    
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss">
+        <div class="slds-modal__container myCustomView">
+		           
+            <header class="slds-modal__header headercls">
+                View Medication
+                
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{! c.hideExampleModal }"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"
+                                      />
+            </header>
+            
+            
+              <div class="slds-modal__content slds-p-around_medium clsLabel" id="modal-content-id-1">
+                 <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                <div class="slds-box custom-box" >
+                 <aura:if isTrue="{!not(v.jsonList.types == 'Action Order')}">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>
+                                <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                <lightning:input aura:id="field" type="textarea" label="Medication Name" name="medicationName" value="{!v.jsonList.medicationName}" onblur="{! c.recordEdit}" disabled="true"/>
+                            </span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">                                                
+                           
+                            <span>
+<span>
+                                <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                <lightning:input aura:id="field" type="textarea" label="Dosage" name="Dosage" value="{!v.jsonList.dosageForm}" onblur="{! c.recordEdit}" disabled="{!v.viewflag}"/>
+                            </span>
+                                <!--
+                                <lightning:select required="true" aura:id="field" label="Select Dosage" name="dosageForm" onchange="{!c.recordEdit}" value="{!v.jsonList.dosageForm}" disabled="{!v.viewflag}">
+                                   
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.dosageFormPicklistValues}" var="item">
+                                        <option value="{!item}" selected="{!item == v.jsonList.dosageForm}">
+                                            {!item}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select> -->
+                            </span>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>
+                                <lightning:select label="Select Type" name="types" value="{!v.jsonList.types}" disabled="true">      
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.typePicklistValues}" var="item">
+                                        <option value="{!item}" selected="{!item == v.jsonList.types}">
+                                            {!item}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </span>
+                        </div>      
+                       
+                       
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_4-of-12">
+<span>
+                                <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                <lightning:input aura:id="field" type="textarea" label="Route" name="Route" value="{!v.jsonList.Route}" onblur="{! c.recordEdit}" disabled="{!v.viewflag}"/>
+                            </span>
+                            <!--
+                            <lightning:select required="true" aura:id="field" label="Route" name="Route" value="{!v.jsonList.Route}" onchange="{!c.recordEdit}" disabled="{!v.viewflag}">  
+                                <option value="">Choose one...</option>
+                                <aura:iteration items="{!v.RouteList}" var="item">
+                                    <option value="{!item}" selected="{!item == v.jsonList.Route}">
+                                        {!item}
+                                    </option>
+                                </aura:iteration>
+                            </lightning:select>  -->  
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <span>
+                                <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                <lightning:input required="true" aura:id="field" type="Date" name="startDate" label="Start Date" value="{!v.jsonList.startDate}" onchange="{!c.recordEdit}" disabled="{!v.viewflag}"/>
+                            </span>  
+                        </div>
+                        <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                            <span>
+                                <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                <lightning:input type="Checkbox"  name="afterDischarge" label="After Discharge" checked="{!v.jsonList.afterDischarge}" disabled="{!v.viewflag}"  onchange="{!c.utilityEventMethod}"/>
+                            </span>  
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>
+                            <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                            <lightning:input  required="true" aura:id="field" type="text" name="reasonLabel" label="Reason" value="{!v.jsonList.reasonLabel}" onblur="{!c.recordEdit}" disabled="{!v.viewflag}"/>
+                        </span>  
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span>
+                            <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                            <lightning:input type="text"  name="Warning" label="Warning" value="{!v.jsonList.Warning}" onblur="{!c.recordEdit}" disabled="{!v.viewflag}"/>
+                        </span>  
+                    </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                       
+                        <div class="slds-col slds-size_4-of-12">
+                            <aura:if isTrue="{!v.jsonList.types == 'Taper'}">
+                                <lightning:select required="true" aura:id="field" label="Days" onchange="{!c.DaysSelectionEvent}" value="{!v.jsonList.dispenseExpectedSupplyDuration}" disabled="{!v.viewflag}">                
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.DaysPicklistValues}" var="item">
+                                        <option value="{!item}" selected="{!item == v.jsonList.dispenseExpectedSupplyDuration}">
+                                            {!item}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:if>
+                             <aura:if isTrue="{!v.jsonList.types == 'PRN'}">
+                                <lightning:select required="true" aura:id="field" label="Days" onchange="{!c.DaysSelectionEvent}" value="{!v.jsonList.dispenseExpectedSupplyDuration}" disabled="{!v.viewflag}">                
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.DaysPicklistValues}" var="item">
+                                        <option value="{!item}" selected="{!item == v.jsonList.dispenseExpectedSupplyDuration}">
+                                            {!item}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:if>
+                        </div>  
+                        <aura:if isTrue="{!v.jsonList.types == 'Taper'}">
+                          <div class="slds-col slds-size_4-of-12">                                  
+                       <lightning:input type="Date" disabled="true" label="End Date" value="{!v.jsonList.endDate}"/>                                                
+                          </div>
+                        </aura:if>
+                       
+                       
+                    </div>
+                    <br/>
+                    <aura:if isTrue="{!v.jsonList.types == 'Taper'}">
+                       
+                        <aura:iteration items = "{!v.jsonList.Days}" var="itemInside" indexVar="index">
+                           
+                            <div class="slds-gutters slds-grid">
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                    <lightning:select required="true" aura:id="field" label= "{! 'Day '+ add(index,1) +' Frequency'}" name="{! index}" onchange="{!c.GetFrequency}" value="{!itemInside.Repeat}" disabled="{!v.viewflag}">      
+                                        <aura:iteration items="{!v.RepeatPicklistValues}" var="item1">
+                                            <option value="{!item1}" selected="{!item1 == itemInside.Repeat}">
+                                                {!item1}
+                                            </option>
+                                        </aura:iteration>  
+                                    </lightning:select>
+                                   
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                   
+                                    <aura:if isTrue="{!itemInside.Repeat == '\''+'n'+'\''+ ' times a day'}">  
+                                        <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">      
+                                           
+                                            <aura:iteration items="{!v.DosagePicklistValues}" var="itemDays">  
+                                                <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                    {!itemDays}
+                                                </option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                                    <aura:if isTrue="{!itemInside.Repeat != '\''+'n'+'\''+ ' times a day'}">
+                                       
+                                        <aura:if isTrue="{!itemInside.Repeat == 'After every '+ '\''+ 'n' +'\''+ ' hours'}">
+                                            <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">  
+                                               
+                                                <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                    <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                        {!itemDays}
+                                                    </option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                            <aura:set attribute="else">
+                                             
+                                                <lightning:select required="true" aura:id="field" label="Times" name="{! index}" disabled="true" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" >  
+                                                   
+                                                    <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                        <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                            {!itemDays}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:set>
+                                        </aura:if>
+                                       
+                                    </aura:if>
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                    <ui:outputText value="{!itemInside.textMessage}"/>
+                                </div>  
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_4-of-12">
+                                    &nbsp;
+                                </div>
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                       
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">    
+                                            <aura:iteration items="{!itemInside.times}" var="itemInside2" indexVar="index1">
+                                                <lightning:input required="true" aura:id="field" type="Time" label="Start Time" name="{! index1 +'$' +index +'$START TIME'}" onchange="{!c.editInsideData}" value="{!itemInside2}" disabled="{!v.viewflag}"/>                                                                    
+                                            </aura:iteration>
+                                           
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Strength}" var="itemInside2" indexVar="index1">
+                                               
+                                                <lightning:input aura:id="fieldstrength" required="true" pattern="[a-zA-Z0-9 ]*" messageWhenPatternMismatch="Special Characters not allowed." label="Strength" type="text" name="{! index1 +'$' +index +'$STRENGTH'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                               
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Dosage}" var="itemInside2" indexVar="index1">
+                                                <lightning:input aura:id = "field" required="true" label="Dosage" type="number" step="0.001" name="{! index1 +'$' +index +'$DOSAGE'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls height-css">
+                                            <aura:iteration items="{!itemInside.Units}" var="itemInside2" indexVar="index1">
+                                               
+                                                <lightning:select required="true" label="Units" name="{! index1 +'$' +index +'$UNITS'}" onchange="{!c.editInsideData}"  value="{!itemInside2}" disabled="{!v.viewflag}">
+                                                   
+                                                    <aura:iteration items="{!v.UnitsValues}" var="items2" >
+                                                       
+                                                        <option selected= "{!items2 == itemInside2}">
+                                                            {!items2}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:iteration>
+                                        </div>
+                                       
+                                    </div>
+                                   
+                                </div>
+                               
+                               
+                            </div>
+                           
+                        </aura:iteration>
+                    </aura:if>
+                   
+                    <aura:if isTrue="{!v.jsonList.types == 'PRN'}">
+                       
+                       <aura:iteration items = "{!v.jsonList.Days}" var="itemInside" indexVar="index">
+                           
+                            <div class="slds-gutters slds-grid">
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                    <lightning:select required="true" aura:id="field" label= "{! 'Day '+ add(index,1) +' Frequency'}" name="{! index}" onchange="{!c.GetFrequency}" value="{!itemInside.Repeat}" disabled="{!v.viewflag}">      
+                                        <aura:iteration items="{!v.RepeatPicklistValues}" var="item1">
+                                            <option value="{!item1}" selected="{!item1 == itemInside.Repeat}">
+                                                {!item1}
+                                            </option>
+                                        </aura:iteration>  
+                                    </lightning:select>
+                                   
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                   
+                                    <aura:if isTrue="{!itemInside.Repeat == '\''+'n'+'\''+ ' times a day'}">  
+                                        <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">      
+                                           
+                                            <aura:iteration items="{!v.DosagePicklistValues}" var="itemDays">  
+                                                <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                    {!itemDays}
+                                                </option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                                    <aura:if isTrue="{!itemInside.Repeat != '\''+'n'+'\''+ ' times a day'}">
+                                       
+                                        <aura:if isTrue="{!itemInside.Repeat == 'After every '+ '\''+ 'n' +'\''+ ' hours'}">
+                                            <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">  
+                                               
+                                                <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                    <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                        {!itemDays}
+                                                    </option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                            <aura:set attribute="else">
+                                             
+                                                <lightning:select required="true" aura:id="field" label="Times" name="{! index}" disabled="true" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" >  
+                                                   
+                                                    <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                        <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                            {!itemDays}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:set>
+                                        </aura:if>
+                                       
+                                    </aura:if>
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                    <ui:outputText value="{!itemInside.textMessage}"/>
+                                </div>  
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_4-of-12">
+                                    &nbsp;
+                                </div>
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                       
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">    
+                                            <aura:iteration items="{!itemInside.times}" var="itemInside2" indexVar="index1">
+                                                <lightning:input required="true" aura:id="field" type="Time" label="Start Time" name="{! index1 +'$' +index +'$START TIME'}" onchange="{!c.editInsideData}" value="{!itemInside2}" disabled="{!v.viewflag}"/>                                                                    
+                                            </aura:iteration>
+                                           
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Strength}" var="itemInside2" indexVar="index1">
+                                               
+                                                <lightning:input aura:id="fieldstrength" required="true" pattern="[a-zA-Z0-9 ]*" messageWhenPatternMismatch="Special Characters not allowed." label="Strength" type="text" name="{! index1 +'$' +index +'$STRENGTH'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                               
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Dosage}" var="itemInside2" indexVar="index1">
+                                                <lightning:input aura:id = "field" required="true" label="Dosage" type="number" step="0.001" name="{! index1 +'$' +index +'$DOSAGE'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls height-css">
+                                            <aura:iteration items="{!itemInside.Units}" var="itemInside2" indexVar="index1">
+                                               
+                                                <lightning:select required="true" label="Units" name="{! index1 +'$' +index +'$UNITS'}" onchange="{!c.editInsideData}"  value="{!itemInside2}" disabled="{!v.viewflag}">
+                                                   
+                                                    <aura:iteration items="{!v.UnitsValues}" var="items2" >
+                                                       
+                                                        <option selected= "{!items2 == itemInside2}">
+                                                            {!items2}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:iteration>
+                                        </div>
+                                       
+                                    </div>
+                                   
+                                </div>
+                               
+                               
+                            </div>
+                           
+                        </aura:iteration>
+                    </aura:if>
+                    </aura:if>
+                       <aura:if isTrue="{!v.jsonList.types == 'Action Order'}">
+                     <div class="slds-grid slds-gutters">
+                                     <div class="slds-col slds-size_4-of-12">
+                                         <span>
+                                             <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                             <lightning:input disabled="true" type="text" label="Medication Name" name="medicationName" value="{!v.jsonList.medicationName}"/>
+                                         </span>
+                                     </div>
+                                     <div class="slds-col slds-size_4-of-12">
+                                         <span>
+                                             <lightning:select label="Select Type" name="types" value="{!v.jsonList.types}" disabled="true">      
+                                                 <option value="">Choose one...</option>
+                                                 <aura:iteration items="{!v.typePicklistValues}" var="item">
+                                                     <option value="{!item}" selected="{!v.jsonList.types}">
+                                                         {!item}
+                                                     </option>
+                                                 </aura:iteration>
+                                             </lightning:select>
+                                         </span>
+                                 </div>
+                                     <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                         <lightning:input type="Checkbox" label="Show in MAR/MOR" checked="{!v.jsonList.MARdisplay}" onchange = "{!c.utilityEventMethod}"/>
+                                     </div>                                        
+                                 </div>
+
+                                 <div class="slds-grid slds-gutters">
+                                     <div class="slds-col slds-size_4-of-12">
+                                         <span>
+                                             <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                             <lightning:input type="Date" required="true" aura:id="fieldAction" name="startDate" onchange="{!c.recordEdit}" label="Start Date" value="{!v.jsonList.startDate}"/>
+                                         </span>  
+                                     </div>
+                                     <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                         <span>
+                                             <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                             <lightning:input type="Checkbox" label="After Discharge" checked="{!v.jsonList.afterDischarge}" onchange = "{!c.utilityEventMethod}"/>
+                                         </span>  
+                                     </div>
+                                     <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                         
+                                         <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                         <lightning:input type="Checkbox" label="PRN" checked="{!v.jsonList.PRNdisplay}" onchange = "{!c.utilityEventMethod}"/>
+                                     </div>
+                                 </div>
+                                        <div class="slds-grid slds-gutters">
+                                                            
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                                  
+                                                                   <lightning:select required="true" aura:id="field" label="Days" onchange="{!c.DaysSelectionEvent}" value="{!v.jsonList.dispenseExpectedSupplyDuration}" disabled="{!v.viewflag}">                
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.DaysPicklistValues}" var="item">
+                                        <option value="{!item}" selected="{!item == v.jsonList.dispenseExpectedSupplyDuration}">
+                                            {!item}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select>                                    
+                                                                   
+                                                                </div>
+                                                        </div>
+                                                       
+                                                       
+                                                            
+                                                                <!--aura:if isTrue="{! item3.Id == rec.Id}"-->
+                                                                     <aura:iteration items = "{!v.jsonList.Days}" var="itemInside" indexVar="index">
+                           
+                            <div class="slds-gutters slds-grid">
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                    <lightning:select required="true" aura:id="field" label= "{! 'Day '+ add(index,1) +' Frequency'}" name="{! index}" onchange="{!c.GetFrequency}" value="{!itemInside.Repeat}" disabled="{!v.viewflag}">      
+                                        <aura:iteration items="{!v.RepeatPicklistValues}" var="item1">
+                                            <option value="{!item1}" selected="{!item1 == itemInside.Repeat}">
+                                                {!item1}
+                                            </option>
+                                        </aura:iteration>  
+                                    </lightning:select>
+                                   
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 questionCSS">
+                                   
+                                   
+                                    <aura:if isTrue="{!itemInside.Repeat == '\''+'n'+'\''+ ' times a day'}">  
+                                        <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">      
+                                           
+                                            <aura:iteration items="{!v.DosagePicklistValues}" var="itemDays">  
+                                                <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                    {!itemDays}
+                                                </option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:if>
+                                    <aura:if isTrue="{!itemInside.Repeat != '\''+'n'+'\''+ ' times a day'}">
+                                       
+                                        <aura:if isTrue="{!itemInside.Repeat == 'After every '+ '\''+ 'n' +'\''+ ' hours'}">
+                                            <lightning:select required="true" aura:id="field" label="Times" name="{! index}" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" disabled="{!v.viewflag}">  
+                                               
+                                                <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                    <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                        {!itemDays}
+                                                    </option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                            <aura:set attribute="else">
+                                             
+                                                <lightning:select required="true" aura:id="field" label="Times" name="{! index}" disabled="true" onchange="{!c.GetTimes}" value="{!itemInside.Dosage_Instruction}" >  
+                                                   
+                                                    <aura:iteration items="{!v.everyHourValues}" var="itemDays">  
+                                                        <option value="{!itemDays}" selected="{!itemDays == itemInside.Dosage_Instruction}">
+                                                            {!itemDays}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:set>
+                                        </aura:if>
+                                       
+                                    </aura:if>
+                                </div>
+                               
+                                <div class="slds-col slds-size_4-of-12 slds-p-top_large">
+                                    <ui:outputText value="{!itemInside.textMessage}"/>
+                                </div>  
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_4-of-12">
+                                    &nbsp;
+                                </div>
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div class="slds-grid slds-gutters">
+                                       
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">    
+                                            <aura:iteration items="{!itemInside.times}" var="itemInside2" indexVar="index1">
+                                                <lightning:input required="true" aura:id="field" type="Time" label="Start Time" name="{! index1 +'$' +index +'$START TIME'}" onchange="{!c.editInsideData}" value="{!itemInside2}" disabled="{!v.viewflag}"/>                                                                    
+                                            </aura:iteration>
+                                           
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Strength}" var="itemInside2" indexVar="index1">
+                                            
+                                                <lightning:input aura:id="fieldstrength" required="true" pattern="[a-zA-Z0-9 ]*" messageWhenPatternMismatch="Special Characters not allowed." label="Strength" type="text" name="{! index1 +'$' +index +'$STRENGTH'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                               
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls">
+                                            <aura:iteration items="{!itemInside.Dosage}" var="itemInside2" indexVar="index1">
+                                                <lightning:input aura:id = "field" required="true" label="Dosage" type="number" step="0.001" name="{! index1 +'$' +index +'$DOSAGE'}" value="{!itemInside2}" onblur="{!c.editInsideData}" disabled="{!v.viewflag}"/>
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 starttime-cls height-css">
+                                            <aura:iteration items="{!itemInside.Units}" var="itemInside2" indexVar="index1">
+                                               
+                                                <lightning:select required="true" label="Units" name="{! index1 +'$' +index +'$UNITS'}" onchange="{!c.editInsideData}"  value="{!itemInside2}" disabled="{!v.viewflag}">
+                                                   
+                                                    <aura:iteration items="{!v.UnitsValues}" var="items2" >
+                                                       
+                                                        <option selected= "{!items2 == itemInside2}">
+                                                            {!items2}
+                                                        </option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </aura:iteration>
+                                        </div>
+                                       
+                                    </div>
+                                   
+                                </div>
+                               
+                               
+                            </div>
+                           
+                        </aura:iteration>
+                                                                <!--/aura:if-->
+                                                            
+
+                                                          </aura:if>
+                                       
+                 
+                   
+                    <br/>
+                </div>
+               
+            </div>
+            <footer class="slds-modal__footer footercls">
+                <div class="slds-grid slds-gutters" >
+               <!--div class="slds-col slds-size_3-of-12" aura:id = "orderby"> 
+                              
+                                <lightning:select required="true" value ="{!v.SelectedUser}" aura:id="field" label="Ordered By" disabled="{!v.viewflag}">
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.AllUsers}" var="u">
+                                        <option value="{!u.Id}">
+                                            {!u.Name}
+                                        </option>
+                                    </aura:iteration>
+                                    
+                                </lightning:select>
+                                   
+                            </div>
+                           
+                            <div class="slds-col slds-size_3-of-12 slds-form-element" aura:id = "ordervia"> 
+                                 <lightning:select required="true" value="{!v.SelectedVia}" aura:id="field" label="Ordered Via" disabled="{!v.viewflag}">
+                                    <option value="">Choose one...</option>
+                                    <aura:iteration items="{!v.OrderedViaList}" var ="rec">
+                                        <option value="{!rec}">
+                                            {!rec}
+                                        </option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                
+                            </div>
+                            <div class="slds-col slds-size_3-of-12"> &nbsp;</div>
+                    <div aura:id="buttons-cls" class="slds-col slds-size_3-of-12 slds-p-top_medium"-->   
+                      <div class="slds-col slds-size_12-of-12 slds-text-align--center" aura:id = "orderby"> 
+                        <lightning:button class="btn-cls" variant ="neutral" label ="Close" onclick = "{!c.hideExampleModal}" />  
+                    </div>
+                        <!--lightning:button class="btn-cls" variant="brand" label="Submit" disabled="{! or( v.isDisabled,v.viewflag)}" type="submit" onclick = "{!c.Save}" aura:id = "submitid"/-->         
+                    </div>
+               
+                
+            </footer>
+        </div>
+        
+        
+    </section>
+    </aura:if>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    
+</aura:component>

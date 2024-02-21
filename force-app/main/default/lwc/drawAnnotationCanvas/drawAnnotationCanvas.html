@@ -1,0 +1,248 @@
+<!--
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+-->
+
+<template>
+    <template if:false={hideToolbar}>
+        <div class="slds-builder-toolbar padding w_100" role="toolbar">
+            <div class=" slds-text-align_right slds-builder-toolbar__item-group w_100 slds-float_right" aria-label="Edit actions" >
+                <!--First button group containing- save canvas, delete and select icon buttons-->
+<div class="slds-text-align_right w_100 slds-float_right">
+                <lightning-button-group class="canvasButtonGroup">
+                    <!--Save canvas button-->
+                    <!--<lightning-button label="Save Canvas" title="Save Canvas" onclick={handleSaveClick}></lightning-button>-->
+
+                    <!--Delete selection button-->
+
+                    <button class="slds-button slds-button_icon canvasIconButton" title="Delete Selection" onclick={handleDeleteClick}>
+                        <lightning-icon icon-name="utility:delete" alternative-text="Delete Selection" size="x-small" title="Delete Selection">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Delete Selection</span>
+                    </button>
+
+
+                    <!--Sample Select stateful button-->
+                    <template if:false={selected.select}>
+                        <!--selected.select is false meaning button has not been clicked-->
+                        <!--give button white background and icon without any variant attribute-->
+
+                        <button class="slds-button slds-button_icon canvasIconButtonLast" title="Select" aria-pressed={selected.select} onclick={handleSelectionClick}>
+                            <lightning-icon icon-name="utility:touch_action" alternative-text="Select" size="x-small" title="Select">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Select</span>
+                        </button>
+                    </template>
+
+                    <template if:true={selected.select}>
+                        <!--selected.select is true meaning button has been clicked-->
+                        <!--give button a background color and icon an inverse variant(making icon white) to show selected state-->
+                        <button class="slds-button slds-button_icon canvasIconButtonLast canvasiconBg" title="Select" aria-pressed={selected.select} onclick={handleSelectionClick}>
+                            <lightning-icon icon-name="utility:touch_action" variant="inverse" alternative-text="Select" size="x-small" title="Select">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Select</span>
+                        </button>
+                    </template>
+
+                </lightning-button-group>
+
+                <!--Second button group containing- a button menu, pencil & text tool icon button-->
+                <lightning-button-group class="canvasButtonGroup">
+                    <!--button menu for configuring pencil and text tool-->
+                    <lightning-button-menu icon-name="utility:settings" menu-alignment="auto" class="toolbar-settings-menu chinuButton">
+                        <lightning-menu-subheader label="Object Settings"></lightning-menu-subheader>  
+                        <lightning-menu-divider variant="compact"></lightning-menu-divider>
+
+                        <lightning-tile label="Color Settings" class="toolbar-settings-colors toolbar-settings-tile">
+                            <lightning-input type="color"
+                                name="input-fill-color"
+                                label="Fill Color"
+                                value={_fillColor}
+                                onchange={handleFillColorChange}>
+                            </lightning-input>
+                            <lightning-input type="color"
+                                name="input-line-color"
+                                label="Line Color"
+                                value={_lineColor}
+                                onchange={handleLineColorChange}>
+                            </lightning-input>
+                        </lightning-tile>
+                        
+                        <lightning-menu-divider variant="compact"></lightning-menu-divider>
+
+                        <lightning-tile label="Line Settings" class="toolbar-settings-line toolbar-settings-tile">
+                            <lightning-input type="number"
+                                name="input-line-width"
+                                label="Line Width"
+                                value={_lineWidth}
+                                variant="label-inline"
+                                onchange={handleLineWidthChange}>
+                            </lightning-input>
+                        </lightning-tile>
+
+                        <lightning-menu-divider variant="compact"></lightning-menu-divider>
+
+                        <lightning-tile label="Text Settings" class="toolbar-settings-text toolbar-settings-tile">
+                            <lightning-input type="number"
+                                name="input-text-size"
+                                label="Text Size"
+                                value={fontOptions.fontSize}
+                                variant="label-inline"
+                                onchange={handleTextSizeChange}>
+                            </lightning-input>
+                            <lightning-combobox name="input-font-family"
+                                label="Text Font Family"
+                                value={fontOptions.fontFamily}
+                                variant="label-inline"
+                                placeholder="Font Family"
+                                dropdown-alignment="right"
+                                options={currentFontFamilyOptions}
+                                onchange={handleFontFamilyChange}>
+                            </lightning-combobox>
+
+                        </lightning-tile>
+
+                    </lightning-button-menu>
+
+                    <!--Pencil stateful button-->
+                    <template if:false={selected.drawing}>
+                        <!--selected.drawing is false meaning button has not been clicked-->
+                        <!--give button white background and icon without any variant attribute-->
+                        <button class="slds-button slds-button_icon canvasIconButton" title="Pencil" aria-pressed={selected.drawing} onclick={handlePencilClick}>
+                            <lightning-icon icon-name="utility:edit" alternative-text="Pencil" size="x-small" title="Pencil">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Pencil</span>
+                        </button>
+                    </template>
+
+                    <template if:true={selected.drawing}>
+                        <!--selected.drawing is true meaning button has been clicked-->
+                        <!--give button a background color and icon an inverse variant(making icon white) to show selected state-->
+                        <button class="slds-button slds-button_icon canvasIconButton canvasiconBg" title="Pencil" aria-pressed={selected.drawing} onclick={handlePencilClick}>
+                            <lightning-icon icon-name="utility:edit" variant="inverse" alternative-text="Pencil" size="x-small" title="Pencil">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Pencil</span>
+                        </button>
+                    </template>
+
+                    <!--Text stateful button-->
+                    <template if:false={selected.text}>
+                        <!--selected.text is false meaning button has not been clicked-->
+                        <!--give button white background and icon without any variant attribute-->
+                        <button class="slds-button slds-button_icon canvasIconButtonLast" title="Text" aria-pressed={selected.text} onclick={handleTextClick}>
+                            <lightning-icon icon-name="utility:text" alternative-text="Text" size="x-small" title="Text">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Text</span>
+                        </button>
+                    </template>
+
+                    <template if:true={selected.text}>
+                        <!--selected.text is true meaning button has been clicked-->
+                        <!--give button a background color and icon an inverse variant(making icon white) to show selected state-->
+                        <button class="slds-button slds-button_icon canvasIconButtonLast canvasiconBg" title="Text" aria-pressed={selected.text} onclick={handleTextClick}>
+                            <lightning-icon icon-name="utility:text" variant="inverse" alternative-text="Text" size="x-small" title="Text">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Text</span>
+                        </button>
+                    </template>
+                </lightning-button-group>
+
+                <!--Third button group containing- one stateful button(to show shape selection), a button menu(showing shapes)
+                    and if hasStamps is true, one stateful button(to show stamp selection), a button menu(showing stamps)
+                -->
+                <lightning-button-group class="canvasButtonGroup">
+                    
+                    <!--Shape selection stateful button-->
+                    <template if:false={selected.shapes}>
+                        <!--selected.shapes is false meaning button has not been clicked-->
+                        <!--give button white background and icon without any variant attribute-->
+                        <button class="slds-button slds-button_icon canvasIconButton" title="Shapes" aria-pressed={selected.shapes} onclick={handleFakeShapeClick}>
+                            <lightning-icon icon-name="utility:all" alternative-text="Shapes" size="x-small" title="Shapes">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Shapes</span>
+                        </button>
+                    </template>
+
+                    <template if:true={selected.shapes}>
+                        <!--selected.shapes is true meaning button has been clicked-->
+                        <!--give button a background color and icon an inverse variant(making icon white) to show selected state-->
+                        <button class="slds-button slds-button_icon canvasIconButton canvasiconBg" title="Shapes" aria-pressed={selected.shapes} onclick={handleFakeShapeClick}>
+                            <lightning-icon icon-name="utility:all" variant="inverse" alternative-text="Shapes" size="x-small" title="Shapes">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Shapes</span>
+                        </button>
+                    </template>
+
+                    <!--button menu, showing all shapes-->
+                    <lightning-button-menu class="toolbar-shape-menu">
+                        <template for:each={shapes} for:item="shape">
+                            <template if:true={shape.checked}>
+                                <lightning-menu-item checked key={shape.id}
+                                    label={shape.label}
+                                    class={shape.class}
+                                    onclick={handleShapeClick}></lightning-menu-item>
+                            </template>
+                            <template if:false={shape.checked}>
+                                <lightning-menu-item key={shape.id}
+                                    label={shape.label}
+                                    class={shape.class}
+                                    onclick={handleShapeClick}></lightning-menu-item>
+                            </template>
+                        </template>
+                    </lightning-button-menu>
+
+                    <template if:true={hasStamps}>
+                        <!--stamp selection stateful button-->
+                        <template if:false={selected.stamps}>
+                            <!--selected.stamps is false meaning button has not been clicked-->
+                            <!--give button white background and icon without any variant attribute-->
+                            <button class="slds-button slds-button_icon canvasIconButton" title="Stamps" aria-pressed={selected.stamps} onclick={handleFakeStampClick}>
+                                <lightning-icon icon-name="utility:approval" alternative-text="Stamps" size="x-small" title="Stamps">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Stamps</span>
+                            </button>
+                        </template>
+
+                        <template if:true={selected.stamps}>
+                            <!--selected.stamps is true meaning button has been clicked-->
+                            <!--give button a background color and icon an inverse variant(making icon white) to show selected state-->
+                            <button class="slds-button slds-button_icon canvasIconButton canvasiconBg" title="Stamps" aria-pressed={selected.stamps} onclick={handleFakeStampClick}>
+                                <lightning-icon icon-name="utility:approval" variant="inverse" alternative-text="Stamps" size="x-small" title="Stamps">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Stamps</span>
+                            </button>
+                        </template>
+
+                        <!--button menu, showing all stamps-->
+                        <lightning-button-menu class="toolbar-stamp-menu">
+                            <template for:each={stamps} for:item="stamp">
+                                <template if:true={stamp.checked}>
+                                    <lightning-menu-item checked key={stamp.id}
+                                        label={stamp.label}
+                                        class={stamp.class}
+                                        onclick={handleStampClick}></lightning-menu-item>
+                                </template>
+                                <template if:false={stamp.checked}>
+                                    <lightning-menu-item key={stamp.id}
+                                        label={stamp.label}
+                                        class={stamp.class}
+                                        onclick={handleStampClick}></lightning-menu-item>
+                                </template>
+                            </template>
+                        </lightning-button-menu>
+
+                    </template>
+                </lightning-button-group>
+            </div>
+        </div>
+</div>
+    </template>
+
+    <div class="draw-annotation-container"  lwc:dom="manual">
+    </div>
+    
+</template>

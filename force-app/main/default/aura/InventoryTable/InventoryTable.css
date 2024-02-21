@@ -1,0 +1,7 @@
+.THIS .slds-border{
+    border-collapse:collapse;
+}
+.THIS.tableborder{
+    max-height: 300px;
+    overflow-y: auto;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manual_ERA_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Manual ERA Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ERA Generated</fullName>
+                <default>false</default>
+                <label>ERA Generated</label>
+            </value>
+            <value>
+                <fullName>Saved</fullName>
+                <default>false</default>
+                <label>Saved</label>
+            </value>
+            <value>
+                <fullName>Posted</fullName>
+                <default>false</default>
+                <label>Posted</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

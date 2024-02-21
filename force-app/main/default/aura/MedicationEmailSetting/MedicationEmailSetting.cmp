@@ -1,0 +1,121 @@
+<aura:component controller="ElixirOEM_FormApprovalHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isdisAbled" type="Boolean"/>
+    <aura:attribute name="recordID" type="String"/>
+    <aura:attribute name="emailSettingName" type="String"/>
+    <aura:attribute name="approvalLevelValues" type="String"/>
+    <aura:attribute name="setupKeyWrapper" type="String"/>
+    <aura:attribute name="setupKeySelected" type="String"/>
+    <aura:attribute name="isSetUpKeySelected" type="Boolean" default="false" />
+    <aura:attribute name="dropdownLabel" type="String"/>
+    <aura:attribute name="dropDownOptions" type="List"/>
+    <aura:attribute name="dropDownSelectedValues" type="List"/>
+    <aura:attribute name="mapOfSetUpKey_MarkupAttibute" type="String"/>
+    <aura:attribute name="searchString"   type="string" access="private" default="" description="String to search"/>
+    <aura:attribute name="enableSaveButton" type="Boolean" default="true"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isApprovalLevelAdded" type="Boolean"/>
+    <aura:attribute name="errorForApprovalLevelIndex" type="Boolean"/>
+    <aura:attribute name="dropDownSelectedValueToName" type="List"/>
+    <aura:attribute name="enableEditpencilIcon" type="Boolean"/>
+    <aura:attribute name="enableEdit" type="Boolean"/>
+    <aura:registerEvent name="RefreshApprovalMembers" type="c:RefreshApprovalMembers"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div>       
+        <div class="">
+            <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" variant="brand" size="large"/>
+                    </aura:if>
+            <aura:if isTrue="{!v.errorForApprovalLevelIndex}">
+                <div class="slds-col slds-size_12-of-12">
+                    <p class="add-l1"><lightning:icon iconName="utility:warning" alternativeText="Warning!" title="Warning" /> Please add approval for LEVEL {!v.indexLevelNotDefined} first </p>
+                </div>
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.enableEditpencilIcon}">
+                        <div class="utility_approval">
+                            <lightning:buttonIcon iconName="utility:edit" variant="bare" onclick="{!c.handleEditForSingleInstanceApprovalRecord}" alternativeText="edit" title="edit" />
+                        </div>
+                    </aura:if>
+                    <div class="define_box">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                                <h2 class="slds-text-heading_medium slds-m-bottom_small">Medication Email Setting</h2>
+                            </div>
+                        </div>
+                        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+                        <div class="slds-grid slds-gutters">
+                            <aura:if isTrue="{!v.isApprovalLevelAdded}">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <p class="approval"><lightning:icon iconName="utility:success" alternativeText="Medication!" title="Medication!" /> Email setting saved for Medication</p>
+                                </div> 
+                            </aura:if>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-m-top_small">
+                            
+                        </div>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_12-of-12">
+                                <lightning:select name="select1" label="Select Approver" aura:id="field" disabled="{!v.isdisAbled}" value = "{!v.approvalLevelValues.approver}" required="true" onchange="{!c.fetchRelatedOptions}" >
+                                    <option value="None">None</option>
+                                    <option value="User">User</option>
+                                    <option value="Role">Role</option>
+                                    <option value="Profile">Profile</option>                                    
+                                </lightning:select> 
+                            </div>
+                            
+                        </div>
+                        <aura:if isTrue="{!v.setupKeyWrapper.isUserSelected}">
+                            <div class="slds-grid slds-gutters slds-m-top_small select-user">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <c:portalSettingMultiSelectForEmail isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}" disabled = "{!v.isdisAbled}" options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}"
+                                                                        multiSelect="true" label="{!v.dropdownLabel}"/>
+                                </div>
+                                
+                            </div>
+                            
+                        </aura:if>
+                        <aura:if isTrue="{!v.setupKeyWrapper.isRoleSelected}">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <c:portalSettingMultiSelectForEmail isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}" disabled = "{!v.isdisAbled}" options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}"
+                                                                        multiSelect="true" label="{!v.dropdownLabel}"/>
+                                </div>
+                                
+                            </div>
+                            
+                        </aura:if>
+                        <aura:if isTrue="{!v.setupKeyWrapper.isProfileSelected}">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <c:portalSettingMultiSelectForEmail isSetUpKeySelected = "{!v.isSetUpKeySelected}" searchString = "{!v.searchString}" disabled = "{!v.isdisAbled}" options="{!v.dropDownOptions}" values="{!v.dropDownSelectedValues}"
+                                                                        multiSelect="true" label="{!v.dropdownLabel}"/>
+                                </div>
+                                
+                            </div>
+                            
+                        </aura:if>
+                        <div class="slds-grid slds-gutters slds-m-top_medium">
+                            <aura:if isTrue="{!v.enableSaveButton}">
+                                <div class="slds-col slds-size_12-of-12 ">
+                                    <!--<lightning:input class="changeNew1" name="ApproverCustomLabel" label="Approver Custom Label" placeholder="type here..." value="{!v.ApproverCustomLabel}"/>-->
+                                    
+                                    <lightning:button class="slds-align_absolute-center" variant="brand" label="Save" title="Save" onclick="{!c.proceedWithSaveForApprovalProcess}" />
+                                </div> 
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.enableEdit}">
+                                <div class="slds-col slds-size_12-of-12 " >
+                                    <!--<lightning:input class="changeNew1" name="ApproverCustomLabel" label="Approver Custom Label" placeholder="type here..." value="{!v.ApproverCustomLabel}"/>-->
+                                    
+                                    <lightning:button class="slds-align_absolute-center" variant="brand" label="Update" title="Update" onclick="{!c.proceedWithUpdateForApprovalProcess}" />
+                                </div> 
+                            </aura:if>
+                            
+                            
+                        </div>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </div>
+    </div>    
+</aura:component>

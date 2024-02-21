@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,forceCommunity:availableForAllPageTypes"
+    access="global">
+    <aura:registerEvent name="appEvent" type="c:Elixir_RefreshViewsGenericAppEvt"/>    
+    <lightning:button label="Fire aura" onclick="{!c.handleClick }"/>
+</aura:component>

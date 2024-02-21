@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Data__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is a self lookup field and is used to associate the Integration data.</description>
+    <externalId>false</externalId>
+    <label>Integration Data</label>
+    <referenceTo>Integration_Data__c</referenceTo>
+    <relationshipLabel>Integration Data</relationshipLabel>
+    <relationshipName>Integration_Data</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

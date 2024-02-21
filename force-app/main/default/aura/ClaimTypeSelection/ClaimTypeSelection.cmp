@@ -1,0 +1,128 @@
+<aura:component access="global"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader"
+                controller="ClaimTypeSelectionApex">   
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
+    <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name = "subheading" type = "String"/>
+    <aura:attribute name = "isCMS1500" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isUB04" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isSingleVOB" type = "Boolean" default = "False"/>
+    <aura:attribute name="selectedVOBList" type="list" />
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="isActive" type="Boolean"/>
+    <aura:attribute name="isOpen" type="Boolean"/>    
+    <aura:attribute name="patId" type="Id"/>
+    <aura:attribute name="openCMSCopy" type="Boolean"/> 
+    <aura:attribute name="displayCMS1500Button" type="Boolean" default="false"/> <!--Anusha 28/10/22-->
+    <aura:attribute name="displayUB04" type="Boolean" default="false"/> <!--Anusha 28/10/22-->   
+    <aura:attribute name="showModal" type="Boolean" default="false"/> <!--Anusha 29/10/22-->
+    <aura:handler name="cancelEvent" event="c:closePopUp" action="{!c.handleComponentEvent}"/> <!--Anusha 29/10/22-->
+     <aura:attribute name="VobList" type="list" />
+     <aura:attribute name="payerList" type="list" />
+    <!-- Modal/Popup Box starts here-->
+    <aura:if isTrue="{!v.showModal}"> <!--Anusha 29/10/22-->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box Header Starts here-->
+            <header class="slds-modal__header">
+                <h4 class="title slds-text-heading--medium">
+                    <div class="slds-grid slds-gutter">
+                        <div class="slds-col slds-size_1-of-1">
+                            <span>Select a Type of Claim</span>
+                        </div>
+                    </div>
+                </h4>
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{! c.closePopUp }"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"/>
+            </header>
+            <!--Modal/Popup Box Body Starts here-->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                
+                <div class = "images">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-parent">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-col1">
+                                        <span>
+                                            <aura:if isTrue="{!v.displayCMS1500Button}"> <!--Anusha 28/10/22-->
+                                            <lightning:button class="slds-button new-but" name="CMS_1500" onclick="{!c.onCMSFormClick}">
+                                                <img src="{!$Resource.CMS1500}"  height="300" width="300" title="CMS-1500 Form"/>
+                                                <div class = "slds-col1-cover slds-is-absolute" >
+                                                    <h5>CMS-1500 Form</h5>
+                                                </div>        
+                                            </lightning:button>
+                                            </aura:if> <!--Anusha 28/10/22-->
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-col1">
+                                        <span>
+                                            <aura:if isTrue="{!v.displayUB04}"> <!--Anusha 28/10/22-->
+                                            <lightning:button class="new-but" name="UB_04"  onclick="{!c.onUBFormClick}">
+                                                <img src="{!$Resource.UB04}" height="300" width="300" title="UB-04 Form"/>
+                                                <div class = "slds-col1-cover slds-is-absolute" >
+                                                    <h5>UB-04 Form</h5>
+                                                </div>
+                                            </lightning:button>
+                                            </aura:if> <!--Anusha 28/10/22-->
+                                        </span>
+                                    </div>
+                                </div>
+                                 <!--div class="slds-col slds-size_4-of-12">
+                                    <div class="slds-col1">
+                                        <span>
+                                           <lightning:button class="slds-button new-but" name="CMS_1500" onclick="{!c.onCMSFormClickCopy}">
+                                                <img src="{!$Resource.CMS1500}"  height="300" width="300" title="CMS-1500 Form"/>
+                                                <div class = "slds-col1-cover" >
+                                                    <h5>CMS-1500 Form Copy</h5>
+                                                </div>        
+                                            </lightning:button>
+                                        </span>
+                                    </div>
+                                </div-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button variant="neutral"
+                                  label="Cancel"
+                                  title="Cancel"
+                                  onclick="{! c.closePopUp }"/>
+                
+            </footer>
+        </div></section></aura:if> <!--Anuhsa added '</aura:if>' 29/10/22-->
+    
+    <aura:if isTrue="{!v.isCMS1500}">
+        <aura:if isTrue="{!v.isSingleVOB}">
+            <c:CMS1500ClaimForm isActive="{!v.isCMS1500}" selectedVOBList="{!v.selectedVOBList}"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" patId = "{!v.patId}" />               
+            
+            <aura:set attribute="else">
+                <c:Elixir_SelectPayer isOpen="{!v.isOpen}" VobList="{!v.VobList}" payerList="{!v.payerList}" selectedVOBList="{!v.selectedVOBList}" headerLabel="Primary"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" recordId = "{!v.patId}"/>
+            </aura:set>
+        </aura:if>
+        
+        <!--c:CMS1500ClaimForm isActive="{!v.isCMS1500}"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" patId = "{!v.patId}" /-->               
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isUB04}">
+        <aura:if isTrue="{!v.isSingleVOB}">
+            <c:UB04ClaimForm isActive="{!v.isUB04}" selectedVOBList="{!v.selectedVOBList}"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" patId = "{!v.patId}" />               
+            
+            <aura:set attribute="else">
+                <c:Elixir_SelectPayer isCMS1500="{!v.isCMS1500}" isUB04="{!v.isUB04}" isOpen="{!v.isOpen}" VobList="{!v.VobList}" payerList="{!v.payerList}" selectedVOBList="{!v.selectedVOBList}" headerLabel="Primary"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" recordId = "{!v.patId}"/>
+            </aura:set>
+        </aura:if>
+        <!--c:UB04ClaimForm isActive="{!v.isUB04}"  recordTypeId = "{!v.recordTypeId}" heading = "{!v.heading}" patId = "{!v.patId}" / -->               
+    </aura:if>
+    
+     <!--aura:if isTrue="{!v.openCMSCopy}">
+       
+    </aura:if-->
+</aura:component>

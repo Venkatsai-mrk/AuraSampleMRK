@@ -1,0 +1,7 @@
+.THIS .changeBorderCo{
+    border-collapse:collapse;
+}
+.THIS .changeBdr{
+    max-height: 300px; 
+    overflow-y: auto;
+}

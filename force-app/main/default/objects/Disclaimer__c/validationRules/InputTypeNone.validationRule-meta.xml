@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InputTypeNone</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Input_type__c, &apos;&apos;),
+  Require_Agreement__c  = true)</errorConditionFormula>
+    <errorMessage>Can not have an input type of “None” also be “Required”. Please change the input type if you wish for it to be required.</errorMessage>
+</ValidationRule>

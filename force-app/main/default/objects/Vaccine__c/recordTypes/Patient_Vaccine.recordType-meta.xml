@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Vaccine</fullName>
+    <active>true</active>
+    <label>Patient Vaccine</label>
+    <picklistValues>
+        <picklist>Age_Group__c</picklist>
+        <values>
+            <fullName>1-4 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11-13 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12-18 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12-24 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13-16 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15-19 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16-18 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2-18 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2-4 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4-6 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4-7 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6-9 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9-18 years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Birth</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Coding_System__c</picklist>
+        <values>
+            <fullName>CVX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LOINC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SNOMEDCT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Administered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Planned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refused</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Vaccine_Route__c</picklist>
+        <values>
+            <fullName>Intradermal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intramuscular</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intravenous</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nasal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Percutaneous</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subcutaneous</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transdermal</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Vaccine_Series__c</picklist>
+        <values>
+            <fullName>SARS-COV-2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Vaccine_Site__c</picklist>
+        <values>
+            <fullName>Left Lower Forearm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Thigh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Left Upper Arm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Right Lower Forearm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Right Thigh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Right Upper Arm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

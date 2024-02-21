@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Responsibility__c</fullName>
+    <description>This will be a manual input by the user which will depict the total amount on which the payment plan is to be created..</description>
+    <externalId>false</externalId>
+    <label>Total Amount Due</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

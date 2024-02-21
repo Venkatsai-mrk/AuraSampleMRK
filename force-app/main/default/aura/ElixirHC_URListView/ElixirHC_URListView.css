@@ -1,0 +1,90 @@
+.THIS .open svg{
+    fill : red;
+}
+.THIS .open .slds-grid {
+    color: #FFF;
+    background-color: #F08080;
+    padding: 2px 25px;
+     border-radius: 25px;
+    display: inline-block;
+}
+.THIS .open svg{
+    fill: red !important;
+}
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg{
+    fill : red;
+}
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS .mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+    -webkit-border-radius:5px;
+    padding:17px;
+}
+
+.THIS .selected{
+    height: 40px;
+    width: 60px;
+    margin-bottom: 15px;
+    padding : 2px;
+    border: 1px solid ;
+}
+
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+    width: 34px;
+}
+.THIS button{
+    width: max-content;    
+}
+.THIS span.slds-radio {
+    float: left;
+}
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #ffffff;    
+}
+.THIS span.slds-grid.slds-grid_align-spread {
+    justify-content: flex-start;
+}
+.THIS.ur1{
+    height:100%;
+}
+.THIS .ur2{
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .ur3{
+    font-size:20px;
+}
+.THIS .ur4{
+    margin-top:2px; 
+    margin-left:10px;
+}
+.THIS .ur5{
+    position:relative;
+}
+.THIS .ur6{
+    bottom:13px;
+}
+.THIS .ur7{
+    text-align:right;
+    padding-right:2.3rem;
+}

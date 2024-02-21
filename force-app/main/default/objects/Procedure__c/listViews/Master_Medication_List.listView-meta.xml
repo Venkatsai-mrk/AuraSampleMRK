@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Master_Medication_List</fullName>
+    <columns>NAME</columns>
+    <columns>Medication_Type__c</columns>
+    <columns>Quantity__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Procedure__c.Medication</value>
+    </filters>
+    <label>Master Medication List</label>
+</ListView>

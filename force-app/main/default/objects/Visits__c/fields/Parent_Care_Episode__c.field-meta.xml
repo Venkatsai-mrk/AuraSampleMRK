@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Care_Episode__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Used to link Patient specific care episode as parent care episode.</description>
+    <externalId>false</externalId>
+    <label>Parent Care Episode</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Visits__c.Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Account__c</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Visits__c</referenceTo>
+    <relationshipLabel>Visits</relationshipLabel>
+    <relationshipName>Visits</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

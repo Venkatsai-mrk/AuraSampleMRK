@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field will be storing Patient record against the disclaimer response.</description>
+    <externalId>false</externalId>
+    <label>Patient</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Disclaimer Response</relationshipLabel>
+    <relationshipName>Disclaimer_Response</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

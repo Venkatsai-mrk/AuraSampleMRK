@@ -1,0 +1,122 @@
+<aura:component controller="AddOnlyDiagnosisController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="showAddOnlyDiagnosis" type="Boolean" default="false"/>
+    <aura:attribute name="showAddExistingDiagnosis" type="Boolean"/>
+    <aura:attribute name="diagnosisList" type="ICD_Codes__c[]"/>
+    <aura:attribute name="ICDPickList" type="list"/>
+    <aura:attribute name="ICDVersion" type="String"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="diagnosisEvent" event="c:diagnosisEvent" action="{!c.diagnosisComponentEvent}"/>
+    <aura:registerEvent name="AddOnlyDiagnosisEvent" type="c:AddOnlyDiagnosisEvent"/>
+    <aura:attribute name="selectedRecord" type="Object" default="" description="selected Record Details" />
+    <aura:attribute name="notesSpecificData" type="Object"/>
+    <aura:attribute name="formUniqueId" type="String"/>
+    
+    <aura:if isTrue="{!v.showAddOnlyDiagnosis}">
+        <!--Table Part-->           
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small p_table"> 
+            <thead>
+                <tr class="slds-text-title_small">
+                    <th scope="col" class="slds-p-left_none pr5 bg-white">
+                        <div class="slds-truncate">S.No</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Code Label">Code Label</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-100">
+                        <div class="slds-truncate" title="Code Description">Code Description</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="ICD Version">ICD Version</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Diagnosis Type">Diagnosis Type</div>
+                    </th>
+                    <th scope="col" class="pl5 pr5 bg-white w-128">
+                        <div class="slds-truncate" title="Date Diagnosis">Diagnosis Date </div>
+                    </th>
+                    <th scope="col" colspan="2" class="pl5 pr5 bg-white">
+                        <div class="slds-truncate" title="Notes">Notes</div>
+                    </th>
+                </tr>
+            </thead>   
+            <tbody>
+                
+                <aura:iteration items="{!v.diagnosisList}" var="diagnosisInstance" indexVar="rowIndex">
+                    <tr class="slds-text-title_caps">
+                        <td> 
+                            {!rowIndex + 1}
+                        </td>
+                        <td>
+                            <c:AddOnlyDiagnosisSearch index="{!rowIndex}" selectedRecord="{!diagnosisInstance.SelectedRecord}" ICDSearchParam="{!diagnosisInstance.ICDVersion}" selectedRecordId="{!diagnosisInstance.ICDId}"
+                                                   selectedRecordName = "{!diagnosisInstance.ICDCode}" placeholder="Search Code Label" patientID="{!v.patientID}"/>
+                            
+                        </td>
+                        <td>
+                            <lightning:input type="text" name="{!rowIndex}" value="{!diagnosisInstance.ICDDescription}" placeholder ="Code Description" class="small-placeholder-text"/>
+                        </td>
+                        <td>
+                            <lightning:select name="{!rowIndex}"  label="" onchange="{!c.handleICDVersionChange}" value="{!diagnosisInstance.ICDVersion}" class="customFont" >
+                                <aura:iteration items="{!v.ICDPickList}" var="item">
+                                    <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.ICDVersion}">                                               
+                                    </option> 
+                                </aura:iteration>   
+                            </lightning:select>
+                        </td>
+                        <td>
+                            <lightning:select name=""  label="" onchange="" value="{!diagnosisInstance.DiagnosisType}" class="customFont" >
+                                <option value="">NONE</option>
+                                <option value="Primary" label="Primary"/>   
+                                <option value="Secondary" label="Secondary"/> 
+                                <option value="Other" label="Other"/>
+                            </lightning:select>
+                            
+                        </td>
+                        <td class="calender">
+                            <lightning:input type="date" name="{!rowIndex}" value="{!diagnosisInstance.DateDiagnoses}"/>
+                        </td>
+                        <td>
+                            <lightning:textarea name="{!rowIndex}" value="{!diagnosisInstance.Notes}"/>
+                        </td>
+                        <td class="slds-text-align_center pr_5">
+                            <aura:if isTrue="{!rowIndex == 0}">
+                                <aura:if isTrue="{!lessthanorequal(v.diagnosisList.length,9)}">
+                                    <a onclick="{!c.addNewRow}">
+                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                        <span class="slds-assistive-text">Add Icon</span>
+                                    </a>
+                                    <aura:set attribute="else">
+                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                    </aura:set>
+                                </aura:if>   
+                                
+                                <aura:set attribute="else">
+                                    <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>
+                                </aura:set> 
+                            </aura:if>
+                        </td> 
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        <br/>
+        <div class="slds-text-align_right">
+            <!--Save Button which is call Save js function on click --> 
+            <button class="slds-button slds-button_neutral" onclick="{!c.Cancel}">Cancel</button>
+            <button class="slds-button slds-button_brand" onclick="{!c.addOnlyDiagnosis}">Add</button>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.showAddExistingDiagnosis}">
+        <c:addOnlyExistingDiagnosis showModal="{!v.showAddExistingDiagnosis}" 
+                                  patientID="{!v.patientID}"
+                                  onicdsadded="{!c.handleModalSave}"
+                                  objectName="ElixirSuite__ICD_Codes__c" 
+                                  fieldName="Name"/> 
+    </aura:if>
+</aura:component>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Discount_Applied__c</fullName>
+    <description>This is a formula field that calculate the Actual discount Amount after Discount is applied.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+ISPICKVAL( Discount_Type__c , &apos;$&apos;) ,
+Discount_Amount__c ,
+IF(
+ISPICKVAL( Discount_Type__c , &apos;%&apos;),
+List_Price__c * Discount_Percentage__c ,
+0
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Actual Discount Applied</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

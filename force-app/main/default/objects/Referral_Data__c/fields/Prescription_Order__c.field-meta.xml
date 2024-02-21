@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prescription_Order__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to attach the medications to it&apos;s parent order</description>
+    <externalId>false</externalId>
+    <label>Prescription Order</label>
+    <referenceTo>Prescription_Order__c</referenceTo>
+    <relationshipLabel>Referral Data</relationshipLabel>
+    <relationshipName>Referral_Data</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

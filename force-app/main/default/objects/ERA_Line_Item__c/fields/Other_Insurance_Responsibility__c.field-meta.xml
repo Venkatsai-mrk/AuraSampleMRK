@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Insurance_Responsibility__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>Total_Allowed_Amount__c - (Paid__c + Patient_Responsibility__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Other Insurance Responsibility</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

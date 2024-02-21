@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title = "Lab Orders">
+        <div class = "slds-m-around_medium">
+                <template if:true={labOrders} >
+                        <lightning-datatable key-field="Id"
+                                         data={labOrders}
+                                         columns={columns}
+                                         hide-checkbox-column="true"
+                                         default-sort-direction={defaultSortDirection}
+                                         sorted-direction={sortDirection}
+                                         sorted-by={sortedBy}
+                                         onsort={onHandleSort}>
+                        </lightning-datatable>                
+                </template>
+            <template if:true = {error}>
+                {error}>     
+            </template>
+        </div>   
+    </lightning-card>    
+</template>

@@ -1,0 +1,18 @@
+<template>
+
+     <template if:true={dataLength}>
+               
+              
+                <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column="true"
+                        >
+                    </lightning-datatable>
+              </template>
+              <template if:false={alldatalength}>
+                <div class="slds-align_absolute-center">Awaiting results</div>
+              </template>
+                
+</template>

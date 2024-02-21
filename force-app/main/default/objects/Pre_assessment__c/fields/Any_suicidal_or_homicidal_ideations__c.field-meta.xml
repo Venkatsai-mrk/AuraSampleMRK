@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Any_suicidal_or_homicidal_ideations__c</fullName>
+    <description>This field is used to inquire about the patient&apos;s current thoughts regarding suicide or homicide.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Suicide attempt or hospitalizations</inlineHelpText>
+    <label>Any suicidal or homicidal ideations?</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unit_2__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Units 2</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tablet</fullName>
+                <default>false</default>
+                <label>Tablet</label>
+            </value>
+            <value>
+                <fullName>capsule</fullName>
+                <default>false</default>
+                <label>capsule</label>
+            </value>
+            <value>
+                <fullName>film</fullName>
+                <default>false</default>
+                <label>film</label>
+            </value>
+            <value>
+                <fullName>liquid</fullName>
+                <default>false</default>
+                <label>liquid</label>
+            </value>
+            <value>
+                <fullName>packet</fullName>
+                <default>false</default>
+                <label>packet</label>
+            </value>
+            <value>
+                <fullName>Suspension</fullName>
+                <default>false</default>
+                <label>Suspension</label>
+            </value>
+            <value>
+                <fullName>tablet chewable</fullName>
+                <default>false</default>
+                <label>tablet chewable</label>
+            </value>
+            <value>
+                <fullName>tablet delayed release</fullName>
+                <default>false</default>
+                <label>tablet delayed release</label>
+            </value>
+            <value>
+                <fullName>tablet dispersible</fullName>
+                <default>false</default>
+                <label>tablet dispersible</label>
+            </value>
+            <value>
+                <fullName>tablet extended release 12h</fullName>
+                <default>false</default>
+                <label>tablet extended release 12h</label>
+            </value>
+            <value>
+                <fullName>tablet sublingual</fullName>
+                <default>false</default>
+                <label>tablet sublingual</label>
+            </value>
+            <value>
+                <fullName>tablet subliungual</fullName>
+                <default>false</default>
+                <label>tablet subliungual</label>
+            </value>
+            <value>
+                <fullName>Tablet Therapy Pack</fullName>
+                <default>false</default>
+                <label>Tablet Therapy Pack</label>
+            </value>
+            <value>
+                <fullName>tabletq</fullName>
+                <default>false</default>
+                <label>tabletq</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

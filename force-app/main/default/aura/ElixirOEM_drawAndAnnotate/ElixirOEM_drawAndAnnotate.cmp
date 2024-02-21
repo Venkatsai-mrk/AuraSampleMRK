@@ -1,0 +1,81 @@
+<aura:component controller="AnnotationHandler"
+                implements="force:appHostable,lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="staticResourceGarbage" type="list"/>
+    <aura:attribute name="stillImage" type="String"/>
+    <aura:attribute name="stillimageLst" type="list"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="freeDrawImageValueStatic" type="object"/>
+    <aura:attribute name="freeDrawImageValue" type="object"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="saveNature" type="Boolean" default="true" />
+    <aura:attribute name="saveVisible" type="Boolean" default="true" />
+    <aura:attribute name="staticImage" type="String"/> 
+    <aura:attribute name="contentIDsToDel" type="list"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="isStaticImageRefresh" type="Boolean" default="true"/>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_12-of-12">
+            <aura:if isTrue="{!not(empty(v.staticImage))}">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small multipleTable">
+                    <tbody>
+                        <tr class="slds-text-title_caps">
+                            <td> </td>
+                            <td> <div class="embedLWC handlerForStatic">
+                                <center><b></b> </center> 
+                                <br/>
+                                <center> <img class="imgCls" src="{!v.staticImage}" width="800" height="800"/> </center>
+                                </div>
+                            </td>
+                            <td>  
+                                <a onclick="{!c.showDiaglogueBox}">
+                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                    <span class="slds-assistive-text">Delete Icon</span>
+                                </a> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.isStaticImageRefresh}">
+                        <div class="embedLWC">  
+                            <center><b></b> </center> 
+                            <br/>                 
+                            <c:staticDrawAnnotation onimageDataStatic="{!c.getValueFromLwcStatic}" onloadNewImage="{!c.inititateNewImg}"/>                    
+                        </div>
+                    </aura:if>
+                </aura:set>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this item?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if> 
+        <aura:if isTrue="{!! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    </div>
+    
+    
+    <lightning:button class="slds-button" disabled = "{!v.saveNature}" variant="brand" onclick="{!c.updateForm}">Save</lightning:button>
+    <aura:if isTrue="{!v.saveVisible }">
+        
+    </aura:if>
+</aura:component>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Estimated_Amount_Due_A__c</fullName>
+    <description>Refers to the expected amount that a patient is responsible for paying based on their insurance coverage, benefits, and any applicable cost-sharing arrangements.</description>
+    <externalId>false</externalId>
+    <label>Estimated Amount Due A</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

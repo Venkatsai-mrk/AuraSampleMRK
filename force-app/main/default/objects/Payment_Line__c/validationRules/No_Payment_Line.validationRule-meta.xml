@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Payment_Line</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISNEW() , Payment_Schedule__r.Remaining_Amount__c
+=0)</errorConditionFormula>
+    <errorMessage>No Payment Line Can  be Formed,as there is no Balance due</errorMessage>
+</ValidationRule>

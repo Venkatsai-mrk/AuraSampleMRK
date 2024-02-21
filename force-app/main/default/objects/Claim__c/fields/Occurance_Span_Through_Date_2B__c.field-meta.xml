@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occurance_Span_Through_Date_2B__c</fullName>
+    <description>Used to report the ending date of a period of occurrence or condition related to the patient's stay associated with Occurance Span Code 2B.</description>
+    <externalId>false</externalId>
+    <label>Occurance Span Through Date 2B</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

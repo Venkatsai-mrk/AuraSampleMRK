@@ -1,0 +1,46 @@
+.THIS .modal-footer.slds-modal__footer {
+    display: none !important;
+}
+
+.THIS.slds-modal__container {
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.THIS .attach-to-bottom {
+   /* position: absolute;*/
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+}
+
+.THIS.slds-modal__footer {
+    /*position: absolute;*/
+    /* top: 0; */
+    bottom: calc(50% - 85px);
+    width: 100%;
+    right: 0;
+}
+
+.THIS.modal-body {
+    overflow-y: visible;
+    padding: 0 !important;
+}
+
+.THIS .slds-modal__header {
+    /*position: absolute;*/
+    width: calc(100% + 65px);
+    left: -32px;
+    top: -15px;
+}
+
+.THIS .bold {
+   /* position: absolute;*/
+    top: 50px;
+    width: 100%;
+    text-align: center;
+}

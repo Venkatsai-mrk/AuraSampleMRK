@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email with message contain PHI data</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Elixir_logo</letterhead>
+    <name>Message contains PHI data</name>
+    <style>formalLetter</style>
+    <subject>New Message Received from {!User.FirstName}</subject>
+    <textOnly>Hi {!Contact.Name}
+To see the full conversation
+Login in to the portal to view complete message.
+https://momentum-flow-72462-dev-ed.scratch.my.site.com/ElixirPatientPortal</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

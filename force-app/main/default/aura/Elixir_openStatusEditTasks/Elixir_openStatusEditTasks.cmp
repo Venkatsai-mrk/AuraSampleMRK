@@ -1,0 +1,85 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "nameSpace" type="String"/>
+    <aura:attribute name= "task" type="Object"/> 
+    <aura:attribute name="taskId" type="String" />
+    <aura:attribute name="taskIdx" type="Integer"/>
+    <aura:attribute name="tasksList" type="Object"/>
+       <aura:attribute name= "problemsList" type="Object"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="editableBoxVal" type="Boolean"/>
+      <aura:attribute name= "customSetting" type="String"/>
+    
+      <div class="slds-show " aura:id="taskId" >
+    <div class="slds-page-header c-point" >
+         <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon  iconName="utility:food_and_drink"/> 
+                </div>
+                 <div class="slds-float--right ">
+                     
+              
+                    
+                </div>
+                <div class="slds-m-left--large">
+                    <h3>
+                                  {!v.customSetting.ElixirSuite__Fifth_Level__c}&nbsp;{!v.taskIdx+1}
+                        
+                        <div class="slds-float--right right-side_bar right-side_bar1" >
+                            <div class="slds-float_left">
+                                <lightning:input type="Date" placeholder="Due Date" name = "input1" value="{!v.task.ElixirSuite__Due_Date__c}" onchange="{!c.dueDate}"/>
+                            </div>
+                            <div class="slds-float_left">
+                                 <lightning:button label="Remove" iconName="utility:delete" class="btncss" title="Neutral action" onclick="{! c.removeSection }"/>
+                            </div>
+                        </div>
+                    </h3>
+                     <aura:if isTrue="{!v.editableBoxVal}">
+                         <lightning:textarea value="{!v.task.ElixirSuite__Description__c}" class="editStyle" onblur="{!c.outsideFocus1}"/>
+                    
+                        <aura:set attribute="else">
+                            <div class="slds-m-bottom_medium">
+                            <ui:outputTextArea value="{!v.task.ElixirSuite__Description__c}"></ui:outputTextArea>
+                            
+                            <aura:if isTrue="{!(v.task.ElixirSuite__Description__c == 'Undefined' || v.task.ElixirSuite__Description__c == null ||  v.task.ElixirSuite__Description__c == '')}">   
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:edit" class="spaceEdit" alternativeText="Edit Description" title="edit" size="x-small" onclick="{!c.editableBox}" />
+                                </aura:set>
+                            </aura:if>
+                               
+                                </div>
+                        </aura:set>
+                    </aura:if>
+                    
+                    <br/>
+                    <!-- for IR demo start-->
+                    <!--div class="slds-grid slds-gutters chnagemargin" >
+                        
+                        <div class="slds-col slds-size_5-of-12 slds-form-element">
+                         <lightning:input type="date" name="input2" label="TARGET DATE" value="{!v.task.ElixirSuite__Target_Date__c}" onchange="{!c.dueDate}" autocomplete="off"/>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12 slds-form-element">
+                         <lightning:input type="date" name="input3" label="RESOLVED DATE" value="{!v.task.ElixirSuite__Resolved_Date__c}" onchange="{!c.dueDate}" autocomplete="off"/>
+                        </div>
+                    </div>
+                     <div class="slds-grid slds-gutters chnagemargin" >
+                        <div class="slds-col slds-size_5-of-12 slds-form-element" >
+                         <lightning:input type="text" name="input4" label="DURATION" value="{!v.task.ElixirSuite__Duration__c}" onchange="{!c.dueDate}" autocomplete="off"/>
+                        </div>
+                         <div class="slds-col slds-size_5-of-12 slds-form-element">
+                         <lightning:input type="text" name="input5" label="FREQUENCY" value="{!v.task.ElixirSuite__Frequency__c}" onchange="{!c.dueDate}" autocomplete="off"/>
+                        </div>
+                    </div-->
+                     <!-- for IR demo end-->
+                    
+                </div>
+            </section>
+    </div>
+    
+    <div class="slds-hide slds-p-around--medium" aura:id="taskSection">
+        
+    </div>
+    </div>
+    
+</aura:component>

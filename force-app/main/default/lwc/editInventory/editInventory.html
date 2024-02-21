@@ -1,0 +1,149 @@
+<template>
+
+    <template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+         <!-- modal header start -->
+           <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                 <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                 <span class="slds-assistive-text">Close</span>
+              </button>
+
+              <div class="slds-box heading"> 
+                <h1 class="slds-page-header__title">
+                    
+                    <div class="demo-only heading1">
+                        <div class="slds-text-color_inverse">Edit Inventory to Patient File</div>
+                      </div>
+</h1>
+            </div>
+
+           </header>
+           
+
+           <div class="slds-modal__content slds-p-around_large" id="modal-content-id-2">
+
+            <div class="slds-box tablecolour">
+            
+               
+                <div class="container-fluid">        
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer add-inventory_table"> 
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate">S. No</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Inventory Type">Inventory Type</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Inventory Type">Inventory Item</div>
+                                </th>
+                                <template if:true={lotRequired}>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Lot Number">Lot Number</div>
+                                </th>
+                            </template>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Units Available">Units Available</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Units Required">Units Required</div>
+                                </th>
+                            </tr>
+                        </thead>   
+                        <tbody>     
+                            
+                            <template for:each={invcolumn} for:item="col"  for:index="index">
+                                <tr key={col.id}> 
+                                    <td>{key}</td>           
+                                                                                
+                                    <td>
+                                        
+                                        <lightning-layout horizontal-align="spread">
+                                        <lightning-combobox 
+                                        name="Type"
+                                        
+                                        value={col.Type}
+                                        placeholder="Inventory Type"
+                                        options={options1}
+                                        onchange={handleChange}
+                                        disabled={comboCheck} ></lightning-combobox>  
+                                    </lightning-layout>                             
+                                    </td>
+
+                                    <td>
+                                        
+                                        <lightning-layout horizontal-align="spread">
+                                        <lightning-combobox 
+                                        name="Inventory Item"
+                                        
+                                        value={col.Name}
+                                        placeholder="Inventory Item"
+                                        options={options3}
+                                        onchange={handleNameChange}
+                                        disabled={comboCheck} ></lightning-combobox>  
+                                    </lightning-layout>                             
+                                    </td>
+
+                                    <template if:true={lotRequired}>
+                                    <td>
+                                        <lightning-layout horizontal-align="spread">
+                                        <lightning-combobox 
+                                        name={col.id}
+                                        
+                                        value={col.Lot}
+                                        placeholder="Lot Number"
+                                        
+                                        options={options2}
+                                        onchange={handlebathChange}
+                                        disabled={comboCheck} ></lightning-combobox>  
+                                    </lightning-layout>                      
+                                    </td>
+                                </template>
+                                    <td>
+                                        <!--lightning-formatted-text value={available} ></lightning-formatted-text-->
+                                        <lightning-formatted-number value={col.Avail}></lightning-formatted-number>
+                                        <!--lightning-output-field data-id={item.id} label="Units Available" value={available}></lightning-output-field-->
+                                    </td>
+        
+                                    <td>
+                                        <lightning-input label="Units Required" value={col.req} onchange={handleReqChange}></lightning-input>
+                                    </td>
+                                    
+                                    
+                                </tr>
+                            </template>
+                            
+                             
+                        </tbody>
+                    </table>
+        
+               
+                </div>
+            
+        </div>
+        </div>
+        
+        <footer class="slds-modal__footer">
+
+            <div>                
+                <lightning-button name="Add" class="slds-m-right_small" label="Update" onclick={editRecord} ></lightning-button>
+
+                <lightning-button name="Cancel" label="Cancel" onclick={hideModalBox} ></lightning-button>
+            
+        </div>
+         </footer>
+        
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+        
+        
+        </template>

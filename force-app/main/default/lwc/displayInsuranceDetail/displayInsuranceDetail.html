@@ -1,0 +1,7 @@
+<template>
+    <div>
+        <lightning-icon icon-name="utility:chevronleft" alternative-text="Go" title="Go To" variant="base" onclick={navToPage}></lightning-icon>
+        <lightning-button label="Return To List View" variant="base" onclick={navToPage}></lightning-button>
+        <lightning-button class="requestupdate" disabled={disabledButton} label="Request Update" variant="brand" onclick={requestUpdateHandler}></lightning-button>
+    </div>
+</template>

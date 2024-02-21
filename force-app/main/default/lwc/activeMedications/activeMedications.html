@@ -1,0 +1,58 @@
+<template>
+    <div class="header">
+        Active Medications
+    </div>
+    <!--div>
+        <template if:true={showMedication}>
+            <lightning-datatable key-field="Id" data={medicationRecords} columns={columns} hide-checkbox-column="true" show-row-number-column="true" onrowaction={handleSendEmail}></lightning-datatable>
+        </template>
+    </div>
+   
+    <div>
+        <template if:true={futureItemArray}>
+            <lightning-datatable key-field="Id" 
+            data={futureItemArray} 
+            columns={columns} 
+            hide-checkbox-column="true" 
+            show-row-number-column="true" 
+            onrowaction={handleSendEmail}>
+        </lightning-datatable>
+        </template>
+    </div>
+   
+    <div class="slds-m-top_x-large slds-m-left_medium">
+        <div class="pagination">
+        <div class="first">
+            <lightning-button label="|<"
+                disabled={isPrev} onclick={handleFirst}
+                                    variant="brand"
+                                    name="first"></lightning-button>
+        </div> 
+        <div class="slds-p-right_xx-small">
+                 
+            <lightning-button label="<"
+            disabled={isPrev} onclick={handlePrev}
+                                variant="brand"
+                                name="prev"></lightning-button>  
+        </div>
+        <span class="slds-badge slds-badge_lightest">
+            Product {recordEnd} of {totalRecords}
+        </span>
+        <div class="slds-p-left_xx-small">
+            <lightning-button label=">"
+            disabled={isNext} onclick={handleNext}
+                                variant="brand"
+                                icon-position="right"
+                                name="next"></lightning-button>
+        </div>
+        <div class="last">
+            <lightning-button label=">|"
+                disabled={isNext} onclick={handleLast}
+                                    variant="brand"
+                                    icon-position="right"
+                                    name="last"></lightning-button>
+        </div>
+        </div>
+    </div-->
+
+</template>

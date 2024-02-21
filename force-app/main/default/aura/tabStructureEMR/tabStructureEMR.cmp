@@ -1,0 +1,746 @@
+<aura:component controller="tabStructureController" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,flexipage:availableForRecordHome,lightning:isUrlAddressable" access="global" >
+    <!--aura:registerEvent type="c:result" name="loadrelatedList"/-->
+    <ltng:require styles="{!$Resource.multilineToastCSS}" />
+    <!--aura:registerEvent type="c:RecordIdForLabOrder" name="RecordIdForLabOrder"/>
+    <aura:registerEvent type="c:PatientIdentifier" name="transferPatientId"/>
+   
+    <aura:registerEvent type="c:labOtherTestEvent" name="labAndOtherTest"/-->
+    <aura:handler name="init" action="{!c.getaccessibility}" value="{!this}"/>
+    <!--aura:handler name="HideMedicationComponent" event="c:HideMedicationComponent" action="{!c.handleComponentEvent}"/--> 
+    <aura:attribute name="showMedication" type="boolean" default="true"/>
+    <aura:attribute name="accessibilityMap" type="Map"/>
+    <aura:attribute name= "orgNamespace" type="String"/>
+    <aura:attribute type="id" name="recordId"/>
+    <aura:attribute name="licenseAvailable" type="boolean" default="true"/>
+    <aura:attribute name="oppId" type="Id"/>
+    <aura:attribute name="simpleRecord" type="Object" />
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="showNursing" type="boolean"/>
+    <aura:attribute name = "visible"  type="boolean"/>
+    <aura:attribute name = "openModal" type="boolean"/>
+    <aura:attribute name = "openMedicationModal" type="boolean"/>
+    <aura:attribute name = "openCareplan" type="boolean"/>
+    <aura:attribute name = "openMedication" type="boolean"/>
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "recordValForMedication" type="String"/>
+    <aura:attribute name= "openReviewOrder" type="Boolean" default="false"/>
+    <aura:attribute name= "openCreateLabOrder" type="Boolean" default="false"/>
+    <aura:attribute name= "openASAMForms" type="Boolean" default="false"/>
+    <aura:attribute name="openForms" type="Boolean" />
+    <aura:attribute name = "prescriptionsView" type="boolean" default="false"/>
+    <aura:attribute name = "openCMForms" type="boolean" /> 
+    <aura:attribute name="openModalMorMar" type="Boolean" />
+    <aura:attribute name="openSignaturePad" type="Boolean" />
+    <aura:attribute name="openModalLabOrder" type="Boolean" default="false" />
+    <aura:attribute name="OpenNotes" type="Boolean" default="false" />	
+    <aura:attribute name="OpenAdmsn" type="Boolean" default="false" />	
+    <aura:attribute name="OpenNursing" type="Boolean" default="false" />	
+    <aura:attribute name="OpenClinical" type="Boolean" default="false" />
+    <aura:attribute name="OpenDischarge" type="Boolean" default="false" />
+    <aura:attribute name="extendPlan" type="Boolean" default="false"/>	
+    <aura:attribute name="enableEndDateEdit" type="Boolean" default="false"/>
+    <aura:attribute name="openReferralForm" type="Boolean" default="false"/> 
+     <aura:attribute name="Procedure" type="Boolean" default="false"/>
+    <aura:attribute name="ProgressNotes" type="Boolean" default="false"/>
+    <aura:attribute name="NotesForms" type="Boolean" default="false"/>
+    <aura:attribute name="CareEpisode" type="Boolean" default="false"/>
+    <aura:attribute name="DischargeForm" type="Boolean" default="false"/>
+    <aura:attribute name="Timeline" type="Boolean" default="false"/>
+    <aura:attribute name="GenerateVerificationCode" type="Boolean" default="false"/>
+    <aura:attribute name="AdmissionForms" type="Boolean" default="false"/>
+    <aura:attribute name="CarePlan" type="Boolean" default="false"/>
+    <aura:attribute name="Messaging" type="Boolean" default="false"/>
+    <aura:attribute name="NursingForms" type="Boolean" default="false"/>
+    <aura:attribute name="MorMar" type="Boolean" default="false"/>
+    <aura:attribute name="FirstVisitNotes" type="Boolean" default="false"/>
+    <aura:attribute name="ClinicalForms" type="Boolean" default="false"/>
+    <aura:attribute name="ReviewForms" type="Boolean" default="false"/>
+    <aura:attribute name="SendDataForClaims" type="Boolean" default="false"/>
+    <aura:attribute name="MedicalExamination" type="Boolean" default="false"/>
+    <aura:attribute name="LabOrders" type="Boolean" default="false"/>
+    <aura:attribute name="Prescriptions" type="Boolean" default="false"/>
+    <aura:attribute name="Proc" type="Boolean" default="false"/>
+    <aura:attribute name="CaptureSignature" type="Boolean" default="false"/>
+    <aura:attribute name="MasterProblemList" type="Boolean" default="false"/>
+    <aura:attribute name="Transportation" type="Boolean" default="false"/>
+    <aura:attribute name="BillingSummary" type="Boolean" default="false"/>
+    <aura:attribute name="Immunization" type="Boolean" default="false"/>
+     <aura:attribute name="CostOfCare" type="Boolean" default="false"/>
+    
+    <aura:attribute name="PaymentSchedule" type="Boolean" default="false"/>
+    
+    <aura:attribute name="Claims" type="Boolean" default="false"/>
+    
+    <aura:attribute name="Payment" type="Boolean" default="false"/>
+    
+    <aura:attribute name="PatientStatement" type="Boolean" default="false"/>
+    
+    <aura:attribute name="OpPatientStatement" type="Boolean" default="false"/>
+    
+     <aura:attribute name="MedicalCoding" type="Boolean" default="false"/>
+    
+     <aura:attribute name="EPrescriptions" type="Boolean" default="false"/>
+    
+     <!-- Below 5 attributes added by Himanshu Tajne -->
+     <!-- <aura:attribute name="CHCPrescription" type="Boolean" default="false"/> -->
+     <aura:attribute name="NewCropPrescription" type="Boolean" default="false"/>
+     <aura:attribute name="IntegratedLabOrder" type="Boolean" default="false"/>
+     <aura:attribute name="PrescriptionPriority" type="String"/>
+     <aura:attribute name="LabOrderPriority" type="String"/>
+    
+ 	<aura:attribute name="CHCLabOrder" type="String"/>
+    <aura:attribute name="DummyLabOrder" type="String"/>
+    
+    
+    <aura:attribute name="OpenNewNursing" type="Boolean" default="false"/>
+    <aura:attribute name="OpenListMsgSub" type="Boolean" default="false"/>
+    <aura:attribute name="OpenNewAdmsn" type="Boolean"/>
+    <aura:attribute name="OpenNewClinical" type="Boolean"/>
+    <aura:attribute name="OpenNewNotes" type="Boolean" default ="true"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+     <!-- Suraj/Pankaj-->
+     <aura:attribute name= "patientId" type="String"/>
+     <aura:attribute name= "heading" type="String" default="MAR"/>
+    <aura:attribute name= "careModal" type="Boolean" default="false"/>
+     <!-- end-->
+    
+    <aura:if isTrue="{!v.Ehr}">
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <force:recordData aura:id="forceRecordCmp" recordId="{!v.recordId}" layoutType="FULL" targetFields="{!v.simpleRecord}"
+                      targetRecord="{!v.record}" fields="Id, ElixirSuite__Treatment_Center__c"/>
+    <div class="slds-tabs_scoped" id="navDiv">
+        <aura:if isTrue="{!v.licenseAvailable}">
+            <ul class="slds-tabs_scoped__nav e-product-fea" role="tablist" id="nav"> 
+              <aura:if isTrue="{!v.GenerateVerificationCode || v.CaptureSignature || v.CareEpisode || v.AdmissionForms || v.Transportation}">    
+                <li class="e-product-fea-child" aura:id="articleFour" title="Admission Process" role="presentation">      
+                    <a class="" href="" title="Admission Process" onclick="{!c.sectionFour}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left">
+                            <lightning:icon class="" aura:id="articleFour" size="x-small"  iconName="utility:edit_form" />
+                        </div>&nbsp;Admin
+                    </a>
+                    <ul class="admission_submenus slds-is-absolute">
+                        <aura:if isTrue="{!v.GenerateVerificationCode}">
+                        	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Verification Code" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.handleClickForOTP}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Generate Verification Code</a></li>
+                        </aura:if>
+                        <aura:if isTrue="{!v.CaptureSignature}">
+                        	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Capture Signature" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.signaturePad}"  target="_blank" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="signature capture">Capture Signature for E-sign</a></li>
+                        </aura:if>
+                         <aura:if isTrue="{!v.CareEpisode}">
+                        	<li class=" " title="Patient Care" role="presentation"><a class=" " href="" onclick="{!c.visitRecordListView}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-4__item">Patient Care</a></li>
+                        </aura:if>
+                        <aura:if isTrue="{!v.AdmissionForms}">
+                           <!-- <li class="slds-tabs_scoped__item slds-dropdown__item" title="Admission forms" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="{!c.admissionForms}" name="Admission Forms" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Admin Forms</a></li>-->
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" aura:id="allocateBed" title="Admission forms" role="presentation">
+                                <a class="slds-tabs_scoped__link " href="" onclick="{!c.masterNoteView}" role="tab"   tabindex="-1" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">
+                                    Admin Forms</a>  
+                            </li>
+                        </aura:if>
+                        <aura:if isTrue="{!v.Transportation}">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Transportation" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.travelRelatedList}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Transportation</a></li>
+                            </aura:if>
+                    </ul>
+                </li>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.LabOrders || v.Prescriptions || v.MorMar || v.MedicalExamination}">
+                <li class="e-product-fea-child" aura:id="articleThree" title="Medical" role="presentation">
+                    <aura:if isTrue="{!v.accessibilityMap}">
+                        <a class="" href="" onclick="{!c.sectionThree}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                            <div class="slds-float_left ">
+                                <lightning:icon class="" aura:id="articleThree" iconName="utility:adduser"  src="" size="x-small" />
+                            </div>&nbsp;Medical Orders
+                        </a>
+                        <ul class="admission_submenus slds-is-absolute">
+                            <!-- <li class=" " title="Encounter" role="presentation"><a class="" target='_self'  onclick="{!c.navHome}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Encounter</a></li>
+                             <li class=" " title="Allergy/MedicalAlerts" role="presentation"><a class="" target='_self'  onclick="{!c.navAllergy}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Allergy/MedicalAlerts</a></li>-->
+                            <aura:if isTrue="{!v.MedicalExamination}">
+                            	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Medical Examination" role="presentation">
+                                <a class="slds-tabs_scoped__link"  onclick="{!c.allergyRec}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Medical Examination">Medical Examination</a></li>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.Immunization}">
+                              <li class="slds-tabs_scoped__item slds-dropdown__item" title="Immunization" role="presentation">
+                                <a class="slds-tabs_scoped__link"  onclick="{!c.ImmunizationRec}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Immunization">Immunization</a></li> 
+                            </aura:if>
+                            <!--<aura:if isTrue="{!v.Transportation}">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Transportation" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.travelRelatedList}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Transportation</a></li>
+                            </aura:if>-->
+                            <!--<aura:if isTrue="{!v.CarePlan}">
+                                <li class=" " title="Care Plan" role="presentation"><a class="" target='_self'  onclick="{!c.navHome1}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Care Plan</a></li>
+                            </aura:if-->   
+                                <!-- <li class=" " title="Nursing Notes" role="presentation"><a class="" href="" onclick="{!c.nursingNotes}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Nursing Notes</a></li>
+                    
+  <li class=" " title="Nursing Assessment" role="presentation"><a class="" href="" onclick="{!c.nursingAssessment}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Nursing Assessment</a></li>
+                      -->
+                            <!--li class=" " title="Care Plan" role="presentation"><a class="" href="" onclick="{!c.newCarePlan}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item"></a></li-->
+                            <!--li class="slds-tabs_scoped__item slds-dropdown__item" title="Vital Signs" role="presentation"><a class="slds-tabs_scoped__link"  onclick="{!c.vitalRec}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Create Lab Orders">Vital Sign</a></li-->
+                            <!--aura:if isTrue="{!v.LabOrders}"-->
+                            <aura:if isTrue="{!v.DummyLabOrder}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Lab Orders" role="presentation">
+                                    <a class="slds-tabs_scoped__link"  onclick="{!c.labOrdersHandler}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Lab Orders">Lab Orders</a></li> 
+                            </aura:if>	
+                        <!--/aura:if-->
+
+                            <!--aura:if isTrue="{!v.IntegratedLabOrder}"-->
+                                <aura:if isTrue="{!v.CHCLabOrder}">
+                                    <li class="slds-tabs_scoped__item slds-dropdown__item" title="CHC LabOrders" role="presentation">
+                                        <a class="slds-tabs_scoped__link" onclick="{!c.labOrdersCHCHandler}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="CHC LabOrders">CHC LabOrder</a></li> 
+                                </aura:if>
+                            <!--/aura:if-->
+                            
+                            <!-- <aura:if isTrue="{!v.Prescriptions}">
+                            <aura:if isTrue="{!v.CHCPrescription}">
+                            	<li class="slds-tabs_scoped__item slds-dropdown__item" title="E Prescription" role="presentation">
+                                    <a class="slds-tabs_scoped__link" onclick="{!c.EprescriptionCHCHandler}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="E Prescription">E Prescription</a></li> 
+                            </aura:if>
+                            </aura:if>   -->
+                            
+                            
+                            <!--aura:if isTrue="{!v.NewCropPrescription}"-->
+                                <aura:if isTrue="{!v.PrescriptionPriority == 'NewCrop Prescription'}">
+                                    <li class="slds-tabs_scoped__item slds-dropdown__item" title="NewCrop Prescription" role="presentation">
+                                        <a class="slds-tabs_scoped__link" onclick="{!c.prescriptionNewCrop}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="NewCrop Prescription">NewCrop Prescription</a></li> 
+                                </aura:if>
+                            <!--/aura:if-->
+
+
+
+                            
+                            <!--<li class="slds-tabs_scoped__item slds-dropdown__item" title="Create Lab Orders" role="presentation"><a class="slds-tabs_scoped__link"  onclick="{!c.CreatelabOrdersHandler}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Create Lab Orders">Create Lab Orders</a></li>-->
+                            <!--<aura:if isTrue="{!v.NursingForms}">
+                            	<li class=" " title="Nursing forms" role="presentation"><a class="" href="" onclick="{!c.accountAssociatedForms}" name="Nursing$Forms" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Nursing Forms</a></li>
+                            </aura:if>-->
+                            <!--aura:if isTrue="{!v.Prescriptions}"-->
+                            <aura:if isTrue="{!v.PrescriptionPriority == 'Dummy Prescription'}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Medication Prescriptions" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.prescriptionsView}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Prescriptions</a></li>
+                            </aura:if>
+                        <!--/aura:if-->
+                           
+                            <aura:if isTrue="{!v.MorMar}">
+                           		<li class="slds-tabs_scoped__item slds-dropdown__item" title="MOR/MAR" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="{!c.MORMARHandler}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="MOR/MAR">MOR/MAR</a></li>
+                            </aura:if>
+                            
+                                <!--   <li  class="slds-tabs_scoped__item slds-dropdown__item" title="RX Orders" role="presentation"><a class="slds-tabs_scoped__link " href="https://preproduction.newcropaccounts.com/Pages/ComposeRx.aspx" target='blank_' onclick="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Sure Scripts</a></li>-->
+                            <!--<aura:if isTrue="{!v.Procedure}">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Procedure" role="presentation">
+                                <a class="slds-tabs_scoped__link"  onclick="{!c.procedureRec}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Medical Examination">Procedure</a></li>
+                            </aura:if>-->
+                        </ul>
+                        <aura:set attribute="else">
+                            <a class="" href="" onclick="{!c.notAccessible}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleThree" iconName="utility:adduser" size="x-small" />
+                                </div>&nbsp;Medical</a>
+                        </aura:set>
+                    </aura:if>
+                </li> 
+                </aura:if>
+                
+                                  <ul class="admission_submenus slds-is-absolute">  
+                        <!--<aura:if isTrue="{!v.MasterProblemList}">
+                        	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Master Problem List" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.masterProblemListview}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-4__item">Master Problem List</a></li>
+                        </aura:if>-->
+                        <!--  <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterClaim?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master ICD/CPT Codes List</a></li>
+            <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterProblemList?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master Problem List</a></li>
+            <li class="" title="Master DX List" ><a  target="_blank" href="{!'/apex/Elixir_HC__Master_Dx_List?Id='+v.recordId}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Master DX List</a></li>
+-->       		
+                    </ul>
+                    
+              
+             <!--    <li class="e-product-fea-child" aura:id="articleEleven" title="Treatment Plan" role="presentation">
+                    <a class="" href="" onclick="{!c.navHome1}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleTwelve" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;Treatment Plan
+                    </a>
+                </li> -->
+                
+              
+                <aura:if isTrue="{!or(v.FirstVisitNotes,v.NursingForms)}">
+                <li class="e-product-fea-child" aura:id="allocateBed" title="Notes" role="presentation">
+                    <a class="slds-tabs_scoped__link " href="" onclick="{!c.masterNoteViewMedical}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="allocateBed" iconName="utility:edit_form" size="x-small" />
+                        </div>&nbsp;Notes</a>  
+                    <ul class="admission_submenus slds-is-absolute">  
+                       <!-- <aura:if isTrue="{!v.FirstVisitNotes}">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.handleRedirectNotesSubSection_1}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Notes</a></li>  
+                        </aura:if>-->
+                        <!--
+                        <aura:if isTrue="{!v.NursingForms}">
+                            	<li class=" " title="Notes" role="presentation"><a class="" href="" onclick="{!c.accountAssociatedForms}" name="Nursing$Forms" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Notes</a></li>
+                            </aura:if>-->
+                        <!-- <aura:if isTrue="{!v.NursingForms}">
+                            	<li class=" " title="Nursing forms" role="presentation"><a class="" href="" onclick="{!c.accountAssociatedForms}" name="Nursing$Forms" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Nursing forms</a></li>
+                            </aura:if>
+                         <aura:if isTrue="{!v.ClinicalForms}">
+                            	<li class=" " title="Clinical forms" role="presentation"><a class="" href="" onclick="{!c.clinicalForms}" name="Clinical$Forms" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Clinical Forms</a></li>                           
+                     <aura:if isTrue="{!v.ProgressNotes}">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.progressNote}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Progress Note</a></li>   
+                        </aura:if>-->
+                    </ul>
+                    
+                    </li>
+                </aura:if>
+          <aura:if isTrue="{!v.CarePlan}">
+                <li class="e-product-fea-child" aura:id="articleEleven" title="Care Plan" role="presentation">
+                    <a class="" href="" onclick="{!c.navHome1}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleEleven" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;CarePlan
+                    </a>
+                      </li>
+                </aura:if>
+                <aura:if isTrue="{!v.Messaging}">
+                        <li class="e-product-fea-child" aura:id="articleEleven" title="Messsaging" role="presentation">
+                            <a class="" href="" onclick="{!c.navToMessageSubjectListView}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleEleven" size="x-small" iconName="utility:multi_picklist" />
+                                </div>&nbsp;Message Center
+                            </a>
+                        </li>
+                    </aura:if>
+                <!--commenting
+                <aura:if isTrue="{!or(v.ClinicalForms,v.NotesForms)}">
+                <li class="e-product-fea-child" title="Clinician" aura:id="articleSix" role="presentation">
+                    <aura:if isTrue="{!v.accessibilityMap}">
+                        <a class="" href="javascript:void(0);" onclick="{!c.sectionSix}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                            <div class="slds-float_left ">
+                                <lightning:icon class="" aura:id="articleSix" iconName="utility:questions_and_answers" size="x-small" />
+                            </div>&nbsp;Clinician
+                        </a>
+                        <ul class="admission_submenus" role="tablist" id="nav2">
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Encounter" role="presentation"><a class="slds-tabs_scoped__link" href="{!'/lightning/r/'+v.recordId+'/related/HealthCloudGA__Encounters__r/view'}"  target='_blank' onclick="{!c.sectionFive}" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item" variant="brand">Encounter</a></li>      
+                   <li class="slds-tabs_scoped__item slds-dropdown__item" title="Clinical Notes" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.clinicalNotes}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Clinical Notes</a></li>
+                            
+                   <li class="slds-tabs_scoped__item slds-dropdown__item" title="Bio Psych Social" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.bioAssessments}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Bio Psych Social</a></li>
+                      <li class="slds-tabs_scoped__item slds-dropdown__item" title="Special Assessments" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="{!c.specialAssessments}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Special Assessments</a></li>
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Clinical forms" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Clinical Forms</a></li>
+                            <aura:if isTrue="{!v.ClinicalForms}">
+                            	<li class=" " title="Clinical forms" role="presentation"><a class="" href="" onclick="{!c.clinicalForms}" name="Clinical$Forms" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Clinical Forms</a></li>                           
+                            </aura:if
+                                 <li class="slds-tabs_scoped__item slds-dropdown__item" title="ASAM Forms" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.ASAMForms}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-4__item">ASAM Forms</a></li>
+                          
+                            <aura:if isTrue="{!v.NotesForms}">
+                            	<li class=" " title="Notes Forms" role="presentation"><a class="" href="" onclick="{!c.NotesForm}" name="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Notes Forms</a></li>
+                            </aura:if>
+                             <li class="slds-tabs_scoped__item slds-dropdown__item" title="Treatment Plan Review" role="presentation"><a class="slds-tabs_scoped__link" href="" onclick="{!c.treatmentPlanReview}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Treatment Plan Review</a></li>
+                        </ul>
+                        
+                        
+                        <aura:set attribute="else">
+                            <a class="" href="javascript:void(0);" onclick="{!c.notAccessible}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleSix" iconName="utility:questions_and_answers" size="x-small" />
+                                </div>&nbsp;Clinician
+                            </a>
+                        </aura:set>
+                    </aura:if>
+                </li>
+                </aura:if>
+				ending commemt-->
+                <aura:if isTrue="{!v.ReviewForms}">
+                <li class="e-product-fea-child" title="Utilization Review" aura:id="articleSix" role="presentation">
+                    <a class="" href="javascript:void(0);" onclick="{!c.sectionSix}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleSix" iconName="utility:questions_and_answers" size="x-small" />
+                        </div>&nbsp;Utilization Review
+                    </a>
+                    <ul class="admission_submenus slds-is-absolute" role="tablist" id="nav2">
+                        <aura:if isTrue="{!v.ReviewForms}">
+                        	<li class=" " title="Review Forms" role="presentation"><a class="" href="" onclick="{!c.URListview}" name="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Review Forms</a></li>                             
+                        </aura:if>
+                        <!--<aura:if isTrue="{!v.CareEpisode}">
+                        	<li class=" " title="Visits" role="presentation"><a class=" " href="" onclick="{!c.visitRecordListView}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-4__item">Care Episode</a></li>
+                        </aura:if>-->
+                            <!--<li class=" " title="Claims" role="presentation"><a class="" href="" onclick="{!c.claimsListview}" name="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Claims</a></li>                             
+           -->
+                        <!--<aura:if isTrue="{!v.SendDataForClaims}">
+                        <li class=" " title="Send Data For Claims" role="presentation"><a class=" " href=""  onclick="{!c.generateClaim}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Send Data For Claims</a></li>
+                        </aura:if>-->
+                    </ul>
+                </li>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.openSignaturePad}">
+                    <c:signaturePadCmp isActive = "{!v.openSignaturePad}" recordVal="{!v.recordVal}"/>         
+                </aura:if>
+                <aura:if isTrue="{!v.OpenAdmsn}">
+                    <c:Elixir_AccountAssociatedForms recordVal="{!v.recordVal}" isOpen1="{!v.OpenAdmsn}" categorized="Admission" subCategorized="Assessments" headingTitle="All Forms"
+                                                     nameSpace="ElixirSuite__"/>
+                </aura:if>
+                <aura:if isTrue="{!v.OpenNursing}">
+                    <!--c:Elixir_NewAccountAssociatedForms recordVal="{!v.recordId}" isOpen1="{!v.OpenNursing}" categorized="Nursing" subCategorized="Assessments" headingTitle="All Assessment Forms"/-->
+                    <c:Elixir_AccountAssociatedForms nameSpace="ElixirSuite__" recordVal="{!v.recordId}" isOpen1="{!v.OpenNursing}" categorized="Nursing" subCategorized="Assessments" headingTitle="All Assessment Forms"/>
+                </aura:if>
+                <aura:if isTrue="{!v.OpenClinical}">
+                    <c:Elixir_AccountAssociatedForms nameSpace="ElixirSuite__" recordVal="{!v.recordId}" isOpen1="{!v.OpenClinical}" categorized="Clinical" subCategorized="Assessment" headingTitle="All Assessment Forms"/>
+                </aura:if>
+                <aura:if isTrue="{!v.OpenNewNursing}">
+               <c:Elixir_NewAccountAssociatedForms recordVal="{!v.recordId}" isOpen1="{!v.OpenNewNursing}" categorized="Nursing" subCategorized="Assessment" headingTitle="All Assessment Forms"/>
+                   
+                </aura:if>
+                
+                <aura:if isTrue="{!v.OpenListMsgSub}">
+               <c:customListViewMsgSubject patientID="{!v.recordId}" />
+                   
+                </aura:if>
+                
+                <aura:if isTrue="{!v.OpenNewAdmsn}">
+                 <!--   <c:Elixir_NewAccountAssociatedForms recordVal="{!v.recordId}" isOpen1="{!v.OpenNewAdmsn}" categorized="Admission" subCategorized="Assessment" headingTitle="Administrative Documentation"/>-->
+                  
+               
+                </aura:if> 
+                <aura:if isTrue="{!v.OpenNewClinical}">
+                    <c:Elixir_NewAccountAssociatedForms recordVal="{!v.recordId}" isOpen1="{!v.OpenNewClinical}" categorized="Clinical" subCategorized="Assessment" headingTitle="All Assessment Forms"/>
+                </aura:if>
+                <aura:if isTrue="{!v.OpenNewNotes}">
+                  <!-- <c:Elixir_NewAccountAssociatedForms recordVal="{!v.recordId}" isOpen1="{!v.OpenNewNotes}" categorized="MedicalNotes" subCategorized="Assessment" headingTitle="All Assessment Forms"/> -->
+
+                </aura:if>
+                
+                <aura:if isTrue="{!v.OpenNotes}">
+                    <c:Elixir_AccountAssociatedForms nameSpace="ElixirSuite__" recordVal="{!v.recordId}" isOpen1="{!v.OpenNotes}" categorized="Medical" subCategorized="Notes" headingTitle="All Notes Forms"/>
+                    <!-- <c:ElixirHC_NotesFormListView recordVal="{!v.recordVal}" isOpen1="{!v.OpenNotes}" categorized="Medical" subCategorized="Notes" headingTitle="All Notes Forms"/>-->
+                </aura:if>
+                <aura:if isTrue="{!v.OpenDischarge}">
+                    <c:Elixir_AccountAssociatedForms nameSpace="ElixirSuite__" recordVal="{!v.recordVal}" isOpen1="{!v.OpenDischarge}" categorized="DischargeForm" subCategorized="Discharge" headingTitle="Discharge Forms"/>
+                </aura:if>
+                <!--aura:if isTrue="{!v.openCareplan}">
+                    <c:CarePlan_ListView openCareplan = "{!v.openCareplan}" recordVal="{!v.recordVal}"/>         
+                </aura:if-->
+               <!-- <aura:if isTrue="{!v.openModalMorMar}">
+                    <c:MAR isActive = "{!v.openModalMorMar}" recordVal="{!v.recordVal}"/>         
+                </aura:if> -->
+                
+                 <aura:if isTrue="{!v.openReferralForm}">
+                    <c:ElixirOEM_ReferralContainer isOpen = "{!v.openReferralForm}" accountId="{!v.recordId}"/>         
+                </aura:if>
+                
+                <!--  <li class=".slds-tabs_{variant}__item" title="UR Notes" aura:id="articleOne" role="presentation">
+                    <a class="" href="" target="_blank" onclick="{!c.patientBills}" role="tab" title="Utilization REview Notes" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleOne" size="x-small" iconName="utility:note"/>
+                        </div>&nbsp;Patient Bills
+                    </a>
+                </li> -->
+                
+                <!--    <li class="" aura:id="articleNine" title="Lab and Test Results" role="presentation">
+                    <a class="" href="" onclick="{!c.sectionNine}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleNine" iconName="utility:record_lookup" size="x-small" />
+                        </div>&nbsp;Lab and Test Results
+                    </a>
+                    <ul class="admission_submenus"> 
+                   <li class="slds-tabs_scoped__item slds-dropdown__item" title="Lab Results" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.labResults}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Lab Results</a></li>
+            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Other Test Results" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.otherTestResults}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Other Test Results</a></li>
+         
+        </ul>
+                  
+                </li>-->
+                <!-- Unused Article/Section Eight. Can be repurposed for another menu item-->
+                <!--li class="slds-context-bar__item slds-shrink-none" title="Item Three" aura:id="articleEight" role="presentation">
+                        <a class="slds-tabs_scoped__link " href="javascript:void(0);" onclick="{!c.sectionEight}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                            <div class="slds-float__left ">
+                                <lightning:icon class="slds-show" aura:id="articleEight" iconName="utility:down" size="x-small" />
+                            </div>UR</a></li-->
+                <!--    <li class="" title="Care Coordinator" aura:id="articleSeven" role="presentation">
+                    <aura:if isTrue="{!v.accessibilityMap.CaseManagement}">
+                        <a class="" href="javascript:void(0);" onclick="{!c.sectionSeven}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                            <div class="slds-float_left ">
+                                <lightning:icon class="" aura:id="articleSeven" iconName="utility:case" size="x-small" />
+                            </div>&nbsp;Care Coordinator
+                        </a>
+                        <ul class="admission_submenus" >
+                            <li  title="Encounter" ><a class="slds-tabs_scoped__link" href="{!'/lightning/r/'+v.recordId+'/related/HealthCloudGA__Encounters__r/view'}"  target='_blank' onclick="{!c.sectionFive}" >Encounter</a></li>      
+                   <li  title="Case Coordinator Assessment "><a class="slds-tabs_scoped__link " href="" onclick="{!c.caseMgmtAssmnt}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Assessment </a></li>
+                   <li  title="Care Plan"><a href="" onclick="{!c.newCarePlan}" >New Care Plan</a></li>
+                   <li  title="Care Coordinator Notes" ><a  href="" onclick="{!c.caseMgmtNotes}" >Notes</a></li>
+                        </ul>     
+                        
+                        <aura:set attribute="else">
+                            <a class="" href="javascript:void(0);" onclick="{!c.notAccessible}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleSeven" iconName="utility:case" size="x-small" />
+                                </div>&nbsp;Care Coordinator
+                            </a>
+                        </aura:set>
+                    </aura:if>
+                </li>-->
+                <!-- <li class="slds-context-bar__item_tab slds-shrink-none" aura:id="articleFive" title="Inventory" role="presentation">
+                                <aura:if isTrue="{!v.accessibilityMap.Inventory}"><a class="slds-tabs_scoped__link " href="{!'/lightning/r/'+v.recordId+'/related/Inventory__r/view'}" onclick="{!c.sectionFive}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                    <div class="slds-float_left ">
+                                        <lightning:icon class="slds-show" aura:id="articleFive" size="x-small" />
+                                    </div>Inventory</a>
+                                <aura:set attribute="else"><a class="slds-tabs_scoped__link " onclick="{!c.notAccessible}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                    <div class="slds-float_left ">
+                                        <lightning:icon class="slds-show" aura:id="articleFive" size="x-small" />
+                                    </div>Inventory</a>
+                                    </aura:set>
+                                </aura:if></li>
+                         -->
+                <!--<li class="slds-context-bar__item_tab slds-shrink-none" aura:id="allocateBed" title="Bed Allocation" role="presentation">
+                             <aura:if isTrue="{!(v.simpleRecord.Treatment_Center__c)==null}"> 
+                            <a class="slds-tabs_scoped__link" target="_blank" href="{!'/apex/EMROccupancyAllocationforHC?Id='+v.recordId}" title="Allocate Bed" onclick="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                              <div class="slds-float_left"> 
+                                 <lightning:icon class="slds-show" iconName="utility:resource_territory" size="x-small" aura:id="allocateBed" />
+                                 </div>&nbsp;Allocate Bed
+                                 </a>
+                              <aura:set attribute ="else" >   <a class="slds-tabs_scoped__link" target="_blank" href="" title="Allocate Bed" onclick="{!c.displaymessege}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                             <div class="slds-float_left">  <lightning:icon class="slds-show" iconName="utility:resource_territory" size="x-small" aura:id="allocateBed" />                  
+                                  </div>&nbsp;Allocate Bed </a>
+                                    </aura:set>   
+                               </aura:if> 
+                       </li>-->
+                 <aura:if isTrue="{!v.MasterProblemList}">
+                <li class="e-product-fea-child" aura:id="articleEleven" title="Problem &amp; Diagnosis"  role="presentation">
+                    <a class="" href="" onclick="{!c.masterProblemListview}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleEleven" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;Problem &amp; Diagnosis
+                    </a>
+                 
+                </li>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.CostOfCare || v.PaymentSchedule || v.Claims || v.Payment || v.PatientStatement || v.MedicalCoding}">
+                    <li class="e-product-fea-child" aura:id="articleTen" title="Billing" role="presentation">
+                        <aura:if isTrue="{!v.accessibilityMap}">
+                            <a class="" href="" onclick="{!c.sectionTen}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleTen" size="x-small" iconName="utility:change_owner" />
+                                </div>&nbsp;Billing
+                            </a>
+                            <ul class="admission_submenus slds-is-absolute">
+                                <!--li class="slds-tabs_scoped__item slds-dropdown__item" title="Billing Summary" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenElixirBillingSummary}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Billing Summary</a></li-->
+                                
+                                 <aura:if isTrue="{!v.MedicalCoding}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Medical Coding" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.procView}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Medical Coding</a></li>
+                            </aura:if>
+                                
+                                <aura:if isTrue="{!v.CostOfCare}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Cost Of Care" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenCostOfCare}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Cost Of Care</a></li>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.PaymentSchedule}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Payment Schedule" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenPaymentSchedule}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Payment Schedule</a></li>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.Claims}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Claims" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenClaims}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Claims</a></li>
+                                </aura:if>
+                                    
+                                <aura:if isTrue="{!v.Payment}">
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Payment" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenPayment}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Payment</a></li>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.PatientStatement}">    
+                                <li class="slds-tabs_scoped__item slds-dropdown__item" title="Patient Statements" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.OpenPatientStatement}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Patient Statements</a></li>
+                            	</aura:if>
+                                    
+                           
+                            </ul>
+                        </aura:if>
+                    </li>
+                    
+                </aura:if>
+                
+                
+                
+                 <!--aura:if isTrue="{!v.CostOfCare}">
+                        
+                        <c:Past_Estimates_for_EHR patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+                    
+                    
+                     <aura:if isTrue="{!v.PaymentSchedule}">
+                        
+                        <c:View_Payment_Schedule_for_EHR patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+                    
+                     <aura:if isTrue="{!v.Claims}">
+                        
+                        <c:ClaimListView_for_Ehr patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+                    
+                     <aura:if isTrue="{!v.Payment}">
+                        
+                        <c:PaymentHistory_for_ehr patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+                    
+                     <aura:if isTrue="{!v.PatientStatement}">
+                        
+                        <c:ParentStatement recordId = "{!v.recordId}"/>
+                    
+                    </aura:if-->
+                
+                 <!-- Suraj/Pankaj -->
+                  <aura:if isTrue="{!v.careModal}" >                      
+                 <c:CareEpisodeShowPrompt showPrompt="{!v.careModal}" patientId="{!v.recordId}" heading="{!v.heading}"></c:CareEpisodeShowPrompt>    	      
+               </aura:if>
+                
+
+                
+                <aura:if isTrue="{!v.DischargeForm}">
+                <li class="e-product-fea-child" aura:id="articleTen" title="DC And Transfer" role="presentation">
+                    <aura:if isTrue="{!v.accessibilityMap}">
+                        <a class="" href="" onclick="{!c.sectionTen}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                            <div class="slds-float_left ">
+                                <lightning:icon class="" aura:id="articleTen" size="x-small" iconName="utility:change_owner" />
+                            </div>&nbsp;DC And Transfer
+                        </a>
+                        <ul class="admission_submenus slds-is-absolute">
+                            <aura:if isTrue="{!v.DischargeForm}">
+                            	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Discharge Form" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.dischargePatient}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Discharge Form</a></li>
+                            </aura:if>
+                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="Referral" role="presentation">
+                                <a class="slds-tabs_scoped__link"  onclick="{!c.referralRec}" target="_blank" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item" name="Referral">Referral</a></li>
+
+                            <!-- <li class=" " title="Transfer Patient" role="presentation">
+                        <a class="slds-tabs_scoped__link " href="{!'/apex/Elixir_HC__EMROccupancyAllocationforHC?Id='+v.recordId}" onclick="" target="_self" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Transfer Patient</a> </li>
+                            <li class=" " title="DC and Transfer Notes" role="presentation"><a class="" href=""  onclick="{!c.DCTransferNote}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">DC/Transfer Notes</a></li>
+                            <li><a href="#">DC/Transfer Plan</a></li>-->
+                        </ul>
+                        
+                        <aura:set attribute="else">
+                            <a class="slds-tabs_scoped__link " href="" onclick="{!c.notAccessible}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                                <div class="slds-float_left ">
+                                    <lightning:icon class="" aura:id="articleTen" size="x-small" iconName="utility:change_owner" />
+                                </div>&nbsp;DC And Transfer
+                            </a>
+                        </aura:set>    
+                    </aura:if>
+                </li>
+                </aura:if>
+               
+                <!--   <li class="e-product-fea-child" aura:id="articleEleven" title="Diagnosis List" role="presentation">
+                    <a class="" href="" onclick="{!c.masterDiagnosisListview}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleEleven" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;Diagnosis List
+                    </a>
+                    <ul class="admission_submenus slds-is-absolute">  </ul>
+                    
+                </li>-->
+                <!-- <aura:if isTrue="{!v.Procedure}">
+                <li class="e-product-fea-child" aura:id="articleEleven" title="Procedure List" role="presentation">
+                    <a class="" href="" onclick="{!c.procedureRec}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleEleven" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;Procedure List
+                    </a>
+                     </li>
+                </aura:if>-->
+                    <ul class="admission_submenus slds-is-absolute">  
+                        <!--<aura:if isTrue="{!v.MasterProblemList}">
+                        	<li class="slds-tabs_scoped__item slds-dropdown__item" title="Master Problem List" role="presentation"><a class="slds-tabs_scoped__link " href="" onclick="{!c.masterProblemListview}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-4__item">Master Problem List</a></li>
+                        </aura:if>-->
+                        <!--  <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterClaim?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master ICD/CPT Codes List</a></li>
+            <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterProblemList?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master Problem List</a></li>
+            <li class="" title="Master DX List" ><a  target="_blank" href="{!'/apex/Elixir_HC__Master_Dx_List?Id='+v.recordId}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Master DX List</a></li>
+-->       		
+                    </ul>
+                    
+               
+               <aura:if isTrue="{!v.Timeline}">
+                <li class="e-product-fea-child" aura:id="articleEleven" title="Timeline" role="presentation">
+                    <a class="" href="" onclick="{!c.OpenElixirTimeline}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">
+                        <div class="slds-float_left ">
+                            <lightning:icon class="" aura:id="articleTwelve" size="x-small" iconName="utility:multi_picklist" />
+                        </div>&nbsp;Timeline
+                    </a>
+                    <ul class="admission_submenus">   
+                        
+                                            </ul>
+                    
+                </li>
+                </aura:if>
+                        <!--  <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterClaim?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master ICD/CPT Codes List</a></li>
+            <li class="" title="Master Problem List" ><a  target="_blank" href="{!'/apex/Elixir_HC__MasterProblemList?Id='+v.recordId}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Master Problem List</a></li>
+            <li class="" title="Master DX List" ><a  target="_blank" href="{!'/apex/Elixir_HC__Master_Dx_List?Id='+v.recordId}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Master DX List</a></li>
+-->       		
+
+                
+                
+            </ul>
+            
+          
+              <!--aura:if isTrue="{!v.CostOfCare}">
+                  
+                  <lightning:tabset selectedTabId="one">
+                  
+                  <lightning:tab label="Cost of Care" id="one">
+                    
+                        <c:Past_Estimates_for_EHR patId = "{!v.recordId}"/>
+                      </lightning:tab>
+                      </lightning:tabset>
+                    
+                    </aura:if>
+               
+               
+                
+            
+             <aura:if isTrue="{!v.PaymentSchedule}">
+                        
+                        <c:View_Payment_Schedule_for_EHR patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+            
+            
+             <aura:if isTrue="{!v.Claims}">
+                        
+                        <c:ClaimListView_for_Ehr patId = "{!v.recordId}"/>
+                    
+                    </aura:if>
+                    
+                     <aura:if isTrue="{!v.Payment}">
+                        
+                        <c:PaymentHistory_for_ehr patId = "{!v.recordId}"/>
+                    
+                    </aura:if-->
+                    
+                     <aura:if isTrue="{!v.OpPatientStatement}">
+                        
+                        <c:ParentStatement recordId = "{!v.recordId}" isOpen="{!v.OpPatientStatement}"/>
+                    
+                    </aura:if>
+                    
+            
+            
+            
+            
+            
+            <aura:set attribute="else">
+                <div class="tb1" aura:id="licensecheck">
+                    <p>This functionality is part of EMR. Please get in touch with Mirketa if you are interested in EMR.</p>
+                </div>
+            </aura:set>
+        </aura:if>
+        <div id="slds-tabs_scoped" aura:id="allocateBed" class="slds-tabs_scoped__content slds-hide slds-dropdown BedAllocation " role="tabpanel" aria-labelledby="tab-scoped-1__item">
+            <ul class="slds-tabs_scoped__nav slds-dropdown__list" role="tablist" id="nav2">    
+                <li class="slds-tabs_scoped__item slds-dropdown__item " title="allocatebed" role="presentation">
+                    <aura:if isTrue="{!(v.simpleRecord.ElixirSuite__Treatment_Center__c)==null}"> 
+                        <a class="slds-tabs_scoped__link " href="{!'/apex/Elixir_HC__EMROccupancyAllocationforHC?Id='+v.recordId}" onclick="" target="_blank" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Allocate Bed</a>  
+                        <aura:set attribute ="else" >   
+                            <a class="slds-tabs_scoped__link" target="_blank" href="" title="Allocate Bed" onclick="{!c.displaymessege}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Allocate Bed</a>
+                        </aura:set>   
+                    </aura:if> 
+                </li>
+                <!--li class="slds-tabs_scoped__item slds-dropdown__item " title="heatmap" role="presentation">
+                    <a class="slds-tabs_scoped__link " href="/apex/HeatMapVf" target="_blank" onclick="" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Heat Map</a></li-->
+            </ul>
+            
+             
+            
+        </div>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,4 @@
+<apex:page controller="RefillController" applyHTMLTag="true" applyBodyTag="true" readOnly="true">
+    
+    <iframe height="800px" id="Eprescription" title ="Eprescription" name="Eprescription" src="{!src}" width="100%" ></iframe>
+</apex:page>

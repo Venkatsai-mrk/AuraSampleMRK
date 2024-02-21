@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>It is used to connect the test to the lab order.</description>
+    <externalId>false</externalId>
+    <label>Test</label>
+    <referenceTo>Test__c</referenceTo>
+    <relationshipName>Lab_Orders</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

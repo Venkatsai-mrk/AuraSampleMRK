@@ -1,0 +1,15 @@
+<aura:component controller='ERACustomWidgetCtrl' implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="ERALst" type="List"/>
+    <aura:attribute name="column" type="List"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <lightning:card title="{! 'ERA (' + v.ERALst.length + ')'}" iconName="standard:entity">
+        <div aura:id="dataTable" class="slds-col">
+            <lightning:datatable
+                                 data="{! v.ERALst }"
+                                 columns="{! v.column}"
+                                 hideCheckboxColumn="true"
+                                 keyField="Id"
+                                 />
+        </div>
+    </lightning:card>
+</aura:component>

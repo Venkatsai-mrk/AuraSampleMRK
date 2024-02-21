@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stack_Trace_Long__c</fullName>
+    <description>Contains a detailed and extended version of the stack trace, offering a comprehensive view of the call hierarchy leading to the exception.</description>
+    <externalId>false</externalId>
+    <label>Stack Trace Long</label>
+    <length>131072</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>50</visibleLines>
+</CustomField>

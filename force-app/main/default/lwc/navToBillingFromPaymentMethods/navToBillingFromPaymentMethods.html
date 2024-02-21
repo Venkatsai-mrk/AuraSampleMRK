@@ -1,0 +1,12 @@
+<template>
+    <div>
+        <template if:true={showBilling}>
+            <lightning-icon icon-name="utility:chevronleft" alternative-text="Go" title="Go To" variant="base" onclick={navToBillingPage}></lightning-icon>
+            <lightning-button label="Return To Billing" variant="base" onclick={navToBillingPage}></lightning-button>
+        </template>
+        <template if:true={showListView}>
+            <lightning-icon icon-name="utility:chevronleft" alternative-text="Go" title="Go To" variant="base" onclick={navToListView}></lightning-icon>
+            <lightning-button label="Return To List View" variant="base" onclick={navToListView}></lightning-button>
+        </template>
+    </div>
+</template>

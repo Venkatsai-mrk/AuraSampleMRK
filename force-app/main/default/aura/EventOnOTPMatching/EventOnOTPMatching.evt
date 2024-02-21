@@ -1,0 +1,10 @@
+<aura:event type="COMPONENT" description="Event on OTP Match" >
+     <aura:attribute name="attachementId" type="String" default=" " />
+     <aura:attribute name="signComment" type="String"/>
+     <aura:attribute name="dateToday" type="String"/>
+    <aura:attribute name="showButton" type="Boolean"/>
+    <aura:attribute name="showButton1" type="Boolean"/>
+    <aura:attribute name="signeeName" type="String"/>
+    <aura:attribute name="approvalLevel" type="String"/>
+    <aura:attribute name="cancelKey" type="String"/>
+</aura:event>

@@ -1,0 +1,9 @@
+<aura:component controller="ChangeStatusHelper" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="recordId" type="string"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <div class=" slds-theme_default">   
+       <lightning:notificationsLibrary aura:id="notifLib"/>
+
+        <h1>Please wait. . .</h1>
+    </div>  
+</aura:component>

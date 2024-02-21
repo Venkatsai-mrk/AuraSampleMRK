@@ -1,0 +1,103 @@
+<aura:component controller="AppointmentreUsableMultiSelectLookupCtrl" Implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId"
+                access="global">
+    <aura:attribute name="equipmentData" type="list"/>
+    <aura:attribute name="tempEquipmentLst" type="list"/>
+    <aura:attribute name="tempIdLst" type="list"/>
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+
+    <aura:attribute name="selectedRecordOfEquipment" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="selectedRecordOfLocation" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="mode" type="String" default=""/>
+    
+    <aura:attribute name="myText" type="Integer" default=""/>
+    <aura:attribute name="EquipmentNeeded" type="Integer" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="SelectedStartTime" type="DateTime" default=""/>
+    <aura:attribute name="SelectedEndTime" type="DateTime" default=""/>
+    <aura:attribute name="SelectedStartDate" type="Date" default=""/>
+    <aura:attribute name="SelectedEndDate" type="Date" default=""/>
+    <aura:attribute name="AllDayEvent" type="boolean" default="false"/>
+    <aura:attribute name="ConflictMessage" type="string" default=""/>
+    <aura:attribute name="equipMessage" type="string" default=""/>
+    <aura:attribute name="fixedMessage" type="string" default=" are available for the requested time frame"/>
+    <aura:attribute name="ErrorDivHide" type="boolean" />
+   <aura:attribute name="showByPassErrForMultiSelect" type="boolean" default=""/>
+     <aura:attribute name="equipmentErr" type="boolean" />
+    
+    <aura:handler name="eqipSelectedRecordEvent" event="c:EquipEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="eqipmentEvent" event="c:EquipmentEvent" action="{!c.handleEquipmentEvent}"/>
+    
+    <lightning:card title="Add Equipment">
+        <div aura:id="conflictingEvent"  class="slds-text-color_error">
+             <aura:iteration items="{!v.tempEquipmentLst}" var="temp" indexVar="index1">
+           <p>{!temp.message}</p> 
+            </aura:iteration>                
+        </div>
+        <div class="slds-m-top_small">
+            
+            <div class="container-fluid">        
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer equipTable"> 
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Equipment</th>
+                            <th>Available</th>
+                            <th>Needed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>      
+                        <aura:iteration items="{!v.equipmentData}" var="equip" indexVar="index">
+                            <tr>
+                                <td> 
+                                    {!index + 1}
+                                </td>
+                                <td><c:customLookupForAppointmentSchedule  objectAPIName="ElixirSuite__Equipment__c"
+                                                                          IconName="standard:account"
+                                                                          SelectRecordName="{!equip.Equipment}"
+                                                                          SearchKeyWord="{!equip.Equipment}"
+                                                                          label="Equipment"
+                                                                          selectedRecordOfLocation="{!v.selectedRecordOfLocation}"
+                                                                          equipmentList="{!v.equipmentData}"
+                                                                          indexVal="{!index}"
+                                                                          EuipIdLst = "{!v.tempIdLst}"
+                                                                          SelectedStartTime="{!v.SelectedStartTime}"
+                                                                          SelectedEndTime="{!v.SelectedEndTime}"
+                                                                          SelectedStartDate="{!v.SelectedStartDate}"
+                                                                          SelectedEndDate="{!v.SelectedEndDate}"
+                                                                          AllDayEvent="{!v.AllDayEvent}"
+                                                                           /></td>
+                                
+                                
+                                <td><lightning:input disabled="true" type="text" name="" placeholder="" value="{!equip.noOfAvEquip}"/></td>
+                                
+                                <td><lightning:input disabled="{!equip.disabled}"  type="integer" placeholder=""  name="{!index}" value="{!equip.Needed}" onchange="{!c.handleChange}"/></td>
+                                
+                                <td>
+                                 <aura:if isTrue="{!index == 0}">
+                                    <aura:if isTrue="{!lessthanorequal(v.equipmentData.length,4)}">
+                                        <a onclick="{!c.addRow}" data-record="{!index}" data-name="{!index}">
+                                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                            <span class="slds-assistive-text">Add Icon</span>
+                                        </a> 
+                                        <aura:set attribute="else">
+                                            <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                        </aura:set>
+                                    </aura:if>
+                                    </aura:if>
+                                    <aura:if isTrue="{!index > 0}">
+                                        <a onclick="{!c.deleteRecord}" data-record="{!index}" data-name="{!index}">
+                                            <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                            <span class="slds-assistive-text">Delete</span>
+                                        </a>
+                                    </aura:if>
+                                </td> 
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

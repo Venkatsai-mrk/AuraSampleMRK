@@ -1,0 +1,566 @@
+<apex:page renderAs="pdf" controller="VisitSummaryPdfHelper">
+    <apex:form >
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet"/> 
+            
+        </head>
+        <table width="710" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="font-family: 'Montserrat', sans-serif;">
+            <thead>
+               <tr>
+                    <td style="background-color: #c9c5c5; color: #0e0e0e; text-align: center;">
+                        <h2 style="margin:5px 0;font-family: 'Montserrat', sans-serif; font-size: 20px;">Visit Summary</h2>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td style="height: 30px"></td></tr>
+                <tr>
+                    <td style ="background-color:#f1f2f3;">
+                        <table width="690" border="0" align="center" cellspacing="0" cellpadding="0" class="full" style="margin-left:15px; font-size: 14px; font-family: 'Montserrat', sans-serif;">
+                            <tbody>
+                                <tr><td style="height: 10px;" colspan="5"></td></tr>
+                                <tr>
+                                    <td style="background-color: #f1f2f3; color: #020202; text-align: left;" colspan="5">
+                                        <h2 style="margin: 0 0 0 15px; font-size: 16px;color: #757271;"> Demographic Details </h2>
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 10px;" colspan="5"></td></tr>
+                                <tr>
+                                    <th style="font-size: 12px; width : 120px"><span style="margin-left : 17px">Patient Name </span></th>
+                                    <td style="font-size: 12px; font-weight: lighter !important;">{!patientInfo.Name}</td>
+                                    <td style="width : 50px"></td>
+                                    <th style="font-size: 12px; width : 90px">Birth Date</th>
+                                    <td style="font-size: 12px;">  
+                                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}" >	 
+                                            <apex:param value="{!patientInfo.DOB__c}"/>
+                                        </apex:outputText> 
+                                    </td>
+                                </tr>
+                                <tr><td style="height: 10px;" colspan="5"></td></tr>
+                                <tr>
+                                    <th style="font-size: 12px; width : 120px"><span style = "margin-left : 17px">Birth Sex</span></th>
+                                    <td style="font-size: 12px;">{!patientInfo.ElixirSuite__Gender__c}</td>
+                                    <td style="width: 50px;"></td>
+                                    <th style="font-size: 12px; width : 90px">MRN</th>
+                                    <td style="font-size: 12px;">{!patientInfo.ElixirSuite__MRN_Number_New__c}</td>
+                                </tr>
+                                <tr><td style="height: 10px;" colspan="5"></td></tr>
+                                <tr>
+                                    <th style="font-size: 12px; width : 120px"><span style = "margin-left : 17px">Phone</span></th>
+                                    <td style="font-size: 12px;">{!patientInfo.Phone}</td>
+                                    <td style="" colspan="3"></td>
+                                </tr>
+                                <tr><td style="height: 10px;" colspan="5"></td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td style="height: 5px "></td></tr>
+                <apex:outputPanel rendered="{!problems}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr>
+                                        <td style="height: 5px;" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Problem(s)</h5>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="height: 10px;background-color: #f1f2f3;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <apex:outputPanel rendered="{!probList.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                                
+                                                <tr>
+                                                    <td style="border-collapse:collapse; background-color: #f1f2f3;">
+                                                        <table border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; margin-top: ; border-top: transparent; border-left: transparent">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="font-size: 12px;">Sr. No.</th>
+                                                                    <th style="font-size: 12px;">Problem</th>
+                                                                    <th style="font-size: 12px;">SNOMED CT Code</th>
+                                                                    <th style="font-size: 12px;">Problem Type</th>
+                                                                    <th style="font-size: 12px;">Date Onset</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:variable value="{!1}" var="count" />
+                                                                <apex:repeat value="{!probList}" var="item">
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;"
+                                                                            rowspan="2">
+                                                                            {!count}
+                                                                            <apex:variable value="{!count+1}" var="count" />
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;">{!item.name}</td>
+                                                                        <td style="font-size: 12px;">{!item.SNOMED_CT_Code__c}</td>
+                                                                        <td style="font-size: 12px;">{!item.Problem_Type__c}</td>
+                                                                        <td style="font-size: 12px;">{!item.Date_Onset__c}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!probList.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px;" colspan="2"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showVitalSigns}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif; ">
+                                <thead>
+                                    <tr>
+                                        <td style="height: 5px;" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Vital Signs</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px;background-color: #f1f2f3;"></td>
+                                    </tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!vitalSigns.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                            
+                                            <tr>
+                                                <td style="background-color: #f1f2f3;">
+                                                    <table border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px;">Sr. No.</th>
+                                                                <th style="font-size: 12px;">Temperature</th>
+                                                                <th style="font-size: 12px;">Pulse</th>
+                                                                <th style="font-size: 12px;">Blood Pressure</th>
+                                                                <th style="font-size: 12px;">Weight</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:variable value="{!1}" var="count" />
+                                                            <apex:repeat value="{!vitalSigns}" var="item">
+                                                                <tr>
+                                                                    <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;"
+                                                                        rowspan="2">
+                                                                        {!count}
+                                                                        <apex:variable value="{!count+1}" var="count" />
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 12px;">{!item.Temperature__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Pulse__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Blood_Pressure_Systolic__c}/{!item.Blood_Pressure_Diasystolic__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Weight__c}</td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!vitalSigns.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px" colspan="2"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!allergies}">
+                    <tr>
+                        <td style="background-color: #f1f2f3;">
+                            <table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr><td style="height: 5px;" colspan="2"></td></tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Allergies/Medical Alerts</h5>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr><td style="height: 10px;background-color: #f1f2f3;"></td></tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!allerList.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                            <tr>
+                                                <td style="background-color: #f1f2f3;">
+                                                    <table  border="1" cellspacing="0" cellpadding="2" style="background-color: #f1f2f3; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px;">Sr. No.</th>
+                                                                <th style="font-size: 12px;">Allergy Name</th>
+                                                                <th style="font-size: 12px;">Reaction</th>
+                                                                <th style="font-size: 12px;">Substance</th>
+                                                                <th style="font-size: 12px;">Severity</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:variable value="{!1}" var="count" />
+                                                            <apex:repeat value="{!allerList}" var="item" >
+                                                                <tr>
+                                                                    <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;" rowspan="2">
+                                                                        {!count}
+                                                                        <apex:variable value="{!count+1}" var="count" /> 
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <tr>
+                                                                    
+                                                                    <td style="font-size: 12px;">{!item.Allergy_Name__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Reaction__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Substance__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Severity__c}</td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table> 
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!allerList.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr> 
+                                    <tr><td style="height: 10px;background-color: #f1f2f3;" colspan="2"></td></tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showDiagnosisCode}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr>
+                                        <td style="height: 5px;" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Diagnosis Code(s)</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px;background-color: #f1f2f3;"></td>
+                                    </tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!diagnosisCodeList.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                            
+                                            <tr>
+                                                <td style="background-color: #f1f2f3;">
+                                                    <table border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px;">Sr. No.</th>
+                                                                <th style="font-size: 12px;">Diagnosis Code</th>
+                                                                <th style="font-size: 12px;">Description</th>
+                                                                <th style="font-size: 12px;">Diagnosis Type</th>
+                                                                <th style="font-size: 12px;">Date Diagnosed</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:variable value="{!1}" var="count" />
+                                                            <apex:repeat value="{!diagnosisCodeList}" var="item">
+                                                                <tr>
+                                                                    <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;"
+                                                                        rowspan="2">
+                                                                        {!count}
+                                                                        <apex:variable value="{!count+1}" var="count" />
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 12px;">{!item.Diagnosis_Code__r.name}</td>
+                                                                    <td style="font-size: 12px;">{!item.Diagnosis_Code__r.Code_Description1__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Diagnosis_Code__r.Diagnosis_Type__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Diagnosis_Code__r.Effective_Date__c}</td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!diagnosisCodeList.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="height: 10px;" colspan="2"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showLabOrder}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr><td style="height: 5px;" colspan="2"></td></tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Lab Order(s)</h5>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr><td style="height: 10px; background-color: #f1f2f3;"></td></tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!IF(showCHCLabOrder, chcLabOrderList.size >= 1, labOrderList.size >= 1)}" style="font-size: 12px; margin-left: 20px;">
+                                            <tr>
+                                                <td style="border-collapse:collapse; background-color: #f1f2f3;"> 
+                                                    <apex:outputText rendered="{!NOT(showCHCLabOrder)}">
+                                                        <table  border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="font-size: 12px;">Sr. No.</th>
+                                                                    <th style="font-size: 12px;">Lab Order</th>
+                                                                    <th style="font-size: 12px;">Medical Test</th>
+                                                                    <th style="font-size: 12px;">Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:variable value="{!1}" var="count" />
+                                                                <apex:repeat value="{!labOrderList}" var="item" >
+                                                                    <tr>
+                                                                        <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;" rowspan="2">
+                                                                            {!count}
+                                                                            <apex:variable value="{!count+1}" var="count" /> 
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;">{!item.Name}</td>
+                                                                        <td style="font-size: 12px;">{!item.Medical_Test__c}</td>
+                                                                        <td style="font-size: 12px;">{!item.Start_Date__c}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                            
+                                                        </table> 
+                                                    </apex:outputText>
+                                                    
+                                                    <apex:outputText rendered="{!showCHCLabOrder}">
+                                                        <table  border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="font-size: 12px;">Sr. No.</th>
+                                                                    <th style="font-size: 12px;">Lab Order</th>
+                                                                    <th style="font-size: 12px;">Medical Test</th>
+                                                                    <th style="font-size: 12px;">Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:variable value="{!1}" var="count" />
+                                                                <apex:repeat value="{!chcLabOrderList}" var="item" >
+                                                                    <tr>
+                                                                        <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;" rowspan="2">
+                                                                            {!count}
+                                                                            <apex:variable value="{!count+1}" var="count" /> 
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;">{!item.Name}</td>
+                                                                        <td style="font-size: 12px;">{!item.Test_Name__c}</td>
+                                                                        <td style="font-size: 12px;">{!item.Collection_Date_Time__c}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                            
+                                                        </table> 
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <!-- rendered="{!labOrderList.size < 1}" -->
+                                            <apex:outputPanel rendered="{!IF(showCHCLabOrder, chcLabOrderList.size < 1, labOrderList.size < 1)}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr><td style="height: 10px;" colspan="2"></td></tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!prescriptions}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table  border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr><td style="height: 5px;" colspan="2"></td></tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Prescription(s)</h5>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr><td style="height: 10px;background-color: #f1f2f3;"></td></tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!presList.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                            
+                                            <tr>
+                                                <td style="background-color: #f1f2f3;">
+                                                    <table  border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px;">Sr. No.</th>
+                                                                <th style="font-size: 12px;">Medication Name</th>
+                                                                <th style="font-size: 12px;">Reason</th>
+                                                                <th style="font-size: 12px;">Route</th>
+                                                                <th style="font-size: 12px;">Frequency</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:variable value="{!1}" var="count" />
+                                                            <apex:repeat value="{!presList}" var="item" >
+                                                                <tr>
+                                                                    <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;" rowspan="2">
+                                                                        {!count}
+                                                                        <apex:variable value="{!count+1}" var="count" /> 
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 12px;">{!item.Drug_Name__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Reason_new__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Route_New__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Ferquency__c}</td>                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table> 
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!presList.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>    
+                                        </td>
+                                    </tr>
+                                    <tr><td style="height: 10px;background-color: #f1f2f3;" colspan="2"></td></tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showProcedureCode}">
+                    <tr>
+                        <td style="background-color: #f1f2f3; ">
+                            <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 690px; margin-left: 15px; font-family: 'Montserrat', sans-serif;">
+                                <thead>
+                                    <tr>
+                                        <td style="height: 5px;" colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="">
+                                            <h5 style="margin: 0 0 0 15px; font-size: 16px; font-weight: 700; color: #757271;">Procedure Code(s)</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px;background-color: #f1f2f3;"></td>
+                                    </tr>
+                                    <tr><td>
+                                        <apex:outputPanel rendered="{!procedureCodeList.size >= 1}" style="font-size: 12px; margin-left: 20px;">
+                                            
+                                            <tr>
+                                                <td style="background-color: #f1f2f3;">
+                                                    <table border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; width: 660px; margin-left: 15px;  color: #757271; text-align: left; border-top: transparent; border-left: transparent">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px;">Sr. No.</th>
+                                                                <th style="font-size: 12px;">Procedure Code</th>
+                                                                <th style="font-size: 12px;">Description</th>
+                                                                <th style="font-size: 12px;">Place of Service</th>
+                                                                <th style="font-size: 12px;">Units/Duration</th>
+                                                                <th style="font-size: 12px;">Modifier 1</th>
+                                                                <th style="font-size: 12px;">Modifier 2</th>
+                                                                <th style="font-size: 12px;">Modifier 3</th>
+                                                                <th style="font-size: 12px;">Modifier 4</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:variable value="{!1}" var="count" />
+                                                            <apex:repeat value="{!procedureCodeList}" var="item">
+                                                                <tr>
+                                                                    <td style="font-size: 12px; text-align: left; padding: 3px; border: 1px solid #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: top; width: 50px;"
+                                                                        rowspan="2">
+                                                                        {!count}
+                                                                        <apex:variable value="{!count+1}" var="count" />
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="font-size: 12px;">{!item.Name}</td>
+                                                                    <td style="font-size: 12px;">{!item.Code_Description__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Place_Of_Service_Picklist__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Days_Units__c}</td>
+                                                                    <td style="font-size: 12px;">{!item.Modifier1__r.Name}</td>
+                                                                    <td style="font-size: 12px;">{!item.Modifier2__r.Name}</td>
+                                                                    <td style="font-size: 12px;">{!item.Modifier3__r.Name}</td>
+                                                                    <td style="font-size: 12px;">{!item.Modifier4__r.Name}</td>
+                                                                    
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        </td></tr>
+                                    <tr>
+                                        <td style="background-color: #f1f2f3;">
+                                            <apex:outputPanel rendered="{!procedureCodeList.size < 1}" style="font-size: 12px; margin-left: 15px;">No Data Available</apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px;" colspan="2"></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:outputPanel>
+            </tbody>
+        </table>
+    </apex:form>
+</apex:page>

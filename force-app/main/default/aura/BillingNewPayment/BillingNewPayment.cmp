@@ -1,0 +1,1232 @@
+<aura:component access="global"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="PaymentController" >
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="cheque" type="boolean" default="False"/>
+    <aura:attribute name="patOutStndAmount" type="boolean" default="False"/><!--AK-->
+    <aura:attribute name="patOutStndAmountRegister" type="boolean" default="False"/><!--AK-->
+    <aura:attribute name="optionsForPrivatePayment" type="List" default="[
+                                                                         {'label': 'Register Payment', 'value': 'Register a Payment'},                                                     
+                                                                         {'label': 'Allocate Payments', 'value': 'Allocate Payments'}]
+                                                                         {'label': 'Payment Plan', 'value': 'Payment schedule'},
+                                                                         {'label': 'Add Discount', 'value': 'Add Discount'},
+                                                                         {'label': 'Allocate Discount', 'value': 'Allocate Discount'},
+                                                                         ]"/>  
+    <aura:attribute name="valueForPrivatePayment" type="String" default="Register a Payment"/>
+    <aura:attribute name="makePay" type="boolean" default="true"/>
+    <aura:attribute name="AllocPay" type="boolean" default="false"/>
+    <aura:attribute name="paySched" type="boolean" default="false"/>
+    
+    <aura:attribute name="Allocate" type="boolean" default="False"/> 
+    <aura:attribute name="Credit" type="boolean" default="False"/>
+    <aura:attribute name="Plist" type="list" default=""/>
+    
+    <aura:attribute name="Tdate" type="Date" default=""/>
+    <aura:attribute name="Tdate2" type="Date" default=""/>
+    
+    <aura:attribute name="myCurrency" type="Decimal" default="0.0"/>
+    <aura:attribute name="myCurrency2" type="Decimal" default="0.0"/>
+    
+    <aura:attribute name="NetAmount" type="integer" default="0"/>
+<aura:attribute name="plugData" type="boolean" default="False"/>
+    
+    <aura:attribute name="AmountDue" type="integer" default="0"/>
+    <aura:attribute name="AmountApplied" type="integer" default="0"/>
+    <aura:attribute name="totalUnAllocatedAmount" type="Decimal" default="0.0"/>
+    
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="selectedSchedules" type="List" />
+    
+    
+    <aura:attribute name="Infolist" type="list" default=""/>
+    <aura:attribute name="PaySchedulist" type="list" default=""/>
+    <aura:attribute name="scheduleList" type="list" default=""/>
+    
+    <aura:attribute name="hideSchedule" type="boolean" default="false"/>
+    
+    <aura:attribute name="PayTransId" type="List" default=""/>
+    <aura:attribute name="Patient" type="Account" default=""/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="columns3" type="List"/>
+    
+    <aura:attribute name="currentValue" type="String"/>
+    
+    <aura:attribute name="PaymentType" type="String" default="Unallocated"/>
+    <aura:attribute name="paySchedule" type="Boolean"/>
+    
+    <aura:attribute name="isAllocatedAmtExceed" type="Boolean" default="false"/>
+    <aura:attribute name="isAllocatedAmtExceedPaSh" type="Boolean" default="false"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="value" type="String" default="Make a Payment"/>
+    <aura:attribute name="chequeNo" type="String" default=""/>
+    <aura:attribute name="creditCardId" type="String" default=""/>
+    <aura:attribute name="amountAllocated" type="Decimal" default="0"/>
+    <aura:attribute name="creditSelectedRows" type="List" default="[]"/> 
+    <aura:attribute name="makePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="makePrivatePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="makePrivateAllocatePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="makePrivateSchedulePaymentButtonDisable" type="Boolean" default="false"/>
+    <aura:attribute name="makePrivateDiscountButtonDisable" type="Boolean" default="false"/>
+    <aura:attribute name="allocatePrivateDiscountButtonDisable" type="Boolean" default="false"/>
+    <!--aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Make a Payment', 'value': 'Make a Payment'},
+                                                        {'label': 'Allocate Payments', 'value': 'Allocate Payments'},
+                                                        {'label': 'Payment schedule', 'value': 'Payment schedule'}
+                                                        ]"/ -->
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Register Payment', 'value': 'Make a Payment'},
+                                                        {'label': 'Allocate Payments', 'value': 'Allocate Payments'},
+                                                        {'label': 'Payment Plan', 'value': 'Payment Plan'}
+                                                        ]"/>
+    
+    <aura:attribute name="isModalOpen" type="boolean" />
+    <aura:attribute name="isPaymentTab" type="boolean" default="true"/>
+    <!-- EB-345 Attributes START-->
+    <aura:attribute name="toggleOptions" type="List" default="[
+                                                              {'label': 'By Procedures', 'value': 'By Procedure'},
+                                                              {'label': 'By Claims', 'value': 'By Claims'}
+                                                              ]"/>
+    <aura:attribute name="toggleValue" type="String" default="By Procedure"/>
+    <aura:attribute name="ClaimsList" type="list" default=""/>
+    <aura:attribute name="ClaimsColumns" type="List"/>
+    <aura:attribute name="hideOrShowClaims" type="boolean" default="false"/>
+    <aura:attribute name="selectAllClaims" type="boolean" default="false"/>
+    <aura:attribute name="selectClaimAllProc" type="boolean" default="false"/>
+    <aura:attribute name="NoOfClaimsSelected" type="Integer" default="0"/>
+    <!-- EB-345 Attributes END-->
+    <!-- EB-362 Attributes START -->
+    <aura:attribute name="disableCheckbox" type="boolean" default="false"/>
+    <aura:attribute name="payReasonVal" type="String" default=""/>
+    <aura:attribute name="ReceivedFrom" type="String" default=""/>
+    <aura:attribute name="addNote" type="String" />
+    
+    <!-- EB-362 Attributes END -->
+    <!-- EB-363 START-->
+    <aura:attribute name="generateReceipt" type="boolean" default="false"/>
+    <!-- EB-363 END-->
+    
+    <!-- LX3-5300 START-->
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="PInsurancePaylist" type="list" default=""/>
+    <aura:attribute name="selectedRowsOfProc" type="list" default=""/>
+    <aura:attribute name="selectedInsurancePaylist" type="list" default=""/>
+    <aura:attribute name="selectedProcedurePaylist" type="list" default=""/>
+    <aura:attribute name="claimProcedurePaylist" type="list" default=""/>
+    <aura:attribute name="TNumber" type="String" default=""/>
+    <aura:attribute name="columns4" type="List"/>
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <!-- LX3-5300 END-->
+    
+    <!-- LX-3 5343 -->
+    
+    <aura:attribute name="TotalAppliedForAllocatePayment" type="integer" default="0"/>
+    <aura:attribute name="TotalUnallocatedForAllocatePayment" type="integer" default="0"/>
+    
+    <aura:attribute name="PrivateAppliedAmountInsurance" type="integer" default="0"/>
+    <aura:attribute name="TotalPrivateUnallocatedAmountInsurance" type="integer" default="0"/>
+    
+    <aura:attribute name="PrivateAmountLabel" type="String"/>
+    <aura:attribute name="TotalPrivateUnallocatedAmountLabel" type="String"/>
+    
+    <aura:attribute name="billingOpenIssueRefund" type="boolean" default="false"/>
+    <aura:attribute name="billingDisableCreateRefund" type="boolean" default="true"/>
+    
+    <aura:handler event="c:PaymentEvent" action="{!c.fromChild}"/>
+    
+    <aura:attribute name="allocatePaymentButtonDisable" type="Boolean" default="true"/>
+    <aura:attribute name="showConfirmDialogForAllocatePayment" type="Boolean" default="false"/>
+    <aura:attribute name="showConfirmDialogMessage" type="String" default=""/>
+    <!-- LX-3 5343 -->
+    
+    <!-- LX3-5118 START-->
+    <aura:attribute name="paymentTypeList" type="List"/>
+    <aura:attribute name="typeOfPayment" type="String" default=""/> 
+    <aura:attribute name="TotalAppliedAmountInsurance" type="integer" default="0"/>
+    <aura:attribute name="TotalUnallocatedAmountInsurance" type="integer" default="0"/>
+    
+    <!-- LX3-5118 END-->
+    
+    <!-- LX3-9282 START-->
+    <aura:attribute name="refundScreen" type="boolean" default="false"/>
+    <!-- LX3-9282  END-->
+     <aura:attribute name="refundScreenTab" type="String"/>
+    <aura:attribute name="isProcessButtonDisabled" type="boolean" />
+    <aura:attribute name="sendPatientStatements" type="boolean" default="false"/>
+    <aura:if isTrue="{!v.isModalOpen}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container hideDiv">
+                
+                <header class="slds-modal__header slds-text-heading_large">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    
+                    <aura:if isTrue="{!v.typeOfPayment == 'Manage Refunds'}">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>REFUNDS</b></h2>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.typeOfPayment == 'Insurance Payment'}">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>INSURANCE PAYMENTS</b></h2>
+                            <aura:set attribute="else">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>PRIVATE PAYMENTS</b></h2>
+                            </aura:set>
+                                </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </header>
+                
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="pvt-pay" aura:id="paymentTypeAura">
+                        <lightning:select value="{!v.typeOfPayment}" onchange="{!c.changePaymentType}">
+                            
+                            <aura:iteration items="{!v.paymentTypeList}" var="item">
+                                <option text="{!item.label}" value="{!item.value}" />
+                            </aura:iteration>
+                            
+                        </lightning:select>
+                        
+                    </div>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Insurance Payment'}">
+                        <lightning:card>
+                            <div class="slds-form-element__control">
+                                <ul class="payment-list">
+                                    <!--<li><h2>Payment</h2></li>-->
+                                    <li class="first-cart">
+                                        <div class="slds-grid slds-gutters">
+                                            <aura:if isTrue="{!v.isPaymentTab}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Patient Name: </span>
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_8-of-12 ">
+                                                            <c:CustomLookup aura:id="customLookupCmp"></c:CustomLookup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <!-- Patient's details will is shown only if the Patient record is selected -->
+                                            <aura:if isTrue="{!v.PatientId != ''}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Name   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">DOB  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__DOB__c}"/> <!--replaced 'ElixirSuite__Patient_s_Birth_Date__c' with 'Patient.ElixirSuite__DOB__c' by Anusha LX3-5342-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">MRN Number   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__MRN_Number_New__c}"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </aura:if>
+                                        </div>
+                                    </li>
+                                    <li class="second-cart">
+                                        <span>
+                                            <lightning:radioGroup name="radioButtonGroup"
+                                                                  options="{! v.options }"
+                                                                  value="{! v.value }"
+                                                                  type="radio"
+                                                                  onchange="{! c.handleChange }"
+                                                                  />
+                                        </span>
+                                        <br/>
+                                       
+                                        
+                                        <aura:if isTrue="{!v.makePay}">
+                                            <div class="slds-grid slds-gutters mobile-li2">
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Mode of Payment  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <lightning:select aura:id="select1" name="select1" label="" onchange="{!c.getField}" value="{!v.modeOfPayment}">
+                                                                <option value="">Choose one..</option>
+                                                                <option value="Cash">Cash</option>
+                                                                <option value="Cheque">Cheque</option>
+                                                                <option value="Credit Card">Credit Card</option>
+                                                                <option value="EFT">EFT</option>
+                                                            </lightning:select>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Amount Paid   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <lightning:input type="number"  formatter="currency" value="{!v.myCurrency}" onchange="{!c.setValue}"/>
+                                                            
+                                                            <aura:if isTrue="{!v.paySched}">
+                                                                <aura:if isTrue="{!v.isAllocatedAmtExceedPaSh}">
+                                                                    <div class="slds-text-color_error slds-text-heading_small">
+                                                                        Please enter amount less than or equal to
+                                                                        <lightning:formattedNumber value="{!v.NetAmount}" style="currency" currencyCode="USD"/>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </aura:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-gutters mobile-li2">
+                                                <aura:if isTrue="{!!v.paySched}">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <div class="slds-grid slds-gutters">
+                                                            <div class="slds-col slds-size_4-of-12">
+                                                                <span class="slds-form-element__static slds-form-element__label">Reason : </span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_8-of-12 remove_label">
+                                                                <lightning:select aura:id="payReason" name="payReason" label="" onchange="{!c.getPaymentReason}" value="{!v.payReasonVal}">
+                                                                    <option value="">Choose one..</option>
+                                                                    <option value="Applied Payment">Applied Payment</option>
+                                                                    <option value="Unallocated Payment">Unallocated Payment</option>
+                                                                    
+                                                                </lightning:select>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.paySched}">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <div class="slds-grid slds-gutters">
+                                                            <div class="slds-col slds-size_4-of-12">
+                                                                <span class="slds-form-element__static slds-form-element__label">Date    : </span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_8-of-12 remove_label">
+                                                                <lightning:input type="date" value="{!v.Tdate}" onchange="{!c.dateChangeHandler}"></lightning:input>
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </aura:if>
+                                                <div class="slds-col slds-size_6-of-12">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <!--div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Received From    : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <lightning:select aura:id="" name="select1" label="" value="{!v.ReceivedFrom}">
+                                                                <option value="">Choose one..</option>
+                                                                <option value="Patient">Patient</option>
+                                                                <option value="Insurer">Insurer</option>
+                                                            </lightning:select>
+                                                        </div-->
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Payment Transaction Number: </span> <!--removed space between "Payment Transaction Number" and ":" for LX3-5800-->
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <lightning:input type="text"   value="{!v.TNumber}" />
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-gutters mobile-li2">
+                                                <aura:if isTrue="{!!v.paySched}">
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <div class="slds-grid slds-gutters">
+                                                            <div class="slds-col slds-size_4-of-12">
+                                                                <span class="slds-form-element__static slds-form-element__label">Date of Payment    : </span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_8-of-12 remove_label">
+                                                                <lightning:input type="date" value="{!v.Tdate}"></lightning:input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_6-of-12">
+                                                        <div class="slds-grid slds-gutters">
+                                                            <div class="slds-col slds-size_4-of-12">
+                                                                <span class="slds-form-element__static slds-form-element__label">Note    : </span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_8-of-12 remove_label">
+                                                                <lightning:textarea name="Note" label="Note" placeholder="Add Note..." value="{!v.addNote}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </aura:if>
+                                            </div>
+                                            <div class="slds-grid slds-gutters mobile-li2">
+                                                <aura:if isTrue="{!!v.paySched}">
+                                                    <aura:if isTrue="{!or(v.payReasonVal == 'Applied Payment')}"> <!--Replaced {!(v.payReasonVal == 'Upfront Payment')}-->
+                                                        <div class="slds-col slds-size_6-of-12">
+                                                            <div class="slds-grid slds-gutters">
+                                                                <div class="slds-col slds-size_4-of-12">
+                                                                    <span class="slds-form-element__static slds-form-element__label">Generate Receipt </span>
+                                                                </div>
+                                                                <div class="slds-col slds-size_8-of-12 remove_label">
+                                                                    <lightning:input type="checkbox"
+                                                                                     checked="{!v.generateReceipt}"
+                                                                                     />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </aura:if>
+                                                </aura:if>
+                                            </div>
+                                            <div class="slds-grid slds-gutters mobile-li2">
+                                              <aura:if isTrue="{!v.cheque}">
+                                                  <div class="slds-col slds-size_6-of-12">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Cheque No   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <lightning:input  value="{!v.chequeNo}"></lightning:input>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                </aura:if>
+                                            </div>
+                                            <aura:if isTrue="{!v.Credit}">
+                                            <div class="slds-m-top_xxx-small">
+                                                <div class="slds-m-bottom_none">
+                                                    <b class="slds-text-heading_medium">Card Details</b> 
+                                                </div>
+                                                <lightning:datatable
+                                                                     keyField="id"
+                                                                     data="{! v.Infolist }"
+                                                                     columns="{! v.columns1 }"
+                                                                     class="byProcTableCss"
+                                                                     hideCheckboxColumn="false"
+                                                                     onrowselection="{!c.handleCreditSelectedRow}"
+                                                                     selectedRows="{!v.selectedRows}"
+                                                                     maxRowSelection="{! v.maxRowSelection }"/>
+                                                
+                                            </div>
+                                        </aura:if>
+                                            
+                                            <aura:if isTrue="{!v.paySched}">
+                                                <aura:if isTrue="{!v.typeOfPayment == 'Private Payment'}"> <!--Anusha-->
+                                                    <div class="slds-m-bottom_small">
+                                                        <b class="slds-text-heading_medium">Active Payment Schedules</b>
+                                                    </div>
+                                                    <lightning:datatable
+                                                                         keyField="id"
+                                                                         data="{! v.PaySchedulist }"
+                                                                         columns="{! v.columns2 }"
+                                                                         onrowselection="{!c.selectedRowsOne}"
+                                                                         class="byProcTableCss"
+                                                                         maxRowSelection="{! v.maxRowSelection }"
+                                                                         />
+                                                    <br/>
+                                                    <aura:if isTrue="{!v.PaySchedulist.length == 0}">
+                                                        <center >
+                                                            <span class="no-record">
+                                                                NO RECORDS TO SHOW.
+                                                            </span>
+                                                        </center>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.hideSchedule}">
+                                                        <div class="slds-m-bottom_small">
+                                                            <b class="slds-text-heading_medium">Schedules</b>
+                                                        </div>
+                                                        <lightning:datatable
+                                                                             keyField="id"
+                                                                             data="{! v.scheduleList }"
+                                                                             columns="{! v.columns3 }"
+                                                                             class="byProcTableCss"
+                                                                             minColumnWidth="100px"
+                                                                             hideCheckboxColumn="true"
+                                                                             /> 
+                                                    </aura:if>
+                                                </aura:if>
+                                            </aura:if>
+                                        </aura:if> 
+                                        
+                                         <aura:if isTrue="{!v.paySched}">
+                                           <c:ElixirOEM_PaymentScheduleInPrivateModule aura:id="privatePaymentSchedule" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.makePrivateSchedulePaymentButtonDisable}"
+                                                                                isModalOpen = "{!v.isModalOpen}" typeofPayment = "{!v.typeOfPayment}"/>
+                                                
+                                            
+
+                                        
+                                    </aura:if>  
+                                        
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_8-of-12">
+                                                <aura:if isTrue="{!v.AllocPay}">
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-p-right_none slds-col slds-size_3-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label"> Unallocated Amount  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 remove_label">
+                                                            <div class="slds-m-top_xx-small">
+                                                                <lightning:formattedNumber value="{!v.totalUnAllocatedAmount}" style="currency" currencyCode="USD"/>
+                                                                <!--b> $  {!v.totalUnAllocatedAmount}  </b-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-p-right_none slds-col slds-size_3-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label"> Amount to Allocate  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_3-of-12 remove_label">
+                                                            <lightning:input type="number" 
+                                                                             name="amountAllocated"
+                                                                             required="true"
+                                                                             label="" 
+                                                                             value="{!v.amountAllocated}" 
+                                                                             formatter="currency" 
+                                                                             step="0.01" 
+                                                                             onchange="{!c.validateAmtAllocated}"/>
+                                                            
+                                                            <aura:if isTrue="{!v.isAllocatedAmtExceed}">
+                                                                <div class="slds-text-color_error slds-text-heading_small">
+                                                                    Amount Allocated cannot be greater than Unallocated Amount
+                                                                    <lightning:formattedNumber value="{!v.totalUnAllocatedAmount}" style="currency" currencyCode="USD"/>
+                                                                </div>
+                                                            </aura:if>
+                                                        </div>
+                                                    </div>
+                                                </aura:if>
+                                              
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                                
+                                        <aura:if isTrue="{!v.Allocate}">
+                                            <div class="slds-m-top_medium">
+                                                <aura:if isTrue="{!v.isPaymentTab == true}">
+                                                <div class="slds-m-bottom_small">
+                                                    <b class="slds-text-heading_medium">Patient Procedures</b>
+                                                </div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.isPaymentTab == false}">
+                                                <div class="slds-m-bottom_small">
+                                                    <b class="slds-text-heading_medium">Open Transactions</b>
+                                                </div>
+                                                
+                                                <br/>
+                                                <lightning:radioGroup name="radioButtonGroup2"
+                                                                      options="{! v.toggleOptions }"
+                                                                      value="{! v.toggleValue }"
+                                                                      type="radio"
+                                                                      onchange="{! c.handleToggleChange }"
+                                                                      />
+                                                <br/>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.hideOrShowClaims == false}">
+                                                    <aura:if isTrue="{!v.disableCheckbox}">
+                                                      
+                                                        <lightning:datatable
+                                                                             keyField="id"
+                                                                             data="{! v.PInsurancePaylist }"
+                                                                             columns="{! v.columns4 }"
+                                                                             onrowselection="{!c.selectedRows}"
+                                                                             hideCheckboxColumn="true"
+                                                                             class="byProcTableCss"
+                                                                             minColumnWidth="100px" 
+                                                                             sortedBy="{!v.sortBy}"
+                                                                             sortedDirection="{!v.sortDirection}"
+                                                                             onsort="{!c.handleSort}"
+                                                                             onrowaction="{! c.handleRowAction }"
+                                                                             />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.disableCheckbox == false}">
+                                                    <ui:scrollerWrapper class="scrollerSize">
+                                                        <lightning:datatable
+                                                                             keyField="id"
+                                                                             data="{! v.PInsurancePaylist }"
+                                                                             columns="{! v.columns4 }"
+                                                                             onrowselection="{!c.selectedRows}"
+                                                                             hideCheckboxColumn="false"
+                                                                             class="byProcTableCss"
+                                                                             minColumnWidth="175"
+                                                                             sortedBy="{!v.sortBy}"
+                                                                             sortedDirection="{!v.sortDirection}"
+                                                                             onsort="{!c.handleSort}"
+                                                                             selectedRows="{!v.selectedRowsOfProc }" 
+                                                                             onrowaction="{! c.handleRowAction }"
+                                                                             /> <!--Anusha - Modified mincolumnwidth property from 100px to 175-->
+                                                    </ui:scrollerWrapper>
+                                                    </aura:if>
+                                                </aura:if>
+                                                
+                                                <aura:if isTrue="{!v.hideOrShowClaims}">
+<!--.THIS .changescroll{
+.THIS .changescroll{-->
+                                                    <div class=" slds-scrollable changescroll" > <!--Added by Anusha -->
+                                                    <table aria-multiselectable="true" class="payment-table slds-table slds-table_header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols">
+                                                        <thead>
+                                                            <th scope="col">
+                                                                <lightning:input type="checkbox" onchange="{!c.getSelectAllClaims}"
+                                                                                 checked="{!v.selectAllClaims}" disabled="{!v.disableCheckbox}"
+                                                                                 />
+                                                            </th>
+                                                            <th scope="col">
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Claim</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>No. Of Open Procedures</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Billed Amount</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Primary Insurance Paid</span>
+                                                            </th>
+                                                             <th scope="col" class="slds-cell-wrap">
+                                                                <span>Secondary Insurance Paid</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Patient Responsibility</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Patient Paid</span>
+                                                            </th>
+                                                            <th scope="col" class="slds-cell-wrap">
+                                                                <span>Patient Outstanding</span>
+                                                            </th>
+                                                            
+                                                        </thead>
+                                                        <aura:iteration items="{!v.ClaimsList}" var="cl" >
+                                                            <tr>
+                                                                <td>
+                                                                    <lightning:input type="checkbox"
+                                                                                     checked="{! cl.Selected }" onchange="{!c.handleOnClaimSelection}" name="{!cl.ClaimId}" disabled="{!v.disableCheckbox}"
+                                                                                     />
+                                                                </td>
+                                                                <td>
+                                                                    <lightning:input type="checkbox-button" name="input1" checked="{!cl.ShowProc}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <aura:if isTrue="{!cl.ClaimId != ''}"><a href="{! '/' + cl.ClaimId}">{!cl.ClaimName}</a></aura:if>
+                                                                    <aura:if isTrue="{!cl.ClaimId == ''}">{!cl.ClaimName}</aura:if>
+                                                                </td>
+                                                                <td>{!cl.OpenProc}</td>
+                                                                
+                                                                <td><lightning:formattedNumber value="{!cl.totalBilledAmount}" style="currency" currencyCode="USD" /></td>
+                                                                <td><lightning:formattedNumber value="{!cl.totalInsurancePaidAmount}" style="currency" currencyCode="USD" /></td>
+                                                                 <td><lightning:formattedNumber value="{!cl.totalSecondaryInsurancePaidAmount}" style="currency" currencyCode="USD" /></td>
+                                                                <td><lightning:formattedNumber value="{!cl.totalPatientResponsibility}" style="currency" currencyCode="USD" /></td>
+                                                                <td><lightning:formattedNumber value="{!cl.totalPatientPaidAmount}" style="currency" currencyCode="USD" /></td>
+                                                                <td><lightning:formattedNumber value="{!cl.PatientResp}" style="currency" currencyCode="USD" /></td>
+                                                                
+                                                            </tr>
+                                                            <aura:if isTrue="{!cl.ShowProc}">
+                                                                <thead>
+                                                                    <th></th>
+                                                                    <th scope="col">
+                                                                        <lightning:input type="checkbox"
+                                                                                         checked="{! cl.Selected }" onchange="{!c.handleOnClaimSelection}" disabled="{!v.disableCheckbox}"
+                                                                                         name="{!cl.ClaimId}"/>
+                                                                    </th>
+                                                                    <!-- Below 7 cols has been added by Anusha - start -->
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Procedure Name</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>DOS</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Status</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Billed Amount</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Primary Insurance Paid</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Secondary Insurance Paid</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Patient Responsibility</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Patient Paid</span>
+                                                                    </th>
+                                                                    <th scope="col" class="slds-cell-wrap">
+                                                                        <span>Patient Outstanding</span>
+                                                                    </th>
+                                                                    <!-- Anusha-End -->
+                                                                </thead>
+                                                                <aura:iteration items="{!cl.procWrap}" var="proc">
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <lightning:input type="checkbox" disabled="{!v.disableCheckbox}"
+                                                                                             checked="{!proc.Selected }" onchange="{!c.handleOnProcSelection}" name="{!proc.ProcId}" value="{!cl.ClaimId}"/>
+                                                                        </td>
+                                                                        <!--<td>
+                                                                             {!proc.SNo}
+                                                                            </td>-->
+                                                                        <td>
+                                                                            <aura:if isTrue="{!proc.ElixirSuite__Procedure__c != ''}"><a href="{! '/' + proc.ElixirSuite__Procedure__c}">{!proc.ElixirSuite__Procedure_Name__c}</a></aura:if>
+                                											<aura:if isTrue="{!proc.ElixirSuite__Procedure__c == ''}">{!proc.ElixirSuite__Procedure_Name__c}</aura:if>
+                                                                        </td>
+                                                                        
+                                                                        <!-- Added below 6 cols by Anusha -start -->
+                                                                        <td>
+                                                                            <lightning:formattedDateTime value="{!proc.ElixirSuite__Date_Of_Service__c}" year="numeric" day="2-digit" month="long"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedText value="{!proc.ElixirSuite__Procedure__r.ElixirSuite__Status__c}"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__Actual_Price__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__Insurance_Paid__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__Secondary_Insurance_Paid__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__Patient_Responsibility__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__Total_Actual_Patient_Paid_Amount__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <lightning:formattedNumber value="{!proc.ElixirSuite__PatientOutstanding__c}" style="currency" currencyCode="USD" />
+                                                                        </td>
+                                                                        <!-- Anusha-End -->
+                                                                    </tr>
+                                                                </aura:iteration>
+                                                            </aura:if>
+                                                        </aura:iteration>
+                                                    </table>
+                                                    </div> <!--Added by Anusha -->
+                                                </aura:if>
+                                                <br/>
+                                               <!-- <div class="slds-scrollable ml-80">  -->
+                                                        
+                                            </div>
+                                        </aura:if>
+                                        
+                                    </li>
+                                    
+                                    <aura:if isTrue="{!v.paySched}">
+                                       <!--  <div class="pvt-container">
+                                             <div class="pvt-box">
+                                    
+                                        <c:ElixirOEM_PaymentScheduleInPrivateModule aura:id="privatePaymentSchedule" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.makePrivateSchedulePaymentButtonDisable}"
+                                                                                isModalOpen = "{!v.isModalOpen}" typeofPayment = "{!v.typeOfPayment}"/> 
+                                             </div>
+                                        </div>-->
+                                    </aura:if>
+                                </ul>
+                                
+                                
+                                
+                            </div>
+                            <br/>
+                            <!--ul class="payment-list">
+                                <li class="slds-text-aligncenter">
+                                    
+                                </li>
+                            </ul-->
+                            <aura:if isTrue="{!v.showConfirmDialog}">
+                            
+                            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                                <div class="slds-modal__container myWidth">
+                                    
+                                    <header class="slds-modal__header">
+                                        <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING</h1>
+                                    </header>
+                                    
+                                    <div class="slds-modal__content slds-p-around--medium">
+                                        <center><b>Do you want to apply the 'Paid Amount' on the basis of oldest to newest DOS?</b></center>
+                                    </div>
+                                    
+                                    <footer class="slds-modal__footer">
+                                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                                    </footer>
+                                    
+                                </div>
+                            </div>
+                            <div class="slds-backdrop slds-backdrop--open"></div>            
+                        </aura:if>
+                            <aura:if isTrue="{!v.showConfirmDialogForAllocatePayment}">
+                            
+                            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                                <div class="slds-modal__container myWidth">
+                                    
+                                    <header class="slds-modal__header">
+                                        <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING</h1>
+                                    </header>
+                                    
+                                    <div class="slds-modal__content slds-p-around--medium">
+                                        <center><b>{!v.showConfirmDialogMessage}</b></center>
+                                    </div>
+                                    
+                                    <footer class="slds-modal__footer">
+                                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYesForAllocate}'/>
+                                    </footer>
+                                    
+                                </div>
+                            </div>
+                            <div class="slds-backdrop slds-backdrop--open"></div>            
+                        </aura:if>
+                        </lightning:card> 
+                        
+                    </aura:if>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Private Payment'}">
+                        <div class="pvt-container">
+                            <div class="pvt-box">
+                                <div class="slds-grid slds-gutters">
+                                    
+                                     
+                                            <aura:if isTrue="{!v.isPaymentTab}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Patient Name: </span>
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_8-of-12 ">
+                                                            <c:CustomLookup aura:id="customLookupCmp"></c:CustomLookup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <!-- Patient's details will is shown only if the Patient record is selected -->
+                                            <aura:if isTrue="{!v.PatientId != ''}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Name   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">DOB  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__DOB__c}"/> <!--replaced 'Patient.ElixirSuite__Patient_s_Birth_Date__c' with 'Patient.ElixirSuite__DOB__c' by Anusha LX3-5342-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">MRN Number   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__MRN_Number_New__c}"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </aura:if>
+                                        
+                                    <!--aura:if isTrue="{!v.PatientId != ''}">
+                                        <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                            
+                                            <div class="slds-grid slds-gutters ">
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    <span class="slds-form-element__static slds-form-element__label">Name   : </span>
+                                                </div>
+                                                <div class="slds-col slds-size_8-of-12">
+                                                    {!v.Patient.Name}"
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    <span class="slds-form-element__static slds-form-element__label">DOB  : </span>
+                                                </div>
+                                                <div class="slds-col slds-size_8-of-12 remove_label">
+                                                    <ui:outputText value="{!v.Patient.ElixirSuite__Patient_s_Birth_Date__c}"/>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_4-of-12">
+                                                    <span class="slds-form-element__static slds-form-element__label">MRN Number   : </span>
+                                                </div>
+                                                <div class="slds-col slds-size_8-of-12 remove_label">
+                                                    <ui:outputText value="{!v.Patient.ElixirSuite__MRN_Number_New__c}"/>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </aura:if -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pvt-container">
+                            <div class="pvt-box">
+                                <span>
+                                    <lightning:radioGroup name="radioButtonGroup"
+                                                          options="{! v.optionsForPrivatePayment }"
+                                                          value="{! v.valueForPrivatePayment }"
+                                                          type="radio"
+                                                          onchange="{! c.handleChange }"
+                                                          />
+                                </span>
+                                <aura:if isTrue="{!v.valueForPrivatePayment == 'Register a Payment'}">
+                                     <!--aura:if isTrue="{!v.PatientId != ''}"--> <!--Sagili Sivasai - start-->
+                                    <c:ElixirOEM_PrivatePayment aura:id="privateRegisterAPayment" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" isModalOpen = "{!v.isModalOpen}" makePaymentButtonDisable="{!v.makePrivatePaymentButtonDisable}"/>
+                                     </aura:if> <!--Added aura:id-Anusha LX3-5599-->
+                                        <!--/aura:if-->
+                                <aura:if isTrue="{!v.valueForPrivatePayment == 'Allocate Payments'}">   
+                                     <!--aura:if isTrue="{!v.PatientId != ''}"-->
+                                    <c:ElixirOEM_AllocatePaymentInPrivateModule aura:id="privateAllocatePayment" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.makePrivateAllocatePaymentButtonDisable}"
+                                                                                isModalOpen = "{!v.isModalOpen}"/> <!--Added aura:id-Anusha LX3-5525-->
+                                           </aura:if>
+                                     <!--/aura:if-->
+                            
+                                 <aura:if isTrue="{!v.valueForPrivatePayment == 'Payment schedule'}">  
+                                      <!--aura:if isTrue="{!v.PatientId != ''}"-->
+                                    <c:ElixirOEM_PaymentScheduleInPrivateModule aura:id="privatePaymentSchedule" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.makePrivateSchedulePaymentButtonDisable}"
+                                                                                isModalOpen = "{!v.isModalOpen}" typeofPayment = "{!v.typeOfPayment}"/> <!--Anusha added aura:id LX3-5527-->
+                                            </aura:if>
+                                      <!--/aura:if-->
+                                <!--end-->
+                                 <aura:if isTrue="{!v.valueForPrivatePayment == 'Add Discount'}">                    
+                                    <c:ElixirOEM_AddDiscountInPrivateModule aura:id="privatePaymentAddDiscount" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.makePrivateDiscountButtonDisable}"
+                                                                            isModalOpen = "{!v.isModalOpen}"/> <!--Added aura:id-Anusha LX3-5599-->
+                                </aura:if> 
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Allocate Discount'}">                    
+                                    <c:ElixirOEM_AllocateDiscountInPrivateModule aura:id="privatePaymentAllocateDiscount" recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" makePaymentButtonDisable="{!v.allocatePrivateDiscountButtonDisable}"
+                                                                            isModalOpen = "{!v.isModalOpen}"/>
+                                </aura:if> 
+                            </div>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Manage Refunds'}">
+                        <div class="pvt-container">
+                            <div class="pvt-box">
+                                <div class="slds-grid slds-gutters">
+                                    
+                                     
+                                            <aura:if isTrue="{!v.isPaymentTab}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Patient Name: </span>
+                                                        </div>
+                                                        
+                                                        <div class="slds-col slds-size_8-of-12 ">
+                                                            <c:CustomLookup aura:id="customLookupCmp"></c:CustomLookup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <!-- Patient's details will is shown only if the Patient record is selected -->
+                                            <aura:if isTrue="{!v.PatientId != ''}">
+                                                <div class="slds-col slds-size_6-of-12 mobile-li1">
+                                                    
+                                                    <div class="slds-grid slds-gutters ">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">Name   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">DOB  : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__DOB__c}"/> <!--replaced 'Patient.ElixirSuite__Patient_s_Birth_Date__c' with 'Patient.ElixirSuite__DOB__c' by Anusha LX3-5342-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_4-of-12">
+                                                            <span class="slds-form-element__static slds-form-element__label">MRN Number   : </span>
+                                                        </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                                                            <ui:outputText value="{!v.Patient.ElixirSuite__MRN_Number_New__c}"/>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pvt-container">
+                            <div class="pvt-box">
+                                <c:ElixirOEM_Refund aura:id="processRefund" selTabId="{!v.refundScreenTab}" isProcessButtonDisabled="{!v.isProcessButtonDisabled}" 
+                                                    recordId = "{!v.recordId}" PatientId = "{!v.PatientId}" openIssueRefund="{!v.billingOpenIssueRefund}"
+                                                    OEMdisableCreateRefund="{!v.billingDisableCreateRefund}" sendPatientStatements="{!v.sendPatientStatements}" />
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    
+                    <aura:if isTrue="{!v.typeOfPayment == 'Insurance Payment'}">
+                    <div class="ml-80"> 
+                                                    <b>Total Amount Collected</b>
+                                                    <aura:if isTrue="{!v.makePay}">
+                                                        
+                                                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                            
+                                                            <tr class="slds-line-height_reset">
+                                                                <th class="" scope="col">
+                                                                    <div class="slds-truncate" title="Opportunity Name">Total Applied Amount</div>
+                                                                    
+                                                                </th>
+                                                                <th class="" scope="col">
+                                                                    <div class="slds-truncate" title="Account Name">
+                                                                        <lightning:formattedNumber value="{!v.TotalAppliedAmountInsurance}" style="currency" />
+                                                                        </div>
+                                                                </th>
+                                                            </tr>
+                                                            
+                                                            <tbody>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Opportunity Name">Total Unallocated Amount</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Account Name">
+                                                                            <lightning:formattedNumber value="{!v.TotalUnallocatedAmountInsurance}" style="currency" />
+                                                                            </div>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                        </aura:if>
+                                                        <aura:if isTrue="{!v.AllocPay}">
+                                                            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                                
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Opportunity Name">Total Applied Amount</div>
+                                                                        
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Account Name">
+                                                                            <lightning:formattedNumber value="{!v.TotalAppliedForAllocatePayment}" style="currency" />
+                                                                            </div>
+                                                                    </th>
+                                                                </tr>
+                                                                
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Opportunity Name">Total Unallocated Amount</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Account Name">
+                                                                                <lightning:formattedNumber value="{!v.TotalUnallocatedForAllocatePayment}" style="currency" />
+                                                                                </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </aura:if>
+                        							<aura:if isTrue="{!v.paySched}">
+                                                            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                                
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Opportunity Name">Total Applied Amount</div>
+                                                                        
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Account Name">
+                                                                            <lightning:formattedNumber value="{!v.PrivateAppliedAmountInsurance}" style="currency" />
+                                                                            </div>
+                                                                    </th>
+                                                                </tr>
+                                                                
+                                                                <tbody>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Opportunity Name">Total Unallocated Amount</div>
+                                                                        </th>
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="Account Name">
+                                                                                <lightning:formattedNumber value="{!v.TotalPrivateUnallocatedAmountInsurance}" style="currency" />
+                                                                                </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </aura:if>
+                                                    
+                                                </div>
+                        </aura:if>
+                    
+                    <aura:if isTrue="{!v.typeOfPayment == 'Private Payment'}">
+                    	
+                        <div class="ml-80"> 
+                            							<b>Total Amount Collected</b>
+                                                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                                                            
+                                                            <tr class="slds-line-height_reset">
+                                                                <th class="" scope="col">
+                                                                    <div class="slds-truncate" title="Opportunity Name">{!v.PrivateAmountLabel}</div>
+                                                                    
+                                                                </th>
+                                                                <th class="" scope="col">
+                                                                    <div class="slds-truncate" title="Account Name">
+                                                                        <lightning:formattedNumber value="{!v.PrivateAppliedAmountInsurance}" style="currency" />
+                                                                        </div>
+                                                                </th>
+                                                            </tr>
+                                                            
+                                                            <tbody>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Opportunity Name">{!v.TotalPrivateUnallocatedAmountLabel}</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Account Name">
+                                                                            <lightning:formattedNumber value="{!v.TotalPrivateUnallocatedAmountInsurance}" style="currency" />
+                                                                            </div>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                </div>
+                        
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.typeOfPayment == 'Manage Refunds'}">
+                    
+                        <aura:if isTrue="{!v.billingOpenIssueRefund}">
+                        
+                            <lightning:button variant="brand" class="" disabled="{!v.billingDisableCreateRefund}" label="Create Refund Request" title="Save" onclick="{!c.createRefundReq}" />    
+                            
+                        </aura:if>
+                    
+                    </aura:if>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Manage Refunds'}">
+                        <aura:if isTrue="{!v.refundScreenTab == 'tab2'}">
+                            <div class="patStatement"> 
+                                <lightning:input type="checkbox" label="Generate Receipt" checked="{!v.sendPatientStatements}"
+                                                 onchange="{!c.generateRefundStatement}"/>
+                            </div>
+                        </aura:if>
+                    </aura:if>
+                    <lightning:button  variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Insurance Payment'}">
+                    <aura:if isTrue="{!v.makePay}">
+                                        <lightning:button variant="brand" 
+                                                          label="Register Payment" 
+                                                          title="Register the  Payment" 
+                                                          disabled="{!v.makePaymentButtonDisable}"
+                                                          onclick="{! c.registerPayment }"/>
+                        </aura:if>
+                    <aura:if isTrue="{!v.AllocPay}">
+                                            <lightning:button variant="brand" 
+                                                              label="Allocate Payment" 
+                                                              title="Allocate the Payment" 
+                                                              disabled="{!v.allocatePaymentButtonDisable}"
+                                                              onclick="{! c.registerAllocatePayment }"/>
+                                        </aura:if>
+                        <aura:if isTrue="{!v.paySched}">
+                            <lightning:button variant="brand" 
+                                  label="Register Payment" 
+                                  title="Register the Payment" 
+                                  disabled="{!v.makePrivateSchedulePaymentButtonDisable}"
+                                  onclick="{! c.registerPaymentSchedule }"/>
+                            
+                            
+                        </aura:if>
+                                    
+                        </aura:if>
+                     <aura:if isTrue="{!v.typeOfPayment == 'Manage Refunds'}">
+                        <aura:if isTrue="{!v.refundScreenTab == 'tab2'}">
+                                <lightning:button variant="brand" label="Process Refund" disabled="{!v.isProcessButtonDisabled}"
+                                                  onclick="{!c.processRefunds}"/>
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!v.typeOfPayment == 'Private Payment'}">
+                    
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Register a Payment'}">
+                            <lightning:button variant="brand" 
+                                                  label="Register Payment" 
+                                                  title="Register the Payment" 
+                                                  disabled="{!v.makePrivatePaymentButtonDisable}"
+                                                  onclick="{! c.registerPrivatePayment }"/>
+                        </aura:if>
+                        
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Allocate Payments'}">
+                        
+                            <lightning:button variant="brand" 
+                                  label="Allocate Payment" 
+                                  title="Allocate Payments" 
+                                  disabled="{!v.makePrivateAllocatePaymentButtonDisable}"
+                                  onclick="{! c.allocatePrivatePayment }"/>
+                    
+                        </aura:if>
+                        
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Payment schedule'}">
+                        
+                            <lightning:button variant="brand" 
+                                  label="Register Payment" 
+                                  title="Register the Payment" 
+                                  disabled="{!v.makePrivateSchedulePaymentButtonDisable}"
+                                  onclick="{! c.registerPaymentSchedule }"/>
+                            
+                        </aura:if>
+                        
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Add Discount'}">
+                        
+                            <lightning:button variant="brand" 
+                                  label="Add Discount" 
+                                  title="Add Discount" 
+                                  disabled="{!v.makePrivateDiscountButtonDisable}"
+                                  onclick="{! c.addPrivateDiscount }"/>
+                            
+                        </aura:if>
+                        
+                        <aura:if isTrue="{!v.valueForPrivatePayment == 'Allocate Discount'}">
+                        
+                            <lightning:button variant="brand" 
+                                          label="Allocate Discount" 
+                                          title="Allocate Discount" 
+                                          disabled="{!v.allocatePrivateDiscountButtonDisable}"
+                                          onclick="{! c.allocatePrivateDiscount }"/>
+                            
+                        </aura:if>
+                        
+                    </aura:if>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,24 @@
+.THIS .slds-modal__content {
+   height: 600px !important;
+    max-height: 600px !important;
+}
+.THIS .modal-header
+{
+   /* background-color:green;*/
+    
+}
+.THIS .customheader 
+{
+    color:purple; 
+    font-weight: 500;
+ 
+}
+
+.THIS .paddingclass
+{
+   padding:0px;
+}
+.THIS.slds-modal__header
+{
+     padding:0px !important;
+}

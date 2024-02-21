@@ -1,0 +1,132 @@
+<aura:component controller="AppointmentScheduleEdit_Ctrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="eventDataRecordId" type="String" />
+    <aura:attribute name="ByPassEvent" type="boolean" />
+    <aura:attribute name="selectedBussinessAccountsRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedGroupRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedAccountRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedCoFacilitatorsRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedEquipmentsRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="selectedRecordOfLocation" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="selectedRecordOfRoom" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="selectedRecordOfEquipment" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="selectedRecordOfAssignedTo" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="mode" type="String" />
+    <!--Added by mahesh=Mahesh-->
+     <aura:attribute name="equipmentErr" type="boolean" />
+    <aura:attribute name="equipMessage" type="string" default=""/>
+     <aura:attribute name="SelectedStartTime" type="DateTime" default=""/>
+    <aura:attribute name="SelectedEndTime" type="DateTime" default=""/>
+    <!--End-->
+    <aura:attribute name="equipList" type="list"/>
+    <aura:attribute name="url" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div class="slds-text-align_right">
+        <lightning:button  variant="brand" label="Update" title="Update" disabled="{!v.equipmentErr}" onclick="{!c.UpdateEventDataRecord}" />
+    </div>
+    
+    <div class="slds-grid slds-gutters"> 
+        
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:customLookupForAppointmentSchedule aura:id="childComponent" objectAPIName="ElixirSuite__Provider__c"
+                                                      IconName=""
+                                                      selectedRecord="{!v.selectedRecordOfLocation}"
+                                                      SelectedStartTime="{!v.SelectedStartTime}"
+                                                      SelectedEndTime="{!v.SelectedEndTime}"
+                                                      label="Location" />
+                
+            </lightning:layoutItem>
+        </div>
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:AppointmentreUsableMultiSelectLookup objectAPIName="Account"
+                                                        IconName="standard:account"
+                                                         SelectedStartTime="{!v.SelectedStartTime}"
+                                                         SelectedEndTime="{!v.SelectedEndTime}"
+                                                        lstSelectedRecords="{!v.selectedAccountRecords}"
+                                                        label="Patients"
+                                                        />
+                
+            </lightning:layoutItem>
+        </div>
+    </div>
+    
+    <div class="slds-grid slds-gutters"> 
+        
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:AppointmentreUsableMultiSelectLookup objectAPIName="ElixirSuite__Account_Group__c"
+                                                        IconName="standard:account"
+                                                        lstSelectedRecords="{!v.selectedGroupRecords}"
+                                                        SelectedStartTime="{!v.SelectedStartTime}"
+                                                         SelectedEndTime="{!v.SelectedEndTime}"
+                                                        label="Patient Groups"
+                                                        />
+            </lightning:layoutItem>
+        </div>
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:AppointmentreUsableMultiSelectLookup objectAPIName="User"
+                                                        IconName="standard:user"
+                                                        lstSelectedRecords="{!v.selectedCoFacilitatorsRecords}"
+                                                        SelectedStartTime="{!v.SelectedStartTime}"
+                                                        SelectedEndTime="{!v.SelectedEndTime}"
+                                                        label="Co-Facilitators"
+                                                        />
+            </lightning:layoutItem>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters"> 
+        
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:AppointmentreUsableMultiSelectLookup objectAPIName="Account1"
+                                                        IconName="standard:Account"
+                                                        lstSelectedRecords="{!v.selectedBussinessAccountsRecords}"
+                                                        SelectedStartTime="{!v.SelectedStartTime}"
+                                                        SelectedEndTime="{!v.SelectedEndTime}"
+                                                        label="Bussiness Accounts"
+                                                        />
+            </lightning:layoutItem>
+        </div>
+        <div class="slds-col slds-size_6-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:customLookupForAppointmentSchedule aura:id="childComponentRoom" objectAPIName="ElixirSuite__Rooms__c"
+                                                      IconName=""
+                                                      selectedRecord="{!v.selectedRecordOfRoom}"
+                                                      selectedRecordOfLocation="{!v.selectedRecordOfLocation}"
+                                                      SelectedStartTime="{!v.SelectedStartTime}"
+                                                      SelectedEndTime="{!v.SelectedEndTime}"
+                                                      label="Room" />
+            </lightning:layoutItem>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters"> 
+        <div class="slds-col slds-size_6-of-12 slds-p-top_x-large">                            
+            <!--lightning:input type="checkbox" label="Bypass existing bookings" aura:id="bypasscheck" value="{!v.ByPassEvent}" onchange="{!c.bypassSelect}"/ -->
+            <!-- Mahesh Error=> "{!v.equipmentErr}"-->
+        </div>
+    </div>
+    
+    <div class="slds-grid slds-gutters"> 
+        <div class="slds-col slds-size_12-of-12 slds-p-top_small">
+            <lightning:layoutItem ><!--added by mahesh SelectedStartTime-->
+                <c:AddEquipment mode="edit" equipmentData="{!v.equipList}"
+                                selectedRecordOfLocation="{!v.selectedRecordOfLocation}"
+                                SelectedStartTime="{!v.SelectedStartTime}"
+                                SelectedEndTime="{!v.SelectedEndTime}"
+                                equipmentErr="{!v.equipmentErr}"
+                                equipMessage="{!v.equipMessage}"
+                                />
+            </lightning:layoutItem>
+        </div>
+    </div>
+    
+    <div class ="changeNew">
+    </div>
+    
+</aura:component>

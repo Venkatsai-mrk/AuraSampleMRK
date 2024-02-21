@@ -1,0 +1,209 @@
+<apex:page controller="PrescriptionOrder_PDFHelper" renderAs="pdf">
+    <apex:form > 
+    <apex:param name="orderId" value="{!$CurrentPage.parameters.orderId}"/>
+        <apex:variable value="{!1}" var="rowNum"/>
+    
+        <apex:outputPanel > 
+        <head>     
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet"/>  
+    </head>
+    <body>
+        <table class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: 'Open Sans', sans-serif;  width: 740px; margin: 10px auto; background-color: #fff;">
+            <thead>
+                          <tr>	
+                <th style="background-color: #fff; padding: 0px 0px 0;">	
+                    <table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 0px;">	
+                        <tbody>	
+                            <tr>	
+                                <td style="padding: 0px 25px 0px 20px; width: 200px;"><apex:image url="{!$Resource.InfiniteRecoveryLogo}" width="180"/></td>	
+                                <td style="width: 430px; ">	
+                                    <table  border="0" cellspacing="0" cellpadding="0" style="text-align: right; width: 410px; ">	
+                                        <tbody>
+
+                                          <tr><td><p style="text-align: left ; margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;"> 11501 Dublin Blvd STE 200</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Dublin</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">CA 94583, USA</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Phone: +1 844-206-9063</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0; font-size: 12px; font-weight: 400; color: #222;">Website: www.elixirehr.com</p></td></tr>
+                                       </tbody>
+                                    </table>	
+                                </td>	
+                                <!--<td style="width: 180px;">	
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 180px; text-align: left;">	
+                                <tbody>	
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">Patient:</p></td></tr>	
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">8 S OSCEOLA AVE APT</p></td></tr>	
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">2203, ORLANDO FL</p></td></tr>	
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">DOB: </p></td></tr>	
+                                <tr><td><p style="margin:0; font-size: 12px; font-weight: 700; color: #222;">Date of Services: 5/8/2020</p></td></tr>	
+                                </tbody>	
+                                </table>	
+                                </td>-->	
+                            </tr>	
+                        </tbody>	
+                    </table>	
+				</th>	
+            </tr>	
+                
+                <tr>
+                    <th style="background-color: #455660; padding: 10px 25px; box-shadow: 0px 6px 4px #ebe9ea;">
+                    	<table  border="0" cellspacing="0" cellpadding="0" style="width: 660px; text-align: left;">
+                    		<thead>
+                    			<tr>
+                    				<th>
+                                        <h2 style="margin: 0; font-weight: 400; font-size: 36px; color: #8ec63f;">Prescription Order: {!prescriptionOrder.Name}</h2>
+                    				</th>
+                    			</tr>
+                    			<tr>
+                    				<td>
+                    					<h3 style="color: #dff9ba; font-size: 26px; font-weight: 400; margin: 2px 0 0;">{!accounts.Name}</h3>
+                    				</td>
+                    			</tr>
+                    			<tr>
+                    				<td>
+                    					<p style="color: #dff9ba; font-size: 14px; font-weight: 400; margin: 0px 0;">Date of Birth : {!accounts.Patient_s_Birth_Date__c}</p>
+                    				</td>
+                    			</tr>
+                    		</thead>
+                    	</table>
+                    </th>
+                </tr>
+            </thead>
+        	<tbody>
+        		<tr>
+        			<td style="padding: 15px 25px;">
+        				<table border="0" cellspacing="2px" cellpadding="0" style="width: 660px;  text-align: left;">
+        					<thead>
+        						<td style="background-color: #8ec63f; text-align: center; padding: 7px 0 7px 5px; width: 30px;">
+        							<p style="margin: 1px 0px 0;">
+                                       <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                  'images/hass.png')}" style="width: 16px; float: left;"/>
+        							</p>
+        						</td>
+        						<td style="background-color: #8ec63f; padding: 7px 0 7px 5px; width: 140px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">
+                                       <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                  'images/medication-name.png')}" style="width:16px; float: left; margin-right: 5px;"/>Medication Name
+        							</p>
+        						</td>
+        						<td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 130px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">
+                                        <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                  'images/prescribed.png')}" style="width: 16px; float: left; margin-right: 5px;"/> Prescribed for (Days)
+	        						</p>
+        						</td>
+        						<td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 100px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">
+                                       
+                                        <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                  'images/frequency.png')}" style="width: 16px; float: left; margin-right: 5px;"/> Frequency
+	        						</p>
+        						</td>
+        						<td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 90px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">
+                                        <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                  'images/strength.png')}" style="width: 14px; float: left; margin-right: 5px;"/>Strength
+	        						</p>
+        						</td>
+        						<td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 100px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">After Discharge</p>
+        						</td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 50px;">
+        							<p style="color: #fff; font-size: 13px; margin: 0;">Type &nbsp;&nbsp;</p>
+        						</td>
+        					</thead> 
+                          <apex:repeat value="{!medicationDataOnVF}" var="data" id="theRepeat"> 
+        					<tbody> 
+        						<tr>
+	        						<td style="background-color: #f8f8f8; text-align: center; padding: 7px 0 7px 8px;">
+ 	        							<p style="margin: 0px 0; font-size: 12px;">{!data.counter}</p>
+	        						</td>
+	        						<td style="background-color: #f8f8f8; padding: 7px 0 7px 8px;">
+	        							<p style="color: #141414; font-size: 12px;  margin: 0;">{!data.medicationName}</p>
+	        						</td>
+	        						<td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+	        							<p style="color: #141414; font-size: 12px;  margin: 0;">{!data.numberOfDays}</p>
+	        						</td>
+	        						<td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+	        							<p style="color: #141414; font-size: 12px; margin: 0;">{!data.frequency}</p>
+	        						</td>
+                                   
+                                     
+	        						<td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                       
+	        							<p style="color: #141414; font-size: 12px; margin: 0;">{!data.strength}</p>
+	        						</td>
+                                  
+	        						<td style="background-color: #f8f8f8;padding: 7px 0 7px 8px; text-align: center;">
+                                        <p style="color: #141414; margin: 0;">
+                                            <apex:image url="{!URLFOR($Resource.PrescriptionPDFImages,
+                                          'images/right.png')}" style="width: 16px; margin-top: 3px;" rendered="{!if(data.afterDisacharge==true,true,false)}" /></p>
+	        						</td>
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+	        							<p style="color: #141414; font-size: 12px; margin: 0;">{!data.typeOfMedication}</p>
+	        						</td>
+        						</tr>
+        						
+        					</tbody>
+                            </apex:repeat>
+        				</table> 
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+        </body>
+        </apex:outputPanel>
+        <tr>
+            <td style="vertical-align: top">
+                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin-top: 50px; font-size: 12px; color: #333;">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: top">
+                                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <apex:repeat value="{!approved}" var="approvedLevel">
+                                                    <td style="width:180px;display:inline-block;margin:5px 35px 5px 0;">
+                                                        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.UserName))}">
+                                                            <img class="imgCls" src="{!'/sfc/servlet.shepherd/document/download/'+ approvedLevel.attachId}"
+                                                                 width="180" height="100" />
+                                                            <div style="height:100px;">
+                                                                <p style="margin:0px;"> Signed On :
+                                                                    <apex:outputText escape="false" value="{!approvedLevel.dateOfApproval} "/>
+                                                                </p>
+                                                                <p style="margin:0px;">
+                                                                    <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.UserRoleName))}">
+                                                                        Signed By : {!approvedLevel.UserName} ({!approvedLevel.UserRoleName})
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.UserRoleName))}">
+                                                                        Signed By : {!approvedLevel.UserName}
+                                                                    </apex:outputPanel>
+                                                                </p>
+                                                                <p style="margin:0px;">
+                                                                    Notes :
+                                                                    <apex:outputText value="{!approvedLevel.comment}" rendered="{!NOT(ISNULL(approvedLevel.comment))}"/>
+                                                                    <apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.comment))}" />
+                                                                </p>
+                                                            </div>
+                                                            <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.customLabel))}">
+                                                                ____________________________
+                                                                <div class="slds-text-heading_medium">
+                                                                    <b> {!approvedLevel.customLabel} </b>
+                                                                </div>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                </apex:repeat>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </apex:form>
+</apex:page>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Criteria_Type__c</fullName>
+    <description>Specifies the type of criteria for the assignment.</description>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Criteria Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>LOC</fullName>
+                <default>false</default>
+                <label>LOC</label>
+            </value>
+            <value>
+                <fullName>Age</fullName>
+                <default>false</default>
+                <label>Age</label>
+            </value>
+            <value>
+                <fullName>Care Team Member</fullName>
+                <default>false</default>
+                <label>Care Team Member</label>
+            </value>
+            <value>
+                <fullName>Current Patient Name</fullName>
+                <default>false</default>
+                <label>Current Patient Name</label>
+            </value>
+            <value>
+                <fullName>Location</fullName>
+                <default>false</default>
+                <label>Location</label>
+            </value>
+            <value>
+                <fullName>Admit Date</fullName>
+                <default>false</default>
+                <label>Admit Date</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

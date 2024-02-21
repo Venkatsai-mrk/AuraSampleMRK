@@ -1,0 +1,40 @@
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.THIS .slds-modal__header{
+    background-color: rgb(243, 242, 242);
+}
+
+.THIS .widthForAll .slds-radio [type=radio]+.slds-radio__label .slds-radio_faux {
+    border: 1px solid #000;
+    
+}
+
+.THIS .widthForAll label.slds-radio__label {
+    margin: 10px 0;
+    display: block;
+}
+.THIS .slds-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0%;
+    padding : 0 2%;
+    
+}
+
+.THIS .hideDiv  {
+    max-width: 50% !important;
+    width: 50% !important;
+}
+@media (max-width: 767px) {
+    .THIS .hideDiv  {
+        max-width: 100% !important;
+        width: 84% !important;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .hideDiv  {
+        max-width: 100% !important;
+        width: 84% !important;
+    }
+}

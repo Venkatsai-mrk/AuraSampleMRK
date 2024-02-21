@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Payment_Line_of_Wrong_Amount</fullName>
+    <active>true</active>
+    <description>If payment Schedule Amount is Less than Payment Line Amount, Payment Line should not be created</description>
+    <errorConditionFormula>AND(ISNEW() , OR(
+(Payment_Amount__c &gt;Payment_Schedule__r.Installment_Amount__c),
+(Payment_Amount__c &gt;(Payment_Schedule__r.Installment_Amount__c- Payment_Schedule__r.Total_Payment_Made1__c ))
+))</errorConditionFormula>
+    <errorDisplayField>Payment_Amount__c</errorDisplayField>
+    <errorMessage>Payment Line can not be created, Please specify accurate Balance Due Amount.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,62 @@
+.THIS .define_box {
+    background-color: #f1f2f3;
+    padding: 15px 15px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 0;
+}
+.THIS .define_box lightning-icon.slds-icon_container_circle.slds-icon-action-approval.slds-icon_container,
+.THIS .define_box lightning-icon.slds-icon_container_circle.slds-icon-action-close.slds-icon_container {
+    padding: 0;
+}
+.THIS .define_box .slds-icon {
+    height: 18px;
+    width: 18px;
+    padding: 0px;
+}
+.THIS .define_box p {
+    font-size: 14px;
+    font-weight: 600;
+}
+.THIS .approval {
+    background-color: #00864f;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.THIS .approval svg.slds-icon.slds-icon-text-default {
+    fill: #fff;
+}
+.THIS .add-l1 {
+    background-color: #ff8d27;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.THIS .add-l1 svg.slds-icon.slds-icon-text-default {
+    fill: #fff;
+}
+.THIS .utility_approval {
+  /*  position: absolute;*/
+    z-index: 1;
+  /*  top: -11px;
+    right: -11px;*/
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    background-color: #fff;
+    margin-left: calc(100% - 20px);
+}
+.THIS .utility_approval button.slds-button.slds-button_icon.slds-button_icon-bare:focus {
+    border: none;
+    box-shadow: none;
+}
+.THIS .disabledPill .slds-pill__remove {
+    display: none !important;
+}
+/*changes*/
+.THIS .changeNew1{
+    max-width:200px;
+}

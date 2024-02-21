@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Claim_Codes__c</fullName>
+    <description>The 'Claim Codes' identify additional information about the patient’s condition or the claim.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The &apos;Claim Codes&apos; identify additional information about the patient’s condition or the claim.</inlineHelpText>
+    <label>Claim Codes</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

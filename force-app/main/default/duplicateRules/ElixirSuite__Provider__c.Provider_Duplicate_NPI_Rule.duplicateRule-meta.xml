@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DuplicateRule xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionOnInsert>Block</actionOnInsert>
+    <actionOnUpdate>Block</actionOnUpdate>
+    <alertText>Duplicate value found. Provider NPI should be unique.</alertText>
+    <description>Duplicate Rule for Provider Object</description>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true"/>
+        <duplicateRuleFilterItems>
+            <field>ElixirSuite__Provider_Code__c</field>
+            <operation>notEqual</operation>
+            <value>Null</value>
+            <sortOrder>1</sortOrder>
+            <table>ElixirSuite__Provider__c</table>
+        </duplicateRuleFilterItems>
+        <duplicateRuleFilterItems>
+            <field>RecordType</field>
+            <operation>equals</operation>
+            <value>Template Provider</value>
+            <sortOrder>2</sortOrder>
+            <table>ElixirSuite__Provider__c</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
+    <duplicateRuleMatchRules>
+        <matchRuleSObjectType>ElixirSuite__Provider__c</matchRuleSObjectType>
+        <matchingRule>Provider_Matching_Rule</matchingRule>
+        <objectMapping xsi:nil="true"/>
+    </duplicateRuleMatchRules>
+    <isActive>true</isActive>
+    <masterLabel>Provider Duplicate NPI Rule</masterLabel>
+    <securityOption>BypassSharingRules</securityOption>
+    <sortOrder>1</sortOrder>
+</DuplicateRule>

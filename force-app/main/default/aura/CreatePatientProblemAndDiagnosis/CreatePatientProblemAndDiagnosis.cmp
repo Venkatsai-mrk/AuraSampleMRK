@@ -1,0 +1,4 @@
+<aura:component controller ="CreateProblemAndDiagnosisController" implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable,lightning:actionOverride" access="global">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="recordId" type="String" />
+</aura:component>

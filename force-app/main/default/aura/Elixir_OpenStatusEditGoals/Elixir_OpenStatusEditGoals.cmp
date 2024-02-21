@@ -1,0 +1,121 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "goal" type="Object"/> 
+    <aura:attribute name="goalId" type="String" />    
+    <aura:attribute name="goalIdx" type="Integer"/>
+    <aura:attribute name= "nameSpace" type="String"/> 
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name="tasksList" type="Object"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name="allTasksList" type="Object"/>
+    <aura:attribute name="customTask" type="Boolean" default="false"/>
+    <aura:attribute name="customTask2" type="Boolean" default="false"/>
+    <aura:attribute name= "goalFirstCallBack" type="Boolean"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="test" event="c:testEvent" action="{!c.setTaskValue}"/>
+    <aura:attribute name= "decisionTree" type="String"/>
+    <aura:attribute name="editableBoxVal" type="Boolean"/>
+    <aura:registerEvent name="goalTest" type="c:goalEvent" />
+    
+    <div class="slds-show accordian_header goal_header" aura:id="goalId" >
+        <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+            <lightning:button class="slds-show chevron_btn btns" aura:id="goalSection" iconName="utility:chevronright" onclick="{!c.goalSection}"/>
+            <lightning:button class="slds-hide chevron_btn btns" aura:id="goalSection" iconName="utility:chevrondown" onclick="{!c.goalSection}"/>
+        </aura:if>
+        <div class="slds-page-header c-point">
+            
+            <section class="slds-clearfix">
+                <div class="slds-float--left">
+                    <lightning:icon  iconName="action:goal"/> 
+                </div>
+                
+                <div class="slds-m-left--large">
+                    <h3>
+                        {!v.customSetting.ElixirSuite__Third_Level__c}&nbsp;{!v.goalIdx+1}
+                        <div class="slds-float--right right-side_bar right-side_bar1">
+                            <div class="slds-float_left">
+                                <lightning:input type="Date" placeholder="Due Date" value="{!v.goal.ElixirSuite__Due_Date__c}" onchange="{!c.dueDate}" />
+                            </div>
+                            <div class="slds-float_left">
+                                <lightning:button label="Remove" iconName="utility:delete" class="btncss" title="Neutral action" onclick="{!c.removeSection }"/>
+                            </div>
+                        </div>
+                    </h3>
+                    <aura:if isTrue="{!v.editableBoxVal}">	
+                        <lightning:textarea value="{!v.goal.ElixirSuite__Description__c}" class="editStyle" onblur="{!c.outsideFocus}"/>	
+                        <aura:set attribute="else">
+                            <div class="slds-m-bottom_medium">
+                                <ui:outputTextArea value="{!v.goal.ElixirSuite__Description__c}" ></ui:outputTextArea>	
+                                <aura:if isTrue="{!(v.goal.ElixirSuite__Description__c == 'Undefined' || v.goal.ElixirSuite__Description__c == null ||  v.goal.ElixirSuite__Description__c == '')}">   	
+                                    <aura:set attribute="else">	
+                                        <lightning:icon iconName="utility:edit" class="spaceEdit" alternativeText="Edit Description" title="edit" size="x-small" onclick="{!c.editableBox}" />	
+                                    </aura:set>	
+                                </aura:if>	
+                            </div>
+                        </aura:set>	
+                    </aura:if>
+                </div>
+            </section>
+        </div>
+        
+        <div class="slds-hide slds-p-around--medium third_accordian" aura:id="goalSection">
+            
+            <div class="slds-float--right ">
+                <div class="slds-float--right ">
+                    
+                    <aura:if  isTrue="{!v.decisionTree.openBinaryTree}">
+                        <lightning:button label="{!'Add '+ v.customSetting.ElixirSuite__Fifth_Level__c}" iconName="utility:food_and_drink" class="btncss" title="Neutral action" onclick="{!c.addTask2 }"/>
+                    </aura:if>
+                    <lightning:button label="{!'Add '+ v.customSetting.ElixirSuite__Fourth_Level__c}" iconName="utility:food_and_drink" class="btncss" title="Neutral action" onclick="{!c.addTasks }"/>
+                </div> 
+            </div> 
+            <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+                <!-- IF OBJECTIVE IS RELATED TO GOAL AND INTERVENTION ARE RELATED TO OBJECTIVE -->
+                <aura:if  isTrue="{!v.decisionTree.openLinearTree}">
+                    <aura:iteration items="{!v.goal.listOfTask }" var="taskRec" indexVar="taskIdx">
+                        <aura:if isTrue = "{! not(taskRec.Action == 'DELETE')}">
+                            <c:Elixir_OpenStatusEditObjectives customSetting="{!v.customSetting}"
+                                                               taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.goal}" 
+                                                               showInterventions = "true"/>
+                            <!--<c:Elixir_openStatusEditTasks taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" nameSpace="{!v.nameSpace}"/>-->
+                            <div class="third-accordian_bl"></div>
+                        </aura:if>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <!-- IF BOTH OBJECTIVE AND INTERVENTION ARE RELATED TO GOAL -->
+                        <aura:iteration items="{!v.goal.listOfTask }" var="taskRec" indexVar="taskIdx">
+                            <aura:if isTrue = "{! not(taskRec.Action == 'DELETE')}">
+                                <c:Elixir_OpenStatusEditObjectives customSetting="{!v.customSetting}"
+                                                                   taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.goal}" 
+                                                                   showInterventions = "false"/>                           
+                                <div class="third-accordian_bl"></div>
+                            </aura:if>
+                        </aura:iteration>
+                        
+                        <aura:iteration items="{!v.goal.listOfIntervention }" var="taskRec" indexVar="taskIdx">
+                            <aura:if isTrue = "{! not(taskRec.Action == 'DELETE')}">
+                                <c:Elixir_openStatusEditTasks customSetting="{!v.customSetting}"
+                                                              taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.goal}" nameSpace="{!v.nameSpace}"/>
+                                <div class="third-accordian_bl"></div>
+                            </aura:if>
+                        </aura:iteration>
+                        <!-- end --> 
+                    </aura:set>
+                </aura:if>
+                <!-- end -->
+            </aura:if>
+        </div>
+        <!-- <aura:if isTrue="{!v.customTask}">
+            <c:Elixir_AddTask allTasksList="{!v.allTasksList}" existingTasksObj="{!v.tasksList}" customTask="{!v.customTask}"/>
+        </aura:if>-->
+        <aura:if isTrue="{!v.customTask}">
+            <!--MODAL-->         <c:Elixir_AddObjectives allTasksList="{!v.allTasksList}" existingTasksObj="{!v.goal}" customTask="{!v.customTask}"/>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.customTask2}">
+            <!--MODAL-->       <c:Elixir_NewAddIntervention allTasksList="{!v.allTasksList}" existingTasksObj1="{!v.goal}" existingTasksObj="{!v.goal}" customTask="{!v.customTask2}"/>
+        </aura:if>
+    </div>
+    
+</aura:component>

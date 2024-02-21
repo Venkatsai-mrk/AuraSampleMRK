@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Birth_Sex__c</fullName>
+    <description>This field referred as the administrative gender.</description>
+    <externalId>false</externalId>
+    <label>Gender Identity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>446151000124109</fullName>
+                <default>false</default>
+                <label>Male</label>
+            </value>
+            <value>
+                <fullName>446141000124107</fullName>
+                <default>false</default>
+                <label>Female</label>
+            </value>
+            <value>
+                <fullName>407377005</fullName>
+                <default>false</default>
+                <label>Female-to-Male(FTM)/Transgender Male/Trans Man</label>
+            </value>
+            <value>
+                <fullName>407376001</fullName>
+                <default>false</default>
+                <label>Male-to-Female (MTF)/Transgender Female/Trans Woman</label>
+            </value>
+            <value>
+                <fullName>446131000124102</fullName>
+                <default>false</default>
+                <label>Genderqueer, neither exclusively male nor female</label>
+            </value>
+            <value>
+                <fullName>OTH</fullName>
+                <default>false</default>
+                <label>Additional gender category or other, please specify</label>
+            </value>
+            <value>
+                <fullName>ASKU</fullName>
+                <default>false</default>
+                <label>Choose not to disclose</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

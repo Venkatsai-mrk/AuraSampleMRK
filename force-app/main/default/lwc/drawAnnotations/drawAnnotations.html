@@ -1,0 +1,41 @@
+<!--
+/*
+ * Copyright (c) 2020, salesforce.com, inc.
+ * All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ * For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+-->
+
+<template>
+    <lightning-card>
+        <div class="slds-m-around_large">
+            
+             <div if:true={isLoaded} class="slds-is-relative">
+                <lightning-spinner
+                    alternative-text="Loading..." variant="brand">
+                </lightning-spinner>
+            </div>
+        </div>
+       <lightning-file-upload 
+            label="Upload Image"
+            name="fileUploader" 
+            accept={acceptedFormats}
+            record-id={recordId}
+            onuploadfinished={handleUploadFinished}
+            multiple="">
+    </lightning-file-upload>
+   
+        <p class="slds-p-horizontal_small">
+            <c-draw-annotation-canvas class="da-canvas"
+           
+                fire-auto-save={canHandleSave}
+                canvas-width="550"
+                canvas-height="550"
+                allow-canvas-resize={allowCanvasResize}
+                onsavecanvas={handleSaveCanvas}
+                onautosavecanvas={handleSaveCanvas}>
+            </c-draw-annotation-canvas>
+        </p>
+    </lightning-card>
+</template>

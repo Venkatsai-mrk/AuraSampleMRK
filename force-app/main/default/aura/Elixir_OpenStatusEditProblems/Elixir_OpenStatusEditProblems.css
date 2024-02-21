@@ -1,0 +1,212 @@
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #f3f2f2;
+    border: none;
+    
+}
+.THIS.accordian_header {
+    float:left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.THIS.accordian_header:last-child:after {
+    display: none;
+} 
+.THIS.accordian_header .slds-page-header {
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 70px;
+    padding-bottom: 5px;
+}
+.THIS.accordian_header .chevron_btn {
+    width: 25px;
+    height: 25px;
+    border: none;
+    text-align: right;
+    background-color: transparent;
+    color: #706e6b;
+    float: left;
+}
+.THIS.accordian_header .chevron_btn:focus {
+    box-shadow: none;
+}
+.THIS.accordian_header .chevron_btn .slds-button__icon {
+    height: 16px;
+    width: 16px;
+    margin-left: 8px;
+    margin-top: 10px;
+}
+.THIS.accordian_header .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #c2403b;
+    fill: #fff;
+    padding: 5px;
+    height: 24px;
+    width: 24px;
+    border-radius: 4px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}
+.THIS.accordian_header h3 {
+    font-size: 15px;
+    color: #c2403b;
+    line-height: 22px;
+    margin-bottom: 7px;
+}
+.THIS.accordian_header p {
+    font-size: 12px;
+    color: #333;
+}
+.THIS .right-side_bar button.btncss {
+    font-size: 12px;
+    color: #333;
+    min-height: 14px;
+    height: 14px;
+    line-height: 0;
+    padding: 0;
+    margin-bottom: 0;
+}
+.THIS .right-side_bar button.btncss:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .right-side_bar .slds-form-element__label {
+    display: none;
+}
+.THIS .right-side_bar .slds-input {
+    width: 110px;
+    text-align: left;
+    padding: 0 0 0 20px;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+    color: #333;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0px;
+    top: 7px;
+    fill:#ccc;
+}
+.THIS .right-side_bar svg.slds-button__icon.slds-button__icon_left {
+    height: 13px;
+    width: 13px;
+    fill: #666;
+}
+.THIS .right-side_bar svg{
+    height: 13px;
+    width:13px;
+}
+.THIS .accordian_open {
+    background-color: #f1f2f3;
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 24px;
+    margin-top: 0px;
+}
+.THIS .accordian_open .btncss {
+    background-color: #fff!important;
+    border: 1px solid #999!important;
+    color: rgb(1, 118, 211)!important;
+    padding: 5px 15px!important;
+    margin-bottom: 10px;
+}
+.THIS .accordian_open .right-side_bar1 .btncss {
+    margin-right: 0;
+    border: none!important;
+    color: #333!important;
+    background-color: transparent!important;
+}
+
+.THIS .accordian_open .slds-button__icon {
+    width: 29px;
+    height: 16px;
+}
+.THIS .accordian_open .slds-page-header {
+    background-color: #f8fcf9;
+    margin: 0;
+    padding-right: 45px;
+}
+.THIS .accordian_open .right-side_bar1 .slds-button__icon {
+    height: 13px;
+    width: 13px;
+}
+.THIS.accordian_header .accordian_open .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #4bc076;
+}
+.THIS.accordian_header .accordian_open h3.goals-head {
+    font-size : 18px;
+    color: #4bc076;
+}
+.THIS .first-inner-dl {
+    height: 20px;
+    width: 2px;
+    float: left;
+    margin-left: 75px;
+    background-color: #4bc076;
+}
+.THIS.accordian_header .first-inner-dl:last-child {
+    display: none;
+}
+/*.THIS.accordian_header:last-child .down-line {
+display: none;
+}*/
+.THIS.slds-show {
+    transition: all 1000ms;
+}
+.THIS.slds-hide {
+    transition: all 500ms;
+}
+.THIS .arrangeDiagnosis {
+    background-color: #7030a0;
+    color: #fff;
+    border-radius: 24px;
+    padding: 5px 20px;
+    display: inline-block;
+    margin: 15px 12px;
+}
+.THIS .pillColor span.slds-pill {
+    background: transparent;
+    border: none;
+}
+.THIS .pillColor .slds-button__icon{
+    fill: #fff;
+    margin-left: 24px;
+}
+.THIS .c-point {
+    cursor: pointer;
+}
+/*changes */
+.THIS .chnagespadding{
+    margin-left:60px;paading: 10px;
+}
+
+.THIS .third_accordian .btncss {
+    background-color: #48c3cc;
+    border: 1px solid #48c3cc;
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.THIS h3.obj-head {
+    color: #48c3cc !important;
+    font-size: 18px;
+    line-height: 15px;
+    margin-bottom: 7px;
+}
+.THIS.care-plan_header {
+    width: calc(100% - 50px);
+    float: right;
+    padding: 0 0 0px;
+}
+.THIS.care-plan_header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000 !important;
+}
+.THIS.problem_parent .care-plan_header {
+    display: none;
+}

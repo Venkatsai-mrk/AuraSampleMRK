@@ -1,0 +1,181 @@
+<aura:component  controller="MasterProblemListController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    
+    <aura:attribute name="isView" type="Boolean"/>
+    <aura:attribute name="AllFlag" type="Boolean"/> 
+    <aura:attribute name="disableSave" type="Boolean"/> 
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="accountRelatedDiagnosisDataId" type="list"/>
+    <aura:attribute name="selectRecordName" type="String"/> 
+    <aura:attribute name="diagnosisName" type="String"/> 
+     <aura:attribute name="problemName" type="String"/>
+    <aura:attribute name="recordDetail" type="String"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name="ICDPickList" type="list"/>
+    <aura:attribute name="insertedProblem" type="List" />
+    <aura:attribute name="ICDSearchParam" type="String"/>
+    <aura:attribute name="diagnosisVersionChange" type="Boolean" default="false" />
+    <aura:registerEvent name="ProblemRefreshEvt" type="c:ProblemRefreshEvt"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+     <aura:attribute name="accountRelatedDiagnosisData" type="list"/>
+    <aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="diagnosisEvent" event="c:diagnosisEvent" action="{!c.diagnosisComponentEvent}"/>
+     <aura:registerEvent name="diagnosisLookupComponentEvent" type="c:diagnosisLookupComponentEvent"/>
+    <aura:registerEvent name="diagnosisRemoveCmpEvent" type="c:diagnosisRemoveCmpEvent"/>
+    <aura:attribute name="activeSections" type="List" default="['A','B']" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="parentCSS"  aura:id="text">
+        <section tabindex="-1" class="childCSS">
+            <div class="slds-modal__container hideDiv">
+                
+                <header class="slds-modal__header headerCSS">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>ADD PROBLEM &amp; DIAGNOSIS TO PATIENT FILE</b></h2>
+                    
+                </header>
+                
+                <div class="slds-modal__content slds-p-around_medium spinnerCSS slds-theme_shade" id="modal-content-id-1">
+                    
+                   <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true" activeSectionName="{!v.activeSections }">
+                    <!--  <lightning:accordionSection class="form_config" name="A" label="Problem/Complaint Details">-->
+					  <h2 class="slds-text-heading_medium instruction_head" >Problem/Complaint Details</h2><br/>
+                    
+                    <div class="widthForAll">
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12 p_name">
+                                Problem Name : 
+                                <c:ElixirOEM_Problem_GlobalSearch ICDSearchParam = "{!v.recordDetail.ICDVersion}" selectRecordId="{!v.selectRecordId}"
+                                                                  selectRecordName = "{!v.selectRecordName}" diagnosisName = "{!v.recordDetail.ICDCodeLabel}" /> 
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                           <!-- <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" label="ICD-CM Code" value="{!v.recordDetail.ICDCodeLabel}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>-->
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" label="SNOMED CT Code"  value="{!v.recordDetail.SnomedCode}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            
+                        </div>
+                         <div class="slds-grid slds-gutters "  id="TaskList2">  
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label=" Problem Type" onchange="" value="{!v.recordDetail.ProblemType}">
+                                    <option value="">NONE</option>
+                                    <option value="Primary" label="Primary"/>   
+                                    <option value="Secondary" label="Secondary"/>    
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label="Status" onchange="" value="{!v.recordDetail.Status}">
+                                    <option value="">NONE</option>
+                                    <option value="Active" label="Active"/>   
+                                    <option value="Inactive" label="Inactive"/>    
+                                    <option value="Resolved" label="Resolved"/>   
+                                    
+                                    
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                                
+                        </div>
+                                    
+                                    
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="date" name="" label="Date Onset" value="{!v.recordDetail.DateOnset}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                    
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                  <!--/lightning:accordionSection-->
+                          <!--lightning:accordionSection class="form_config" name="B" label="Diagnosis Details"-->
+                       <h2 class="slds-text-heading_medium instruction_head" >Diagnosis Details</h2><br/>
+                      <div class="widthForAll">
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <c:diagnosisLookupComponent label="ICD-CM Code"
+                                                   objectName="ElixirSuite__ICD_Codes__c" 
+                                                   fieldName="Name"
+                                                   selectedRecordId="{!v.recordDetail.diagnosisId}"
+                                                   selectedRecordName = "{!v.recordDetail.ICDCodeLabel}"
+                                                   ICDSearchParam = "{!v.recordDetail.ICDVersion}"
+                                                   diagnosisVersionChange = "{!v.diagnosisVersionChange}"
+                                                   problemName = "{!v.selectRecordName}"
+                                                   />
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="text" name="" label="ICD Description"  value="{!v.recordDetail.description}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label="ICD Version" onchange="{!c.handleICDVersionChange}" value="{!v.recordDetail.ICDVersion}">
+                                
+                                    <aura:iteration items="{!v.ICDPickList}" var="item">
+                                        <option value="{!item.label}" label="{!item.label}" selected="{!item.label == v.recordDetail.ICDVersion}">                                               
+                                        </option> 
+                                    </aura:iteration>                                        
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:select name=""  label="Diagnosis Type" onchange="" value="{!v.recordDetail.diagnosisType}">
+                                    <option value="">NONE</option>
+                                    <option value="Primary" label="Primary"/>   
+                                    <option value="Secondary" label="Secondary"/> 
+                                    <option value="Other" label="Other"/> 
+                                </lightning:select>
+                                <div class="slds-m-top_small"></div>
+                        </div>
+                        </div>
+                           <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning:input type="date" name="" label="Date Diagnosed" value="{!v.recordDetail.DateDiagnised}"/>
+                                <div class="slds-m-top_small"></div>
+                            </div>
+                    </div>
+                    <div class="slds-grid slds-gutters"  id="TaskList2">                           
+                        <div class="slds-col slds-size_12-of-12 p_name">
+                            <lightning:textarea name="input3" label="Notes" placeholder="Add your notes here..."
+                                                value="{!v.recordDetail.notes}"/>
+                        </div>
+                    </div>
+                          </div>
+                   <!--/lightning:accordionSection-->
+                </lightning:accordion>
+                    <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                </div>
+                <footer class="slds-modal__footer buttonRound">
+                    <div class="slds-grid slds-gutters footerCSS">
+                        <div class="slds-col slds-size_12-of-12">  
+                            
+                            <lightning:button class="btn" label="Cancel" title="Cancel" onclick="{!c.closeModel }" />                                                                          
+                            <lightning:button class="btn" variant="brand" disabled="{!v.disableSave}" label="Save" title="Save" onclick="{!c.saveRecord }" />
+                        </div>
+                        
+                    </div>
+                    
+                </footer>
+            </div>
+        </section>
+        
+    </div>
+</aura:component>

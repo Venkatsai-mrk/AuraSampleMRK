@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template is used for patient portal to request the update of insurance.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Elixir_logo</letterhead>
+    <name>Request Update For Insurance</name>
+    <style>freeForm</style>
+    <subject>Insurance Update Request from {!Account.Name}</subject>
+    <textOnly>Hello Care Team,
+
+{!Account.Name} has requested updates in their insurance details. Please do the needful.
+
+Thanks.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

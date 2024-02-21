@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invalid_Treatment_center</fullName>
+    <active>false</active>
+    <errorConditionFormula>Treatment_Center__c  &lt;&gt;  House__r.Treatment_Center__c</errorConditionFormula>
+    <errorDisplayField>Treatment_Center__c</errorDisplayField>
+    <errorMessage>Please Choose Valid Treatment Center</errorMessage>
+</ValidationRule>

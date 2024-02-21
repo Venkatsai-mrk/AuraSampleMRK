@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_s_Birth_Date__c</fullName>
+    <description>Denotes the date of birth of the patient.</description>
+    <externalId>false</externalId>
+    <label>Patient DOB</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Date</type>
+</CustomField>

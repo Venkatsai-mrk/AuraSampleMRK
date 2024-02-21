@@ -1,0 +1,65 @@
+<aura:component controller="EnableAppointmentBookingController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="appointmentBookingValue" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="appointmentBooking" type="Boolean" default="False" />
+    <aura:attribute name="selectedValues" type="String[]" />
+    <aura:attribute name="picklistOptions" type="List" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="enablePayNowValue" type="Boolean" />
+    <aura:attribute name="enableScheduleZoomMeeting" type="Boolean" />
+
+    <aura:attribute name="values" type="List" default="[]"/>
+    <aura:attribute name="showOptions" type="Boolean" default="false"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+    <aura:attribute name="reqFieldApi" type="List" default="[]"/>
+    <aura:attribute name="reqFieldLabel" type="List" default="[]"/>
+    <aura:registerEvent name="AppointmentColumnRefreshEvent" type="c:AppointmentColumnRefreshEvent"/> 
+
+
+    <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+        <aura:if isTrue="{!v.appointmentBooking}" > 
+            <aura:if isTrue="{!v.showSpinner}">
+                <div class="slds-spinner_container">
+                    <lightning:spinner variant="brand" size="large" />
+                </div>
+            </aura:if>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Appointment Settings</b></h2><br/>
+            
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Enable Appointment Booking" variant="label-inline" checked="{!v.appointmentBookingValue}"  />
+                    <lightning:input type="checkbox" label="Enable Pay Now" variant="label-inline" checked="{!v.enablePayNowValue}"/>
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                	<lightning:input type="checkbox" label="Allow patient to schedule zoom meeting" variant="label-inline" checked="{!v.enableScheduleZoomMeeting}" />
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:dualListbox
+                        name="selectBox"
+                        label="Select Appointment Types"
+                        sourceLabel="Available Appointment Types"
+                        selectedLabel="Selected Appointment Types"
+                        options="{!v.picklistOptions}"
+                        value="{!v.selectedValues}" 
+                    />
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:dualListbox 
+                                           name="selectBox"
+                                           label="Select the columns for Appointment list view on Portal"
+                                           sourceLabel="Available Columns"
+                                           selectedLabel="Selected Columns" 
+                                           options="{!v.options}" 
+                                           value="{!v.values}" />
+                </div>
+            </div>
+            <div class="slds-align_absolute-center slds-m-top_x-large">
+                <lightning:button label="Save" variant="brand" onclick="{!c.handleSave}" />
+            </div>
+        </aura:if> 
+        
+    </div>
+</aura:component>

@@ -1,0 +1,66 @@
+.THIS .hideDiv .slds-p-around_medium{
+    height:80%;
+}
+.THIS .hideDiv .buttonRound{
+    height:50px;
+}
+.THIS .hideDiv .physical_sample label{
+    display:none;
+}
+.THIS .hideDiv .patient_card{
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-left: 10px;
+    background: rgba(242,243,243,1);
+}
+.THIS .hideDiv .physical_sample h2{
+    margin-bottom:15px;
+    padding-top:4px;
+    font-size:17px;
+    height:33px;
+    background: rgba(243,242,242,1);
+}
+.THIS .physical_sample_row .slds-gutters{
+    margin-top:10px;
+}
+.THIS .sample_column{
+    text-align:left;
+}
+.THIS .sample_column legend{
+    display:none !important;
+}
+/*.THIS .physical_sample_row lightning-datepicker{
+width: 50%;;
+}
+.THIS .physical_sample_row lightning-timepicker{
+width: 50%;;
+}*/
+.THIS .physical_sample_row textarea{
+    height:70px;
+}
+.THIS .buttonRound{
+    padding-left:40px;
+    text-align:center;
+}
+.THIS .hideDiv .physical_sample .slds-has-error .slds-form-element__help {
+    display:none;
+}
+.THIS .hideDiv .physical_sample span{
+    color:red;
+}
+.THIS .bold_row{
+    font-weight:bold;
+}
+.THIS .right_side{
+    padding: 25px 0 0 25px;
+}
+.THIS .slds-modal__container{ 
+    max-width: 100% !important; 
+    width:80% !important; 
+}
+.THIS .bg-transparent {
+    background-color: rgba(0,0,0,0.5);
+}
+.THIS .m-top_35 {
+    margin-top:35px;
+}

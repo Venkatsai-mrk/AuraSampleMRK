@@ -1,0 +1,197 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="LabOrderController">
+    
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <aura:attribute name ="patientID" type = "String"/>
+    <aura:attribute name ="RowId" type = "String"/>
+    <aura:attribute name ="nameSpace" type = "String"/>
+    <aura:attribute name ="heading" type = "String" default="Lab Orders"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="selectedLabOrders" type="List" />
+    <aura:attribute name="showDeleteButton" type="Boolean" default="false"/>
+    <aura:attribute name="LabOrders" type="Boolean" default="true"/>
+    <aura:attribute name="UrineAnalysis" type="Boolean" default="false"/>
+    <aura:attribute name="isEnabledEditButton" type="Boolean" default="false"/>
+    <aura:attribute name="sortedBy" type="String" default="Name"/> 
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="openNewForm" type="Boolean" default="false"/>
+    <aura:attribute name="editScreen" type="boolean" default="false"/>
+    <aura:attribute name = "editScreenDisabled" type="boolean" default="false"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="labresult" type="boolean" default="false"/>	
+    <aura:handler name="change" value="{!v.labresult}" action="{!c.doInit}"/>
+    <aura:registerEvent type="c:labOtherTestEvent" name="labAndOtherTest"/>
+    <aura:attribute name="value" type="String" default="Lab Orders"/>
+    
+    <!--Added by Ashwini-->
+    <aura:attribute name="greaterSign" type="String" default=">"/>
+   <aura:attribute name ="accName" type = "String"/>
+   <!---End-->
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Lab Orders', 'value': 'Lab Orders'},
+                                                        {'label': 'Urine Analysis', 'value': 'Urine Analysis'}
+                                                        ]"/>
+    <aura:handler name="LandingPage" event="c:LandingPage" action="{!c.parentComponentEvent}"/>
+    
+    
+    
+     <!-- Nikihl LX3-5932-->
+     <aura:attribute name="careModal" type="boolean" default="false"/>
+     <aura:attribute name="labOrderNew" type="boolean" default="false"/>
+     <aura:handler name="RefreshLaborder" event="c:RefreshUAListView" action="{!c.doInit}"/>
+     <!-- end-->
+
+     <aura:attribute name="showColumnConfiguration" type="boolean" default="false"/>
+     <aura:attribute name="columnsAvailable" type="List" default="[]"/>
+     <aura:attribute name="columnsSelected" type="List" default="[]"/>
+     <aura:attribute name="columnsSelectedCleanCopy" type="List" default="[]"/>
+
+     
+    
+    
+    <div class="Class1"> 
+        <div class="Class2">
+            <div class ="mgList mgList1">   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-4">
+                        <span>
+                            <!-- heading -->
+                            <!--Added by Ashwini-->
+                            <ol><li>
+                                <a href="javascript:void(0)" onclick="{!c.navToListView}">Accounts</a> {!v.greaterSign} <a href="javascript:void(0)" onclick="{!c.navToAccRecord}">{!v.accName}</a>
+                                                              </li>
+                                                              </ol>
+                                                              <!--end-->
+                            
+                             <h5 class="mgheading"><b>{!v.heading}</b></h5>
+                            <lightning:radioGroup name="radioButtonGroup"
+                                                  options="{! v.options }"
+                                                  value="{! v.value }"
+                                                  type="radio"
+                                                  onchange="{! c.handleChange }"
+                                                  />
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4"></div>
+                    <div class="slds-col slds-size_1-of-4"></div>
+                    
+                </div>      
+            </div>
+            <aura:if isTrue="{!v.LabOrders}"> 	
+                <!--List Status-->
+                <div class="slds-grid Class4">
+                    <div class="slds-col slds-size_7-of-12 Class5">
+                        <div class="Class6">
+                            {! v.data.length }  items . Sorted by {!v.sortedBy} 
+                            <aura:if isTrue="{! v.time == 0 }"> . Updated a few seconds ago
+                                <aura:set attribute="else"> . Updated {! v.time } minutes ago</aura:set>
+                            </aura:if>
+                        </div>
+                    </div> 
+                    
+                    <div class="slds-col slds-size_5-of-12 slds-m-left_small slds-m-bottom_small Class7">
+                        <aura:if isTrue="{!v.showDeleteButton}">
+                            <lightning:button label="Delete Selected"  variant="brand" onclick="{!c.deleteSelectedRows}"/>
+                            <lightning:button label="Send To Lab"  variant="brand" onclick="{!c.updateSelectedRows}"/>
+                        </aura:if>
+                        <lightning:buttonIcon size="medium" iconName="utility:table" variant="neutral" title="Manage Columns" onclick="{!c.configureColumns}"/>
+                        <lightning:button label="New" title="New Lab Order" onclick="{!c.handleClick }"/>
+                        <lightning:buttonicon iconName="utility:refresh" size="medium"  onclick="{!c.doInit}" aura:id ="refreshing" class="inline-buttons left-margin"/> 
+                    </div>
+                </div> 
+                <div>         
+                    <!--to display datatable-->
+                    <div class="slds-grid">
+                        <div aura:id="dataTable" class="slds-col">                            
+                            <lightning:datatable data="{!v.data}"  
+                                                 class = "abc"
+                                                 aura:id="myCol"
+                                                 columns="{!v.mycolumns}" 
+                                                 keyField="Id"
+                                                 selectedRows="{!v.selectedRows}"
+                                                 hideCheckboxColumn="false"
+                                                 onsort="{!c.updateColumnSorting}"
+                                                 sortedBy="{!v.sortedBy}"  
+                                                 sortedDirection="{!v.sortedDirection}"
+                                                 onrowaction="{! c.handleRowAction }"
+                                                 onrowselection="{!c.selectedRows}"
+                                                 resizeColumnDisabled="false"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.UrineAnalysis}"> 
+                <c:ElixirHC_UAListView  patientID = "{!v.patientID}"  />
+            </aura:if>
+        </div>
+         
+        <!-- Nikhil -->
+         <aura:if isTrue="{!v.careModal}" >                      
+            <c:CareEpisodeShowPrompt showPrompt="{!v.careModal}" patientId="{!v.patientID}" heading="{!v.heading}"></c:CareEpisodeShowPrompt>    	      
+        </aura:if>   
+         
+         <aura:if isTrue="{!v.labOrderNew}">
+               <c:ElixirHC_LabOrder  AcctIden = "{!v.patientID}" isOpen="{!v.labOrderNew}" popFlag="{!v.labOrderNew}"/>
+        </aura:if> 
+        
+        <!-- END Nikhil -->
+        <aura:if isTrue="{!v.labresult}"> 	
+            <c:labAndOtherTestResults recordId="{!v.RowId}" isOpen = "{!v.labresult}"  
+                                      popUpType="labResult" resultName="Lab Result" />	
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.editScreen}">
+            <c:ElixirHC_EditLabOrder viewflag="{!v.editScreenDisabled}"  isEnabledEditButton="{!v.isEnabledEditButton}" isOpen="{!v.editScreen}" recordValue="{!v.RowId}" AcctIden="{!v.patientID}"/>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.showConfirmDialog}">            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">DELETE CONFIRMATION</h1>
+                    </header>                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Are you sure you want to delete this item?</b></center>
+                    </div>                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+
+        <aura:if isTrue="{!v.showColumnConfiguration}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button> -->
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Manage Columns</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:dualListbox
+                            sourceLabel="Available"
+                            selectedLabel="Selected"
+                            options="{!v.columnsAvailable}"
+                            value="{!v.columnsSelected}"
+                            onchange="{! c.handleChange }" />
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.configureColumns}">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick="{!c.saveColumns}">Save</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </aura:if>
+    </div>
+</aura:component>

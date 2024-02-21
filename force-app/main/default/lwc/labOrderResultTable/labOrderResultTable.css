@@ -1,0 +1,81 @@
+th {
+    text-align: center;
+    color: #333;
+    border: 1px solid black;
+    border-collapse:collapse;
+}
+
+.trHeader {
+    background: lightgrey;
+    font-size: medium;
+}
+
+table {
+    border-style: solid;
+    font-weight: normal;
+    text-align: center;
+    border: thin solid;
+     padding: none;
+     margin: none;   
+}
+
+td {
+    text-align: center;
+    border: thin solid;
+     margin: none;
+    
+}
+
+.tdClassImg {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+}
+
+.labels {
+    padding: 6px;
+    font-size: medium;
+}
+
+.layout {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.tabset {
+    background-color: white;
+    font-size: 15px;
+}
+
+.Note {
+    white-space: pre-wrap;
+    text-align:left;
+    padding-left:18px
+}
+
+.tdheader{
+    text-align: left;
+    padding:6px
+}
+
+.facilityInfo{
+    text-align: left;
+    font-weight: bold;
+    padding:6px;
+    font-family:serif;
+    font-size:18px;
+    white-space: pre-wrap;
+}
+
+.labInfo{
+    text-align: center;
+    font-weight: bold;
+    padding-left:6px;
+    padding-top:0px;
+    font-family:serif;
+    font-size:18px;
+}

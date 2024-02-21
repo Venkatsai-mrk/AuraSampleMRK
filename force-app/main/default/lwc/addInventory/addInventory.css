@@ -1,0 +1,55 @@
+.add-inventory_table lightning-combobox.slds-form-element {
+    width: 100%;
+}
+.add-inventory_table .slds-combobox__input.slds-input_faux{
+    width: 100%;
+}
+
+.add-inventory_table .slds-form-element__label {
+    display: none;
+}
+.slds-modal__content { 
+    overflow-y: scroll;
+    max-height:  180px;
+}
+.parentCSS { 
+    height:100%;
+}
+.childCSS { 
+    width: 100%;
+    background-color: rgb(243, 242, 242);
+    height: 100%;
+}
+.group-footer { 
+    background-color: #f1f2f3;
+    /*  position: absolute;*/
+    z-index: 1;/*9*/
+    bottom: 0px;
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+    padding: 11px 15px;
+    text-align: right;
+    left: 0;
+}
+.add-inventory_table .slds-form-element__label {
+    display: none;
+}
+.cancelbutton { 
+    margin-right: 13px;
+}
+.overflow{
+    overflow: visible;
+}
+.demo-only{
+    padding:0.5rem;
+    background:#493266;
+}
+
+.bgclor{
+    background-color: #493266;
+}
+
+.bgcolorMargin{
+    background-color: white;
+    margin-bottom: 60px;
+}

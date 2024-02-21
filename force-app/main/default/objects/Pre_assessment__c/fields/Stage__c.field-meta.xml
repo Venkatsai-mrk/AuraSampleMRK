@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage__c</fullName>
+    <description>This field is used to describe the patient&apos;s current stage in the treatment process.</description>
+    <externalId>false</externalId>
+    <label>Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Assesment Pending</fullName>
+                <default>true</default>
+                <label>Assesment Pending</label>
+            </value>
+            <value>
+                <fullName>Submit For Approval</fullName>
+                <default>false</default>
+                <label>Submit For Approval</label>
+            </value>
+            <value>
+                <fullName>Assessment Approval Requested</fullName>
+                <default>false</default>
+                <label>Assessment Requested</label>
+            </value>
+            <value>
+                <fullName>Assessment Approved</fullName>
+                <default>false</default>
+                <label>Assessment Approved</label>
+            </value>
+            <value>
+                <fullName>Assessment Denied</fullName>
+                <default>false</default>
+                <label>Assessment Denied</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

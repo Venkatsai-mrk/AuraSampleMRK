@@ -1,0 +1,70 @@
+.THIS .inputbar input{
+    box-shadow:none;
+}
+.THIS .slds-input:focus{
+    box-shadow:none;
+}
+.THIS .slds-input:active{
+    box-shadow:none;
+}
+.THIS .e-employer {
+    position: relative;
+    z-index: 1;
+}
+.THIS .e-employer .slds-form-element__label {
+    display: none; 
+}
+.THIS .e-employer .listboxCSS.slds-dropdown.slds-dropdown_length-with-icon-7.slds-dropdown_fluid {
+    margin-top: 32px;
+}
+.THIS .e-employer .slds-icon_container {
+}
+.THIS .e-employer lightning-input.inputbar.inputbarCSS.slds-form-element {
+    float: left;
+    width: calc(100% - 20px);
+}
+.THIS .e-employer .slds-input {
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+.THIS .e-employer .slds-input:focus, .THIS .e-employer .slds-input:active {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    border-right: none;
+}
+.THIS .e-employer span.slds-icon_container.slds-icon-utility-search.slds-input__icon.slds-input__icon_right.iconheight {
+    float: right;
+    width: 20px;
+    border: 1px solid #ddd;
+    border-radius: 0 5px 5px 0;
+    border-left: none;
+}
+.THIS .e-employer button.slds-input__icon.slds-input__icon_right.slds-button.slds-button_icon.iconheight {
+
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+   margin-top: 25px;
+    margin-right: 0px;
+}
+.THIS .e-employer .slds-icon_container .slds-close {
+    margin-top: 0px;
+    margin-right: 2px;
+}
+.THIS.slds-card{
+    border-top: 1px solid #efede9;
+}
+.THIS .inputbarCSS {
+    text-align:right;
+}
+.THIS .listboxCSS {
+}
+.THIS .verticalbox {
+    background: white;
+}
+.THIS .parentCSS {
+    margin:10px;
+}
+.THIS .iconCSS {
+    margin-left: 5px;
+    margin-top: 19px;
+}

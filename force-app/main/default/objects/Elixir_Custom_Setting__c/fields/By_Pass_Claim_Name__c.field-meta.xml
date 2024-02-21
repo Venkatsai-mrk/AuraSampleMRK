@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>By_Pass_Claim_Name__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If checkbox marked as TRUE , then sending ClaimName+OrgId and if false sending claimName only to claimMD</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If TRUE sending Claim Name plus Org Id</inlineHelpText>
+    <label>By Pass Claim Name</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

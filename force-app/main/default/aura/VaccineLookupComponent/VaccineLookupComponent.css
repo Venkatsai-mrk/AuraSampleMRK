@@ -1,0 +1,12 @@
+.THIS .vaccine_selectbox{
+    min-height:40px;
+    margin-top:0px !important;
+    min-width: 90px !important;
+}
+
+.THIS span.slds-media__figure {
+    display: none;
+}
+.THIS span.slds-pill__icon_container {
+    display: none;
+}

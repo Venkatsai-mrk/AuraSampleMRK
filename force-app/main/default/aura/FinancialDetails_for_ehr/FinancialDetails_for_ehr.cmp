@@ -1,0 +1,58 @@
+<aura:component controller="PatientDetailLedger_for_ehr" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="paymentSched" type="Boolean"/>
+    <aura:attribute name="patStatement" type="Boolean"/>
+    <aura:attribute name="isOutstanding" type="Boolean"/>
+    <aura:attribute name="COCalculator" type="Boolean"/> 
+    <aura:attribute name="firstCall" type="Boolean"/>
+    <aura:attribute name="secondCall" type="Boolean"/>
+    <aura:attribute name="claimView" type="Boolean"/>
+    <aura:attribute name="vobInfo" type="List"/>  
+    <aura:attribute name="vobResultInfo" type="Object"/>
+    <aura:attribute name="patientData" type="Object"/>
+    <aura:attribute name="totalInsuranceResp" type="Decimal" default="0.0"/>
+    <aura:attribute name="payPosting" type="Boolean"/>
+    
+    <aura:attribute name="optVal" type="String" default="Claims"/>
+    <aura:attribute name="payHistory" type="Boolean"/>
+    <aura:attribute name="cocEstimates" type="Boolean"/>
+    <aura:attribute name="paySchedule" type="Boolean"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{! c.init }"/>
+    
+    <aura:if isTrue="{!or(and(v.Billing,v.ContactCentr),v.Billing)}">
+        <aura:if isTrue="{!v.firstCall}">
+            <div class="demo-only slds-grid patient-ac slds-p-top_x-small slds-wrap">
+                <div class=" slds-grid slds-grid_vertical slds-nowrap">
+                    <div class=" slds-size_12-of-12 o_financ">
+                        
+                        <div class=" slds-grid slds-gutters slds-p-bottom_small">
+                            <div class="slds-col slds-size_9-of-12 "><h3 class="fin-headline" >Financial Details</h3></div>
+                            <div class="slds-col slds-size_2-of-12 ">
+                                <lightning:buttonicon iconName="utility:refresh" size="medium" class="refreshCss" variant ="neutral" onclick="{!c.init}"/> 
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class=" slds-grid slds-gutters ">
+                            <div class="slds-col slds-size_12-of-12 ">
+                                <p class="grpId2">Outstanding Balance &nbsp;:&nbsp; <b>
+                                    <aura:if isTrue="{!v.isOutstanding}">
+                                        <span class="total-red"><lightning:formattedNumber value="{!v.patientData.ElixirSuite__Outstanding_Amount__c}" style="currency" /></span>
+                                        <aura:set attribute="else">
+                                            <span class="total-red">No Balance Due</span>
+                                        </aura:set>
+                                    </aura:if>
+                                    </b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </aura:if>
+</aura:component>

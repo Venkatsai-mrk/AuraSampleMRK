@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sent_to_Clearinghouse</fullName>
+    <columns>NAME</columns>
+    <columns>Patient_Relationship_to_Insured__c</columns>
+    <columns>Total_Charge__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Claim_Status__c</field>
+        <operation>equals</operation>
+        <value>Sent to Clearing house</value>
+    </filters>
+    <label>Sent to Clearinghouse</label>
+</ListView>

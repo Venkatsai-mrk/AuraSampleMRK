@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+      <aura:attribute name="selectedValues" type="List" />
+    <aura:attribute name="selectedFormNames" type="List" />
+</aura:event>

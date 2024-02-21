@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Code_Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Code Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ICD -10-PCS</fullName>
+                <default>false</default>
+                <label>ICD -10-PCS</label>
+            </value>
+            <value>
+                <fullName>HCPCS Level 1</fullName>
+                <default>false</default>
+                <label>HCPCS Level 1</label>
+            </value>
+            <value>
+                <fullName>HCPCS Level 2</fullName>
+                <default>false</default>
+                <label>HCPCS Level 2</label>
+            </value>
+            <value>
+                <fullName>Modifier</fullName>
+                <default>false</default>
+                <label>Modifier</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

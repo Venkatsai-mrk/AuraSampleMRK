@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insured_s_ID_Number__c</fullName>
+    <description>Captures the insured individual's identification number assigned by the insurance plan.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Insured’s ID Number is the identification number of the insured. This information identifies the insured to the payer. This field allows for entry of 29 characters.</inlineHelpText>
+    <label>Insured’s ID Number</label>
+    <length>29</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

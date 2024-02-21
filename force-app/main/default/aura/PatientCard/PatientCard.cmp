@@ -1,0 +1,85 @@
+<aura:component controller="PatientDetailLedger"  implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="licenseAvailable" type="boolean" default="false"/>
+    <aura:attribute name="Alerts" type="boolean" default="false"/>
+    <aura:attribute name="patId" type="string" />    
+    <aura:attribute name="Patient_Name" type="object" />
+    <aura:attribute name="attchid" type="String" default=""/>   
+    <aura:attribute name="parentId" type="Id"/>
+    <aura:attribute name="contentId" type="Id" />
+    
+    <aura:attribute name="place" type="string" />
+    <aura:attribute name="TileConfigFieldsInOrder" type="List"/>
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}"/>
+    <aura:registerEvent name="refreshView" type="force:refreshView" />
+    
+    <div class="slds-grid patacc" >
+        <div class=" slds-grid slds-grid_vertical slds-nowrap" >
+            <div class="slds-form slds-form_stacked slds-grow ">
+                
+                <lightning:layout>
+                    <lightning:layoutItem size="4" class="profilepicRelocation">
+                        
+                        <div class="slds-media">
+                            <div class="slds-media__figure change25" >
+                                <span class="slds-avatar slds-avatar--large slds-avatar--circle patLedger2">
+                                    
+                                    <aura:if isTrue="{!(v.Patient_Name.ElixirSuite__Profile_Picture__c!=null)}">                                      
+                                        <img alt="Patient Image" 
+                                             src="{!'/sfc/servlet.shepherd/version/download/'+ v.Patient_Name.ElixirSuite__Profile_Picture__c}" 
+                                             title="Patient avatar" 
+                                             name="patimg" 
+                                             aura:id="patientImage" />
+                                        
+                                        <aura:set attribute="else">
+                                        <img alt="Patient Image" src="{!$Resource.DefaultProfilePic}" title="Patient avatar" name="patimg" aura:id="patientImage" />
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                </span>
+                            </div>
+                            
+                        </div>
+<aura:if isTrue="{!v.licenseAvailable}">
+                            <div class="upload-btn">
+                                <lightning:fileUpload aura:id="fileUploader" 
+                                                      accept=".png, .jpg" 
+                                                      recordId="{!v.patId}" 
+                                                      onuploadfinished="{!c.handleUploadFinished}"
+                                                      name="fileUploader"/>
+                            </div>
+                        </aura:if>
+                        
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8">
+                        
+                        <lightning:layout multipleRows="true">
+                            <lightning:layoutItem size="12">
+                                
+                                <div class="patRow">
+                                    {!v.Patient_Name.Name}
+                                </div>
+                                
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="12">
+                                
+                                <div class="patNextRow">
+                                    <lightning:layout multipleRows="true">
+										<aura:iteration items="{!v.TileConfigFieldsInOrder}" var="field" indexVar="key">
+                                        {!field.key} : {!field.value} <br></br>
+                                    </aura:iteration> 
+                                    </lightning:layout>
+                                </div>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                        
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+</aura:component>

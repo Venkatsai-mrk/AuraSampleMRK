@@ -1,0 +1,193 @@
+<!--Edited by Avani jain:only created one boolean attribute disable for the save button as it was working without clicking on generate schedule.!-->
+<aura:component controller="PaymentScheduleApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+
+
+<aura:attribute name ="disable" type = "Boolean" default="true"/>
+<aura:registerEvent name="RefreshEstimatesListView" type="c:RefreshEstimatesListView"/>
+<aura:attribute name="PayList" type="List"/> 
+<aura:attribute type="string" name="recordId"/>
+<aura:attribute type="string" name="frequencyVal"/>
+<aura:attribute type="Decimal" name="installAmt"/>
+<aura:attribute type="Decimal" name="patientResponse"/>
+<aura:attribute type="string" name="patientOutstanding"/>
+<aura:attribute type="string" name="description"/>
+<aura:attribute type="string" name="patient"/>
+<aura:attribute name="isOpen" type="Boolean"/>
+<aura:attribute name="isData" type="Boolean"/>  
+<aura:attribute name="scheduleActive" type="Boolean" default="false"/>
+<aura:handler name="init" value="{!this}" action="{! c.init }"/>
+
+<aura:if isTrue="{!v.isOpen}">
+    <div  class="parentClass" aura:id="text">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" 
+                    aria-modal="true" 
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectionCSS">
+            <div class="slds-modal__container hideDiv">
+                <header class="slds-modal__header headerCSS">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.Cancel}" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate colPayHeader">PAYMENT SCHEDULE</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium divCSS" id="modal-content-id-1" 
+                        >
+                    <aura:if isTrue="{!v.spinner}">
+                        <div aura:id="spinnerId" class="slds-spinner_container">
+                            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                                <span class="slds-assistive-text">Loading...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-grid slds-gutters "> 
+                        <div class="slds-col slds-size_12-of-12">
+                            
+                            <div class="slds-section slds-is-open" aura:id="task2">
+                                <h3 class="slds-section__title billSummaryHead">
+                                    <span class="slds-truncate" title="Fill up the Information">Add the details to view the schedule</span>
+                                </h3>
+                                <div class="bill_summry">
+                                        <div class="slds-section__content" id="TaskList2" >
+                                        <div class="widthForAll slds-p-bottom_medium " id="TaskList2">
+                                            <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                <div class="slds-col slds-size_6-of-12  fixedHeight pre_bal">
+                                                    <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                        <div class="slds-col slds-size_6-of-12  fixedHeight childInside" >Patient Responsibility/Amount($):</div>
+                                                        <div class="slds-col slds-size_6-of-12  fixedHeight childInside_level_1">  
+                                                            <lightning:input aura:id="inputField" type="decimal" name="" value="{!v.patientResponse}" placeholder="Add amount" autoComplete="off"/>
+                                                        </div>
+                                                        <!--<div class="slds-col slds-size_6-of-12  fixedHeight">Patient Outstanding/Amount($):</div>
+                                                        <div class="slds-col slds-size_6-of-12  fixedHeight">  
+                                                            <aura:if isTrue="{!not(empty(v.patientOutstanding))}">
+                                                                <b>${!v.patientOutstanding}</b>
+                                                                <aura:set attribute="else">
+                                                                    <b> $0</b> 
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </div>-->
+                                                        
+                                                        <div class="slds-col slds-size_4-of-12  fixedHeight marginCSS" 
+                                                                >Payment Frequency :</div>
+                                                        <div class="slds-col slds-size_6-of-12  fixedHeight">  
+                                                            <lightning:select aura:id="select1" name="select1" label="" onchange="{!c.getField}">
+                                                                <option value="">Choose one..</option>
+                                                                <option value="Daily">Daily</option>
+                                                                <option value="Weekly">Weekly</option>
+                                                                <option value="Monthly">Monthly</option>
+                                                                <option value="Annually">Annually</option>
+                                                                
+                                                            </lightning:select>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">Installment Amount($) :</div>
+                                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight sign">  
+                                                            <lightning:input type="decimal" name="" value="{!v.installAmt}" placeholder="Add amount" autoComplete="off"/>
+                                                        </div>
+                                                        <!--   <div class="slds-col slds-size_4-of-12  fixedHeight changesmarginleft">Active :</div>
+                                                        <div class="slds-col slds-size_6-of-12  fixedHeight changemarginmargintop" >  
+                                                            <ui:inputCheckbox aura:id="checkbox" value="{!v.scheduleActive}" change="{!c.onCheck}"/>
+                                                            
+                                                        </div>-->
+                                                    </div>
+                                                    
+                                                    <!--  <div class="slds-grid slds-gutters defaultBackground"  id="TaskList2">
+                                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight">Installment Amount($) :</div>
+                                                        <div class="slds-col slds-size_6-of-12 slds-m-top_small fixedHeight sign">  
+                                                            <lightning:input type="text" name="" value="{!v.installAmt}" placeholder="Add amount" autoComplete="off"/>
+                                                        </div>
+                                                        
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="payment-list">
+                                    <li class="slds-text-align--center">
+                                        <lightning:button label="Generate Schedule" title="Generate Schedule" onclick="{! c.generateSchedule }" class="colPayHeader1"/></li>
+                                </ul>
+                                
+                                <aura:if isTrue="{!v.isData}">
+                                    <!-- for table-->
+                                    <table class="slds-table slds-table_bordered tableCSS"> 
+                                        <thead>
+                                            <tr class="slds-text-title_caps">
+                                                <th scope="col">
+                                                    <div class="slds-truncate " title="serial number">S.No</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate " title="Installment Amount">Installment Amount</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate " title="Due Date">Due Date</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate " title="Balance Amount">Balance Amount</div>
+                                                </th>
+                                                <!--   <th scope="col">
+                                                    <div class="slds-truncate " title="Status">Status</div>
+                                                </th>-->
+                                                <th scope="col">
+                                                    <div class="slds-truncate " title="Notes">Notes</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.PayList}" var="PayInstance" indexVar="rowIndex">
+                                                <tr class="slds-text-title_caps">
+                                                    
+                                                    <td class= "SelectClass Method">
+                                                        {!rowIndex + 1}
+                                                    </td>
+                                                    
+                                                    <td class="SelectClass Method">
+                                                        $<ui:outputText value="{!PayInstance.instAmt}"/>
+                                                    </td>
+                                                    
+                                                    <td class="SelectClass Method">
+                                                        <ui:outputText value="{!PayInstance.DD}"/>
+                                                    </td>
+                                                    
+                                                    <td class="SelectClass Method">
+                                                        $<ui:outputText value="{!PayInstance.BalAmt}"/>
+                                                    </td>
+                                                    
+                                                    <!--   <td class="SelectClass Method">
+                                                        <ui:outputText value="{!PayInstance.Active}"/>
+                                                    </td>-->
+                                                    <td class="SelectClass Method">
+                                                        <lightning:input type="String" name="" label="" value="{!PayInstance.Des}"/>
+                                                        <!-- <ui:outputText value="{!PayInstance.Des}"/>-->
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table> 
+                                    <!-- for table end-->
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <div >
+                        <lightning:button variant="neutral"
+                                            label="Cancel"
+                                            title="Cancel"
+                                            class="colPayHeader1"
+                                            onclick="{! c.Cancel }"/>
+                        <lightning:button variant="neutral"
+                                            label="Save"
+                                            title="Save"
+                                            class="colPayHeader1"
+                                            onclick="{! c.saveSchedule }"
+                                            disabled="{!v.disable}"/>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </div>
+</aura:if>
+</aura:component>

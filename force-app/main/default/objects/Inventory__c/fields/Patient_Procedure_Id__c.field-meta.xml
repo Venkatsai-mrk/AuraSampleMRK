@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Procedure_Id__c</fullName>
+    <description>Stores the unique identifier for the patient procedure associated with the order line item.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Patient Procedure Id</label>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>Inventory (Patient Procedure Id)</relationshipLabel>
+    <relationshipName>Inventory1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

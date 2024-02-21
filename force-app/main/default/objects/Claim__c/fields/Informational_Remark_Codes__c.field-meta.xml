@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Informational_Remark_Codes__c</fullName>
+    <description>Used to store Remittance Advice Remark Codes.</description>
+    <externalId>false</externalId>
+    <label>Informational Remark Codes</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>M17</fullName>
+                <default>false</default>
+                <label>M17</label>
+            </value>
+            <value>
+                <fullName>M27</fullName>
+                <default>false</default>
+                <label>M27</label>
+            </value>
+            <value>
+                <fullName>M32</fullName>
+                <default>false</default>
+                <label>M32</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

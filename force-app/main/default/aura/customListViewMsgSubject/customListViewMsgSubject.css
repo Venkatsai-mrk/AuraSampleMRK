@@ -1,0 +1,48 @@
+.THIS .parentCSS{
+    height:100%;
+}
+.THIS .childCSS {
+    width:100%;background-color:rgb(243, 242, 242); height:100%;    
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+}
+.THIS .headingCSS {
+    font-size:20px;
+}
+.THIS .radio-h span.slds-radio {
+    float: left;
+}
+.THIS .changeheight{
+    max-height:500px;height:430px;
+}
+.THIS .radio-h span.slds-radio {
+    float: left;
+}
+.THIS .message_center {
+    border: 1px dotted #ccc;
+}
+@media (max-width:767px) {
+    .THIS .all-form_nav {
+        display: block;
+    }
+    .THIS .all-form_nav .slds-size_5-of-12, .THIS .all-form_nav .slds-size_7-of-12 {
+        width: 100%;
+    }
+}
+@media (max-width:576px) {
+    .THIS .all-form_nav {
+        display: block;
+    }
+    .THIS .all-form_nav .slds-size_5-of-12, .THIS .all-form_nav .slds-size_7-of-12 {
+        width: 100%;
+    }
+}
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #ffffff;
+    
+}

@@ -1,0 +1,30 @@
+.bcol{
+    background-color: #493266;
+    color: #fff;
+    border: 1px solid #493266;
+    border-radius: 0;
+    padding-left: 1%;
+    padding-right: 1%;
+   
+}
+.txt{
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    height: auto;
+}
+.diagHeading {
+    font-weight:normal;
+    padding: 5px;
+    font-size:14px;
+}
+.procdureHeading {
+    font-weight:normal;
+    padding: 5px;
+    font-size:14px;
+}
+.testHeading {
+    font-weight:normal;
+    padding: 5px;
+    font-size:14px;
+}

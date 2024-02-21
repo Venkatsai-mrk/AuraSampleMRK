@@ -1,0 +1,162 @@
+.THIS .cms_box {
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 4px 0px #ccc;
+}
+.THIS .cms_box label.slds-form-element__label {
+    display: none;
+}
+.THIS .cms_box .mendate-field {
+    color: #f00;
+}
+.THIS .colPayHeader {
+    color: black;
+    background-color: #f3f3f3;
+      font-weight: bold;
+ }
+ .THIS .colPayHeader1 {
+    color: white;
+    background-color: #493266;
+ }
+ .THIS .colPayHeader1:disabled {
+    color: white;
+    background-color: #c9c7c5;
+ }
+.THIS .slds-input[readonly] {
+    padding-left: 6px;
+    border-color: #cac8c8;
+    background-color: #f3f3f3
+}
+.THIS .slds-form-element {
+    display: inline !important ;
+}
+.THIS .cms_box .heading h2 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+}
+.THIS .cms_box .heading p {
+    font-size: 12px;
+}
+.THIS .check_row label.slds-checkbox__label {
+    display: block;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.THIS .check_row span.slds-checkbox_faux {
+    margin-right: calc(100% - 20px) !important;
+}
+.THIS .check_row span.slds-form-element__label {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px !important;
+    padding-right: 0;
+    margin-right: 0;
+}
+.THIS .check_row .slds-col {
+    padding-right: 0;
+}
+.THIS .abc { 
+  /*  border-right: 2px solid black;
+    height: 12px; */
+    padding-right: 0px;
+    padding-left: 4px;
+}
+.THIS .abcd { 
+  /*  border-right: 2px solid black;
+    height: 12px;*/
+    padding-right: 8px;
+    padding-left: 4px;
+}
+.THIS .slds-checkbox {
+display: inline !important;
+}
+
+/*adjusting help text position*/
+.THIS .customIcon div{
+    vertical-align: top !important;
+}
+ 
+.THIS.customIcon div{
+    vertical-align: top !important;
+}
+.THIS .label_removal .slds-form-element__label {
+    display:none;
+}
+.THIS .table-scroll {
+    border: 1px solid #ccc;
+    overflow: scroll;
+    width: 100%;
+    height: 640px;
+}
+.THIS .custome-class th:nth-child(2) , .THIS .custome-class th:nth-child(3), 
+.THIS .custome-class td:nth-child(2) .slds-input, .THIS .custome-class td:nth-child(3) .slds-input{
+  width:140px;  
+}
+.THIS .cuf-content {
+    padding: 0 0rem !important;
+}
+.THIS .slds-p-around--medium {
+    padding: 0rem !important;
+}       
+.THIS .slds-modal__content{
+    height:99% !important;
+    max-height:99% !important;
+}
+.THIS .slds-modal__container{
+    width: 80% !important;
+    max-width: 85% !important;
+}
+.THIS .h-40 {
+    height: 40px;
+}
+.THIS .pareshanCalender{
+    
+}
+@media (max-width: 767px) {
+    .THIS .slds-grid.slds-gutters {
+        display: block
+    }
+    .THIS .slds-grid.slds-gutters .slds-size_1-of-12, .THIS .slds-grid.slds-gutters .slds-size_2-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_3-of-12, .THIS .slds-grid.slds-gutters .slds-size_4-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_5-of-12, .THIS .slds-grid.slds-gutters .slds-size_6-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_7-of-12, .THIS .slds-grid.slds-gutters .slds-size_8-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_9-of-12, .THIS .slds-grid.slds-gutters .slds-size_10-of-12,
+    .THIS .slds-grid.slds-gutters .slds-size_11-of-12 {
+        width: 100%;
+    }
+    .THIS .slds-grid.slds-gutters .slds-size_1-of-8, .THIS .slds-grid.slds-gutters .slds-size_1-of-4 {
+        width: 24%;
+        display: inline-block;
+    }
+    .THIS .slds-modal__content{
+        height:84% !important;
+        max-height:84% !important;
+    }
+}
+/*changes*/
+.THIS .changeFont{
+    font-family: Arial, sans-serif;
+}
+.THIS .changeMargin{
+  margin-bottom: small;
+}
+.THIS .changeNew{
+    margin-top:5px;
+}
+.THIS .slds-modal__footer.footer_btn {
+    text-align: right;
+}
+.THIS .slds-modal__content.slds-p-around--medium.modal_body {
+    height: 70px !important;
+    padding-top: 22px !important;
+}
+.THIS .slds-modal__container.main_modal_body {
+    width: 50% !important;
+    max-width: 50% !important;
+}
+.THIS .slds-modal__header.modal-header {
+    background-color: #fff;
+}

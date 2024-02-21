@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SetUp_Houses_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( Set_up_Houses__c == true,If(ISBLANK(TEXT( Add_houses__c)),True,False),False)</errorConditionFormula>
+    <errorMessage>Please fill the number of houses if you have checked &quot;set up houses&quot;</errorMessage>
+</ValidationRule>

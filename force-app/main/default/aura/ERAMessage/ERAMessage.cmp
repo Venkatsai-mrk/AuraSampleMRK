@@ -1,0 +1,16 @@
+<aura:component controller="sendClaimToClearingHouse" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+     
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+   
+   
+   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <aura:if isTrue="{!v.Billing}">
+     <div class=" slds-theme_default">   
+        <h1>Please wait. . .</h1>
+    </div>  
+    </aura:if>
+</aura:component>

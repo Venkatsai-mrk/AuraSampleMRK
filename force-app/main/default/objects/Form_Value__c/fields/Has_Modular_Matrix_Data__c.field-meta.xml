@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Has_Modular_Matrix_Data__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>denotes whether this record contains some data in it</description>
+    <externalId>false</externalId>
+    <label>Has Modular Matrix Data</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

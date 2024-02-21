@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lookup_Fields_Validation_for_Room_Record</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+RecordType.Name = &quot;Room&quot;,
+OR(
+AND(
+NOT(ISBLANK(RoomtoSuite__c)),
+NOT(ISBLANK(Room__c))
+),
+AND(
+ISBLANK(RoomtoSuite__c),
+ISBLANK(Room__c)
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Please ensure that either the Building or Suite field has a value, but not both. Both fields cannot be empty.</errorMessage>
+</ValidationRule>

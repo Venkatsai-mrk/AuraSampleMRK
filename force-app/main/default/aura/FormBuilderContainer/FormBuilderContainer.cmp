@@ -1,0 +1,22 @@
+<aura:component implements="force:appHostable,lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <div class="slds-card">
+        <div class="arrange_Window">
+            <div class="slds-grid slds-gutters slds-m-top_medium">
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="slds-text-align_center slds-m-top_medium slds-m-bottom_medium">
+                        <aura:if isTrue="{!v.isOpen}">
+                            <lightning:button variant="brand" label="Refresh" title="" onclick="{! c.refresh}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!!v.isOpen}">
+                            <lightning:button variant="brand" label="New" title="" onclick="{! c.openNew}"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isOpen}">
+                <c:FormConfigurationScreen isOpen="{!v.isOpen}"/>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

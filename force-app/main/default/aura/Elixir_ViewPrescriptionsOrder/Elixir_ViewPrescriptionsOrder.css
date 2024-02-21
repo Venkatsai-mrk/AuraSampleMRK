@@ -1,0 +1,168 @@
+.THIS .slds-modal__container {
+    max-width: 100% !important;
+    width: 97% !important;
+    background-color:rgba(0,0,0,0.7);
+}
+.THIS .prescription-order .slds-accordion__section {
+    padding: 0;
+    border: 1px solid #f1f2f3;
+    margin-bottom: 15px;
+}
+.THIS .prescription-order .slds-accordion__section .slds-accordion__section {
+    margin-bottom: 5px;
+    border: 1px solid #f4f5f6;
+}
+.THIS .prescription-order .slds-accordion__section .slds-accordion__summary  .slds-accordion__summary-heading {
+    background-color: #f1f2f3;
+    padding: 20px 15px;
+}
+.THIS .prescription-order .slds-accordion__section .slds-accordion__content .slds-accordion__summary  .slds-accordion__summary-heading {
+    background-color: #f8fcf9;
+    padding: 15px;
+}
+.THIS .prescription-order .slds-accordion__content {
+    margin: 10px  auto;
+    width: calc(100% - 50px);
+}
+.THIS .prescription-order .slds-accordion__content .slds-modal__content {
+    padding: 0;
+    box-shadow: none;
+}
+.THIS .prescription-order .slds-accordion__list-item {
+    border: none;
+}
+.THIS .prescription-order .slds-is-open>.slds-accordion__summary {
+    margin-bottom: 0px;
+}
+.THIS .prescription-order .slds-accordion__content .slds-modal__content .custom-box {
+    padding: 0;
+    border: none;
+}
+.THIS .prescription-order .slds-accordion__content .slds-modal__content .custom-box .slds-form-element {
+    margin-bottom: 5px;
+}
+.THIS .pateint_info .slds-form-element__help {
+  /*  position: absolute;*/
+    /* right: -2px; */
+    top: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+    border: none;
+    box-shadow: none;
+}
+.THIS .footercls .slds-form-element__help {
+  /*  position: absolute;*/
+    z-index: 1;
+    left: 3px;
+   /* bottom: -10px;*/
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+.THIS .datetime_class .slds-form-element__group label{
+   display:none !important;
+}
+/*.THIS .datetime_class lightning-datetimepicker button{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top:-1px;
+}*/
+.THIS .datetime_class{
+    padding-top : 5px;
+}
+.THIS .datetime_class legend{
+    padding-top : 0;
+}
+.THIS .buttonRound .slds-button {
+    border-radius:25px;
+    /*min-width:100px;*/
+    font-size: 14px;
+}
+.THIS .flexCSS {
+    display:flex;padding-top: 15px;
+}
+.THIS .system_override {
+    background-color: #eee;
+    padding: 15px;
+}
+.THIS .system_override h2 {
+    font-size: 18px;
+}
+.THIS .system_override .slds-form-element {
+    width: 100%;
+}
+.THIS .system-info {
+    background-color: #f8fcf9;
+    padding: 15px;
+    margin-top: 15px
+}
+.THIS .system-info label.slds-form-element__label {
+    font-weight: 600;
+}
+@media (max-width: 992px) {
+    .THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 88% !important;
+	}
+    .THIS .f-mobile_grid {
+        display: block;
+    }
+    .THIS .f-mobile_grid .slds-size_9-of-12, .THIS .f-mobile_grid .slds-size_3-of-12 {
+        width: 100%;
+    }
+     .THIS .f-mobile_grid .slds-size_9-of-12 .slds-input {
+        padding: 0 0 0 2px;
+        font-size: 10px;
+    }
+    .THIS .f-mobile_grid .slds-size_3-of-12 .slds-gutters {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 88% !important;
+	}
+    .THIS .f-mobile_grid {
+        display: block;
+    }
+    .THIS .f-mobile_grid .slds-size_9-of-12, .THIS .f-mobile_grid .slds-size_3-of-12 {
+        width: 100%;
+    }
+     .THIS .f-mobile_grid .slds-size_9-of-12 .slds-input {
+        padding: 0 0 0 2px;
+        font-size: 10px;
+    }
+    .THIS .f-mobile_grid .slds-size_3-of-12 .slds-gutters {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        max-width: 100% !important;
+        width: 88% !important;
+	}
+    .THIS .f-mobile_grid {
+        display: block;
+    }
+    .THIS .f-mobile_grid .slds-size_9-of-12, .THIS .f-mobile_grid .slds-size_3-of-12 {
+        width: 100%;
+    }
+     .THIS .f-mobile_grid .slds-size_9-of-12 .slds-input {
+        padding: 0 0 0 2px;
+        font-size: 10px;
+    }
+    .THIS .f-mobile_grid .slds-size_3-of-12 .slds-gutters {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}

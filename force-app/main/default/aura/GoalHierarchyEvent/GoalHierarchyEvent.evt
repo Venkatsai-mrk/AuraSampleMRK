@@ -1,0 +1,4 @@
+<!--GoalHierarchyEvent.evt-->
+<aura:event type="Component" description="get selected goal and its hierachies">
+    <aura:attribute name="goalhierarchy" type="String" />
+</aura:event>

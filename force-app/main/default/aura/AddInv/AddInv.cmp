@@ -1,0 +1,39 @@
+<aura:component controller="InventoryController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+
+    <!--added by Anmol-->
+
+    <aura:attribute name="invValue" type="List" default="[]"/>
+    
+    <aura:attribute name="addedLst" type="List"/>
+
+    <aura:attribute name="prevAddedLst" type="List" default="[]"/>
+    
+    <aura:attribute name="lotLst" type="List"/>
+    
+    <aura:attribute name="column" type="Object"/> 
+    
+    <aura:attribute name="InvTable" type="Boolean" default="false"/>
+    
+    <aura:attribute name="mode" type="String"/>
+    
+    <aura:attribute name="defType" type="String"/>
+    
+    <aura:attribute name="addInv" type="Boolean" default="false" />
+    
+    <aura:attribute name="lotReq" type="Boolean" />
+    
+    <aura:attribute name="lotSet" type="Boolean" />
+    
+    <aura:attribute name="Avail" type="Integer"/>
+    
+    <aura:attribute name="defEqId" type="String"/>
+    
+    <aura:attribute name="invMode" type="Boolean" />
+
+    <aura:attribute name="appendCheck" type="Boolean" default="false" />
+    
+    <c:addInventory isShowModal="true" onvaluechange="{!c.getValueFromLwc}" onclosechange="{!c.closeLwc}" column="{!v.column}" clmode="{!v.mode}" lotRequired="{!v.lotReq}" prevLst="{!v.prevAddedLst}" appendCheck="{!v.appendCheck}" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+</aura:component>

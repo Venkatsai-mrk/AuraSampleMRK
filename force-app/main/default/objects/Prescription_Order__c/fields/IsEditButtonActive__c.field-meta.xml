@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEditButtonActive__c</fullName>
+    <externalId>false</externalId>
+    <formula>Archive_Status_NC__c  &lt;&gt;  &apos;N&apos;</formula>
+    <label>IsEditButtonActive</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

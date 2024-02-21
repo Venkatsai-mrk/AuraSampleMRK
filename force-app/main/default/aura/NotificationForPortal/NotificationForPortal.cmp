@@ -1,0 +1,97 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="patientCardController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="CustomNotificationRecords" type="list"/>
+    <aura:attribute name="baseURL" type="string"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <lightning:navigation aura:id="navigationService" />
+    <div class="care_team-box1">
+        <div class=" slds-text-heading_small">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_9-of-12"><h1>Recent Updates</h1></div>
+                <div class="slds-col slds-size_3-of-12 slds-text-align_right">
+                    <lightning:icon iconName="utility:notification" size="x-small" class="slds-icon-text-default" alternativeText="Notification" />
+                </div>
+            </div>
+		</div> 
+    </div>
+      
+        <div class="slds-scrollable_y care_team-box">
+            <aura:iteration items="{!v.CustomNotificationRecords}" var="notifications">
+                <div>
+                    <div class="slds-box slds-box_xx-small ">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_3-of-3">
+                                <div>
+                                    <aura:if isTrue="{!or(notifications.type == 'Lab Order',notifications.type == 'Lab Order CHC')}">
+                                        <lightning:button variant="base" label="{!notifications.type}" name="{!notifications.Id}" onclick="{! c.navToPage }">
+                                            <h2 class=""> 
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_2-of-3 slds-text-align_left notification">
+                                                        <aura:if isTrue="{!notifications.type == 'Lab Order'}">
+                                                            Lab Result Received for {!notifications.ElixirSuite__Medical_Test__c}
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!notifications.type == 'Lab Order CHC'}">
+                                                            Lab Result Received for {!notifications.ElixirSuite__Test_Name__c}
+                                                        </aura:if>
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-3 slds-text-align_right notification notification_date">
+                                                        <lightning:formattedDateTime value="{!notifications.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                                                     minute="2-digit" hour12="true" /> 
+                                                    </div>
+                                                </div>
+                                                
+                                            </h2>
+                                        </lightning:button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!notifications.type == 'Forms'}">
+                                        <lightning:button variant="base" label="{!notifications.type}" onclick="{! c.navToPage }">
+                                            <h2 class="">
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_2-of-3 slds-text-align_left notification">
+                                                        
+                                                         Please complete the {!notifications.ElixirSuite__Form_Name__c} form
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-3 slds-text-align_right notification notification_date">
+                                                        <lightning:formattedDateTime value="{!notifications.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                 minute="2-digit"  hour12="true" /> 
+                                                    </div>
+                                                </div>
+                                                </h2>
+                                        </lightning:button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!notifications.type == 'Payments'}">
+                                        <lightning:button variant="base" label="{!notifications.type}" onclick="{! c.navToPage }">
+                                            <h2 class="">
+                                                <div class="slds-grid">
+                                                    <div class="slds-col slds-size_2-of-3 slds-text-align_left notification">
+                                                        <aura:if isTrue="{!notifications.dueDate == true}">
+                                                            Payment of ${!notifications.ElixirSuite__Installment_Amount__c} is overdue
+                                                            <aura:set attribute="else">
+                                                                Payment of ${!notifications.ElixirSuite__Installment_Amount__c} is due by 
+                                                                <lightning:formattedDateTime value="{!notifications.ElixirSuite__Due_Date__c}" year="numeric" month="numeric" day="numeric"/>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-3 slds-text-align_right notification notification_date">
+                                                        <lightning:formattedDateTime value="{!notifications.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                 minute="2-digit"  hour12="true" /> 
+                                                    </div>
+                                                    
+                                                </div>
+                                                </h2>
+                                        </lightning:button>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            </aura:iteration>
+        </div>
+     <aura:if isTrue="{!! v.loaded }">
+                        <lightning:spinner alternativeText="Loading" size="medium"/>
+                    </aura:if>
+   
+</aura:component>

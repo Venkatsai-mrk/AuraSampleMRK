@@ -1,0 +1,38 @@
+@media (max-width: 767px) {
+    .THIS .add-problem_modal {
+        width: 90%;
+        height: 100%;
+        margin-left: 0;
+    }
+    .THIS .slds-modal__container {
+        max-width: 100%!important;
+        width: 90%!important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .THIS .slds-listbox_vertical .slds-listbox__option_plain, 
+    .THIS .slds-listbox_vertical .slds-listbox__option--plain, 
+    .THIS .slds-listbox--vertical .slds-listbox__option_plain, 
+    .THIS .slds-listbox--vertical .slds-listbox__option--plain {
+        padding: 0 10px;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .add-problem_modal {
+        width: 90%;
+        height: 100%;
+        margin-left: 0;
+    }
+    .THIS .slds-modal__container {
+        max-width: 100%!important;
+        width: 90%!important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .THIS .slds-listbox_vertical .slds-listbox__option_plain, 
+    .THIS .slds-listbox_vertical .slds-listbox__option--plain, 
+    .THIS .slds-listbox--vertical .slds-listbox__option_plain, 
+    .THIS .slds-listbox--vertical .slds-listbox__option--plain {
+        padding: 0 10px;
+    }
+}

@@ -1,0 +1,153 @@
+<aura:component controller="tabStructureController" implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,flexipage:availableForRecordHome,lightning:isUrlAddressable" access="global" >
+<!--aura:registerEvent type="c:result" name="loadrelatedList"/-->
+
+<!--aura:registerEvent type="c:RecordIdForLabOrder" name="RecordIdForLabOrder"/>
+<aura:registerEvent type="c:PatientIdentifier" name="transferPatientId"/>
+
+<aura:registerEvent type="c:labOtherTestEvent" name="labAndOtherTest"/-->
+<aura:handler name="init" action="{!c.getaccessibility}" value="{!this}"/>
+<!--aura:handler name="HideMedicationComponent" event="c:HideMedicationComponent" action="{!c.handleComponentEvent}"/--> 
+<aura:attribute name="showMedication" type="boolean" default="true"/>
+<!-- Testing -->
+<aura:attribute name="accessibilityMap" type="Map"/>
+<aura:attribute name= "orgNamespace" type="String"/>
+<aura:attribute name="subTabPicklistValueMap" type="Object" />
+<aura:attribute name="TabPermission" type="Object" /> 
+<aura:attribute type="id" name="recordId"/> 
+<aura:attribute name="licenseAvailable" type="boolean" default="true"/>
+<aura:attribute name="oppId" type="Id"/>
+<aura:attribute name="simpleRecord" type="Object" />
+<aura:attribute name="record" type="Object" />
+<aura:attribute name="showNursing" type="boolean"/>
+<aura:attribute name = "visible"  type="boolean"/>
+<aura:attribute name = "openModal" type="boolean"/>
+<aura:attribute name = "openMedicationModal" type="boolean"/>
+<aura:attribute name = "openCareplan" type="boolean"/>
+<aura:attribute name = "openMedication" type="boolean"/>
+<aura:attribute name= "recordVal" type="String"/>
+<aura:attribute name= "recordValForMedication" type="String"/>
+<aura:attribute name= "openReviewOrder" type="Boolean" default="false"/>
+<aura:attribute name= "openCreateLabOrder" type="Boolean" default="false"/>
+<aura:attribute name= "openASAMForms" type="Boolean" default="false"/>
+<aura:attribute name="openForms" type="Boolean" />
+<aura:attribute name = "prescriptionsView" type="boolean" default="false"/>
+<aura:attribute name = "openCMForms" type="boolean" /> 
+<aura:attribute name="openModalMorMar" type="Boolean" default="false"/>
+<aura:attribute name="openSignaturePad" type="Boolean" />
+<aura:attribute name="openModalLabOrder" type="Boolean" default="false" />
+<aura:attribute name="OpenNotes" type="Boolean" default="false" />	
+<aura:attribute name="OpenAdmsn" type="Boolean" default="false" />	
+<aura:attribute name="OpenNursing" type="Boolean" default="false" />	
+<aura:attribute name="OpenClinical" type="Boolean" default="false" />
+<aura:attribute name="OpenDischarge" type="Boolean" default="false" />
+<aura:attribute name="extendPlan" type="Boolean" default="false"/>	
+<aura:attribute name="enableEndDateEdit" type="Boolean" default="false"/>
+<aura:attribute name="openReferralForm" type="Boolean" default="false"/> 
+<aura:attribute name="Procedure" type="Boolean" default="false"/>
+<aura:attribute name="ProgressNotes" type="Boolean" default="false"/>
+<aura:attribute name="NotesForms" type="Boolean" default="false"/>
+<aura:attribute name="CareEpisode" type="Boolean" default="false"/>
+<aura:attribute name="DischargeForm" type="Boolean" default="false"/>
+<aura:attribute name="Timeline" type="Boolean" default="false"/>
+<aura:attribute name="GenerateVerificationCode" type="Boolean" default="false"/>
+<aura:attribute name="AdmissionForms" type="Boolean" default="false"/>
+<aura:attribute name="CarePlan" type="Boolean" default="false"/>
+<aura:attribute name="NursingForms" type="Boolean" default="false"/>
+<aura:attribute name="MorMar" type="Boolean" default="false"/>
+<aura:attribute name="FirstVisitNotes" type="Boolean" default="false"/>
+<aura:attribute name="ClinicalForms" type="Boolean" default="false"/>
+<aura:attribute name="ReviewForms" type="Boolean" default="false"/>
+<aura:attribute name="SendDataForClaims" type="Boolean" default="false"/>
+<aura:attribute name="MedicalExamination" type="Boolean" default="false"/>
+<aura:attribute name="LabOrders" type="Boolean" default="false"/>
+<aura:attribute name="Prescriptions" type="Boolean" default="false"/>
+<aura:attribute name="Proc" type="Boolean" default="false"/>
+<aura:attribute name="CaptureSignature" type="Boolean" default="false"/>
+<aura:attribute name="MasterProblemList" type="Boolean" default="false"/>
+<aura:attribute name="Transportation" type="Boolean" default="false"/>
+<aura:attribute name="BillingSummary" type="Boolean" default="false"/>
+
+<aura:attribute name="CostOfCare" type="Boolean" default="false"/>
+
+<aura:attribute name="PaymentSchedule" type="Boolean" default="false"/>
+
+<aura:attribute name="Claims" type="Boolean" default="false"/>
+
+<aura:attribute name="Payment" type="Boolean" default="false"/>
+
+<aura:attribute name="PatientStatement" type="Boolean" default="false"/>
+
+<aura:attribute name="OpPatientStatement" type="Boolean" default="false"/>
+
+<aura:attribute name="MedicalCoding" type="Boolean" default="false"/>
+
+<aura:attribute name="EPrescriptions" type="Boolean" default="false"/>
+
+<aura:attribute name="CHCPrescription" type="Boolean" default="false"/>
+<aura:attribute name="NewCropPrescription" type="Boolean" default="false"/>
+<aura:attribute name="IntegratedLabOrder" type="Boolean" default="false"/>
+
+<aura:attribute name="OpenNewNursing" type="Boolean" default="false"/>
+<aura:attribute name="OpenNewAdmsn" type="Boolean"/>
+<aura:attribute name="OpenNewClinical" type="Boolean"/>
+<aura:attribute name="OpenNewNotes" type="Boolean" default ="true"/>
+
+<aura:attribute name="Ehr" type="Boolean" default="false"/>
+<aura:attribute name="Billing" type="Boolean" default="false"/>
+<aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+<aura:attribute name="dynamicTabLst" type="List" default ="[]"/>
+<aura:attribute name="loaded" type="Boolean" default="false" />
+<aura:attribute name= "appName" type="String"/>
+    <aura:attribute name= "heading" type="String" default=""/>
+    <aura:attribute name= "careModal" type="Boolean" default="false"/>
+<aura:if isTrue="{!v.Ehr}">
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <force:recordData aura:id="forceRecordCmp" recordId="{!v.recordId}" layoutType="FULL" targetFields="{!v.simpleRecord}"
+                        targetRecord="{!v.record}" fields="Id, ElixirSuite__Treatment_Center__c"/>
+    <div class="slds-tabs_scoped" id="navDiv">  
+        <div class="slds-tabs_scoped" id="navDiv">
+            <aura:if isTrue="{!v.licenseAvailable}">
+                <ul class="slds-tabs_scoped__nav e-product-fea" role="tablist" id="nav"> 
+                    <aura:if isTrue="{!v.GenerateVerificationCode || v.CaptureSignature || v.CareEpisode || v.AdmissionForms || v.Transportation}">  
+                        <aura:iteration items="{!v.dynamicTabLst}" var="item" indexVar="index">
+                            <aura:if isTrue="{!item.isParentTabAllowed}">  
+                            <li class="e-product-fea-child" aura:id="{!item.auraId}" role="presentation">       
+                                <a class="" href="" title="{!item.label}" onclick="{!c.genericParentTabCall}" role="tab" tabindex="-1" aria-selected="false" 
+                                    aria-controls="tab-scoped-3" id="tab-scoped-3__item" data-value="{!index}">
+                                    <div class="slds-float_left">
+                                        <lightning:icon class="" aura:id="{!item.auraId}" size="x-small"  iconName="{!item.iconName}" />
+                                    </div>&nbsp;{!item.label}
+                                </a>
+                                <ul class="admission_submenus slds-is-absolute">
+                                    <aura:iteration items="{!item.subTabs}" var="subItem" indexVar="childIndex">
+                                        <aura:if isTrue="{!subItem.isSubTabAllowed}">
+                                            <li class="slds-tabs_scoped__item slds-dropdown__item" title="{!subItem.label}" role="presentation">
+                                                <a class="slds-tabs_scoped__link " href="" onclick="{!c.genericSubTabCall}" role="tab" data-value="{! index +'$'+childIndex}"
+                                                    tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">
+                                                    {!subItem.label}</a>
+                                            </li>
+                                        </aura:if>
+                                    </aura:iteration>
+                                    
+                                    
+                                </ul>
+                                
+                            </li>
+                            </aura:if>
+                        </aura:iteration>
+                    </aura:if>
+                    
+                </ul>
+            </aura:if>    
+            <aura:if isTrue="{!! v.loaded }">
+                            <lightning:spinner alternativeText="Loading" />
+                        </aura:if>   
+        </div>
+        <div aura:id="ModalPlaceholder" />
+    </div>
+</aura:if>
+    
+    <aura:if isTrue="{!v.careModal}" >                      
+        <c:CareEpisodeShowPrompt showPrompt="{!v.careModal}" patientId="{!v.recordId}" heading="{!v.heading}"></c:CareEpisodeShowPrompt>    	      
+    </aura:if>
+</aura:component>

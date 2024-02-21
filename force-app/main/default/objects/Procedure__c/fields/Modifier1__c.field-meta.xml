@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Modifier1__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Modifier 1</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Procedure__c.Code_Category__c</field>
+            <operation>equals</operation>
+            <value>Modifier</value>
+        </filterItems>
+        <filterItems>
+            <field>Procedure__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Template Procedure</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>Procedure Codes</relationshipLabel>
+    <relationshipName>Procedure_Codes</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,16 @@
+.THIS .bill-summary-p {
+    margin:2px; 
+    padding:10px;
+    overflow: auto;
+}
+.THIS .billing-btn {
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;
+    background-color: #3b87a5;
+    width: 200px;
+    height: 35px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+}

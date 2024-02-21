@@ -1,0 +1,145 @@
+<apex:page renderAs="pdf">
+    <apex:form > 
+    <apex:param name="orderId" value="{!$CurrentPage.parameters.orderId}"/>
+        <apex:variable value="{!1}" var="rowNum"/>
+    
+        <apex:outputPanel > 
+        <head>     
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet"/>  
+    </head>
+    <body>
+        <table class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: 'Open Sans', sans-serif;  width: 740px; margin: 10px auto; background-color: #fff;">
+            <thead>
+                          <tr>  
+                <th style="background-color: #fff; padding: 0px 0px 0;">    
+                    <table  border="0" cellspacing="0" cellpadding="0" style="width: 680px; text-align: left; margin-bottom: 0px;"> 
+                        <tbody> 
+                            <tr>    
+                                <td style="padding: 0px 25px 0px 20px; width: 200px;"><apex:image url="{!$Resource.ElixirLogo}" width="180"/></td>    
+                                <td style="width: 430px; "> 
+                                    <table  border="0" cellspacing="0" cellpadding="0" style="text-align: right; width: 410px; ">   
+                                        <tbody>
+                                            <tr><td><p style="text-align: left ; margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">2328 10th Ave N STE 302,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">Lake Worth,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">FL 33461,</p></td></tr>
+                                                        <tr><td><p style="text-align: left ;margin:0 0 5px 0; font-size: 12px; font-weight: 400; color: #222;">United States</p></td></tr>
+                                       </tbody>
+                                    </table>    
+                                </td>   
+                                <!--<td style="width: 180px;">  
+                                <table  border="0" cellspacing="0" cellpadding="0" style="width: 180px; text-align: left;"> 
+                                <tbody> 
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">Patient:</p></td></tr> 
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">8 S OSCEOLA AVE APT</p></td></tr>  
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">2203, ORLANDO FL</p></td></tr> 
+                                <tr><td><p style="margin:0 0 3px 0; font-size: 12px; font-weight: 400; color: #222;">DOB: </p></td></tr>    
+                                <tr><td><p style="margin:0; font-size: 12px; font-weight: 700; color: #222;">Date of Services: 5/8/2020</p></td></tr>   
+                                </tbody>    
+                                </table>    
+                                </td>-->    
+                            </tr>   
+                        </tbody>    
+                    </table>    
+                </th>   
+            </tr>   
+                
+                <tr>
+                    <th style="background-color: #455660; padding: 10px 25px; box-shadow: 0px 6px 4px #ebe9ea;">
+                        <table  border="0" cellspacing="0" cellpadding="0" style="width: 660px; text-align: left;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <h2 style="margin: 0; font-weight: 400; font-size: 36px; color: #8ec63f;">CLAIM: </h2>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3 style="color: #dff9ba; font-size: 26px; font-weight: 400; margin: 2px 0 0;">BRYAN KEETH</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="color: #dff9ba; font-size: 14px; font-weight: 400; margin: 0px 0;">Date of Birth : NOT BORN YET</p>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 15px 25px;">
+                        <table border="0" cellspacing="2px" cellpadding="0" style="width: 660px;  text-align: left;">
+                            <thead>
+                                <td style="background-color: #8ec63f; text-align: center; padding: 7px 0 7px 5px; width: 30px;">
+                                    <p style="margin: 1px 0px 0;">
+                                      DEMO
+                                    </p>
+                                </td>
+                                <td style="background-color: #8ec63f; padding: 7px 0 7px 5px; width: 140px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">
+                                      Claim
+                                    </p>
+                                </td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 130px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">
+                                        Patient Account
+                                    </p>
+                                </td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 100px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">
+                                       
+                                         Plan Name
+                                    </p>
+                                </td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 90px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">
+                                       Relationship
+                                    </p>
+                                </td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 100px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">Insurance Type</p>
+                                </td>
+                                <td style="background-color: #8ec63f;padding: 7px 0 7px 5px; width: 50px;">
+                                    <p style="color: #fff; font-size: 13px; margin: 0;">FECA Number &nbsp;&nbsp;</p>
+                                </td>
+                            </thead> 
+                          <!--apex:repeat value="{!stringifiedClaimData}" var="data" id="theRepeat"> 
+                            <tbody> 
+                                <tr>
+                                    <td style="background-color: #f8f8f8; text-align: center; padding: 7px 0 7px 8px;">
+                                        <p style="margin: 0px 0; font-size: 12px;">DEMO</p>
+                                    </td>
+                                    <td style="background-color: #f8f8f8; padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px;  margin: 0;">{!data.Name}</p>
+                                    </td> 
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px;  margin: 0;">{!data.Patient_Account__r.Name}</p>
+                                    </td>
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px;  margin: 0;">{!data.Insurance_Plan_Name__c}</p>
+                                    </td>
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px;  margin: 0;">{!data.Patient_Relationship_to_Insured__c}</p>
+                                    </td>
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px; margin: 0;">{!data.Insurance_Type__c}</p>
+                                    </td>
+                                
+                                    <td style="background-color: #f8f8f8;padding: 7px 0 7px 8px;">
+                                        <p style="color: #141414; font-size: 12px; margin: 0;">{!data.Insured_Policy__c}</p>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                            </apex:repeat-->
+                        </table> 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </body>
+        </apex:outputPanel>
+        </apex:form>
+</apex:page>

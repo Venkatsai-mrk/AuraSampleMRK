@@ -1,0 +1,12 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="accountRecordByEvent" type="sObject[]"/>
+    <aura:attribute name="locRecordByEvent" type="sObject[]"/>
+    <aura:attribute name="careTeamRecordByEvent" type="sObject[]"/>
+    <aura:attribute name="locationRecordByEvent" type="sObject[]"/>
+    
+    <aura:attribute name="criteriaTypeByEvent" type="String"/>
+    <aura:attribute name="operatorByEvent" type="String"/>
+    <aura:attribute name="ageByEvent" type="Integer"/>
+    <aura:attribute name="admitDateByEvent" type="Date"/>
+   
+</aura:event>

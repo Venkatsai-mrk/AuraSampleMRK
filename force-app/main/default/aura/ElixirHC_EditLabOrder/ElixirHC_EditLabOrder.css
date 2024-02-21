@@ -1,0 +1,211 @@
+.THIS .LabTests {
+    background: rgb(243, 242, 242);
+    padding-bottom : 15px;
+    
+}
+.THIS .LabTests .slds-size_4-of-12 label {
+    font-weight:700;
+    margin-bottom: 2px;
+    
+}
+
+.THIS .LabTests .slds-size_5-of-12 label {
+    font-weight:700;
+    margin-bottom: 2px;
+    
+}
+.THIS .defaultBackground {
+    background: rgb(243, 242, 242);
+    padding-bottom : 15px;
+    border-left:solid 1px lightgrey;
+    font-weight:700; 
+    
+}
+.THIS .defaultBackgroundForNewCheckBox{
+    background: rgb(243, 242, 242);
+    padding-bottom : 15px;
+    border-left:solid 1px lightgrey;
+    font-weight:700; 
+    
+}
+.THIS .ForPatientCard{
+    border: none;
+}
+
+.THIS .slds-modal__content {
+    min-height:430px;
+}
+.THIS .slds-modal__footer {
+    text-align:center;
+}
+.THIS .buttonRound .slds-button {
+    border-radius:25px;
+   /* min-width:100px;*/
+    font-size: 14px;
+}
+.THIS .slds-modal__footer {
+    background: #fff;
+}
+.THIS .HeadingCls {
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 9px;
+}
+.THIS .defaultBackground .slds-checkbox{
+    display: inline-block;
+    float: left;
+    width: 25%;
+    
+    
+}
+
+.THIS .LabTests:first-child {
+    padding-bottom: 0;
+}
+.THIS .widthForAll {
+    width: 90%;
+    margin: 0 5%;
+}
+.THIS .TextHight .slds-textarea {
+    height:500px;
+}
+.THIS .slds-modal__close {
+    top: -40px;
+    right: 0px;
+    color: #fff;
+    z-index: 1;
+    opacity: 1;
+    
+}
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.THIS .slds-button_icon-inverse {
+    height : 25px;
+    width : 25px;
+}
+.THIS .pateint_info .slds-form-element__help {
+    top: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+    box-shadow: none;
+}
+.THIS .footercls .slds-form-element__help {
+    z-index: 1;
+    left: 3px;
+}
+.THIS .datetime_class .slds-form-element__row .slds-form-element label{
+    display :none;
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right{
+    position:relative;
+}
+.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+.THIS .ForPatientCard{
+    border : none;
+}
+.THIS .medical_necessity .slds-form-element {
+    width: 33.33%;
+    float: left;
+}
+.THIS .h-auto {
+    height: auto;
+}
+.THIS .ForPatientCard1 {
+    padding: 0; 
+    border-radius: 8px;
+}
+
+.THIS .datetime_class .slds-form-element__control{
+    display: inline;
+}
+
+.THIS .slds-modal__container{ max-width: 100% !important; width:97% !important; }
+@media (max-width: 992px) {
+    .THIS .datetime_class .slds-grid {
+        display: block;
+    } 
+    .THIS .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .datetime_class .slds-form-element__group {
+        margin-left: 75px;
+    }
+    .THIS .defaultBackground .slds-checkbox {
+        width : 50%;
+    }
+}
+@media (max-width: 767px) {
+    .THIS .slds-modal__container {
+        width: 88% !important;
+    }
+    .THIS .datetime_class .slds-grid {
+        display: block;
+    } 
+    .THIS .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .datetime_class .slds-form-element__group {
+        margin-left: 75px;
+    }
+    .THIS .defaultBackground .slds-checkbox {
+        width: 100%;
+    }
+    .THIS .medical_necessity .slds-form-element {
+        width: 50%;
+    }
+}
+@media (max-width: 576px) {
+    .THIS .slds-modal__container {
+        width: 88% !important;
+    }
+    .THIS .buttonRound .slds-button {
+        padding: 0 8px;
+    }
+    .THIS .datetime_class .slds-grid {
+        display: block;
+    } 
+    .THIS .datetime_class .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .datetime_class .slds-form-element__group {
+        margin-left: 75px;
+    }
+    .THIS .datetime_class .slds-input {
+        padding-right: 5px;
+        padding-left: 2px;
+        font-size: 12px;
+    }
+    .THIS .LabTests .slds-grid:nth-child(2) {
+        display:block;
+    }
+    .THIS .LabTests .slds-size_5-of-12, .THIS .LabTests .slds-size_7-of-12 {
+        width: 100%;
+    } 
+}
+.THIS .datetime_class{
+    margin-left: 64px;
+}
+.THIS .buttonMargin{
+    margin-left: 7px;
+}
+.THIS .min-height20 {
+    min-height: 20px;
+}
+.THIS .modal-innerdiv {
+    max-width: 50% !important; 
+    width:40% !important;
+    margin-left:500px;
+    margin-top:300px;
+    border:grey; 
+    border-width:2px; 
+    border-style:solid;
+}

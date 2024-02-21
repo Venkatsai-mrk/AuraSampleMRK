@@ -1,0 +1,10 @@
+.THIS.lightning-record-form-submit {
+    display:none;
+}
+.THIS.lightning-record-form-cancel {
+    display:none;
+}
+.THIS .changeNew{
+    background-color: #493266;
+    color:#fff;
+}

@@ -1,0 +1,19 @@
+<apex:page showHeader="true" lightningStylesheets="true" standardController="Claim__c" docType="html-5.0">
+<!--apex:page showHeader="true" lightningStylesheets="true" extensions="ChangeStatusHelper" standardController="Claim__c" docType="html-5.0"-->
+<apex:includeScript value="{!$Resource.statusUpdateToast}"/>  
+<!--script>
+        function showToast() {
+            sforce.one.showToast({
+                "title": "Success!",
+                "message": "Status updated successfully",
+                "type": "success"
+            });
+        }
+    window.location.top.reload();
+    </script-->
+    <apex:form >
+        <apex:page >
+            
+        </apex:page>
+    </apex:form>
+</apex:page>

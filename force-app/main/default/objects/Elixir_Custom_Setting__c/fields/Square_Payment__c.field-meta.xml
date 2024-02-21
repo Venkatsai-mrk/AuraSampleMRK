@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Square_Payment__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>If the custom setting is enabled, then on clicking &apos;Collect Payment&apos; button the new payment screen should open up.</description>
+    <externalId>false</externalId>
+    <label>Square Payment</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

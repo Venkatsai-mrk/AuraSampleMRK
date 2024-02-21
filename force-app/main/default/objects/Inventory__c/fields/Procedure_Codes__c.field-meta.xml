@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Procedure_Codes__c</fullName>
+    <description>Captures the procedure codes related to the order line item.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Procedure Codes</label>
+    <referenceTo>Procedure__c</referenceTo>
+    <relationshipLabel>Inventory</relationshipLabel>
+    <relationshipName>Inventory</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

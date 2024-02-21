@@ -1,0 +1,180 @@
+.THIS .LabTests {
+    background: rgb(243, 242, 242);
+    padding:6px 15px 15px;
+    width:100%;
+    padding-bottom: 15px!important;   
+}
+.THIS .LabTestsnew {
+    background: rgb(243, 242, 242);
+    width:100%;
+    padding-bottom: 15px!important;   
+}
+.THIS .defaultBackground4 {    
+    font-weight:700; 
+    width:100%;    
+}
+.THIS .LabTests .slds-size_4-of-12 label {
+  border-left:solid 1px lightgrey;
+   font-weight:700;
+   margin-bottom: 2px;   
+}
+.THIS .LabTests .slds-size_5-of-12 label {
+  border-left:solid 1px lightgrey;
+   font-weight:700;
+   margin-bottom: 2px;  
+}
+.THIS .defaultBackground {
+    background: rgb(243, 242, 242);
+    padding-bottom : 15px;
+    font-weight:700; 
+    width:100%;
+}
+.THIS .defaultBackground2 {
+    background: rgb(243, 242, 242);
+    font-weight:700; 
+    width:100%;   
+}
+.THIS .defaultBackground3 {
+    background: rgb(243, 242, 242);
+    padding-bottom : 15px;
+    font-weight:700; 
+    width:100%;   
+}
+.THIS .slds-modal__content {
+    min-height:430px;
+}
+.THIS .slds-modal__footer {
+    text-align:center;
+}
+.THIS .buttonRound .slds-button {
+    border-radius:25px;
+    /*min-width:100px;*/
+    font-size: 14px;
+}
+.THIS .slds-modal__footer {
+    background: #fff;
+    }
+.THIS .HeadingCls {
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 9px;
+}
+.THIS .defaultBackground .slds-checkbox{
+    display: inline-block;
+    float: right;
+    width: 50%;   
+}
+@media (max-width:768px) {
+    .THIS .defaultBackground .slds-checkbox {
+         width: 100%;
+    }
+    
+}
+
+.THIS .LabTests:first-child {
+    padding-bottom: 0;
+}
+.THIS .widthForAll {
+    width: 90%;
+    margin: 0 5%;
+}
+.THIS .TextHight .slds-textarea {
+    height:500px;
+}
+.THIS .slds-modal__close {
+    right: 0px;
+    color: #fff;
+    z-index: 1;
+    opacity: 1;
+   
+}
+.THIS .slds-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.THIS .slds-button_icon-inverse {
+    height : 25px;
+    width : 25px;
+}
+.THIS .pateint_info .slds-form-element__help {
+    top: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .slds-has-error .slds-input {
+    box-shadow: none;
+}
+.THIS .footercls .slds-form-element__help {
+    z-index: 1;
+    left: 3px;
+   
+}
+.THIS .datetime_class legend{
+   
+}
+.THIS .datetime_class .slds-form-element__row .slds-form-element label{
+    display :none;
+}
+.THIS .slds-form-element__control.slds-input-has-icon.slds-input-has-icon_left{
+    position:relative;
+}
+.THIS .datetime_class .slds-form-element__group{
+    width: 70%;
+    margin-left: 100px;
+}
+.THIS .hideLabelForFooter .slds-form-element .slds-size_1-of-1 .slds-form-element__label {
+    display :none;
+}
+.THIS .hideLabelForFooter .slds-form-element__group .slds-form-element__label {
+     display :none;
+}
+
+.THIS .slds-modal__container{ 
+    max-width: 100% !important; 
+    width:97% !important; 
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+    margin-top: 6px !important;
+}
+.THIS span.slds-form-element__label {
+    max-width: 100% !important;
+}
+.THIS .defaultBackground label.slds-checkbox__label {
+    float: left;
+}
+.THIS .headerCSS {
+    background-color: #FDFDFF;
+    margin-left:50px;
+    margin-right:50px;
+    font-size: x-large;
+    border-bottom: none;
+}
+.THIS .parentCSS {
+    background-color: #FDFDFF;
+}
+.THIS .searchbarCSS {
+    background-color: #FDFDFF;
+}
+.THIS .defaultBackground lightning-input.slds-form-element_horizontal.slds-form-element,
+.THIS .defaultBackground lightning-input-field.requiredField.slds-form-element.slds-form-element_horizontal{
+    position: sticky;
+}
+.THIS .defaultBackground lightning-input-field.slds-form-element.slds-form-element_horizontal {
+    position: sticky;
+}.THIS .e-employer button.slds-input__icon.slds-input__icon_right.slds-button.slds-button_icon.iconheight {
+    float: right;
+    margin-top: 0;
+    width: 20px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    border-left: none;
+    padding-right: 4px;
+}
+.THIS .e-employer .iconCSS {
+    margin-top: 6px;
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+    margin-top: 8px;
+}

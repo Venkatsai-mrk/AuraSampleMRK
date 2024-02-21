@@ -1,0 +1,170 @@
+.THIS #nav li{
+    border-width:none;
+    border-style:none;
+}
+.THIS .bigIcons{
+    width:11.5%;   
+}
+.THIS .smallIcons{
+  width:8%;  
+}
+.THIS .mediumIcons{
+  width:9.5%;  
+}
+.THIS a{
+    width:100%;
+}
+.THIS .doctor{
+    left:25%;
+}
+.THIS .Nurse{
+    left:30%;
+}
+.THIS .BedAllocation{
+    left:18%;
+    max-width:500rem;
+    padding:0px;
+}
+.THIS .dcTransfer{
+    right:20%;
+}
+.THIS .Clinician{
+    left:80%;
+}
+.THIS ul{
+    /*position:static;*/
+    padding:0px;
+    border-width:0px 0px 0px 0px;
+    border-style:none;
+    border: 0px;  
+    }
+
+.THIS #nav li a{
+    color: rgb(107, 109, 112);
+}
+
+.THIS #nav2 li{
+    background-color:rgb(216, 237, 255);
+    color: black;
+}
+.THIS #nav2 li:hover a{
+	background: #eef2f6;
+    color: black;
+    
+}
+
+.THIS .demo{
+     background-color:#eef2f6;
+}
+/* =======- 14-06-2019 -======= */
+.THIS .e-product-fea li.e-product-fea-child {
+    width: 20%;
+    position: relative;
+    /*visibility: visible !important; */  
+}
+.THIS .e-product-fea li .slds-dropdown-trigger {
+    margin: 0 auto;
+}
+.THIS .e-product-fea li.e-product-fea-child a {
+    max-width: 100%;
+    overflow: hidden;
+  /*  text-overflow: ellipsis; */
+    white-space: nowrap;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    height: 2.5rem;
+    font-weight: 500;
+    line-height: 2.5rem;
+    padding: 0 1rem;
+    color: rgb(62, 62, 60);
+    background-clip: padding-box;
+    border: 0;/*
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;*/
+    border-radius: 0;
+    text-align : center;
+}
+@media (max-width: 992px) {
+    .THIS .e-product-fea li.e-product-fea-child a{
+        padding: 0 5px;
+    }
+}
+.THIS .e-product-fea li.e-product-fea-child:hover a {
+    background-color: #fff;
+}
+/*.THIS .e-product-fea li:nth-child(2) .admission_submenus {
+    left: 10%;
+}
+.THIS .e-product-fea li:nth-child(3) .admission_submenus {
+    left: 20%;
+}
+.THIS .e-product-fea li:nth-child(4) .admission_submenus {
+    left: 30%;
+}
+.THIS .e-product-fea li:nth-child(5) .admission_submenus {
+    left: 40%;
+}
+.THIS .e-product-fea li:nth-child(6) .admission_submenus {
+    left: 50%;
+}
+.THIS .e-product-fea li:nth-child(7) .admission_submenus {
+    left: 60%;
+}
+.THIS .e-product-fea li:nth-child(8) .admission_submenus {
+    left: 60%;
+}
+.THIS .e-product-fea li:nth-child(9) .admission_submenus {
+    left: 60%;
+}
+.THIS .e-product-fea li:last-child .admission_submenus {
+    left: 70%;
+}*/
+.THIS .e-product-fea li.e-product-fea-child:hover .admission_submenus {
+    display: block;
+}
+.THIS .admission_submenus {
+    width: 100%;
+    z-index: 4; /*changed from 999 to 2 for app exchange*/
+    display: none;
+    left: 0;
+    top: 40px;
+    color :rgb(176, 196, 223);
+    border: 1px solid #ddd;
+}
+
+.THIS .admission_submenus li {
+    display: block;
+    width:100%;
+    margin: 0 !important;
+}
+.THIS .admission_submenus li a {
+    background-color: #f1f2f3;
+    text-align: center;
+   	padding: 12px 10px;
+    border: none !important;
+    border-bottom: 1px solid #ddd !important;
+    line-height: 16px;
+    font-weight: 500;
+    color: #000 !important;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .admission_submenus li:last-child a {
+    border-bottom: none !important;
+}
+.THIS .admission_submenus li a:hover {
+    text-decoration: none;
+    background-color: #f1f2f3 !important;
+    transition: all 500ms;
+    -moz-transition: all 500ms;
+    -webkit-transition: all 500ms;
+}
+.THIS .tb1{
+    color:blue;
+    font-weight:bold;
+}
+.THIS .mycustomcss{
+    margin-top:78px;
+}

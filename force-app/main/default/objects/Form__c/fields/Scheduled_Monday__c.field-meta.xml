@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduled_Monday__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Scheduled Monday</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Caseload at 06:00PM</fullName>
+                <default>false</default>
+                <label>Caseload at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Caseload Crystal at 12:20PM</fullName>
+                <default>false</default>
+                <label>Caseload Crystal at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Group 1 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 1 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 2 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 2 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 3 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 3 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 4 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 4 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group 5 at 07:30PM</fullName>
+                <default>false</default>
+                <label>Group 5 at 07:30PM</label>
+            </value>
+            <value>
+                <fullName>Group A at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group A at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group B at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group B at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group C at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group C at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group D at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group D at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>Group E at 06:00PM</fullName>
+                <default>false</default>
+                <label>Group E at 06:00PM</label>
+            </value>
+            <value>
+                <fullName>In-House 12 Step Meeting at 07:00PM</fullName>
+                <default>false</default>
+                <label>In-House 12 Step Meeting at 07:00PM</label>
+            </value>
+            <value>
+                <fullName>Lunch at 12:00PM</fullName>
+                <default>false</default>
+                <label>Lunch at 12:00PM</label>
+            </value>
+            <value>
+                <fullName>LW1: Mic Check at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW1: Mic Check at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW1: Songs of Life at 02:00PM</fullName>
+                <default>false</default>
+                <label>LW1: Songs of Life at 02:00PM</label>
+            </value>
+            <value>
+                <fullName>LWD: Mic Check at 10:00AM</fullName>
+                <default>false</default>
+                <label>LWD: Mic Check at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LWD: Psychoeducation Group at 01:30PM</fullName>
+                <default>false</default>
+                <label>LWD: Psychoeducation Group at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Goals A at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Goals A at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Goals B at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Goals B at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Goals C at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Goals C at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group A at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group A at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group B at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group B at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group C at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group C at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education A: at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education A: at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education A: at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education A: at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education B at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education B at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education B: at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education B: at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education C at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education C at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education C at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education C at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Recovery Playlist at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Recovery Playlist at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>Meditation Group at 10:30AM</fullName>
+                <default>false</default>
+                <label>Meditation Group at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Primary Group A at 12:20PM</fullName>
+                <default>false</default>
+                <label>Primary Group A at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Primary Group B at 12:20PM</fullName>
+                <default>false</default>
+                <label>Primary Group B at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Primary Group C at 12:20PM</fullName>
+                <default>false</default>
+                <label>Primary Group C at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Encore B at 02:00PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Encore B at 02:00PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Family Dynamics at 10:30AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Family Dynamics at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Mic Check B at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Mic Check B at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Songs Of Life at 02:00PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Songs Of Life at 02:00PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Transition at 02:00PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Transition at 02:00PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Yellow Brick Road A at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Yellow Brick Road A at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Yellow Brick Road B at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Yellow Brick Road B at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation Yellow Brick Road C at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation Yellow Brick Road C at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Recovery Playlist: 1 at 01:30PM</fullName>
+                <default>false</default>
+                <label>Recovery Playlist: 1 at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>Recreational Therapy/Gym at 04:00PM</fullName>
+                <default>false</default>
+                <label>Recreational Therapy/Gym at 04:00PM</label>
+            </value>
+            <value>
+                <fullName>Yoga at 04:00PM</fullName>
+                <default>false</default>
+                <label>Yoga at 04:00PM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

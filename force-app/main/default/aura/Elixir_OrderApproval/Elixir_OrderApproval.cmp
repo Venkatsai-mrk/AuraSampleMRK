@@ -1,0 +1,154 @@
+<aura:component controller="OrderApproval" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="formName" type="String"/>
+<aura:attribute name="changedFormName" type="String"/>
+<aura:attribute name="formId" type="String"/>
+<aura:attribute name="patientId" type="String"/>
+<aura:attribute name="approvedValues" type="Object"/>
+<aura:attribute name="currentLevel" type="Object"/>
+<aura:attribute name="userValues" type="Object"/>
+<aura:attribute name="flag" type="Boolean" default="false"/>
+<aura:attribute name="notesFlag" type="Boolean" default="true"/>
+<aura:attribute name="portalFlag" type="String"/>
+<aura:attribute name="filteredApprovalLevels" type="List" default="[]"/>
+
+<aura:attribute name="approvalType" type="String" default="Prescription Order"/>
+
+<aura:attribute name="parentPrescriptionId" type="String"/>
+<aura:attribute name="labOrderId" type="String"/>
+<aura:attribute name="prescriptionApprovalInNewMode" type="Boolean" default="true"/>
+<aura:attribute name="labOrderApprovalInNewMode" type="Boolean" default="true"/>
+
+
+
+<aura:handler name="FormSignatureRefresh" event="c:FormSignatureRefresh" action="{!c.myAction}"/>
+
+<aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <div class="slds-grid slds-wrap">
+        <ul class="parent_list_items slds-grid slds-gutters_x-large slds-grid_vertical-align-end">
+        <aura:iteration items="{!v.approvedValues}" var="approvedLevel">
+            <!-- <div class="slds-col"> -->
+            <li class="list_items slds-col">
+            <span class="filecard">
+                <!-- <aura:if isTrue="{!empty(approvedLevel.ElixirSuite__User__c)}">
+                    only external sign
+                    <aura:if isTrue="{!not(approvedLevel.ElixirSuite__Is_External_Signature__c)}">
+                        <img class="imgCls"
+                            src="{!'/servlet/servlet.FileDownload?file=' + approvedLevel.ElixirSuite__Approved_Signature__c}"
+                            width="250" height="200" />
+                    </aura:if>
+                
+                    <aura:set attribute="else">
+                                                        <lightning:fileCard fileId="{!approvedLevel.ElixirSuite__Approved_Signature__c}" description=""/> 
+                                                    </aura:set>
+                </aura:if> -->
+
+                <aura:if isTrue="{!not(empty(approvedLevel.signatureContentDocumentId))}">
+                    <img class="imgCls" src="{!'/sfc/servlet.shepherd/document/download/' + approvedLevel.signatureContentDocumentId}" width="250" height="200"/>
+                    
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!not(empty(approvedLevel.signatureAttachmentId))}">
+                            <img class="imgCls" src="{!'/servlet/servlet.FileDownload?file=' + approvedLevel.signatureAttachmentId}" width="250" height="200"/>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+                
+                <p class="slds-p-left_medium"><span>Signed On : </span> 
+                   
+                    <lightning:formattedDateTime value="{!approvedLevel.dateOfApproval}"
+                                year="numeric" 
+                                month="numeric" 
+                                day="numeric" 
+                                hour="2-digit"
+                                minute="2-digit"
+                                hour12="true"
+                                /></p>  
+                <aura:if isTrue="{! not(empty(approvedLevel.patientName))}">
+                    <p class="slds-p-left_medium"><span>Signed By : </span> {!approvedLevel.patientName} <span> (Patient)</span> </p>  
+                    
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!approvedLevel.userRole}">
+                        	<p class="slds-p-left_medium"><span>Signed By : </span> {!approvedLevel.userName}<span> ({!approvedLevel.userRole}) </span> </p>  
+                         <aura:set attribute="else">
+                             <p class="slds-p-left_medium"><span>Signed By : </span> {!approvedLevel.userName} </p>
+                           </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+                <aura:if isTrue="{!v.notesFlag}">
+                <p class="slds-p-left_medium">
+                    <span>Notes : </span> 
+                    <b>{!approvedLevel.comments} </b></p>
+                </aura:if>
+                    <aura:if isTrue="{!approvedLevel.customLabel}">
+                        <b>____________________________________________________</b> <br/>
+                        <b>  {!approvedLevel.customLabel} </b>
+                         
+                             <aura:set attribute="else">
+                                 <br/><br/>
+                             </aura:set>
+                     </aura:if>
+                 
+            </span>
+            </li>
+            <!-- </div> -->
+        </aura:iteration>
+        <!--div class="slds-col"-->
+            <aura:if isTrue="{! not(empty(v.currentLevel.ElixirSuite__Approval_Level__c))}">
+                <li class="list_items slds-col">
+                    
+                <!-- <c:SignatureModal   changedFormName="{!v.changedFormName}"
+                                    formName="{!v.formName}"
+                                    formId="{!v.formId}"
+                                    
+                                    userValues="{!v.userValues}" 
+                                    currentLevel="{!v.currentLevel}"
+                                    
+                                    flag = "{!v.flag}"
+
+                                    portalFlag = "{!v.portalFlag}"
+
+                                  	label = "{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}"
+                                    /> -->
+                <aura:if isTrue="{! v.approvalType == 'Prescription Order'}">
+                    <c:OrderApproval_SignatureModal 
+                        userValues="{!v.userValues}" 
+                        currentLevel="{!v.currentLevel}"
+                        label = "{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}"
+                        prescriptionApprovalData = "{!v.approvedValues}"
+                        filteredApprovalLevels = "{!v.filteredApprovalLevels}"
+                        prescriptionApprovalInNewMode = "{!v.prescriptionApprovalInNewMode}"
+                        parentPrescriptionId = "{!v.parentPrescriptionId}"/>
+                    
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{! v.approvalType == 'Lab Order'}">
+                            <c:OrderApproval_SignatureModal 
+                                userValues="{!v.userValues}" 
+                                currentLevel="{!v.currentLevel}"
+                                label = "{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}"
+                                labOrderApprovalData = "{!v.approvedValues}"
+                                filteredApprovalLevels = "{!v.filteredApprovalLevels}"
+                                prescriptionApprovalInNewMode = "false"
+                                labOrderId="{!v.labOrderId}"
+                                labOrderApprovalInNewMode = "{!v.labOrderApprovalInNewMode}"
+                                approvalType="{!v.approvalType}"
+                                />
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+
+                    <!--Adding for custom label start here-->
+                    <!--<aura:if isTrue="{!v.currentLevel.ElixirSuite__Approver_Custom_Label__c}">
+                         <b>____________________________________________________</b> <br/>
+                    <b> {!v.currentLevel.ElixirSuite__Approver_Custom_Label__c} </b>
+                        <aura:set attribute="else">
+                            <br/><br/>
+                             </aura:set>
+                    </aura:if>-->
+                    
+                    <!--Custom label addition ends here-->
+                 </li>
+            </aura:if>
+        </ul>
+        <!--/div-->
+    </div>
+</aura:component>

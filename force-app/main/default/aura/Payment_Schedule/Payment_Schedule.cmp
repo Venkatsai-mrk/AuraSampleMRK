@@ -1,0 +1,98 @@
+<aura:component controller="PaymentScheduleApex" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <ltng:require styles="{!$Resource.GeneratePaymentSchedule}" />
+     <aura:attribute name="PayList" type="Object"/> 
+    <aura:attribute type="string" name="recordId"/>
+    
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+   
+    <aura:if isTrue="{!v.ContactCentr}">
+        <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container paddingclass"> 
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div> 
+        </aura:if> 
+
+    <header class="slds-modal__header paddingclass1">
+    <div  class="slds-col modal-header slds-modal__header customheader ">
+        <h2 class="title slds-text-heading--medium slds-hyphenate customheader">Generate Payment Schedule</h2>
+    </div>
+    </header>
+   
+   <div class="paddingclass">
+    <table class="slds-table slds-table_bordered"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate " title="Drug">S.No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Source Type/LOC">Source Type/LOC</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Installment Amount">Installment Amount</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Due Date">Due Date</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Balance Amount">Balance Amount</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Status">Status</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate " title="Status">Description</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.PayList}" var="PayInstance" indexVar="rowIndex">
+                <tr class="slds-text-title_caps">
+                    
+                    <td class= "SelectClass Method">
+                        {!rowIndex}
+                    </td>
+                    <td class= "SelectClass Method" >
+                        <ui:outputText value="{!PayInstance.LOC}"/>
+                    </td>  
+                    
+                    <td class="SelectClass Method">
+                        $<ui:outputText value="{!PayInstance.instAmt}"/>
+                    </td>
+                    
+                    <td class="SelectClass Method">
+                        <ui:outputText value="{!PayInstance.DD}"/>
+                    </td>
+                    
+                    <td class="SelectClass Method">
+                        $<ui:outputText value="{!PayInstance.BalAmt}"/>
+                    </td>
+                    
+                    <td class="SelectClass Method">
+                        <ui:outputText value="{!PayInstance.Active}"/>
+                    </td>
+                    <td class="SelectClass Method">
+                        <ui:outputText value="{!PayInstance.Des}"/>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>   
+       </div>
+    <div class="slds-col modal-header slds-modal__footer">
+        
+        <lightning:button variant="Brand" label="Freeze" title="Freeze payment schedule" onclick="{!c.FreezeAction}"/>
+        <lightning:button variant="Brand" label="Cancel" title="Cancel" onclick="{!c.Cancel}"/>    
+        
+    </div>
+    </aura:if>
+</aura:component>

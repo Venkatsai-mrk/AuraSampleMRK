@@ -1,0 +1,38 @@
+.dummy{
+	color : blue;
+}
+.overview-box {
+	border: 1px solid #565656;
+    border-radius: 15px;
+    padding: 10px 15px 0;
+    width: calc(100% - 50px);
+    margin: 5px 15px 15px;
+	box-shadow: 2px 2px 3px #c3c3c3;
+	height: 100%;
+    min-height: 142px;
+}
+.slds-size_1-of-2 {
+    float: left;
+}
+.overview-box h3 {
+    font-weight: 700;
+    color: #000;
+    font-size: 16px;
+}
+.overview-box p {
+    font-size: 12px;
+	line-height: 12px;
+}
+.overview-box h4 {
+	font-size: 12px;
+    line-height: 14px;
+}
+.overview-parent {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 475px;
+}
+.overview-box img {
+    height: 60px;
+    width: 60px;
+}

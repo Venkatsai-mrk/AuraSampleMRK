@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Available_Test__c</fullName>
+    <externalId>false</externalId>
+    <label>Available Test</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Female Admission Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Female Admission Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>Female Alcohol Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Female Alcohol Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>Iron Deficiency Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Iron Deficiency Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>Male Admission Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Male Admission Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>Male Alcohol Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Male Alcohol Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>Thyroid Panel - (Custom Profile)</fullName>
+                <default>false</default>
+                <label>Thyroid Panel - (Custom Profile)</label>
+            </value>
+            <value>
+                <fullName>DRUG SCREEN 12 - (BIOREFERENCE LABORATORIES) - (Urine) [F362-9]</fullName>
+                <default>false</default>
+                <label>DRUG SCREEN 12 - (BIOREFERENCE LABORATORIES) - (Urine) [F362-9]</label>
+            </value>
+            <value>
+                <fullName>DRUG SCREEN 12 W/ALCOHOL - (BIOREFERENCE LABORATORIES) - (Urine) [H790-9]</fullName>
+                <default>false</default>
+                <label>DRUG SCREEN 12 W/ALCOHOL - (BIOREFERENCE LABORATORIES) - (Urine) [H790-9]</label>
+            </value>
+            <value>
+                <fullName>EXPANDED 18-DRUG EIA SCREEN + ALCOHOL WITH REFLEX CONFIRMATION OF POSITIVES - (ALERE TOXICOLOGY SERVICES) - (Urine) [1203]</fullName>
+                <default>false</default>
+                <label>EXPANDED 18-DRUG EIA SCREEN + ALCOHOL WITH REFLEX CONFIRMATION OF POSITIVES - (ALERE TOXICOLOGY SERVICES) - (Urine) [1203]</label>
+            </value>
+            <value>
+                <fullName>FTL POC - (POC Performed at Facility) - (Other) [FTLPOC]</fullName>
+                <default>false</default>
+                <label>FTL POC - (POC Performed at Facility) - (Other) [FTLPOC]</label>
+            </value>
+            <value>
+                <fullName>Lakeworth POC - (POC Performed at Facility) - (Other) [LakeworthPOC]</fullName>
+                <default>false</default>
+                <label>Lakeworth POC - (POC Performed at Facility) - (Other) [LakeworthPOC]</label>
+            </value>
+            <value>
+                <fullName>13Q14.3 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A878-1]</fullName>
+                <default>false</default>
+                <label>13Q14.3 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A878-1]</label>
+            </value>
+            <value>
+                <fullName>14-3-3 ETA Protein - (BIOREFERENCE LABORATORIES) - (Other) [B677-6]</fullName>
+                <default>false</default>
+                <label>14-3-3 ETA Protein - (BIOREFERENCE LABORATORIES) - (Other) [B677-6]</label>
+            </value>
+            <value>
+                <fullName>14-DRUG EIA SCREEN WITH REFLEX CONFIRMATION OF POSITIVES - (ALERE TOXICOLOGY SERVICES) - (Urine) [1232]</fullName>
+                <default>false</default>
+                <label>14-DRUG EIA SCREEN WITH REFLEX CONFIRMATION OF POSITIVES - (ALERE TOXICOLOGY SERVICES) - (Urine) [1232]</label>
+            </value>
+            <value>
+                <fullName>15q Del Characterization, FISH - (BIOREFERENCE LABORATORIES) - (Other) [B796-4]</fullName>
+                <default>false</default>
+                <label>15q Del Characterization, FISH - (BIOREFERENCE LABORATORIES) - (Other) [B796-4]</label>
+            </value>
+            <value>
+                <fullName>17P13 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A874-0]</fullName>
+                <default>false</default>
+                <label>17P13 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A874-0]</label>
+            </value>
+            <value>
+                <fullName>1P/19Q,D(1;19)DELETION BY FISH - (BIOREFERENCE LABORATORIES) - (Other) [A311-3]</fullName>
+                <default>false</default>
+                <label>1P/19Q,D(1;19)DELETION BY FISH - (BIOREFERENCE LABORATORIES) - (Other) [A311-3]</label>
+            </value>
+            <value>
+                <fullName>1Q21 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A876-5]</fullName>
+                <default>false</default>
+                <label>1Q21 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A876-5]</label>
+            </value>
+            <value>
+                <fullName>20Q12 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A871-6]</fullName>
+                <default>false</default>
+                <label>20Q12 BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A871-6]</label>
+            </value>
+            <value>
+                <fullName>2,3-dinor 11B-Prostaglandin F2a, U - (BIOREFERENCE LABORATORIES) - (Urine) [A983-9]</fullName>
+                <default>false</default>
+                <label>2,3-dinor 11B-Prostaglandin F2a, U - (BIOREFERENCE LABORATORIES) - (Urine) [A983-9]</label>
+            </value>
+            <value>
+                <fullName>3-Alpha Androstanediol-G - (BIOREFERENCE LABORATORIES) - (Other) [1613-9]</fullName>
+                <default>false</default>
+                <label>3-Alpha Androstanediol-G - (BIOREFERENCE LABORATORIES) - (Other) [1613-9]</label>
+            </value>
+            <value>
+                <fullName>4K Prostate Score (Serum) - (BIOREFERENCE LABORATORIES) - (Other) [J148-8]</fullName>
+                <default>false</default>
+                <label>4K Prostate Score (Serum) - (BIOREFERENCE LABORATORIES) - (Other) [J148-8]</label>
+            </value>
+            <value>
+                <fullName>4K PSA rflx &amp;gt;3.0 - (BIOREFERENCE LABORATORIES) - (Other) [J264-3]</fullName>
+                <default>false</default>
+                <label>4K PSA rflx &amp;gt;3.0 - (BIOREFERENCE LABORATORIES) - (Other) [J264-3]</label>
+            </value>
+            <value>
+                <fullName>4K PSA Total + Free Reflex &amp;gt;3.0 to 4Kscore - (BIOREFERENCE LABORATORIES) - (Other) [K135-4]</fullName>
+                <default>false</default>
+                <label>4K PSA Total + Free Reflex &amp;gt;3.0 to 4Kscore - (BIOREFERENCE LABORATORIES) - (Other) [K135-4]</label>
+            </value>
+            <value>
+                <fullName>-5/5Q- BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A869-0]</fullName>
+                <default>false</default>
+                <label>-5/5Q- BY FISH-TC ONLY - (BIOREFERENCE LABORATORIES) - (Other) [A869-0]</label>
+            </value>
+            <value>
+                <fullName>5-Flucytosine, S - (BIOREFERENCE LABORATORIES) - (Other) [6180-4]</fullName>
+                <default>false</default>
+                <label>5-Flucytosine, S - (BIOREFERENCE LABORATORIES) - (Other) [6180-4]</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

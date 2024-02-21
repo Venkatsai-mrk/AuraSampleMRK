@@ -1,0 +1,56 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="Elixir_NewAccountAssociatedFormsApex" access="global">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+    <aura:attribute name="lstOfRecordType" type="RecordType[]" />
+    <aura:attribute name="RecordId" type="String" />
+    <aura:attribute name="formName" type="String" />
+    <aura:attribute name = "categorized" type="String"/>
+    <aura:attribute name = "subCategorized" type="String"/>
+    <aura:attribute name="isOpen" type="boolean"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="accName" type="object"/>
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="value" type="String" default="option1"/>
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="openForm" type="boolean" />
+    <aura:handler name="changehandlerEvent" event="c:changehandlerEvent" action="{!c.closeModal}"/>
+    
+    <aura:if isTrue="{!v.isOpen}">
+        
+        <div class="AllFormsCls">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open AllFormsSectionCls">
+                <div class="slds-modal__container hideDiv" aura:id="ParentDiv">
+                    <header class="slds-modal__header slds-text-heading_large">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModal }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Form</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="widthForAll">
+                            <!-- Model Box Start -->    
+                            
+                            <lightning:radioGroup 
+                                                  onchange="{!c.handleChange}"
+                                                  options="{! v.options }"
+                                                  value="{! v.value }"
+                                                  name="{!v.label}"
+                                                  type="radio"/> 
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeModal}">Cancel</lightning:button>
+                        <lightning:button class="slds-button slds-button--brand" onclick="{!c.navigateToSpecificForm}">Next</lightning:button>
+                    </div>
+                </div>
+            </section>
+            <aura:if isTrue="{!v.openForm}">
+                <c:FormsListView  accName="{!v.accName}" formId="{!v.RecordId}" isOpen1="{!v.openForm}" patientID = "{!v.patientID}" formName="{!v.formName}"/>                
+            </aura:if>
+        </div>
+        
+    </aura:if>
+</aura:component>

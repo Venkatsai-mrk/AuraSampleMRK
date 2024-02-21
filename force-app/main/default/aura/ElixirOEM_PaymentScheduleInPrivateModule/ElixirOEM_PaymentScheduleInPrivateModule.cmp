@@ -1,0 +1,326 @@
+<aura:component access="global"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="ElixirOEM_PaymentScheduleHelper">
+    <!--PAYMENT SCHEDULE ATTRIBUTES -->    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:method name="reInitialize" action="{!c.init}" />   <!--Anusha-->
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="procedureSearchParams" type="String" default=""/> 
+    <aura:attribute name="isSearchDisabled" type="boolean" default="false"/>
+    <aura:attribute name="makePaymentButtonDisable" type="boolean" default="false"/> 
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="totalUnAllocatedAmount" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalUnAllocatedAmount_SumCount" type="Decimal" default="0.0"/> 
+    <aura:attribute name="amountAllocated" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalAppliedAmount" type="Decimal" default="0.0"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="amountPaid" type="Decimal" default="0.0"/>
+    <aura:attribute name="dateOfPayment" type="Date"/> 
+    <aura:attribute name="plugData" type="boolean" default="False"/>
+    <aura:attribute name="paymentTransactionNumber" type="String"/>
+    <aura:attribute name="selectedProcedureRecords" type="List"/>
+    <aura:attribute name="selectedPaymentPlanLineRecords" type="List"/>
+    <aura:attribute name="selectedProcedureRecordsNetInstance" type="List"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="selectedRows" type="List"/> 
+    <aura:attribute name="columns" type="List"/>
+     <aura:attribute name="columns4" type="List"/>
+    <aura:attribute name="Plist" type="list"/>
+    <aura:attribute name="PlistInsurance" type="list"/>
+    <aura:attribute name="isModalOpen" type="boolean" />
+    <!--ACTIVE PAYMENT SCHEDULE ATTRIBUTES -->    
+    <aura:attribute name="PaySchedulist" type="list" default=""/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="columns3" type="List"/> 
+    <aura:attribute name="scheduleList" type="list" default=""/>
+    <aura:attribute name="NetAmount" type="integer" default="0"/>
+    <aura:attribute name="selectedSchedules" type="List" />
+      <aura:attribute name="selectedParentSchedule" type="List" />
+      <aura:attribute name="selectedParentScheduleId" type="String"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="hideSchedule" type="boolean" default="false"/>
+    <aura:attribute name="modeOfPaymentLst" type="List"/>  
+    <aura:attribute name="customSettingData" type="List"/>
+    <!--Credit card & cheque attributs -->
+    <aura:attribute name="cheque" type="boolean" default="False"/>
+    <aura:attribute name="chequeNo" type="String"/>
+    <aura:attribute name="Infolist" type="list" default=""/>
+    <aura:attribute name="creditSelectedRows" type="List" default="[]"/> 
+    <aura:attribute name="Credit" type="boolean" default="False"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="typeofPayment" type="String"/>
+    <aura:attribute name="creditCardId" type="String" default=""/>
+    
+    <aura:handler name="change" value="{!v.totalAppliedAmount}" action="{!c.totalAppliedAmountChange}"/>
+    <aura:handler name="change" value="{!v.totalUnAllocatedAmount}" action="{!c.totalUnAllocatedAmountChange}"/>
+    <aura:registerEvent name="PaymentEvent" type="c:PaymentEvent"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:method name="allocateThePaymentSchedule" action="{!c.allocatePaymentFromUI}" access="PUBLIC"/>
+    <div>
+        <div class="slds-grid slds-gutters slds-m-top_medium mobile-li2">
+            <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-form-element__static slds-form-element__label">Mode of Payment  : </span>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 remove_label">
+                        
+                        <lightning:select aura:id="select1" name="select1" value="{!v.modeOfPayment}" onchange="{!c.getField}">
+                            <option value="" label="NONE"></option>   
+                            <aura:iteration items="{!v.modeOfPaymentLst}" var="paymentItem">
+                                <option value="{!paymentItem.label}" label="{!paymentItem.label}">                                               
+                                </option> 
+                            </aura:iteration>
+                            
+                        </lightning:select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-col slds-size_6-of-12  slds-m-top_medium">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-form-element__static slds-form-element__label">Amount Paid   : </span>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 remove_label">
+                        <lightning:input type="number"  formatter="currency" value="{!v.amountPaid}" step="0.01"
+                                         onchange="{!c.calculateAllocations}" disabled="true"/>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-gutters mobile-li2">
+            
+            <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-form-element__static slds-form-element__label">Date of Transaction   : </span>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 remove_label">
+                        <lightning:input type="date" value="{!v.dateOfPayment}"></lightning:input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-m-top_medium">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-form-element__static slds-form-element__label">Payment Transaction Number: </span> <!--removed space between "Payment Transaction Number" and ":" for LX3-5800-->
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 remove_label">
+                        <lightning:input type="text" value="{!v.paymentTransactionNumber}"/>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <br/>
+            <div class="slds-grid slds-gutters mobile-li2">
+                                              <aura:if isTrue="{!v.cheque}">
+                                                  <div class="slds-col slds-size_6-of-12">
+                                                    <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12">
+                    <span class="slds-form-element__static slds-form-element__label">Cheque No   : </span>
+                </div>
+                                                        <div class="slds-col slds-size_8-of-12 remove_label">
+                    <lightning:input  value="{!v.chequeNo}"></lightning:input>
+                </div>
+            </div>
+                                                  </div>
+        </aura:if>
+                                            </div>
+        <aura:if isTrue="{!v.Credit}">
+            <div class="slds-grid slds-gutters mobile-li2">
+                <div class="slds-m-top_medium">
+                    <div class="slds-m-bottom_small slds-m-left_medium">
+                        <b class="slds-text-heading_medium">Card Details</b> 
+                    </div>
+                    <lightning:datatable
+                                         keyField="id"
+                                         data="{! v.Infolist }"
+                                         columns="{! v.columns1 }"
+                                         class="byProcTableCss"
+                                         onrowselection="{!c.handleCreditSelectedRow}"
+                                         selectedRows="{!v.selectedRows}"
+                                         hideCheckboxColumn="false"
+                                         maxRowSelection="{! v.maxRowSelection }"/>
+                    
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.PatientId != ''}"> <!--Anusha LX3-5527-->
+        <div class="slds-m-bottom_small">
+            <b class="slds-text-heading_medium">Active Payment Plans</b>
+        </div>
+        <lightning:datatable
+                             keyField="id"
+                             data="{! v.PaySchedulist }"
+                             columns="{! v.columns2 }"
+                             onrowselection="{!c.selectedRowsOne}"
+                             class="byProcTableCss"
+                             selectedRows="{!v.selectedRows}"
+                             maxRowSelection="{! v.maxRowSelection }"
+                             />
+        <aura:if isTrue="{!v.PaySchedulist.length == 0}">
+            <center >
+                <span class="no-record">
+                    NO RECORDS TO SHOW.
+                </span>
+            </center>
+        </aura:if>
+            <br/>
+        <aura:if isTrue="{!v.hideSchedule}">
+            <div class="slds-m-bottom_small">
+                <b class="slds-text-heading_medium">Installments</b>
+            </div>
+            <lightning:datatable
+                                 keyField="id"
+                                 data="{! v.scheduleList }"
+                                 columns="{! v.columns3 }"
+                                 onrowselection="{!c.selectedPaymentLineRows}"
+                                 class="byProcTableCss"
+                                 selectedRows="{!v.selectedRows}"
+                                 minColumnWidth="100px"
+                                 hideCheckboxColumn="false"
+                                 /> 
+        </aura:if>
+        </aura:if>   <!--Anusha LX3-5527-->
+        
+        <div class="slds-grid slds-gutters dos-box">
+            <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">DOS From :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="date" value="{!v.procedureSearchParams.DOSFrom}" onchange="{!c.onDOSFromChange}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+            <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">DOS To :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="date" value="{!v.procedureSearchParams.DOSTo}" onchange="{!c.onDOSToChange}"/>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters dos-box">
+            <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">Procedure Name :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <c:ProcedureLookup selectRecordId = "{!v.procedureSearchParams.procedureId}" 
+                                   selectRecordName = "{!v.procedureSearchParams.procedureName}"
+                                   PatientId = "{!v.PatientId}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+            <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">CPT Code :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="text" value="{!v.procedureSearchParams.CPTCode}" />
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                <button class="slds-button slds-button_brand attach_claims" aria-label="Search" disabled = "{!v.isSearchDisabled}"   onclick="{!c.searchClaim}" >Search</button>
+                <button class="slds-button slds-button_neutral btn attach_claims" aria-label="Clear All Filter" disabled = ""   
+                        onclick="{!c.clearClaimSearchFilter}" >Clear Filters</button>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.PatientId != ''}"> <!--Sagili LX3-5525-->
+        <br/>
+        <b>Patient Procedures : </b>
+             <aura:if isTrue="{!v.typeofPayment == 'Private Payment'}">
+            <ui:scrollerWrapper class="scrollerSize">
+            <lightning:datatable
+                                 keyField="Id"
+                                 data="{! v.Plist }"
+                                 columns="{! v.columns }"
+                                 onrowselection="{!c.selectedRows}"
+                                 hideCheckboxColumn="false"
+                                 selectedRows="{!v.selectedRows}"
+                                 class="byProcTableCss"
+                                 minColumnWidth="150"
+                                 sortedBy="{!v.sortBy}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 onsort="{!c.handleSort}"
+                                 onrowaction="{! c.handleRowAction }"
+                                 />
+            
+            
+            
+         </ui:scrollerWrapper>
+            </aura:if>
+             <aura:if isTrue="{!v.typeofPayment == 'Insurance Payment'}">
+        <ui:scrollerWrapper class="scrollerSize">
+            <lightning:datatable
+                                 keyField="Id"
+                                 data="{! v.Plist }"
+                                 columns="{! v.columns4}"
+                                 onrowselection="{!c.selectedRows}"
+                                 hideCheckboxColumn="false"
+                                 selectedRows="{!v.selectedRows}"
+                                 class="byProcTableCss"
+                                 minColumnWidth="150"
+                                 sortedBy="{!v.sortBy}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 onsort="{!c.handleSort}"
+                                 onrowaction="{! c.handleRowAction }"
+                                 />
+            
+            
+            
+         </ui:scrollerWrapper>
+            </aura:if>
+      <!--  <div class="slds-grid slds-gutters pay-table">
+            <lightning:datatable
+                                 keyField="Id"
+                                 data="{! v.Plist }"
+                                 columns="{! v.columns }"
+                                 onrowselection="{!c.selectedRows}"
+                                 hideCheckboxColumn="false"
+                                 selectedRows="{!v.selectedRows}"
+                                 class="byProcTableCss"
+                                 minColumnWidth="100px"
+                                 sortedBy="{!v.sortBy}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 onsort="{!c.handleSort}"
+                                 />
+            
+            
+            
+        </div>-->
+       <!-- <div class="slds-scrollable ml-80 pay-table">-->
+                    
+        </aura:if>
+        <ul class="payment-list">
+            <li class="slds-text-align--center">
+                <!--lightning:button variant="destructive" 
+                                  label="Register the Payment" 
+                                  title="Register the Payment" 
+                                  disabled="{!v.makePaymentButtonDisable}"
+                                  onclick="{! c.allocatePaymentFromUI }"/-->
+            </li>
+        </ul> 
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container myWidth">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Do you want to apply the 'Paid Amount' on the basis of oldest to newest DOS?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+        <aura:if isTrue="{!! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>   
+    </div>
+    
+    
+</aura:component>

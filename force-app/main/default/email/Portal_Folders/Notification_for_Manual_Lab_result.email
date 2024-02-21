@@ -1,0 +1,9 @@
+<p>Hello {!Account.Name},</p>
+
+<p>{!Organization.Name} has added lab result for {!Lab_Order__c.Test_Name__c}. Please review.</p>
+
+<p>Please get in touch with us for any queries.</p>
+
+<p>Log into the patient portal <a href="{link}">{link}</a></p>
+
+<p>Regards,<br/>{!Organization.Name}</p>

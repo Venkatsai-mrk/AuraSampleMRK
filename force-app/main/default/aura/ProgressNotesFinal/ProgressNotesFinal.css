@@ -1,0 +1,109 @@
+.THIS .slds-grid.box{
+  
+}
+/* changes */
+.THIS .changestyle{
+    padding:0 20px 0 20px;
+}
+.THIS .changefloat{
+    float:left;
+}
+.THIS .changemargin{
+    margin-left:22px;margin-bottom:5px;
+}
+.THIS .changemarginauto{
+    margin: 0 auto;
+    width: 70%;
+    max-width: 70%;
+    min-width: 70%;
+}
+.THIS .changefontsize{
+    font-size: x-large;
+}
+.THIS .changetextalign{
+    text-align:center;
+}
+.THIS .changefloatright{
+    float:right;
+}
+.THIS .changemarginleft{
+    margin-left: 80px;
+}
+.THIS .changebackground{
+    background: #77ffd9;text-align:center;
+}
+.THIS .changedisplayblack{
+    display:block;
+}
+.THIS .changeflexmargin{
+    display:flex;margin-top:10px;
+}
+.THIS .changealigncenter{
+    background: aliceblue;text-align:center;
+}
+.THIS .changeblock{
+    display:block;
+}
+.THIS .margintop{
+    display:flex;margin-top:10px;
+}
+.THIS .changecenterbackground{
+    background: aliceblue;text-align:center;
+}
+.THIS .changemargintopbottom{
+    margin-top: 0px; margin-bottom: 0px; height: 268px;
+}
+.THIS .changetopheight{
+    margin-top: 0px;margin-bottom: 0px;height: 200px;
+}
+.THIS .changepaddingimp{
+    padding: 0 !important;
+}
+.THIS .changepadd2{
+    padding: 2% 0px 0px 0 !important;
+}
+.THIS .changewidthpadd{
+    width: 80%; font-size: x-small; padding:0;
+}
+.THIS .changepadding0{
+    padding: 0 !important;
+}
+.THIS .changemarginwidth1{
+    width:25%;margin:0px 0px 5px 50px;
+}
+.THIS .changebackalic{
+    background: aliceblue;text-align:center;
+}
+.THIS .changeblock2{
+    display:block;
+}
+.THIS .changeflexhigh{
+    display:flex;
+}
+.THIS .changeflexpadding{
+    display:flex;margin-top: 27px;padding-left: 10px;
+}
+.THIS .changedispmarg{
+    display:flex;padding-left: 10px;margin-top: 26px;
+}
+.THIS .changetop10{
+    display:flex;margin-top:10px;
+}
+.THIS .changemargin2{
+    display:flex;margin-top: 27px;padding-left: 10px;margin-top: 26px;
+}
+.THIS .changeflexpadd1{
+    display:flex;padding-left: 10px;
+}
+.THIS .changesizefront{
+    font-size: x-small;
+}
+.THIS .changeminheight{
+    min-height: 2rem !important;
+}
+.THIS .changesolidborder{
+    border-bottom: 1px solid lightgrey;
+}
+.THIS .changemargintop2{
+    margin-top: 12px;
+}

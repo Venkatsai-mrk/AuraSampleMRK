@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Dose_in_Series_After__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of days after which the next dose is to be taken</inlineHelpText>
+    <label>Next Dose in Series After</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

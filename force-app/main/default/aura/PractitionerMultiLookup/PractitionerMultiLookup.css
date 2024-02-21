@@ -1,0 +1,26 @@
+.THIS .script {
+font-size: 0.7rem; /*t(fontSizeTextLarge)*/
+font-style: italic;
+
+}
+.THIS .slds-is-absolute{
+z-index:1;
+right:15px;
+top:9px;
+text-align:right;
+
+}
+.THIS .slds-is-absolute span.script b {
+    margin-right:2px;
+}
+.THIS .slds-is-absolute span.script:first-child b {
+    display: none;
+    
+}
+.THIS .changeWid{
+    width: 100%;
+}
+.THIS .changeMinHeight{
+    min-height:40px;
+    margin-top:0px !important
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancel__c</fullName>
+    <description>Indicates the cancellation status of the appointment.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  (ISPICKVAL(ActivitySubtype, &apos;Event&apos;)),
+IF(
+   NOT(ISPICKVAL(Status__c, &apos;Cancelled&apos;)),
+    HYPERLINK(
+        &quot;/lightning/cmp/ElixirSuite__CreateCareEpisode?ElixirSuite__recordId=&quot; &amp; Id &amp; &quot;&amp;ElixirSuite__status=Cancel&quot;,
+        IMAGE(&quot;/resource/ElixirSuite__CancelIcon&quot;, &quot;Cancel&quot;, 32, 32),
+        &apos;_top&apos;
+    ),
+    IMAGE(&quot;/resource/ElixirSuite__GreyOutCancelIcon&quot;, &quot;Cancel&quot;, 32, 32)
+),&apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Cancel</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

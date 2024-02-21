@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Diagnosis_Pointer__c</fullName>
+    <description>Indicate the relationship between a patient’s diagnosis and the services or procedures that are performed.</description>
+    <externalId>false</externalId>
+    <label>Diagnosis Pointer</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

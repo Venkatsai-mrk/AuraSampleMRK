@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Responsibility__c</fullName>
+    <description>Indicates the portion of the claim amount the patient is responsible for.</description>
+    <externalId>false</externalId>
+    <formula>Procedure_Charge__c  - ( Total_Adjustment__c  +  Amount_Paid_by_Insurance__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Patient Responsibility</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

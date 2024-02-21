@@ -1,0 +1,1113 @@
+<aura:component controller="FormRenderClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="patientID" type="String" default=""/>
+    <aura:attribute name="accName" type="String" default=""/>
+    <aura:attribute name="formName" type="String" default=""/>
+    <aura:attribute name="changedFormName" type="String" default=""/>
+    <aura:attribute name="isActualNotes" type="boolean" default="false"/> 
+    <aura:attribute name="customCategory" type="List"/>
+    <!--aura:attribute name="isConsent" type="Boolean" default="false" /-->
+    <aura:attribute name="cssRecords" type="Object"/>  
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="isOpen" type="Boolean" default="true" /> 
+    <aura:attribute name="showRelatedDiagnosis" type="Boolean" default="false" />
+    <aura:attribute name="category" type="String"/>
+    <!--PROCEDURE-->
+    <aura:attribute name="procedureWrapper" type="String"/>
+    <aura:attribute name="listDetailsProcedure" type="List"/>
+    <aura:attribute name="isProcedureEnabled" type="boolean" default="false"/>
+    <!--END-->
+    <!--PROBLEM 1.0-->
+    <aura:attribute name="listDetails" type="List"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="showOptions" type="Boolean"/> 
+    <aura:attribute name="showOptions1" type="Boolean"/> 
+    <aura:attribute name="isProblemEnabled" type="Boolean" default="false"/> 
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="configListFields" type="List" />
+    <aura:attribute name="insertedProblem" type="List" />
+    <aura:attribute name="deletedProblem" type="List" />
+    <aura:attribute name="toDelProblemFromUpdate" type="List" /> 
+    <aura:attribute name="actionName" type="Object"/> 
+    <aura:attribute name="openSelectedRecord" type="Boolean" default="false"/> 
+    <aura:attribute name="toUpdateProblem" type="List" />
+    <!--END-->
+
+        <!-- Added by Anmol for LX3-5676 -->
+        <aura:attribute name="addInv" type="Boolean" default="false" />
+        <aura:attribute name="invValue" type="List" default="[]"/>
+        <aura:attribute name="InvTable" type="Boolean" default="false"/>
+        <aura:attribute name="PreTable" type="Boolean" default="false"/>
+        <aura:attribute name="prevLotLst" type="List"/>
+        <aura:attribute name="prevItemLst" type="List"/>
+        <aura:attribute name="defEqpId" type="String"/>
+        <aura:attribute name="defInvTyp" type="String"/>
+        <aura:attribute name="defLotReq" type="Boolean" default="true"/>
+        <aura:attribute name="invAvail" type="Integer"/>
+        <aura:attribute name="invMode" type="Boolean" />
+    <!-- End by Anmol for LX3-5676 -->
+
+    <!-- Added by Anmol for LX3-5770 -->
+    <aura:attribute name="addPresc" type="Boolean" default="false" />
+    <aura:attribute name="orgWideValidNamespace" type="String" />
+    <aura:attribute name="jsonFinal" type="String[]"/>
+    <aura:attribute name="isOpenMed" type="Boolean" default="true" /> 
+    <aura:attribute name="prescButton" type="Boolean" default="false" />
+    <!-- End by Anmol for LX3-5770 -->
+
+
+    <!--PROBLEM - DIAGNOSIS-->
+    <aura:attribute name="existingProblems" type="Object"/>
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+    <aura:attribute name="problemDiagnosesData" type="Object"/> 
+    <aura:attribute name="openListOfProblems" type="Boolean" default="false"/>
+    <aura:handler name="problemDiagnosesData" event="c:problemDiagnosesData" action="{!c.handleproblemDaignosesDataEvent}"/>
+     <aura:attribute name="parentColumns" type="List" />
+     <aura:attribute name="diagnosisColumnsLst" type="List" />
+    <aura:attribute name="diagnosisdataTypeToApi" type="List" />
+    <!--END-->
+     <aura:handler event="c:ElixirOEM_DiagnosisColumnsEvent" action="{!c.handleDaignosesDataEvent}"/>
+     <aura:attribute name="selectedRows" type="List"/>
+    <aura:attribute name="selectedRecordId" type="String" default=""/>
+    
+    <!--Medication--> 
+    <aura:attribute name="medicationConfiguration" type="Boolean" default="false"/>
+    <aura:attribute name="medicationListCopy" type="List" />
+    <aura:attribute name="medicationColumnsOnForms" type="List" />
+    <aura:handler event="c:ElixirOEM_MedicationColumnsEvent" action="{!c.handleMedicationEvent}"/>
+    <aura:attribute name="medicationColumns" type="List" />
+    <aura:attribute name="medicationColumnsLst" type="List" />
+    <aura:attribute name="medicationTypeLst" type="List" />
+    <aura:attribute name="medicationApiAndType" type="Object" />
+    <aura:handler name="AddMedicationEventOnNotes" event="c:AddMedicationEventOnNotes" action="{!c.handleAddMedicationEvent}"/>
+    <!--Medication-->
+    
+    <!--PRESCRIPTION-->
+    <aura:attribute name="medicationData" type="String"/> 
+    <aura:attribute name="openUpdateMedication" type="Boolean" default="false"/>
+    <aura:handler name="FormMedicationData" event="c:FormMedicationData" action="{!c.handleMedicationDataEvent}"/> 
+    <aura:attribute name="selectedUser" type="String"/>
+    <aura:attribute name="selectedVia" type="String"/>
+    <aura:attribute name="medicationJSON" type="String"/>
+    <!--END-->
+    <!-- All-In - 1 wrapper for all external components data -->
+    <aura:attribute name="showAllergyColumnOptions" type="Boolean"/> 
+    <aura:attribute name="ExternalcmpData" type="Object" />
+    <aura:attribute name="alllergyColumns" type="List"/>
+    <aura:attribute name="vitalsColumns" type="List"/>
+   	<aura:handler  event="c:ElixirOEM_AllergyColumnsEvent" action="{!c.refresColumnForAllergy}"/>
+    <aura:handler  event="c:AddAllergyToCreateForm" action="{!c.refresColumnForAllergy1}"/>
+    <aura:handler name="ElixirOEM_VitalSignColumnsEvent" event="c:ElixirOEM_VitalSignColumnsEvent" action="{!c.refresColumnForAllergy}"/>
+    <!--aura:handler name="SaveAllergyToParent" event="c:SaveAllergyToParent" action="{!c.handleData}" /-->
+    <!--End-->
+    <!-- All-In - 1 wrapper for all aur if of external components -->
+    <aura:attribute name="ExternalcmpParentAuraIf" type="Object" />
+    <!--End-->
+    <!-- All hide event handlers for external components -->
+    
+    <aura:handler name="hideAllergysection" event="c:hideAllergySection" action="{!c.hideAllergySection}"/>
+    <aura:registerEvent name="startExtSaving" type="c:startExtSaving"/> 
+    <aura:registerEvent name="FormsRefreshEvt" type="c:FormsRefreshEvt"/>
+    <!--End--> 
+    <aura:attribute name="today" type="Date" default=""/>
+    
+    <aura:attribute name="isRestricted" type="Boolean" default=""/>
+    <aura:attribute name="isRestrict" type="Boolean" default="false"/>
+    <aura:attribute name="SecurityKeys" type="String"/>
+    <aura:attribute name="RestrictButtons" type="Boolean" />
+    <aura:attribute name="consentData" type="Object"/>
+    
+    <!--add form data template / macros components-->
+    <aura:attribute name="FormData" type="List" />
+    <aura:attribute name="msOptionsList" type="Object"/>
+    <aura:attribute name="selectedVal" type="String" />
+    <aura:handler name="change" value="{!v.msOptionsList}" action="{!c.handleValueChange}"/>
+    <aura:handler name="change" value="{!v.selectedVal}" action="{!c.handleValueChange}"/>
+    <aura:attribute name="checkTempData" type="Boolean" />
+    
+    <aura:attribute name="medicationsToSave1" type="List" /> 
+    <aura:attribute name="myVal1" type="String" default=""/>
+    <aura:attribute name="isListVisible" type="Boolean" default="false"/>
+    <aura:attribute name="patientModeCheckboxVisible" type="Boolean"></aura:attribute>
+    <aura:attribute name="enableTime" type= "Boolean" default="false"/>
+    <aura:attribute name="timeWrapper" type="Object"/>  
+    <aura:attribute name="modularMatrixData" type="Map" default="{}"/>
+    <lightning:messageChannel type="ElixirSuite__drawAnnotateFormMC__c" onMessage="{!c.handleDrawAnnotateMC}" scope="APPLICATION"/>
+    <aura:attribute name="numberOfImagesToLoad" type="Integer" default="0"/>
+    <aura:attribute name="openVitalSign" type="Boolean" default="false"/><!--Added by Pratiksha-->
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+     <lightning:navigation aura:id="navService" />
+    <aura:registerEvent name="CloseAllNotesTabEvt" type="c:CloseAllNotesTab"/>
+    <aura:attribute name="showAddOnlyProblem" type="Boolean" default="false"/>
+    <aura:attribute name="showAddExistingProblem" type="Boolean" default="false"/>
+    <aura:attribute name="problemList" type="Dataset1__c[]"/>
+    <aura:attribute name="showAddOnlyDiagnosis" type="Boolean" default="false"/> 
+    <aura:attribute name="showAddExistingDiagnosis" type="Boolean" default="false"/>
+    <aura:attribute name="diagnosisList" type="ICD_Codes__c[]"/>
+    <aura:attribute name="selectedRecord" type="Object" default="" description="selected Record Details" />
+   <aura:attribute name="diagnosisListCopy" type="List" />
+    <aura:attribute name="diagnosisColumnsOnForms" type="List" />
+    <aura:attribute name="problemListCopy" type="List" />
+    <aura:attribute name="problemColumnsOnForms" type="List" />
+    <aura:handler name="AddOnlyProblemEvent" event="c:AddOnlyProblemEvent" action="{!c.handleAddProblemEvent}"/>
+    <aura:handler name="AddOnlyDiagnosisEvent" event="c:AddOnlyDiagnosisEvent" action="{!c.handleAddDiagnosisEvent}"/>
+    <aura:attribute name="parentProblemColumns" type="List" />
+    <aura:handler event="c:ElixirOEM_ProblemColumnsEvent" action="{!c.handleProblemColumnEvent}"/>
+    <aura:attribute name="problemColumnsLst" type="List" />
+    <aura:attribute name="problemdataTypeToApi" type="List" />
+     <aura:attribute name="draftValues" type="List" />
+     <aura:attribute name="allergyColumnsLst" type="List" />
+    <aura:attribute name="allergydataTypeToApi" type="List" />
+    <aura:attribute name="parentallergyColumns" type="List"/>
+    <aura:attribute name="addMedicationList" type="Boolean" default="false"/> 
+    <aura:attribute name="notesSpecificData" type="Object"/>
+    <aura:attribute name="showProblemData" type="boolean" default="false"/>
+    <aura:attribute name="showDiagnosisData" type="boolean" default="false"/>
+    <aura:attribute name="showMedicationsData" type="boolean" default="false"/>
+    
+    <!-- sorting lighting datatable-->
+    <aura:attribute name="sortedBy" type="String" default="Name"/>  
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="sortedByDiagnosis" type="String" default="Name"/>  
+    <aura:attribute name="sortedDirectionDiagnosis" type="String" default="asc"/>
+    <aura:attribute name="sortedByMedications" type="String" default="Name"/>  
+    <aura:attribute name="sortedDirectionMedications" type="String" default="asc"/>
+    <aura:attribute name="sortedByAllergy" type="String" default="Name"/>  
+    <aura:attribute name="sortedDirectionAllergy" type="String" default="asc"/>
+    <aura:attribute name="showConfirmWarning" type="boolean" default="false"/>
+    <aura:attribute name="showConfirmWarningProblem" type="boolean" default="false"/>
+    <aura:attribute name="showNewAllergy" type="Boolean" default="false"/>
+    <!-- sorting lighting datatable-->
+
+    <aura:if isTrue="{!v.isOpen}">
+        <section class="slds-is-absolute debugging">
+            <div class="form_css">
+                <!-- Modal/Popup Box Header Starts here-->
+                
+                
+                <header>
+                    <aura:if isTrue="{!v.patientModeCheckboxVisible}">
+                        <!--<ui:inputCheckbox aura:id="checkbox" label="Patient Mode" value="{!v.isRestrict}" change="{!c.onCheck}"/>-->
+                        <lightning:input class="changemargin" type="checkbox" label="Patient Mode" checked="{!v.isRestrict}" onclick="{!c.onCheck}"> </lightning:input>
+                    </aura:if>
+                    
+                    <!--lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.handleCancel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close" disabled="{!v.RestrictButtons}"/-->
+                    <h2  class="slds-text-heading_medium slds-hyphenate">
+                        <span class="spanCSS">
+                            <lightning:input type="text" value="{!v.changedFormName}" disabled="{!v.RestrictButtons}"/>                         
+                        </span>
+                    </h2>
+                </header>                   
+                <div class="slds-p-around_medium">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <aura:iteration items="{!v.cssRecords}" var="section" indexVar="idx">
+                                <span class="{!section.ElixirSuite__Class__c}">
+                                    <lightning:formattedRichText value="{!section.ElixirSuite__Default_text__c}"/>
+                                </span>
+
+                                <!-- Lab Orders -->
+                                <aura:if isTrue="{! section.ElixirSuite__Select_Form_Component__c == 'Enable Lab Order'}">
+<h2 class="slds-text-heading_medium instruction_head" >Lab Order</h2><br/>
+                                    <c:labOrderOnForms accountId="{!v.patientID}"/>
+                                </aura:if>
+
+                                <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c == 'Enable Modular Table'}">
+                                    <c:createModularTableForForms section="{!section}" onSectionDataUpdate="{!c.updateModularMatrixData}" />
+                                
+                                <aura:set attribute="else">
+
+                                <aura:if isTrue="{!section.ElixirSuite__Is_matrix__c}">
+                                    <div class="slds-grid slds-gutters matclass" style="{! if(section.ElixirSuite__Is_matrix__c,if(section.ElixirSuite__Columns_In_Section__c==1,'width:40%',if(section.ElixirSuite__Columns_In_Section__c==2,'width:70%','')),'')}">
+                                        <aura:iteration items="{!section.ElixirSuite__Headings__c}" var="header">                                           
+                                            <div class="{! section.colsize + ' header_font'}" >
+                                                {!header}
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{! section.ElixirSuite__Select_Form_Component__c == 'Enable Draw And Annotate'}">
+                                    <c:StaticImageWrapper aura:id="staticImageWrapperChild" section="{!section}" isNew="true" viewMode="false"/>    
+                                </aura:if>
+                                
+                                <aura:if isTrue="{! section.ElixirSuite__Select_Form_Component__c == 'Enable Upload And Annotate'}">
+                                    <c:DynamicImageWrapper aura:id="dynamicImageWrapperChild" section="{!section}" isNew="true" viewMode="false"/>    
+                                </aura:if>
+                                
+                                <aura:iteration items="{!section.ElixirSuite__Object_1_css__r}" var="row" indexVar="idxRow">   
+                                    <div class="slds-form_horizontal slds-form slds-grid slds-gutters" style="{! if(section.ElixirSuite__Is_matrix__c,if(section.ElixirSuite__Columns_In_Section__c==1,'width:40%',if(section.ElixirSuite__Columns_In_Section__c==2,'width:70%','')),'')}">
+                                        <aura:iteration items="{!row.Columns}" var="column" indexVar="idxCol">                                           
+                                            <div class="{! if(section.ElixirSuite__Is_matrix__c,column.colsize + ' matrix_col' + ' matclass',column.colsize)}" > <!--style="{!column.ElixirSuite__Css__c}"-->
+                                                <aura:if isTrue="{! column.ElixirSuite__Is_Consent__c}">
+                                                    <c:ConsentTextWrapper aura:id="consent_text" textValue="{!column.ElixirSuite__Default_text__c}" column="{!column}" consentData="{!v.consentData}"/>
+                                                </aura:if>  
+                                                <aura:if isTrue="{! column.ElixirSuite__IMG_Type_of_Row__c  == 'File Upload'}">
+                                                    <c:FormsImageUpload column="{!column}" patientId="{!v.patientID}" patientName="{!v.accName}"/>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'BOOLEAN',column.ElixirSuite__Data_Type__c == 'boolean'), !column.ElixirSuite__Is_formula_Field__c)}"> <!-- Updated by Vidish }"> -->
+                                                    <span class="removeLeftPaddingCheckbox">
+                                                        <lightning:input type="checkbox" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" checked="{!column.value}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'ONLYTEXT',column.ElixirSuite__Data_Type__c == 'onlytext')}">
+                                                    <span class="text_cls">
+                                                        <p class="paragraph_text">
+                                                            <lightning:formattedRichText value="{!column.ElixirSuite__Default_text__c}"/>
+                                                        </p>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'STRING',column.ElixirSuite__Data_Type__c == 'string'), !column.ElixirSuite__Is_formula_Field__c)}"> <!-- Updated by Vidish -->
+                                                    <span class="text_cls">
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  maxlength="{!column.lengthOfField}" type="text" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onblur="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <!-- Vidish Code Start -->
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'PERCENT',column.ElixirSuite__Data_Type__c == 'percent'), !column.ElixirSuite__Is_formula_Field__c)}">
+                                                    
+                                                    <span class="text_cls">
+                                                        
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="text" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onblur="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'TIME',column.ElixirSuite__Data_Type__c == 'time'), !column.ElixirSuite__Is_formula_Field__c)}">
+                                                    
+                                                    <span class="text_cls">
+                                                        
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="time" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onblur="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'CURRENCY',column.ElixirSuite__Data_Type__c == 'currency'), !column.ElixirSuite__Is_formula_Field__c)}">
+                                                    
+                                                    <span class="text_cls">
+                                                        
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="text" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onblur="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <!-- Vidish Code END -->
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'TEXTAREA',column.ElixirSuite__Data_Type__c == 'textarea')}">
+                                                    <span class="textarea_cls">
+                                                        <lightning:textarea class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="textarea" maxlength="{!column.lengthOfField}" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onblur="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'DOUBLE',column.ElixirSuite__Data_Type__c == 'double'), !column.ElixirSuite__Is_formula_Field__c)}"> <!-- Updated by Vidish -->
+                                                    <span class="text_cls">
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="number" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}" onchange="{!c.textGenerateMultiPicklist}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'PHONE',column.ElixirSuite__Data_Type__c == 'phone')}">
+                                                    <span class="text_cls">    
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"  type="tel" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" onchange="{!c.textGenerateMultiPicklist}"
+                                                                         name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'EMAIL',column.ElixirSuite__Data_Type__c == 'email')}">
+                                                    <span class="text_cls">
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}" type="text" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! column.ElixirSuite__Data_Type__c == 'nbsp'}">
+                                                    <span>
+                                                        &nbsp;
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! column.ElixirSuite__Data_Type__c == 'hr'}">
+                                                    <span>
+                                                        <hr></hr>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'PICKLIST',column.ElixirSuite__Data_Type__c == 'picklist')}">
+                                                    <aura:if isTrue="{! column.ElixirSuite__Form_Data_Type__c == 'Radio'}">
+                                                        <aura:if isTrue="{! column.ElixirSuite__Class__c == 'MultiVertical'}">
+                                                            
+                                                            <span class="{!'radio_btn'+ ' ' + column.ElixirSuite__Class__c}">
+                                                                <lightning:radioGroup label="{!column.ElixirSuite__Field_Label_Long__c}"
+                                                                                      class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"
+                                                                                      options="{!column.PicklistValues}"
+                                                                                      name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c + '#' + idxRow + '#' + idxCol}"
+                                                                                      value="{! column.value }"
+                                                                                      type="radio"
+                                                                                      onchange="{!c.textGenerateMultiPicklist}"/>
+                                                            </span>
+                                                            
+                                                            <aura:set attribute="else">
+                                                                
+                                                                <span class="{!'radio_btn notMultiVertical'}">
+                                                                    <lightning:radioGroup label="{!column.ElixirSuite__Field_Label_Long__c}"
+                                                                                          class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}"
+                                                                                          options="{!column.PicklistValues}"
+                                                                                          name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c + '#' + idxRow + '#' + idxCol}"
+                                                                                          value="{! column.value }"
+                                                                                          type="radio"
+                                                                                          onchange="{!c.textGenerateMultiPicklist}"/>
+                                                                </span>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        
+                                                        <aura:set attribute="else">
+                                                            <c:Elixir_DependentPickListWrapper column = "{!column}" row="{!row}" cssRecords="{!v.cssRecords}"/> <!--Added by Vidish -->
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:if>
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'MULTIPICKLIST',column.ElixirSuite__Data_Type__c == 'multipicklist')}">
+                                                    <aura:if isTrue="{! column.ElixirSuite__Form_Data_Type__c == 'Checkbox'}">
+                                                        <aura:if isTrue="{! column.ElixirSuite__Class__c == 'MultiVertical'}">
+                                                            <span class="{! 'checkbox_btn'+ ' ' + column.ElixirSuite__Class__c}">   
+                                                                <lightning:checkboxGroup label="{!column.ElixirSuite__Field_Label_Long__c}"
+                                                                                         options="{!column.PicklistValues}"
+                                                                                         name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c + '#' + idxRow + '#' + idxCol}"
+                                                                                         value="{! column.value }"
+                                                                                         onchange="{!c.textGenerateMultiPicklist}"
+                                                                                         class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric checkboxLabelAlwaysInline' : 'checkboxLabelAlwaysInline'}"/>
+                                                            </span>
+                                                            <aura:set attribute="else">
+                                                                <span class="{! 'checkbox_btn notMultiVertical'}">
+                                                                    <lightning:checkboxGroup label="{!column.ElixirSuite__Field_Label_Long__c}"
+                                                                                             options="{!column.PicklistValues}"
+                                                                                             name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c + '#' + idxRow + '#' + idxCol}"
+                                                                                             value="{! column.value }"
+                                                                                             onchange="{!c.textGenerateMultiPicklist}"
+                                                                                             class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric checkboxLabelAlwaysInline' : 'checkboxLabelAlwaysInline'}"/>
+                                                                </span>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        
+                                                        <aura:set attribute="else">         
+                                                            <span class="unset_standard_label">
+                                                                <!--c:FormBuilderMultiSelect options="{!column.PicklistValues}" values="{!column.value}" multiSelect="true" label="{!column.ElixirSuite__Field_Label_Long__c}"/-->
+                                                                <lightning:dualListbox label= "{!column.ElixirSuite__Field_Label_Long__c}"
+                                                                                       options="{!column.PicklistValues}"
+                                                                                       value="{!column.value}"
+                                                                                       name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c + '#' + idxRow + '#' + idxCol}"
+                                                                                       onchange="{!c.textGenerateMultiPicklist}"
+                                                                                       class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric removeListStyle removeListMarginLeft setMaxWidth' : 'removeListStyle removeListMarginLeft setMaxWidth'}"/>
+                                                            </span>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'DATE',column.ElixirSuite__Data_Type__c == 'date'), !column.ElixirSuite__Is_formula_Field__c)}"> <!-- Updated By Vidish -->
+                                                    <span class="date_cls">
+                                                        <lightning:input class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric' : ''}" type="date" label="{!column.ElixirSuite__Field_Label_Long__c}" value="{!column.value}" onchange="{!c.textGenerateMultiPicklist}"
+                                                                         name = "{!idx + '#' + column.ElixirSuite__Field_Name__c + '#' + column.ElixirSuite__Data_Type__c}"/>
+                                                    </span>
+                                                </aura:if>
+                                                <aura:if isTrue="{! and(or(column.ElixirSuite__Data_Type__c == 'DATETIME',column.ElixirSuite__Data_Type__c == 'datetime'), !column.ElixirSuite__Is_formula_Field__c)}"> <!-- Updated By Vidish -->
+                                                    <span>
+                                                        <div class="{!column.ElixirSuite__No_Label__c == true ? 'noLabelGeneric dateTimeField slds-form-element' : 'dateTimeField slds-form-element'}">
+                                                            <div>
+                                                                <label class="slds-form-element__label slds-no-flex">{!column.ElixirSuite__Field_Label_Long__c}</label>
+                                                                <div lightning-input_input="" class="slds-form-element__control slds-grow">
+                                                                    <lightning:input type="datetime" variant="label-hidden" value="{!column.value}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                    
+                                                </aura:if>
+                                                <!-- EXTERNAL COMPONENTS AURA IF START -->
+                                                <aura:if isTrue="{! or(column.ElixirSuite__Data_Type__c == 'REFERENCE',column.ElixirSuite__Data_Type__c == 'reference')}">
+                                                    <!-- Vidish code Start -->
+                                                    <aura:if isTrue="{! column.ElixirSuite__Field_Name__c != 'Medical_Examination__c'}" >
+                                                    
+                                                    <div class="slds-grid lookup slds-p-left_x-small">
+                                                        
+                                                        <aura:if isTrue="{!not(column.ElixirSuite__No_Label__c)}">
+                                                            <div class="slds-size_4-of-12 slds-col slds-p-top_small">
+                                                                <label lightning-input_input="" class="slds-form-element__label slds-no-flex">
+                                                                    {!column.ElixirSuite__Field_Label_Long__c}
+                                                                </label>
+                                                            </div>
+                                                        </aura:if>
+                                                        
+                                                        <div class="slds-size_6-of-12 slds-col slds-p-left_none slds-p-right_none lookupInput">
+                                                            <c:Elixir_FormLookup column="{!column}"  objectName="{!column.ElixirSuite__Reference_to_object__c}"/>   
+                                                        </div>
+                                                    </div>
+                                                    </aura:if>
+                                                    <!-- Vidish Code End -->
+                                                    
+                                                    <aura:if isTrue="{!column.ElixirSuite__Form_Data_Type__c== 'Allergy'}">
+                                                        <h2 class="slds-text-heading_medium instruction_head" >Allergies</h2><br/>
+                                                        <div class = "slds-grid slds-gutters cardCls slds-p-right_medium slds-m-bottom_small">
+                                                            <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+                                                                <lightning:buttonIcon size="medium" class="btncss" iconName="utility:table" variant="neutral" 
+                                                                  title="Manage Columns" onclick="{!c.showAllergyColumn}"/>
+                                                                <lightning:button variant="Neutral" label="New Allergy" title="New Allergy" 
+                                                                                  onclick="{!c.handleAddAllergy}"/> 
+                                                                <aura:if isTrue="{!v.showAllergyColumnOptions}">
+                                                                <c:AllergyColumnconfiguration showOptions="{!v.showAllergyColumnOptions}" />
+                                                                </aura:if>
+                                                            </div>
+                                                        </div>
+                                                            <!--div class="allergySection d-none" aura:id="allergySectionAsID"-->
+                                                            <aura:if isTrue="{!v.showNewAllergy}">
+                                                            <c:ElixirHC_AddAllergy  showNewAllergy="{!v.showNewAllergy}" patientID="{!v.patientID}" ExternalcmpData = "{!v.ExternalcmpData}"
+                                                                                    notesSpecificData="{!v.notesSpecificData}"/>       
+                                                            </aura:if>
+                                                        <!--/div-->
+                                                        
+                                                        <div class="scrollable-container">
+                                                            <div aura:id="dataTable" class="slds-col allergyCssClass">
+                                                                <aura:if isTrue="{!not(empty(v.ExternalcmpData.allergyData))}">
+                                                                    <lightning:datatable
+                                                                                         keyField="Id"
+                                                                                         data="{!v.ExternalcmpData.allergyData}"
+                                                                                         columns="{!v.alllergyColumns}"
+                                                                                         hideCheckboxColumn="true"
+                                                                                         onsort="{!c.sortAllergyColumn}"
+                                                                                         showRowNumberColumn="true"
+                                                                                         sortedBy="{!v.sortedByAllergy}"  
+                                                                                         sortedDirection="{!v.sortedDirectionAllergy}"
+                                                                                         onsave="{!c.handleEditAllergySave}"
+                                                                                         draftValues="{!v.draftValues}">
+                                                                    </lightning:datatable>
+                                                                    <aura:set attribute="else">
+                                                                        <div class="slds-text-align_center">
+                                                                            No data to display
+                                                                        </div>
+                                                                    </aura:set>  
+                                                                </aura:if>
+                                                            </div>
+                                                        </div>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!column.ElixirSuite__Form_Data_Type__c== 'Glucose'}">
+                                                        <div class = "slds-grid slds-gutters cardCls slds-p-right_large">
+                                                            <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+                                                                <lightning:button variant="Neutral" label="Add Glucose" title="Add Glucose" 
+                                                                                  onclick="{!c.handleAddGlucose}"/> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="glucoseSection d-none" aura:id="glucoseSectionAsID">       
+                                                            <c:ElixirHC_GlucoseLog aura:id="glucoseCmp" patientID="{!v.patientID}" ExternalcmpData = "{!v.ExternalcmpData}"/>   
+                                                        </div>
+                                                 
+                                                                
+                                                                <aura:if isTrue="{!not(empty(v.ExternalcmpData.glucoseData))}">
+                                                                    
+                                                                    <div class = "slds-grid slds-gutters subs-table">
+                                                                        <div class="slds-col slds-size_3-of-12"></div>
+                                                                        <div class="slds-col slds-size_9-of-12">
+                                                                            <div class="slds-grid slds-gutters forHeading">
+                                                                                <div class="slds-col slds-size_2-of-12 subs-th"><b>S.No.</b></div>
+                                                                                <div class="slds-col slds-size_2-of-12 subs-th"><b>Reading</b></div>
+                                                                                <div class="slds-col slds-size_2-of-12 subs-th"><b>Type Of Check</b></div>
+                                                                                <div class="slds-col slds-size_3-of-12 subs-th"><b>Intervention</b></div>
+                                                                                <div class="slds-col slds-size_3-of-12 subs-th"><b>Note</b></div>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="demo-only demo-only--sizing  slds-grid slds-wrap">
+                                                                        <div class="slds-grid slds-gutters w-100">
+                                                                            <div class="slds-size_3-of-12 slds-col">
+                                                                                <!--b><ui:outputRichText value= "{! 'Glucose logs as of '+ v.today }"/></b-->
+                                                                            </div>
+                                                                            
+                                                                            
+                                                                            <div class="slds-size_9-of-12 slds-col slds-p-right_none">
+                                                                                <aura:iteration items="{!v.ExternalcmpData.glucoseData}" var="gl" indexVar="count">
+                                                                                    <div class="slds-grid slds-gutters subs-table subs-table1">
+                                                                                        <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                            {!count+1}
+                                                                                        </div>
+                                                                                        <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                            {!gl.ElixirSuite__Glucose_Reading__c}
+                                                                                        </div>
+                                                                                        <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                            {!gl.ElixirSuite__Type_of_check__c}
+                                                                                        </div>
+                                                                                        <div class="slds-size_3-of-12 slds-col subs-th">
+                                                                                            {!gl.ElixirSuite__Intervention__c}
+                                                                                        </div>
+                                                                                        <div class="slds-size_3-of-12 slds-col subs-th">
+                                                                                            {!gl.ElixirSuite__Note__c}
+                                                                                        </div>
+                                                                                        
+                                                                                    </div>
+                                                                                </aura:iteration>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </aura:if>
+                                                         
+                                                        
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!column.ElixirSuite__Form_Data_Type__c== 'Vital Sign'}">
+                                                        <h2 class="slds-text-heading_medium instruction_head" >Vital Signs</h2><br/>
+                                                                    <div class="slds-grid slds-gutters">
+                                                                        <div class="slds-size_12-of-12 slds-col slds-text-align-right">
+                                                                            <ul class="cardCls slds-text-align_right">
+                                                                            	<li class="card_list"><c:dynamicComboBox onsave="{!c.handleCallMethodEvent}" /></li>
+                                                                                <li class="card_list slds-m-left_xx-small"><lightning:button variant="Neutral" label="New Vital Sign" title="New Vital Sign" onclick="{!c.handleAddVitals}"/></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                              
+                                                                <!--  <div class="vitalSection d-none" aura:id="vitalSectionAsID">         
+                                                            <c:VitalSigns aura:id="vitalCmp" AccountId="{!v.patientID}" openVitalSign="{!v.openVitalSign}"
+                                                                          showExistingRecords="false" addVital="true" SaveRoute="form" ExternalcmpData="{!v.ExternalcmpData}"/>                          
+                                                        </div> -->
+                                                                
+                                                                
+                                                               
+                                                                
+                                                                <aura:if isTrue="{!v.isListVisible}">
+                                                                    <c:examinComponent onupdatevitalList="{!c.handleUpdateVitalList}" aura:id="childLwc2" oncancel="{!c.handleCloseVital}" patientID="{!v.patientID}" notesSpecificData="{!v.notesSpecificData}"/>
+                                                                </aura:if>
+                                                                  
+                                                                <aura:if isTrue="{!not(empty(v.ExternalcmpData.vitalSignsData))}">
+                                                                   <c:vitalListView aura:id="childLwc3" patientID="{!v.patientID}" notesSpecificData="{!v.notesSpecificData}"/>
+                                                                    <!--div class="scrollable-container">
+                                                                        <div aura:id="dataTable" class="slds-col allergyCssClass">
+                                                                            <lightning:datatable
+                                                                                                 keyField="Id"
+                                                                                                 data="{!v.ExternalcmpData.vitalSignsData}"
+                                                                                                 columns="{!v.vitalsColumns}"
+                                                                                                 hideCheckboxColumn="true">
+                                                                            </lightning:datatable>
+                                                                        </div>
+                                                                    </div-->
+                                                                    <aura:set attribute="else">
+                                                                        <div class="slds-text-align_center">
+                                                                            No data to display
+                                                                        </div>
+                                                                    </aura:set>  
+                                                                    
+                                                                </aura:if>
+                                                                
+                                                                
+                                                            </aura:if>
+                                                    <aura:if isTrue="{!column.Form_Data_Type__c== 'Problem'}">
+                                                        
+                                                        <div class = "slds-grid slds-gutters cardCls">
+                                                            <div class="slds-col slds-size_12-of-12 ">
+                                                                <lightning:button variant="base" label="Add Problem" title="Add Problem"
+                                                                                  onclick="{!c.handleAddProblem}"/>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <aura:if isTrue="{!v.openListOfProblems}">        
+                                                            <c:ElixirHC_AddProblemDiagnosis isOpen = "{!v.openListOfProblems}" CustomProblemToDel="{!v.CustomProblemToDel}"
+                                                                                            existingProblems="{!v.existingProblems}"/>                        
+                                                        </aura:if>
+                                                        
+                                                        <!-- FORM  SPECIFIC DATA OR ACCOUNT SPECIFIC DATA-->
+                                                        
+                                                        <aura:if isTrue="{!not(empty(v.problemDiagnosesData.data))}">
+                                                            <div class = "slds-grid AddProblemCls">
+                                                                
+                                                                
+                                                                <div class="slds-col slds-size_1-of-12 subs-th"><b>SNO.</b></div>
+                                                                <div class="slds-col slds-size_3-of-12 subs-th"><b>PROBLEM</b></div>
+                                                                <div class="slds-col slds-size_4-of-12 subs-th"><b>DIAGNOSES</b></div>
+                                                                <div class="slds-col slds-size_4-of-12 subs-th"><b>NOTES</b></div>
+                                                                
+                                                                
+                                                                
+                                                                
+                                                            </div>
+                                                            <div class="demo-only demo-only--sizing  slds-wrap forConditionData">
+                                                                <aura:iteration items="{!v.problemDiagnosesData.data}" var="pill" indexVar="idx">
+                                                                    <aura:if isTrue="{!pill.problemIsChecked}">
+                                                                        <div class="slds-grid slds-gutters tableCustom">
+                                                                            
+                                                                            <div class="slds-col slds-size_1-of-12 ">
+                                                                                {!idx+1}
+                                                                            </div>
+                                                                            <div class="slds-col slds-size_3-of-12 ">
+                                                                                {!pill.Problem_Name__c}
+                                                                                
+                                                                            </div>
+                                                                            <div class="slds-col slds-size_4-of-12 ">
+                                                                                <div class = "parentNote">
+                                                                                    <aura:iteration items="{!pill.relatedDiagnoses}" var="relatedDiagnoses" indexVar="pillIndex">
+                                                                                        <aura:if isTrue="{!relatedDiagnoses.diagnosesIsChecked}">
+                                                                                            <lightning:pill label="{!relatedDiagnoses.Name}" name="{!idx+'$'+pillIndex}">
+                                                                                                <aura:set attribute="media">
+                                                                                                    <lightning:icon iconName="custom:custom86"  alternativeText="Diagnoses"/>
+                                                                                                </aura:set>
+                                                                                            </lightning:pill>
+                                                                                        </aura:if> 
+                                                                                    </aura:iteration>                 
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="slds-col slds-size_4-of-12">
+                                                                                <div class = "parentNote parentNote1">
+                                                                                    
+                                                                                    <aura:iteration items="{!pill.relatedNotes}" var="relatedNotes" indexVar="idxNotes">
+                                                                                        <ui:outputRichText class="slds-text-longform" value="{!relatedNotes.Notes__c}"/>
+                                                                                    </aura:iteration>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            
+                                                                        </div>  
+                                                                        
+                                                                    </aura:if>
+                                                                    
+                                                                </aura:iteration>
+                                                            </div>
+                                                            <aura:set attribute="else">
+                                                                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                                                    <div class="slds-size_4-of-12">
+                                                                        <b> <ui:outputRichText value= "Problems : "/></b>
+                                                                    </div>
+                                                                    <div class="slds-size_5-of-12">
+                                                                        <ui:outputRichText value= "No problems defined yet!"/>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </aura:set>
+                                                        </aura:if>   
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!column.ElixirSuite__Form_Data_Type__c== 'Medication_List'}"> 
+                                                        <div class = "slds-grid slds-gutters cardCls">
+                                                            <div class="slds-col slds-size_12-of-12 ">
+                                                                <lightning:button variant="base" label="Update Medication List" title="Update Medication List"
+                                                                                  onclick="{! c.handleMedication }"/>
+                                                            </div>
+                                                        </div>
+                                                        <aura:if isTrue="{!v.medicationData.hasValue}">
+                                                            <div class = "slds-grid slds-gutters subs-table">
+                                                                <div class="slds-col slds-size_3-of-12"></div>
+                                                                <div class="slds-col slds-size_9-of-12">
+                                                                    <div class="slds-grid slds-gutters forHeading">
+                                                                        <div class="slds-col slds-size_1-of-12 subs-th"><b>SNO.</b></div>
+                                                                        <div class="slds-col slds-size_4-of-12 subs-th"><b>MEDICATION NAME</b></div>
+                                                                        <div class="slds-col slds-size_2-of-12 subs-th"><b>FREQUENCY</b></div>
+                                                                        <div class="slds-col slds-size_1-of-12 subs-th"><b>TYPE</b></div>
+                                                                        <div class="slds-col slds-size_2-of-12 subs-th"><b>ROUTE</b></div>
+                                                                        <div class="slds-col slds-size_2-of-12 subs-th"><b>REASON</b></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="demo-only demo-only--sizing  slds-grid slds-wrap">
+                                                                <div class="slds-grid slds-gutters">
+                                                                    <div class="slds-size_3-of-12 slds-col">
+                                                                        <b><ui:outputRichText value= "{! 'Current medication as of '+ v.today }"/></b>
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    <div class="slds-size_9-of-12 slds-col slds-p-left_medium">
+                                                                        <aura:iteration items="{!v.medicationData.data}" var="medication" indexVar="count">
+                                                                            <div class="slds-grid slds-gutters subs-table">
+                                                                                <div class="slds-size_1-of-12 slds-col subs-th">
+                                                                                    {!count+1}
+                                                                                </div>
+                                                                                <div class="slds-size_4-of-12 slds-col subs-th">
+                                                                                    {!medication.ElixirSuite__Drug_Name__c}
+                                                                                </div>
+                                                                                <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                    {!medication.ElixirSuite__Frequency__c}
+                                                                                </div>
+                                                                                <div class="slds-size_1-of-12 slds-col subs-th">
+                                                                                    {!medication.ElixirSuite__Type__c}
+                                                                                </div>
+                                                                                <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                    {!medication.ElixirSuite__Route_New__c} 
+                                                                                </div>
+                                                                                <div class="slds-size_2-of-12 slds-col subs-th">
+                                                                                    {!medication.ElixirSuite__Reason_new__c}
+                                                                                </div>
+                                                                            </div>
+                                                                        </aura:iteration>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </aura:if>
+                                                        
+                                                        
+                                                        <aura:if isTrue="{!!v.medicationData.hasValue}">
+                                                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                                                <div class="slds-size_4-of-12">
+                                                                    <b> <ui:outputRichText value= "Medication : "/></b>
+                                                                </div>
+                                                                <div class="slds-size_5-of-12">
+                                                                    <ui:outputRichText value= "N/M;No medications defined yet!"/>
+                                                                </div>  
+                                                            </div>
+                                                            
+                                                        </aura:if>
+                                                        
+                                                        <aura:if isTrue="{!v.openUpdateMedication}">
+                                                            
+                                                            
+                                                            <c:ElixirHC_MedicationComponent patientID="{!v.patientID}"  RouteForComponent = "fromForm"
+                                                                                            openUpdateMedication = "{!v.openUpdateMedication}" 
+                                                                                            showCustomMedicationTab = "false"/>                                                            
+                                                            <lightning:button class = "slds-m-top_large" variant="base" label="Cancel" title="Cancel"
+                                                                              onclick="{!c.handleCloseMedication}"/>
+                                                            
+                                                        </aura:if>                                                             
+                                                    </aura:if>
+                                                    
+                                                    
+                                                </aura:if>
+                                                <!-- END-->
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </div>
+                                        </aura:iteration>
+                                    </div>    
+                                </aura:iteration>
+                                <aura:if isTrue="{!section.ElixirSuite__Add_Problem__c}"> 
+                                    <h2 class="slds-text-heading_medium instruction_head" >Problem</h2><br/>
+                                    <div class = "slds-grid slds-gutters cardCls1 slds-p-right_medium slds-m-bottom_small">
+                                        <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+
+                                                    <lightning:buttonIcon size="medium" class="btncss" iconName="utility:table" variant="neutral" 
+                                                                          title="Manage Columns" onclick="{!c.showOptions}"/>
+                                           <lightning:button  label="Add existing problem" title="Add existing problem" 
+                                                              onclick="{!c.handleAddExistingProblem}"/> 
+                                                                                        <lightning:button  label="New Problem" title="Add Problem" 
+                                                              onclick="{!c.handleAddOnlyProblem}"/> 
+                                                                                        <aura:if isTrue="{!v.showOptions}">
+                                                <c:ElixirOEM_ProblemColumnsConfigurable showOptions="{!v.showOptions}"/>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!v.showAddOnlyProblem}">
+                                        <c:AddOnlyProblem showAddOnlyProblem="{!v.showAddOnlyProblem}" patientID="{!v.patientID}" problemList="{!v.problemList}" notesSpecificData="{!v.notesSpecificData}"/>       
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showAddExistingProblem}">
+                                        <c:AddOnlyProblem showAddExistingProblem="{!v.showAddExistingProblem}" showAddOnlyProblem="{!v.showAddOnlyProblem}" patientID="{!v.patientID}" problemList="{!v.problemList}" notesSpecificData="{!v.notesSpecificData}"/> 
+                                    </aura:if>
+                                    <div class="scrollable-container">
+                                                            <div aura:id="dataTable" class="slds-col allergyCssClass">
+                                    <aura:if isTrue="{!v.showProblemData}">
+                                    <lightning:datatable 
+                                                         keyField="Id"
+                                                         data="{!v.problemListCopy}"
+                                                         columns="{!v.problemColumnsOnForms}"
+                                                         hideCheckboxColumn="true"
+                                                         onrowaction="{!c.handleProblemRowAction}"
+                                                         onsave="{!c.handleEditProblemSave}"
+                                                          draftValues="{!v.draftValues}"
+                                                          onsort="{!c.sortColumn}"
+showRowNumberColumn="true"
+                                                          sortedBy="{!v.sortedBy}"  
+                                                          sortedDirection="{!v.sortedDirection}"
+                                                          />
+                                        <aura:set attribute="else">
+                                            <div class="slds-text-align_center">
+                                                No data to display
+                                            </div>
+                                        </aura:set>    
+                                                                    </aura:if>
+                                        </div>
+                                    </div>
+                                     <aura:if isTrue="{!v.showConfirmWarningProblem}">
+                
+                                        <div role="dialog" class="slds-modal slds-fade-in-open warning_modal">
+                                            <div class="slds-modal__container">
+                                                
+                                                <header class="slds-modal__header">
+                                                    <h1 class="slds-text-heading--medium"> Severe Warning ! </h1>
+                                                </header>
+                                                
+                                                <div class="slds-modal__content slds-p-around--medium">
+                                                    <center>The data which you are trying to delete will get permanently deleted from patient's database</center>
+                                                </div>
+                                                
+                                                <footer class="slds-modal__footer ">
+                                                    <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleProblemCancel}'/>
+                                                    <lightning:button variant="brand" name='Delete' label='Delete' onclick='{!c.handleProblemDeleteRecord}'/>
+                                                </footer>
+                                                
+                                            </div>
+                                        </div>
+                                          
+                                    </aura:if>
+                                    <!--<c:ElixirOEM_ProblemListViewOnForm recordVal="{!v.recordId}" insertedProblem="{!v.insertedProblem}" deletedProblem = "{!v.deletedProblem}"
+                                                                       toUpdateProblem = "{!v.toUpdateProblem}" toDelProblemFromUpdate = "{!v.toDelProblemFromUpdate}" 
+                                                                       listDetails = "{!v.listDetails}" column="{!section}"
+                                                                       allSectionListView = "{!section.ElixirSuite__Add_Problem__c}"/> -->
+                                </aura:if>
+                                    
+                                    <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c== 'Enable Diagnoses'}">
+                                    <h2 class="slds-text-heading_medium instruction_head" >Diagnosis</h2><br/> 	
+                                    <div class = "slds-grid slds-gutters cardCls slds-p-right_medium slds-m-bottom_small">
+                                        <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+
+                                                    <lightning:buttonIcon size="medium" class="btncss" iconName="utility:table" variant="neutral" 
+                                                                          title="Manage Columns" onclick="{!c.showOptions1}"/>
+                                           <lightning:button  label="Add existing Diagnosis" title="Add existing Diagnosis" 
+                                                              onclick="{!c.handleAddExistingDiagnosis}"/> 
+                                                                                        <lightning:button  label="New Diagnosis" title="New Diagnosis" 
+                                                              onclick="{!c.handleAddOnlyDiagnosis}"/> 
+                                            
+                                            <aura:if isTrue="{!v.showOptions1}">
+                                                <c:ElixirOEM_DiagnosisColumnsConfigurable showOptions="{!v.showOptions1}"/>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                 <aura:if isTrue="{!v.showAddOnlyDiagnosis}">
+                                        <c:AddOnlyDiagnosis showAddOnlyDiagnosis="{!v.showAddOnlyDiagnosis}" patientID="{!v.patientID}" diagnosisList="{!v.diagnosisList}" selectedRecord="{!v.selectedRecord}" notesSpecificData="{!v.notesSpecificData}"/>       
+                                    </aura:if>
+                                        <aura:if isTrue="{!v.showAddExistingDiagnosis}">
+                                            <c:AddOnlyDiagnosis showAddExistingDiagnosis="{!v.showAddExistingDiagnosis}" showAddOnlyDiagnosis="{!v.showAddOnlyDiagnosis}" patientID="{!v.patientID}" diagnosisList="{!v.diagnosisList}" selectedRecord="{!v.selectedRecord}" notesSpecificData="{!v.notesSpecificData}"/> 
+                                        </aura:if>
+                                    <div class="scrollable-container">
+                                                            <div aura:id="dataTable" class="slds-col allergyCssClass">
+                                    <aura:if isTrue="{!v.showDiagnosisData}">
+                                    <lightning:datatable
+                                                        keyField="Id"
+                                                        data="{!v.diagnosisListCopy}"
+                                                        columns="{!v.diagnosisColumnsOnForms}"
+                                                        hideCheckboxColumn="true"
+                                                        onrowaction="{!c.handleRowAction}"
+                                                        onsave="{!c.handleEditDiagnosisSave}"
+                                                        draftValues="{!v.draftValues}"
+                                                        onsort="{!c.sortDiagnosisColumn}"
+showRowNumberColumn="true"
+                                                         sortedBy="{!v.sortedByDiagnosis}"  
+                                                         sortedDirection="{!v.sortedDirectionDiagnosis}"
+                                                        
+                                                         />
+                                        <aura:set attribute="else">
+                                            <div class="slds-text-align_center">
+                                               No data to display
+                                            </div>
+                                        </aura:set>    
+                                                                    </aura:if>
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!v.showRelatedDiagnosis}">
+                                        <c:relatedProblemsPopup recordId="{!v.selectedRecordId}" patientID="{!v.patientID}" oncancel="{! c.closeModal }" onsave="{! c.saveModal }" />       
+                                    </aura:if>
+                                    </aura:if>
+                                      <aura:if isTrue="{!v.showConfirmWarning}">
+                
+                                        <div role="dialog" class="slds-modal slds-fade-in-open  warning_modal">
+                                            <div class="slds-modal__container">
+                                                
+                                                <header class="slds-modal__header">
+                                                    <h1 class="slds-text-heading--medium"> Severe Warning ! </h1>
+                                                </header>
+                                                
+                                                <div class="slds-modal__content slds-p-around--medium">
+                                                    <center>The data which you are trying to delete will get permanently deleted from patient's database</center>
+                                                </div>
+                                                
+                                                <footer class="slds-modal__footer ">
+                                                    <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleDiagnosisCancel}'/>
+                                                    <lightning:button variant="brand" name='Delete' label='Delete' onclick='{!c. handleDiagnosisDelete}'/>
+                                                </footer>
+                                                
+                                            </div>
+                                        </div>
+                                          
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c== 'Enable Medications List'}">
+                                            <h2 class="slds-text-heading_medium instruction_head" >Medications</h2><br/> 	
+                                            <div class = "slds-grid slds-gutters cardCls slds-p-right_medium slds-m-bottom_small">
+                                                <div class="slds-col slds-size_12-of-12 slds-text-align_right">
+                                                   
+                                                    <lightning:buttonIcon size="medium" class="btncss" iconName="utility:table" variant="neutral" 
+                                                                  title="Manage Columns" onclick="{!c.showOptionsForMedication}"/>
+                                                    <lightning:button  label="Add New Medication" title="Add New Medication" 
+                                                                      onclick="{!c.handleAddMedicationList}"/> 
+                                                    
+                                                   <aura:if isTrue="{!v.medicationConfiguration}">
+                                                <c:ElixirOEM_MedicationColumnsConfigurable showOptions="{!v.medicationConfiguration}"/>
+                                            </aura:if>
+                                                </div>
+                                            </div>
+                                            <aura:if isTrue="{!v.addMedicationList}">
+                                                <c:AddMedicationsOnNotes addMedicationList="{!v.addMedicationList}" patientID="{!v.patientID}" notesSpecificData="{!v.notesSpecificData}"/>       
+                                            </aura:if>
+                                            <div class="scrollable-container">
+                                                            <div aura:id="dataTable" class="slds-col allergyCssClass">
+                                    <aura:if isTrue="{!v.showMedicationsData}">
+                                    <lightning:datatable
+                                                         keyField="Id"
+                                                         data="{!v.medicationListCopy}"
+                                                         columns="{!v.medicationColumnsOnForms}"
+                                                         hideCheckboxColumn="true"
+                                                         onsort="{!c.sortMedicationColumn}"
+                                                         sortedBy="{!v.sortedByMedications}"  
+                                                         showRowNumberColumn="true"
+                                                         sortedDirection="{!v.sortedDirectionMedications}"
+                                                         onsave="{!c.handleEditMedicationSave}"
+                                                         draftValues="{!v.draftValues}"
+                                                         />
+                                        <aura:set attribute="else">
+                                            <div class="slds-text-align_center">
+                                                No data to display
+                                            </div>
+                                        </aura:set>    
+                                                                    </aura:if>
+                                        </div>
+                                    </div>
+                                        </aura:if>
+
+                                <!-- Added by Anmol for LX3-5676 -->
+                                <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c== 'Enable Inventory Order'}">
+                                <div class="slds-text-align_right slds-p-right_medium">
+                                 <lightning:button variant="brand-outline" name="Add Inventory" label="Add Inventory" title="Add Inventory" onclick="{! c.addInv }" />
+                                    </div>
+                                <aura:if isTrue="{!v.addInv}">
+                                    <c:AddInv column="{!section}" invValue="{!v.invValue}" InvTable="{!v.InvTable}" mode="new" addInv="{!v.addInv}" invMode="{!v.invMode}" lotReq="{!v.defLotReq}"/>
+                                </aura:if>
+                                
+                                <br/>
+                                <br/>
+                                    
+                                    </aura:if>
+                                <!-- End by Anmol for LX3-5676 -->
+
+                                <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c== 'Enable Prescription Order'}">
+<h2 class="slds-text-heading_medium instruction_head" >Prescription Order</h2><br/>
+                                    <c:PrescriptionTable accountId="{!v.patientID}"/>
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!section.ElixirSuite__Add_Notes__c}">  
+                                    
+                                    <c:FirstVisitNotes accountId="{!v.patientID}" column="{!section}" typeOfNote="{!section.ElixirSuite__Type_of_Note__c}"/>
+                                </aura:if>
+                                <aura:if isTrue="{!section.ElixirSuite__Add_Procedure__c}">     
+                                    <div class="slds-m-top_medium"> 
+                                        <c:ElixirOEM_ProcedureListViewOnForm recordVal="{!v.patientID}" procedureWrapper="{!v.procedureWrapper}" listDetails = "{!v.listDetailsProcedure}"
+                                                                             disabled = "false"/>         
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!section.ElixirSuite__Enable_Auto_text__c}">
+                                    <span class="richtext_button">
+                                        <lightning:inputRichText placeholder="Text Generated will appear here" disabled="{!section.AutoText.length == 0}" value="{!section.AutoText}" />
+                                    </span> 
+                                </aura:if>
+                                <aura:if isTrue="{!section.ElixirSuite__isFormMacro__c}">
+                                    <c:QFMultiSelectUIComp mslabel="" msoptions="{!v.FormData}"  formName="{!v.formName}" msOptionList = "{!v.msOptionsList}" column="{!section}" consentData="{!v.consentData}" /> 	
+                                </aura:if>
+                                </aura:set>
+                                </aura:if>
+                            
+                            <!-- Added by Anmol for LX3-5676 -->
+                            <aura:if isTrue="{!section.ElixirSuite__Select_Form_Component__c== 'Enable Inventory Order'}">
+                            <aura:if isTrue="{!v.InvTable}">
+                                    <!--c:InventoryData inValue="{!v.invValue}"/-->
+                                    <c:InventoryTable column="{!section}" wrapListItems="{!v.invValue}" lotRequired="{!v.defLotReq}" invMode="{!v.invMode}"/>
+                                </aura:if>
+                            </aura:if>
+                            <!-- End by Anmol for LX3-5676 -->
+                        </aura:iteration> 
+                            
+                        <c:Elixir_FormApprovalCreate aura:id="formApprovalId" formName="{!v.formName}"
+                        changedFormName="{!v.changedFormName}"
+                        patientId="{!v.recordId}" 
+                        />
+
+                            <aura:if isTrue="{!! v.loaded }">
+                                <lightning:spinner alternativeText="Loading" />
+                            </aura:if>
+                        </div>
+                    </div>
+                    <!--end-->
+                </div>
+                <aura:if isTrue="{!v.enableTime}">
+                    <footer>
+                        <div class = "slds-grid slds-gutters">
+                            
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <p class="slds-text-align_left">Start Time</p>
+                                <br></br>
+                                    <lightning:input type="Datetime" variant="label-hidden" aura:id="startTimeOnForm" value="{!v.timeWrapper.startTime}"
+                                                 name="input1" required="true" label="Start Time"  
+                                                 onchange="{!c.validateStartTime}"/> 
+                                   
+                            </div>
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <p class="slds-text-align_left">End Time</p>
+                                <br></br>
+                                <lightning:input type="Datetime" variant="label-hidden" aura:id="end_time" value="{!v.timeWrapper.endTime}" 
+                                                 name="input2" required="true" label="End Time" 
+                                                 onchange="{!c.validateEndTime}"/>  
+                                
+                            </div>
+                            
+                            <div class="slds-col slds-size_2-of-12 forFooter">
+                                <button class="slds-button slds-button_neutral" disabled="{!v.RestrictButtons}" onclick="{! c.handleCancel}">Cancel</button>
+                                <button class="slds-button slds-button_brand" disabled="{!v.RestrictButtons}" onclick="{! c.handleClick }">Save</button>
+                            </div>
+                        </div>
+                    </footer>
+                    <aura:set attribute="else">
+                        <footer class="slds-text-align_right slds-is-absolute footer-btn">
+                            <button class="slds-button slds-button_neutral" disabled="{!v.RestrictButtons}" onclick="{! c.handleCancel}">Cancel</button>
+                            <button class="slds-button slds-button_brand" disabled="{!v.RestrictButtons}" onclick="{! c.handleClick }">Save</button>
+                        </footer>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <aura:if isTrue="{!v.showConfirmDialog}">
+                
+                <div role="dialog" class="slds-modal slds-fade-in-open ">
+                    <div class="slds-modal__container">
+                        
+                        <header class="slds-modal__header">
+                            <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING </h1>
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around--medium">
+                            <center><b>End Date-Time missing. Do you want to default it to the Current Date-Time?</b></center>
+                        </div>
+                        
+                        <footer class="slds-modal__footer ">
+                            <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                            <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                        </footer>
+                        
+                    </div>
+                </div>
+                      
+            </aura:if>
+        </section>
+       
+    </aura:if>
+    
+    <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isRestricted}">
+        
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__containerr" >
+                
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Enter Security Key</label>
+                        <div class="slds-form-element__controller">
+                            <ui:inputText class="slds-input" value="{!v.SecurityKeys}" aura:id="userName"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <lightning:button class="uu" variant="Neutral" 
+                                      label="Submit"
+                                      title="Submit"
+                                      onclick="{! c.onSubmit }"/>
+                    <lightning:button class="uu" variant="destructive" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.onCancel }"/>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!--###### MODAL BOX Part END Here ######-->
+        
+    </aura:if>
+    
+</aura:component>

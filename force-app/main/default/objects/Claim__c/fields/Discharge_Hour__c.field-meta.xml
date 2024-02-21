@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discharge_Hour__c</fullName>
+    <description>Refers to the specific time at which a patient is officially discharged from a healthcare facility.</description>
+    <externalId>false</externalId>
+    <label>Discharge Hour</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Time</type>
+</CustomField>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>On_selecting_values</name>
+        <label>On selecting values</label>
+        <locationX>575</locationX>
+        <locationY>339</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>On_selecting</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ElixirSuite__Discount_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>$</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Making_Percent_Values_Null</targetReference>
+            </connector>
+            <label>On selecting $</label>
+        </rules>
+        <rules>
+            <name>On_Selecting_Percentage</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ElixirSuite__Discount_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>%</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Making_Amount_Value_Null</targetReference>
+            </connector>
+            <label>On Selecting Percentage</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Dynamic Actions For Discount Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Dynamic Actions For Discount Type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Making_Amount_Value_Null</name>
+        <label>Making Amount Value Null</label>
+        <locationX>733</locationX>
+        <locationY>487</locationY>
+        <inputAssignments>
+            <field>Discount_Amount__c</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Making_Percent_Values_Null</name>
+        <label>Making Percent Values Null</label>
+        <locationX>546</locationX>
+        <locationY>493</locationY>
+        <inputAssignments>
+            <field>Discount_Percentage__c</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>463</locationX>
+        <locationY>36</locationY>
+        <connector>
+            <targetReference>On_selecting_values</targetReference>
+        </connector>
+        <object>Actual_Price__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

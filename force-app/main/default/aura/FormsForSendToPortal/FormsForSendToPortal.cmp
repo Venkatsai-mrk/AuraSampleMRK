@@ -1,0 +1,127 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="Elixir_NewAccountAssociatedFormsApex" access="global">
+    <!---->
+    
+    <!--aura:attribute name="listDetails" type="Elixir_NewAccountAssociatedFormsApex[]"/-->
+    <aura:attribute name="customCategory" type="List"/>
+    <aura:attribute name="customCategoryResults" type="List"/> 
+    <aura:attribute name="Category" type="String"/>
+    <aura:attribute name="notFound" type="boolean" default="false"/>
+    <aura:attribute name="formsToSendForPortal" type="List"/> 
+    <aura:attribute name="forPatientPortal" type="boolean" default="false"/>
+    <aura:attribute name="listDetails" type="Object[]"/>
+    <aura:attribute name="lstOfRecordType" type="RecordType[]" />
+    <aura:attribute name="RecordId" type="String" />
+    <aura:attribute name="formName" type="String" />
+    <aura:attribute name = "categorized" type="String"/>
+    <aura:attribute name = "subCategorized" type="String"/>
+    <aura:attribute name="isOpen" type="boolean"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="searchKey" type="String"/>
+    <aura:attribute name="accName" type="String"/> 
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="optionsForSearching" type="List"/>
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="value" type="String" default="option1"/>
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="openForm" type="boolean" />
+    <aura:attribute name="isActualNotes" type="boolean" default = "false"/> 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:handler name="changehandlerEvent" event="c:changehandlerEvent" action="{!c.closeModal}"/>
+    <aura:handler name="FormsRefreshEvt" event="c:FormsRefreshEvt" action="{!c.closeModal}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.isOpen}">
+        
+        <div class="AllFormsCls">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open AllFormsSectionCls">
+                <div class="slds-modal__container hideDiv" aura:id="ParentDiv">
+                    <header class="slds-modal__header headerCSS">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModal }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                     
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate colPayHeader"><b>Send Forms to Patient</b></h2>
+                            
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="widthForAll">
+                            <!-- Model Box Start -->    
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+                                    <lightning:input type="text" label="Search Note" name="searchKey" autocomplete="off"  aura:id="searchKey" value="{!v.searchKey}" onchange="{!c.searchKeyChange}" placeholder="type here..." /> 
+                                </div>
+                                <aura:if isTrue="{! empty(v.categorized)}">
+                                    <div class="slds-col slds-size_6-of-12 slds-m-bottom_small ">
+                                        <lightning:select aura:id="select" name="select1" label="Filter by Type" onchange="{! c.onChange }">
+                                            <option value="">choose one...</option>
+                                            <!-- <option value="Clinical">Clinical</option>
+                                <option value="Nursing">Nursing</option>
+                                <option value="Doctor">Doctor</option>-->
+                                            <aura:iteration items="{!v.customCategory}" var="ind" indexVar="key">
+                                                <option value="{!ind}" >{!ind}</option>
+                                            </aura:iteration>
+                                            
+                                        </lightning:select>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <table class="slds-table slds-table_cell-buffer  table-body-row send-forms_patient">
+                                <thead>
+                                    <tr class="slds-line-height_reset " >
+                                        <th>Note Name&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:if isTrue="{! empty(v.options)}">
+                                        <tr class="slds-line-height_reset " >
+                                            <th>No Records Found</th>
+                                        </tr>
+                                    </aura:if>
+                                    <tr>
+                                        <td scope="row" class="tableCSS">
+                                            <span class="radios">
+                                                <aura:iteration items="{!v.options}" var="item">
+                                                    <div class="slds-grid slds-gutters b-bottom">
+                        								<div class="slds-col slds-size_5-of-12 slds-m-top_xx-small slds-m-bottom_xx-small">
+                                                            <lightning:input type="checkbox" label="{!item.label}" checked="{!item.checked}" onchange="{!c.handleSendForms}"/>
+                                                        </div>
+                                                        <div class="slds-col slds-size_7-of-12 slds-m-top_xx-small slds-m-bottom_xx-small slds-text-align_right">
+                                                            <!--aura:if isTrue="{!not(empty(item.badge))}">
+                                                            	<lightning:badge label="{!item.badge}" iconName="utility:success"/>
+                                                            </aura:if-->
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    </aura:iteration>
+                                                    <!--lightning:checkboxGroup 
+                                                                             name="{!v.label}"
+                                                                             options="{! v.options }"
+                                                                             value="{! v.value }"
+                                                                             onchange="{! c.handleSendForms }"/-->
+                                              
+                                            </span>
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral colPayHeader1" onclick="{!c.closeModal}" >Cancel</lightning:button>                      
+                        
+                            <lightning:button class="slds-button slds-button--brand colPayHeader1" onclick="{!c.sendToPatientPortal}">Send to Patient</lightning:button>
+         
+                    </div>
+                </div>
+                
+                <aura:if isTrue="{!! v.loaded }">
+                    <lightning:spinner alternativeText="Loading" />
+                </aura:if>
+            </section>
+            
+        </div>
+        
+    </aura:if>
+</aura:component>

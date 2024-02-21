@@ -1,0 +1,87 @@
+<!--
+Developer Name : Tanveer Ahmed
+Purpose : To bring show all the problems and to bring related diagnoses
+Note: 
+
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" 
+                controller="Elixir_FormApexController" 
+                >
+    <aura:attribute name="searchKeyword" type="String"/>
+    <aura:attribute name="allOptions" type="Object"/> 
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "descriptionTag" type="String" default="SELECT RELATED DIAGNOSES : "/>
+    <aura:attribute name= "problem" type="Object"/> 
+    <aura:attribute name="problemId" type="String" />
+    <aura:attribute name="problemIndex" type="Integer"/>
+    <aura:attribute name="relatedDiagnosesList" type="Object"/>
+    <aura:attribute name="problemsList" type="Object"/>   
+    <aura:attribute name= "problemFirstCallBack" type="Boolean"/>  
+    <aura:attribute name= "isSearchInAction" type="Boolean" default="true"/>  
+    <aura:attribute name= "hasValueInDiagnoses" type="Boolean" default="false"/> 
+    <aura:attribute name="currentNote" type="Integer" default="0" />
+    <aura:attribute name="CustomProblemToDel" type="list"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-show problems_accordian">
+        
+        <div class="slds-page-header parentCSS_1_Heading">
+            
+            <section class="slds-clearfix">
+                <div class="accordian_header showLabelForProblems" >
+                    <lightning:button class="slds-show chevron_btn" aura:id="problemSection" iconName="utility:chevronright" name = "true"  onclick="{!c.problemSectionHandler}"/>
+                    <lightning:button class="slds-hide chevron_btn" aura:id="problemSection" iconName="utility:chevrondown" name = "true"   onclick="{!c.problemSectionHandler}"/>
+                    
+                    <lightning:input type="checkbox" text="{!v.problemIndex}" checked = "{!v.problem.problemIsChecked}"
+                                     onchange="{!c.handleProblemOnChange}"  name="{! v.problem.Id +'*'+v.problemIndex}" label="{!v.problem.ElixirSuite__Problem_Name__c}"
+                                     />
+                </div>
+            </section>
+        </div>
+        
+        <div class="slds-hide slds-p-around--medium removeBorder mytransition" aura:id="problemSection"  >
+            <aura:if isTrue="{!v.hasValueInDiagnoses}">
+                <div class="">
+                    <lightning:layout>
+                        <lightning:layoutItem size="9"></lightning:layoutItem>
+                        <!--lightning:layoutItem size="3">
+                            <lightning:input 
+                                             
+                                             aura:id="searchField"
+                                             value="{!v.searchKeyword}"
+                                             name="searchKnowledgeInput" 
+                                             label="" type="search" 
+                                             placeholder="Search Diagnoses"
+                                             isLoading="{!v.issearching}"
+                                             onchange="{!c.Search}"
+                                             
+                                             />
+                        </lightning:layoutItem-->
+                    </lightning:layout> 
+                </div> 
+                <b>{!v.descriptionTag}</b>
+                <aura:set attribute="else">
+                    <b>NO RELATED DIAGNOSES TEMPLATE DEFINED FOR THIS PROBLEM!</b>
+                </aura:set>
+            </aura:if>
+            <aura:if isTrue="{!v.isSearchInAction}">
+                <aura:iteration items="{!v.problem.relatedDiagnoses}" var="goalRec" indexVar="goalIdx">
+                    <c:ElixirHC_AllProblemDiagnosesOnForm goalId="{!goalRec.Id}" goalIdx="{!goalIdx}" relatedDiagnosis="{!goalRec}"
+                                                          goalsList="{!v.relatedDiagnosesList}" problemIndexInDiagnoses="{!v.problemIndex}"
+                                                          problemRecord="{!v.problem}"/>
+                </aura:iteration>
+                <aura:set attribute="else">
+                    <b>NO RELATED DIAGNOSES FOUND FOR DEFINED KEYWORD!</b>
+                </aura:set>
+            </aura:if>
+            <!--aura:if isTrue="{!not(empty(v.problem.relatedNotes[0].ElixirSuite__Notes__c))}"-->
+            <div class="notes_parent">
+                <label>Notes:</label>
+                <b> <lightning:inputRichText onblur="{!c.handleNotes}" value="{!v.problem.relatedNotes[0].ElixirSuite__Notes__c}"
+                                             /></b>
+            </div>
+            <!--/aura:if-->
+        </div>
+        
+    </div>
+</aura:component>

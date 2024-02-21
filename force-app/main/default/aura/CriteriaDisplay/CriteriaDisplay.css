@@ -1,0 +1,20 @@
+.THIS .slds-modal__container.delete_container {
+    min-width: 70% !important;
+    padding-bottom: 25px !important;
+}
+.THIS .delete_container header.slds-modal__header {
+    padding: 5px !important;
+}
+.THIS .delete_container footer.slds-modal__footer {
+    padding: 5px 15px !important;
+}
+.THIS .delete_container .slds-modal__content{
+   padding: 20px 15px!important;
+    min-height: 60px;
+    text-align: center;
+    
+}
+/* changes */
+.THIS .chnageheight {
+    height: 300px;
+}

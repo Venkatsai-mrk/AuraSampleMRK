@@ -1,0 +1,100 @@
+<aura:component controller ="ComposeMessageCmpController" implements="force:appHostable,lightning:actionOverride,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="messageSubject" type="String" />
+    <aura:attribute name="messageDetail" type="String" />
+    <aura:attribute name="replyMsg" type="Boolean" />
+    <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg','.docx','.pdf']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="true" />
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    <aura:attribute name="fileMessage" type="String" default="No file uploaded"/>
+    <aura:attribute name="fileMessageLst" type="String[]" />
+    <aura:attribute name="base64Lst" type="String[]" />
+    <aura:attribute name="showAttach" type="Boolean" default="false"/>
+    <aura:attribute name="messageClass" type="String" default="slds-text-color_error"/>
+    <aura:attribute name="fileList" type="String[]"/>
+    <aura:attribute name="fileNames" type="String" />
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="PHIcheckbox" type="Boolean" default="false"/>
+    <aura:registerEvent name="refreshMessages" type="c:RefreshMessages" />
+    <aura:handler name="init" value="{!this }" action="{!c.doInit }"/>
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container" >
+                
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{!c.hideModalBox }"
+                                      alternativeText="close"
+                                      variant="bare-inverse" 
+                                      class="slds-modal__close backgroundBlurr"/>
+                
+                <lightning:card>
+                    <div class="slds-modal__header">
+                        <h1 class="slds-modal__title slds-hyphenate my-header">Compose Message</h1>
+                    </div>
+                    <div class="slds-modal__content" >
+                    <div align="right">
+                        <div class="slds-p-right_large myDiv_ForUpload">
+                            
+                            <lightning:fileUpload label="Attach Files"
+                                                  name="fileUploader"
+                                                  multiple="true"
+                                                  accept="{!v.filetype}"
+                                                  onuploadfinished="{!c.handleUploadFinished}" />
+                            <div class="slds-p-left_x-small">
+                                <aura:if isTrue="{!v.showAttach}" >
+                                    
+                                    <aura:iteration items="{!v.fileMessageLst}" var="section" indexVar="idx">
+                                        <p class="{!v.messageClass}">{!section.name}&nbsp;
+                                        <a href="javascript:void(0)" id="{!section.value}" onclick="{!c.deleteUploadedFile}">
+                                            <lightning:icon size="x-small" iconName="utility:close" alternativeText="close" />
+                                        </a></p>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        
+                                        <p class="{!v.messageClass}">{!v.fileMessage}</p>
+                                        
+                                    </aura:set>
+                                    
+                                </aura:if>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="slds-m-top_xx-small slds-m-bottom_x-large">
+                        <div>
+                            <div class="slds-p-left_medium slds-p-right_medium">
+                                <lightning:input type="text" aura:id="mySubject" label="Subject" placeholder="Enter Subject" required="true"></lightning:input>
+                            </div>
+                        </div><br/>
+                        <div class="slds-p-left_medium slds-p-right_medium">
+                            <h3>Compose Message</h3>
+                        </div>
+                        <div class="slds-p-left_medium slds-p-right_medium">
+                            <div>
+                                <div><lightning:inputRichText placeholder="Type your message here...." formats="['font', 'size', 'bold', 'italic', 'underline',
+                                                                                                                'strike', 'list', 'indent', 'align',
+                                                                                                                'clean', 'table', 'header', 'color']" aura:id="myMessage"/><lightning:formattedRichText/></div>
+                            </div>
+                            <div>
+                                <lightning:input type="checkbox" aura:id="checkbox" value="{!v.PHIcheckbox}" label="Message contains PHI Data" onchange="{!c.handlePHICheck}"></lightning:input>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <div class="center">
+                            <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.hideModalBox}">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick="{!c.sendMessage}">Send</button>
+                        </div>
+                    </div>
+                    
+                </lightning:card>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

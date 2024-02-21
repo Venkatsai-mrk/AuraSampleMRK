@@ -1,0 +1,188 @@
+<aura:component access="global"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="ElixirOEM_AllocatePaymentHelper">
+    <!-- ALLOCATE PAYMENT ATTRIBUTES -->    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:method name="reInitialize" action="{!c.init}" />   <!--Anusha LX3-5525 & LX3-5599-->
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="procedureSearchParams" type="String" default=""/> 
+    <aura:attribute name="isSearchDisabled" type="boolean" default="false"/>
+    <aura:attribute name="makePaymentButtonDisable" type="boolean" default="false"/> 
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="totalUnAllocatedAmount" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalUnAllocatedAmount_SumCount" type="Decimal" default="0.0"/> 
+    <aura:attribute name="amountAllocated" type="Decimal" default="0.0"/>
+    <aura:attribute name="totalAppliedAmount" type="Decimal" default="0.0"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="modeOfPayment" type="String"/>
+    <aura:attribute name="amountPaid" type="Decimal" default="0.0"/>
+    <aura:attribute name="dateOfPayment" type="Date"/> 
+    <aura:attribute name="paymentTransactionNumber" type="String"/>
+    <aura:attribute name="selectedProcedureRecords" type="List"/>
+    <aura:attribute name="selectedProcedureRecordsNetInstance" type="List"/>
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="showConfirmDialogIfNoAllocation" type="boolean" default="false"/>
+    <aura:attribute name="selectedRows" type="List"/> 
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="Plist" type="list"/>
+    <aura:attribute name="isModalOpen" type="boolean" />
+    <aura:attribute name="customSettingData" type="List"/>
+    <aura:handler name="change" value="{!v.totalAppliedAmount}" action="{!c.totalAppliedAmountChange}"/>
+    <aura:handler name="change" value="{!v.totalUnAllocatedAmount}" action="{!c.totalUnAllocatedAmountChange}"/>
+    <aura:registerEvent name="PaymentEvent" type="c:PaymentEvent"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:method name="allocateThePayment" action="{!c.allocatePaymentFromUI}" access="PUBLIC"/>
+    <div>
+        <div class="slds-grid slds-gutters slds-m-top_medium">
+            <div class="slds-p-right_none slds-col slds-size_3-of-12">
+                <span class="slds-form-element__static slds-form-element__label">Total Unallocated Amount  : </span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 remove_label">
+                <div class="slds-m-top_xx-small">
+                    <lightning:formattedNumber value="{!v.totalUnAllocatedAmount_SumCount}" style="currency" currencyCode="USD"/>
+                </div>
+            </div>
+            <div class="slds-p-right_none slds-col slds-size_3-of-12">
+                <span class="slds-form-element__static slds-form-element__label">Amount to Allocate  : </span>
+            </div>
+            <div class="slds-col slds-size_3-of-12 remove_label">
+                <lightning:input type="number" 
+                                 name="amountAllocated" 
+                                 label="" 
+                                 value="{!v.amountAllocated}" 
+                                 formatter="currency" 
+                                 step="0.01" 
+                                 onchange="{!c.validateAmtAllocated}"/>                
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters dos-box">
+            <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">DOS From :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="date" value="{!v.procedureSearchParams.DOSFrom}" onchange="{!c.onDOSFromChange}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+            <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">DOS To :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="date" value="{!v.procedureSearchParams.DOSTo}" onchange="{!c.onDOSToChange}"/>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters dos-box">
+            <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">Procedure Name :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <c:ProcedureLookup selectRecordId = "{!v.procedureSearchParams.procedureId}" 
+                                   selectRecordName = "{!v.procedureSearchParams.procedureName}"
+                                   PatientId = "{!v.PatientId}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+            <div class="slds-col slds-size_1-of-12 slds-p-top_xx-small">CPT Code :</div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                <lightning:input type="text" value="{!v.procedureSearchParams.CPTCode}" />
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-text-align_right">
+                <button class="slds-button slds-button_brand attach_claims" aria-label="Search" disabled = "{!v.isSearchDisabled}"   onclick="{!c.searchClaim}" >Search</button>
+                <button class="slds-button lds-button_neutral btn attach_claims" aria-label="Clear All Filter" disabled = ""   
+                        onclick="{!c.clearClaimSearchFilter}" >Clear Filters</button>
+            </div>
+        </div>
+        <br/>
+        <aura:if isTrue="{!v.PatientId != ''}"> <!--Sagili LX3-5525-->
+            <b>Patient Procedures : </b>
+            <ui:scrollerWrapper class="scrollerSize">
+                <lightning:datatable
+                                     keyField="Id"
+                                     data="{! v.Plist }"
+                                     columns="{! v.columns }"
+                                     onrowselection="{!c.selectedRows}"
+                                     hideCheckboxColumn="false"
+                                     selectedRows="{!v.selectedRows}"
+                                     class="byProcTableCss"
+                                     minColumnWidth="150"
+                                     sortedBy="{!v.sortBy}"
+                                     sortedDirection="{!v.sortDirection}"
+                                     onsort="{!c.handleSort}"
+                                      onrowaction="{! c.handleRowAction }"
+                                     />
+            </ui:scrollerWrapper>
+            <!-- <div class="slds-grid slds-gutters pay-table">
+            <lightning:datatable
+                                 keyField="Id"
+                                 data="{! v.Plist }"
+                                 columns="{! v.columns }"
+                                 onrowselection="{!c.selectedRows}"
+                                 hideCheckboxColumn="false"
+                                 selectedRows="{!v.selectedRows}"
+                                 class="byProcTableCss"
+                                 minColumnWidth="100px"
+                                 sortedBy="{!v.sortBy}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 onsort="{!c.handleSort}"
+                                 />
+            
+            
+            
+        </div>-->
+            <!--<div class="slds-scrollable ml-80 pay-table">-->
+            
+        </aura:if>
+        <ul class="payment-list">
+            <li class="slds-text-align--center">
+                <!--lightning:button variant="destructive" 
+                                  label="Allocate Payments" 
+                                  title="Allocate Payments" 
+                                  disabled="{!v.makePaymentButtonDisable}"
+                                  onclick="{! c.allocatePaymentFromUI }"/-->
+            </li>
+        </ul> 
+        <aura:if isTrue="{!v.showConfirmDialog}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container myWidth">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Do you want to apply the 'Amount To Allocate' on the basis of oldest to newest DOS?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+        <aura:if isTrue="{!v.showConfirmDialogIfNoAllocation}">
+            
+            <div role="dialog" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container myWidth">
+                    
+                    <header class="slds-modal__header">
+                        <h1 class="slds-text-heading--medium">PLEASE REVIEW THE FOLLOWING</h1>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <center><b>Do you want to apply the 'Unallocated Amount' on the basis of oldest to newest DOS?</b></center>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="btn" name='No' label='No' onclick='{!c.handleConfirmDialogNo_NoAllocation}'/>
+                        <lightning:button class="btn" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes_NoAllocation}'/>
+                    </footer>
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>            
+        </aura:if>
+        <aura:if isTrue="{!! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>   
+    </div>
+    
+    
+</aura:component>

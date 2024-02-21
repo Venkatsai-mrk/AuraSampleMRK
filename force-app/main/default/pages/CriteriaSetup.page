@@ -1,0 +1,24 @@
+<apex:page >
+    <apex:includeLightning />
+    <style>
+        .sfdcBody{
+        overflow-y: hidden;
+        }
+    </style>
+    <!--Lightning Container-->
+    <div style="width:100%;height:100px;" id="LightningContainer"/>
+     
+    <script type="text/javascript">
+    //get account Id from URL
+    
+     
+    //Create Lightning Component
+    $Lightning.use("ElixirSuite:CriteriaDisplayApp", function() {
+        $Lightning.createComponent("ElixirSuite:GroupObjectCustomTab", 
+                                 {Environment : "Visualforce"},
+                                   "LightningContainer", function(component) {
+                                       console.log('Component created');
+                                   });
+    });
+    </script>
+</apex:page>

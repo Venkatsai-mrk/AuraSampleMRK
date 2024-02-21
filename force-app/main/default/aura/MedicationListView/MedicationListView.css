@@ -1,0 +1,111 @@
+.THIS .slds-card{
+    height:100%;
+}
+.THIS .redcolor svg{
+    fill : red;
+}
+.THIS .greencolor svg{
+    fill : green;
+}
+.THIS.mgList {
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #eee;
+    -webkit-border-radius:5px; padding:17px;
+}
+
+.THIS .redcolor svg, .THIS .slds-icon-utility-close svg{
+    fill : red;
+}
+.THIS .greencolor svg, .THIS .slds-icon-utility-check svg{
+    fill : green;
+}
+
+.THIS .selected{
+    height: 40px;
+    width: 60px;
+    margin-bottom: 15px;
+    padding : 2px;
+    border: 1px solid ;
+}
+
+.THIS .slds-scrollable_x {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+
+.THIS .slds-scrollable_y {
+    overflow-y:visible !important;
+    overflow-x:visible !important;
+}
+.THIS .left-margin{
+    margin-left:5px;
+}
+.THIS button{
+    width: max-content;
+    
+}
+.THIS span.slds-radio {
+    float: left;
+}
+.THIS button.btncss{
+   padding: 6px 15px;
+   line-height: 18px;
+   background-color: #ffffff;
+    
+}
+.THIS .parentStyle {
+    height:100%;
+}
+.THIS .subParent {
+    width:100%;background-color:rgb(243, 242, 242); height:100%;
+}
+.THIS .lengthSubHeading {
+    margin-top:2px; margin-left:10px;
+}
+.THIS .footerLength {
+    text-align:right;padding-right:2.3rem;
+}
+.THIS .forPrescription {
+    margin-top:2px; margin-left:10px;
+}
+.THIS .height100 {
+    height: 100%;
+}
+.THIS .mgList-p {
+    width:100%;
+    background-color:rgb(243, 242, 242); 
+    height:100%;
+}
+.THIS .mgList1 {
+    -webkit-border-radius:5px; 
+    padding:17px;
+}
+.THIS .font-20 {
+    font-size: 20px;
+}
+.THIS .medication-grid {
+    margin-top:2px; 
+    margin-left:10px;
+}
+.THIS .medication-grid .slds-size_7-of-12 {
+    position: relative;
+}
+.THIS .medi-btn {
+    text-align:right;
+    padding-right:2.3rem;
+}
+.THIS .prescription {
+    margin-top:2px; 
+    margin-left:10px;
+} 
+.THIS .prescription .slds-size_4-of-12 {
+    position:relative;
+}
+.THIS .pres-child {
+    bottom:13px;
+}
+.THIS .prescription .slds-size_8-of-12 {
+    text-align:right;
+    padding-right:2.3rem
+}

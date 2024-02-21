@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Wastage_Quantity__c</fullName>
+    <description>Captures the quantity of the lot item that has been wasted.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Adjust your available quantity based on the wastage.</inlineHelpText>
+    <label>Wastage Quantity</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

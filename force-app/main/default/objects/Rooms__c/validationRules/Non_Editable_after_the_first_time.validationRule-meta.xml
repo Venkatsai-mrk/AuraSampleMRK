@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Editable_after_the_first_time</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(PRIORVALUE(  No_Of_Beds__c ) = null, false, 
+
+IF(PRIORVALUE( No_Of_Beds__c ) != No_Of_Beds__c , true, false))</errorConditionFormula>
+    <errorDisplayField>No_Of_Beds__c</errorDisplayField>
+    <errorMessage>The value for this field can only be specified once. If you want to add or remove beds please do it manually from the related list.</errorMessage>
+</ValidationRule>

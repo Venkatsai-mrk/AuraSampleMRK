@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>CO</fullName>
+        <default>false</default>
+        <label>CO - Contractual Obligations</label>
+    </customValue>
+    <customValue>
+        <fullName>OA</fullName>
+        <default>false</default>
+        <label>OA - Other Adjustments</label>
+    </customValue>
+    <customValue>
+        <fullName>PI</fullName>
+        <default>false</default>
+        <label>PI - Payor Initiated Reductions</label>
+    </customValue>
+    <customValue>
+        <fullName>PR</fullName>
+        <default>false</default>
+        <label>PR - Patient Responsibility</label>
+    </customValue>
+    <masterLabel>Adjustment Group Code</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

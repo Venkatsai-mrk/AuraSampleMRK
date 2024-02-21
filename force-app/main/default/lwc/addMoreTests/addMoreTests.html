@@ -1,0 +1,98 @@
+<template>
+    <template if:true={showModal}>
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open slds-modal_large"
+      >
+        <div class="slds-modal__container">
+          <!-- Header Start -->
+          <header class="slds-modal__header">
+            <lightning-button-icon
+              class="slds-modal__close"
+              title="Close"
+              icon-name="utility:close"
+              icon-class="slds-button_icon-inverse"
+              onclick={handleDialogClose}
+            ></lightning-button-icon>
+  
+            <h2 class="slds-text-heading_medium slds-hyphenate header-string headingCss">
+              Add More Tests
+            </h2>
+          </header>
+          <!-- Header End -->
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+          >
+            <slot>
+<template if:true={selectedValuesBox}>
+              <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr>
+                    <th scope="col">Selected Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template if:true={selectedValues}>
+                    <template for:each={selectedValues} for:item="item">
+                        <tr key={item.ElixirSuite__Test_Id__c}>
+                    <td>{item.ElixirSuite__Test_Id__c}</td>
+                    <td>{item.ElixirSuite__Test_Name__c}</td>
+                        </tr>
+                        
+                    </template>
+                </template>
+            </tbody>
+        </table>
+           </template>
+              <!--<p>This is a custom modal popup component.</p>-->
+              <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12 div1">
+                  <span>
+                    <lightning-input type="search" label="Enter part of Test Name or Test Id:" placeholder="Search Tests" value={searchValue} onchange={handleSearchKey}></lightning-input>
+                  </span>
+                </div>
+                
+                <div class="slds-col slds-size_3-of-12 div2">
+                    <span>
+                        <button class="slds-button slds-button_brand buttonStyle" onclick={handleTestSearch}>Search</button>
+                    </span>
+                  </div>
+              </div>
+
+              
+            </slot>
+            
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                onloadmore={handleLoadMore}
+                enable-infinite-loading
+                columns={columns}
+                onrowselection={handleRowSelection}
+            >
+                
+            </lightning-datatable>
+          
+            <template if:false={count}>
+              <center>No items to display</center>
+            </template>
+          
+          </div>
+          
+        <div>
+        <footer class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" onclick={handleDialogClose}>Cancel</button>
+          <button class="slds-button slds-button_brand" onclick={getSelectedTestRecords}>Add Selected Tests</button>
+        </footer>
+      </div>
+        </div>
+    
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+  </template>

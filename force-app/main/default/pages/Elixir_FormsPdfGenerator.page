@@ -1,0 +1,2363 @@
+<!--DEVELOPER NAME : ROHIT SINGH BORA
+PURPOSE : TO CREATE PDF OF FORMS-->
+<apex:page controller="ElixirOEM_FormsPDFGeneratorHelper" renderAs="pdf" docType="html-5.0" standardStylesheets="false" applyBodyTag="false"  action="{!init}" >  
+<!-- <apex:page controller="ElixirOEM_FormsPDFGeneratorHelper"  renderAs="pdf" docType="html-5.0" standardStylesheets="false" applyBodyTag="false"  action="{!init}" >   -->
+    <apex:stylesheet value="{!URLFOR($Resource.pdfCSS)}"/>
+    <apex:form >
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            
+            <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" /> 
+            
+            <style type="text/css">
+                
+                @page {   
+                
+                size: a4;
+                
+                border: 1px solid black;     
+                
+                }
+                
+                body {
+                
+                margin: 0;
+                
+                padding: 0;
+                
+                }
+                .consent_para p{
+                margin:0;
+                }
+                @media(max-width: 576px) {
+                
+                .main-table {
+                
+                width: 100% !important;
+                
+                }
+                
+                } 
+                
+                .MultiVertical span{
+                
+                display:inline-block;
+                
+                margin-left:65px;
+                
+                }
+                
+                .MultiVertical span img{
+                
+                margin-right: 15px;
+                
+                }
+                
+                .SectionName td{
+                
+                padding-left: 300px !important;
+                
+                }
+            </style>
+            
+            <script>
+            
+            </script>
+            
+        </head>
+        
+        <body>
+            <!--form start-->
+            <table class="main-table first-main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 10px auto; background-color: #fff; box-shadow: 0px 0px 2px 0px #ccc;font-family: 'Lexend Deca', sans-serif;">
+                <thead>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <table class="main-table" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 10px auto; background-color: #fff; box-shadow: 0px 0px 2px 0px #ccc;font-family: 'Lexend Deca', sans-serif;">
+
+                                <thead>
+                                    <tr>
+                                        
+                                        <td style="width:120px; vertical-align: top">
+                                            <!-- <apex:image value="{!IF(isBlank(pdfData.PDF_Header_Logo__c), ' ' ,$Resource[pdfData.PDF_Header_Logo__c] )}"  width="180" style="margin: 20px 0 0 15px;" /> -->
+                                        </td>
+                                        <td style="width:620px; vertical-align: top">
+                                            <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; margin: 0 15px 0 0; width: 100%; text-align: right;">
+                                                <thead>
+                                                    <tr>
+                                                        <td style="height: 10px; vertical-align: top"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="vertical-align: top">
+                                                            <p style="margin: 0 15px 0 0; font-size: 12px;">
+                                                                {!pdfData.Address_Field_1__c}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height: 2px; vertical-align: top"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="vertical-align: top">
+                                                            <p style="margin: 0 15px 0 0; font-size: 12px;">
+                                                                {!pdfData.Address_Field_2__c}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height: 2px; vertical-align: top"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="vertical-align: top">
+                                                            <p style="margin: 0 15px 0 0; font-size: 12px;">
+                                                                {!pdfData.Address_Field_3__c}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height: 2px; vertical-align: top"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="vertical-align: top">
+                                                            <p style="margin: 0 15px 0 0; font-size: 12px;">
+                                                                {!pdfData.ElixirSuite__Phone_Number__c}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                </thead>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+
+                    </tr>
+
+                    <!--Form name, ex: patient intake form-->
+                    <th style="font-size:24px;text-align:center;">{!changedFormName}</th>
+                </thead>
+
+                <tbody>
+                    <apex:repeat value="{!cssRecords}" id="theRepeat" var="item">
+                        <!--item crossponds to a section, like section 1, section 2-->
+                        <tr>
+                            <!--section-->
+                            <td style="vertical-align: top;font-family: 'Lexend Deca', sans-serif;">
+                                <!--section name-->
+                                <br/>
+                                <apex:outputText style="font-family: 'Lexend Deca', sans-serif;" value="{!item.sObjectRefrence.Default_text__c}" escape="false" />
+
+                                <table border="0" cellpadding="0" cellspacing="0" style="width:700px;margin:auto;border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family: 'Lexend Deca', sans-serif;">
+                                    <tbody>
+                                        <!--render draw and annotate-->
+                                        <apex:outputText rendered="{! AND(item.sObjectRefrence.Select_Form_Component__c == 'Enable Draw And Annotate',
+                                                                    imageData[item.sObjectRefrence.Id]!='false')}">
+                                            <tr>
+                                                <td style="text-align:center; vertical-align: top;">
+                                                    <div style="width:700px">
+                                                        <img width="700px" src="{! imageData[item.sObjectRefrence.Id]}"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+
+                                        <!--render upload and annotate-->
+                                        <apex:outputText rendered="{! AND(item.sObjectRefrence.Select_Form_Component__c == 'Enable Upload And Annotate',
+                                                                    imageData[item.sObjectRefrence.Id]!='false')}">
+                                            <tr>
+                                                <td style="text-align:center; vertical-align: top">
+                                                    <div style="width:700px">
+                                                        <img width="700px" src="{! imageData[item.sObjectRefrence.Id]}"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+
+                                        <!--render modular matrix data-->
+                                        <apex:outputText rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Modular Table'}">
+                                            <table border="0" cellpadding="0" cellspacing="0" style="table-layout: fixed; border-spacing: 0px; border-collapse: collapse;font-family: 'Lexend Deca', sans-serif;">
+                                                <thead>
+                                                    <tr style="text-align: center;">
+                                                        <apex:repeat value="{!item.matrixHeaders}" var="header">
+                                                            <th style="border: 1px solid black; padding: 10px; margin:none">
+                                                                {!header}
+                                                            </th>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <apex:repeat value="{!modularMatrixData}" var="sectionNumber">
+                                                        <apex:repeat rendered="{!TEXT(item.sObjectRefrence.Section_Number__c) == sectionNumber}" value="{!modularMatrixData[sectionNumber]}" var="rows">
+                                                            <apex:repeat value="{!rows}" var="row">
+                                                                <tr style="text-align: center;">
+                                                                    <apex:repeat value="{!row.columns}" var="column">
+                                                                        <td style="border: 1px solid black; padding: 10px; margin:none">
+                                                                            <apex:outputText rendered="{!column.dataType == 'text'}" style="overflow-wrap: break-word;" value="{!column.value}"></apex:outputText>
+                                                                            <apex:outputText rendered="{!column.dataType == 'textarea'}" style="overflow-wrap: break-word;" value="{!column.value}"></apex:outputText>
+                                                                            <apex:outputText rendered="{!column.dataType == 'number'}" style="overflow-wrap: break-word;" value="{!column.value}"></apex:outputText>
+                                                                            
+                                                                            <apex:outputText rendered="{!column.dataType == 'date'}" value="{0,date,MMM dd, yyyy}">
+                                                                                <apex:param value="{!DATEVALUE(column.value)}"/>
+                                                                            </apex:outputText>
+
+                                                                            <!--datetime value from lWC is '2022-11-02T06:02:00.000Z'-->
+                                                                            <!--but for DATETIMEVALUE() we need it like this-  2022-11-02 06:02:00.000Z-->
+                                                                            <!--so replacing T with ' '-->
+                                                                            <apex:outputText rendered="{!column.dataType == 'datetime'}" value="{0,date,MMM dd, yyyy 'at' HH:mm aa}">
+                                                                                <apex:param value="{!DATETIMEVALUE(SUBSTITUTE(column.value, 'T', ' '))}"/>
+                                                                            </apex:outputText>
+                                                                        </td>
+                                                                    </apex:repeat>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </apex:repeat>
+                                                    </apex:repeat>
+                                                    
+
+                                                    <!-- <tr>
+                                                        <td>
+                                                            modMatData: {!modularMatrixData}
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            sectionNumber: {!item.sObjectRefrence.ElixirSuite__Section_Number__c}
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <apex:repeat value="{!modularMatrixData}" var="sectionNumber">
+                                                                <apex:outputText rendered="{!TEXT(item.sObjectRefrence.Section_Number__c) == sectionNumber}" value="{!modularMatrixData[sectionNumber]}" /><br/>
+                                                            </apex:repeat>
+                                                        </td>
+                                                    </tr> -->
+
+
+                                                </tbody>
+                                            </table>
+                                        </apex:outputText>
+
+                                        <apex:outputText rendered="{!item.sObjectRefrence.Is_matrix__c}">
+                                            <tr>
+                                                <apex:repeat value="{!item.matrixHeaders}" var="header">
+                                                    <td class="myTable" style="{! if(item.sObjectRefrence.Is_matrix__c,'font-weight: 600;text-align: center;background-color: #f7f7f7;border: 1px solid black;font-size: 12px;'+ item.colsize, item.colsize)}">
+                                                        {!header}
+                                                    </td>
+                                                </apex:repeat>
+                                            </tr>
+                                        </apex:outputText>
+
+                                        <!--components organised in rows and columns-->
+                                        <apex:repeat value="{!item.Object_1_css_r}" var="rec" rendered="{! or(and(item.sObjectRefrence.Enable_Auto_text__c,not(item.sObjectRefrence.Hide_Selections__c)),not(item.sObjectRefrence.Enable_Auto_text__c))}">
+                                            <!--rows-->
+                                            <tr class="section_rows" style="{! if(item.sObjectRefrence.ElixirSuite__Is_matrix__c,if(item.sObjectRefrence.ElixirSuite__Columns_In_Section__c==1,'width:40%',if(item.sObjectRefrence.ElixirSuite__Columns_In_Section__c==2,'width:70%','')),'')}">
+                                                <apex:repeat value="{!rec.Columns}" var="column">
+                                                    <!--columns-->
+                                                    <td class="section_columns" style="{! if(item.sObjectRefrence.ElixirSuite__Is_matrix__c,'border:1px solid black;vertical-align:top; ' + rec.colsize, 'vertical-align:top;'+rec.colsize)}">
+
+                                                        <apex:outputText rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c  == 'Glucose'}">
+
+                                                            <h4 style="margin:15px 0 5px;">
+                                                                <b>Current Glucose Log as of : {! NOW()} </b>
+                                                            </h4>
+
+
+
+                                                            <apex:outputPanel rendered="{!glucoseObservation.size>0}">
+
+
+
+                                                                <table border="1px" cellpadding="5px" cellspacing="1px" style="width: 650px;margin-top:0px;font-family: 'Lexend Deca', sans-serif;">
+
+                                                                    <tbody>
+
+                                                                        <tr>
+
+                                                                            <th>READING</th>
+
+                                                                            <th>TYPE OF CHECK </th>
+
+                                                                            <th>INTERVENTION</th>
+
+                                                                            <th>NOTE</th>
+
+
+
+                                                                        </tr>
+
+
+
+                                                                        <apex:repeat value="{!glucoseObservation}" var="gl">
+
+                                                                            <tr>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!gl.Glucose_Reading__c}
+
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!gl.Type_of_check__c}
+
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!gl.Intervention__c}
+
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!gl.Note__c}
+
+                                                                                </td>
+
+                                                                            </tr>
+
+                                                                        </apex:repeat>
+
+
+
+                                                                    </tbody>
+
+
+
+                                                                </table>
+
+                                                            </apex:outputPanel>
+
+                                                            <apex:outputPanel rendered="{!glucoseObservation.size<=0}">
+
+                                                                No glucose log defined yet!
+
+                                                            </apex:outputPanel>
+
+                                                        </apex:outputText>
+
+                                                        <apex:outputText rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c == 'Medication_List'}">
+
+                                                            <h4 style="margin:15px 0 5px;">
+                                                                <b>Current medication as of : {!NOW()} </b>
+                                                            </h4>
+
+                                                            <apex:outputPanel rendered="{!medicationData.size>0}">
+                                                                
+                                                                <table border="1px" cellpadding="5px" cellspacing="1px" style="width: 650px;margin-top:0px;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                    
+                                                                    <tbody>
+                                                                        
+                                                                        <tr>
+                                                                            
+                                                                            <th>NAME</th>
+                                                                            
+                                                                            <th>FREQUENCEY </th>
+                                                                            
+                                                                            <th>TYPE</th>
+                                                                            
+                                                                            <th>ROUTE</th>
+                                                                            
+                                                                            <th>STRENGTH</th>
+                                                                            
+                                                                        </tr>
+                                                                        
+                                                                        
+                                                                        
+                                                                        <apex:repeat value="{!medicationData}" var="medication">
+                                                                            
+                                                                            <tr>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!medication.Drug_Name__c}
+                                                                                    
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!medication.Ferquency__c}
+                                                                                    
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!medication.Type__c}
+                                                                                    
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!medication.Route_New__c}
+                                                                                    
+                                                                                </td>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    {!medication.Reason_new__c }
+                                                                                    
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                            
+                                                                        </apex:repeat>
+                                                                        
+                                                                        
+                                                                        
+                                                                    </tbody> 
+                                                                    
+                                                                    
+                                                                    
+                                                                </table>
+                                                                
+                                                            </apex:outputPanel>
+                                                            
+                                                            <apex:outputPanel rendered="{!medicationData.size<=0}">
+                                                                
+                                                                No Medications defined yet!
+                                                                
+                                                            </apex:outputPanel>
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                    
+                                                        <!-- vital signs-->
+                                                        <apex:outputText rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c == 'Vital Sign'}">
+                                                            <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                                <b>Vital signs</b>
+                                                            </h4>
+                                                            <apex:outputText rendered="{!(vitalListData != null && vitalListData.size > 0)}">
+                                                            <apex:outputText rendered="{!selectedVitalFields != null}">
+                                                               
+                                                                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                            <apex:outputText value="S.No" />
+                                                                        </th>
+                                                                            <apex:repeat value="{!selectedVitalFields}" var="field" rows="7">
+                                                                                <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                                    <apex:outputText value="{!$ObjectType.Medical_Examination__c.fields[field].Label}" />
+                                                                                </th>
+                                                                            </apex:repeat>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <apex:variable var="index" value="{!1}"/>
+                                                                        <apex:repeat value="{!vitalListData}" var="currentRecord">
+                                                                            <tr>
+                                                                                <td style="vertical-align: top">
+                                                                                    {!index}
+                                                                                </td>
+                                                                                <apex:repeat value="{!selectedVitalFields}" var="field" rows="7">
+                                                                                    <td style="vertical-align: top">
+                                                                                        <apex:outputText rendered="{!$ObjectType.Medical_Examination__c.fields[field].type == 'datetime'}" 
+                                                                                                         value="{0,date,yyyy-MM-dd 'at' hh:mm a}">
+                                                                                            <apex:param value="{!currentRecord[field]}" />
+                                                                                        </apex:outputText>
+                                                                                        <apex:outputText rendered="{!$ObjectType.Medical_Examination__c.fields[field].type != 'datetime'}" 
+                                                                                                         value="{!currentRecord[field]}" />
+                                                                                    </td>
+                                                                                </apex:repeat>
+                                                                            </tr>
+                                                                            <apex:variable var="index" value="{!index + 1}" />
+                                                                        </apex:repeat>
+                                                                    </tbody>
+                                                                </table>
+                                                            </apex:outputText>
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!( vitalListData == null || vitalListData.size == 0)}">
+                                                            No data to display
+                                                        </apex:outputText>
+                                                        </apex:outputText>
+
+
+                                                        <!-- vital signs-->
+
+
+                                                        
+                                                        
+                                                        
+                                                        <apex:outputText rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c == 'Allergy'}">
+                                                            
+                                                         <!--<apex:outputPanel rendered="{!allergyData.size > 0}">
+                                                                <apex:variable var="allergyColumns" value="{!allergyColumns1}"  rendered="{!NOT(ISNULL(allergyColumns1))}">
+                                                                    <h4 style="margin:15px 0 5px;">
+                                                                        <b>Allergies as of : {! NOW()}</b>
+                                                                    </h4>
+                                                                    <table border="1px" cellpadding="5px" cellspacing="1px" style="width: 650px; margin-top: 0px;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <apex:repeat value="{!allergyColumns1}" var="column">
+                                                                                    <td style="vertical-align: top">
+                                                                                         <apex:outputPanel rendered="{!column == 'AllergyName'}">Allergy Name</apex:outputPanel>
+                                                                                        <apex:outputPanel rendered="{!column == 'Substance'}">SUBSTANCE</apex:outputPanel>
+                                                                                        <apex:outputPanel rendered="{!column == 'SubstanceCode'}">SUBSTANCE CODE</apex:outputPanel>
+                                                                                        <apex:outputPanel rendered="{!column == 'Reaction'}">REACTION</apex:outputPanel>
+                                                                                         <apex:outputPanel rendered="{!column == 'Severity'}">Severity</apex:outputPanel>
+                                                                                    </td>
+                                                                                </apex:repeat>
+                                                                            </tr>
+                                                                            <apex:repeat value="{!allergyData}" var="allergy" id="theRepeat">
+                                                                                <tr>
+                                                                                    <apex:repeat value="{!allergyColumns1}" var="column">
+                                                                                        <td style="vertical-align: top">
+                                                                                            <apex:outputPanel rendered="{!column == 'AllergyName'}">
+                                                                                                {!allergy.ElixirSuite__Allergy_Name1__r.Name}
+                                                                                            </apex:outputPanel>
+                                                                                            <apex:outputPanel rendered="{!column == 'Substance'}">
+                                                                                                {!allergy.ElixirSuite__Substance1__r.Name}
+                                                                                            </apex:outputPanel>
+                                                                                            <apex:outputPanel rendered="{!column == 'SubstanceCode'}">
+                                                                                                {!allergy.Substance_Code__c}
+                                                                                            </apex:outputPanel>
+                                                                                            <apex:outputPanel rendered="{!column == 'Reaction'}">
+                                                                                                {!allergy.ElixirSuite__Reaction1__r.Name}
+                                                                                            </apex:outputPanel>
+                                                                                             <apex:outputPanel rendered="{!column == 'Severity'}">
+                                                                                                {!allergy.ElixirSuite__Severity1__r.Name}
+                                                                                            </apex:outputPanel>
+                                                                                        </td>
+                                                                                    </apex:repeat>
+                                                                                </tr>
+                                                                                
+                                                                            </apex:repeat>
+                                                                            
+                                                                            
+                                                                            
+                                                                        </tbody>   
+                                                                    </table>
+                                                                </apex:variable>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!OR(ISNULL(allergyData), ISNULL(allergyColumns1))}">
+                                                                No allergies defined yet!
+                                                                
+                                                            </apex:outputPanel>-->
+                                                            <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                                <b>Allergies</b>
+                                                            </h4>
+                                                            
+                                                            <apex:outputText rendered="{!(NOT(ISNULL(allergyData)) && allergyData.size > 0)}">
+                                                            <apex:outputText rendered="{!selectedAllergyFields != null}">
+                                                            
+                                                            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                            <apex:outputText value="S.No" />
+                                                                        </th>
+                                                                        <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                            <apex:outputText value="Allergy Name" />
+                                                                        </th>
+                                                                        <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                            <apex:outputText value="Substance" />
+                                                                        </th>
+                                                                        <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                            <apex:outputText value="Substance Code" />
+                                                                        </th>
+                                                                        
+                                                                        <apex:repeat value="{!selectedAllergyFields}" var="field" rows="7">
+                                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                                <apex:outputText value="{!$ObjectType.Medical_Examination__c.fields[field].Label}" />
+                                                                            </th>
+                                                                        </apex:repeat>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:variable var="index" value="{!1}"/>
+                                                                    <apex:repeat value="{!allergyData}" var="record">
+                                                                        <tr>
+                                                                            <td style="vertical-align: top">
+                                                                                {!index}
+                                                                            </td>
+                                                                            <td style="vertical-align: top">
+                                                                                <apex:outputText value="{!record.ElixirSuite__Allergy_Name1__r.Name}" />
+                                                                            </td>
+                                                                            <td style="vertical-align: top">
+                                                                                <apex:outputText value="{!record.ElixirSuite__Substance1__r.Name}" />
+                                                                            </td>
+                                                                            <td style="vertical-align: top">
+                                                                                <apex:outputText value="{!record.ElixirSuite__Substance_Code__c}" />
+                                                                            </td>
+                                                                            <apex:repeat value="{!selectedAllergyFields}" var="field" rows="7">
+                                                                                <td style="vertical-align: top">
+                                                                                    <apex:outputText value="{!IF(
+                                                                                        field == 'ElixirSuite__Allergy_Name1__c', record.ElixirSuite__Allergy_Name1__r.Name,
+                                                                                        IF(field == 'ElixirSuite__Substance1__c', record.ElixirSuite__Substance1__r.Name,
+                                                                                           IF(field == 'ElixirSuite__Reaction1__c', record.ElixirSuite__Reaction1__r.Name,
+                                                                                              IF(field == 'ElixirSuite__Severity1__c', record.ElixirSuite__Severity1__r.Name,
+                                                                                                 record[field]
+                                                                                              )
+                                                                                           )
+                                                                                        )
+                                                                                    )}" />
+                                                                                </td>
+                                                                            </apex:repeat>
+                                                                        </tr>
+                                                                        <apex:variable var="index" value="{!index + 1}" />
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+                                                        </apex:outputText>
+
+                                                            
+                                                        </apex:outputText>
+                                                            
+                                                           
+                                                            <apex:outputText rendered="{!(ISNULL(allergyData) || allergyData.size == 0)}">
+                                                                No data to display
+                                                            </apex:outputText>
+
+                                                        </apex:outputText>
+                                                        
+                                                        <!--IMAGE UPLOAD TO PDF-->
+                                                        
+                                                        <apex:outputText rendered="{! or(column.sObjectColumnRefrence.ElixirSuite__IMG_Type_of_Row__c  == 'File Upload')}">
+                                                            
+                                                            <ul style="margin:0;padding:0;">
+                                                                
+                                                                <apex:repeat value="{!column.imgFileDemographics}" var="imageVar">
+                                                                    
+                                                                    <li style="display:inline-block;width:300px;margin-left:0;">
+                                                                        
+                                                                        <table border="0" cellpadding="0" cellspacing="0" style="font-family: 'Lexend Deca', sans-serif;">
+                                                                            
+                                                                            <tr>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    <apex:outputText value="{!'Please Upload '+column.sObjectColumnRefrence.IMG_File_Name__c}" />
+
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td style="height:7px;"></td>
+                                                                            </tr>
+
+                                                                            <tr>
+
+                                                                                <td style="vertical-align: top">
+                                                                                    <apex:outputPanel rendered="{!(imageVar.uploadFileType == 'PDF')}" >
+                                                                                        <div style="line-height:80px">
+                                                                                            <i>Preview is not available for this file</i>
+                                                                                        </div>                                                                                        																		                                                                                       
+                                                                                    </apex:outputPanel>
+																					<apex:outputPanel rendered="{!(imageVar.uploadFileType != 'PDF')}">
+                                                                                    	<img class="imgCls" src="{!'/sfc/servlet.shepherd/document/download/'+ imageVar.recordContentVersionId}" width="250" />
+																					</apex:outputPanel>
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td style="height:7px; vertical-align: top">
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+
+                                                                                <td style="vertical-align: top">
+
+                                                                                    <apex:outputText value="{!imageVar.nameOfImageFile}" />
+
+                                                                                </td>
+                                                                                
+                                                                            </tr>
+                                                                            
+                                                                        </table>
+                                                                        
+                                                                    </li>
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                </apex:repeat>  
+                                                                
+                                                            </ul>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        
+                                                        
+                                                        <!-- end -->
+                                                        
+                                                        <apex:outputText rendered="{! or(column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'BOOLEAN',column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'boolean')}">
+                                                            
+                                                            <table style="width:100%;font-weight: 700;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                
+                                                                <tbody>
+                                                                    
+                                                                    <tr>
+                                                                        <td style="vertical-align: top; width: 16px">
+                                                                            <apex:outputPanel rendered="{! column.value == 'false'}">
+                                                                                <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                    'unchecked.png')}" style="margin-top: 1px;width:16px;"
+                                                                                />
+                                                                            </apex:outputPanel>
+
+                                                                            <apex:outputPanel rendered="{! column.value == 'true'}">
+                                                                                <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                    'checked.png')}" style="margin-top: 1px;width:16px;"
+                                                                                />
+                                                                            </apex:outputPanel>
+
+                                                                        </td>
+                                                                        <td style="font-weight: 700; vertical-align: top; overflow-wrap: break-word;">
+                                                                            <apex:outputText escape="false" value="{!HTMLENCODE(column.sObjectColumnRefrence.Field_Label_Long__c)}" />
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </apex:outputText>
+
+                                                        <apex:outputText rendered="{! or(column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'ONLYTEXT',column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'onlytext')}">
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                <tr>
+                                                                    <td style="text-align: center;font-size: 12px;vertical-align: top">
+                                                                        <apex:outputText escape="false" value="{!column.sObjectColumnRefrence.Default_text__c}" />
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputText>
+
+                                                        <apex:outputText rendered="{! or(column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'DATE',column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'date')}">
+
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        <div>
+
+                                                                            <apex:outputText rendered="{! ISBLANK(column.valueInDate)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputText>
+                                                                            
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.valueInDate)}" value="{0, date, MMMM d','  yyyy}">
+                                                                                
+                                                                                <apex:param value="{!column.valueInDate}"/>
+                                                                                
+                                                                            </apex:outputText>
+                                                                        </div>
+                                                                        
+                                                                        
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>         
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{! column.sObjectColumnRefrence.ElixirSuite__Data_Type__c == 'nbsp'}">
+                                                            
+                                                            &nbsp;        
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'DATETIME',column.sObjectColumnRefrence.Data_Type__c == 'datetime')}">
+                                                            
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;">
+                                                                
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top;overflow-wrap: break-word;">                                                                         <div>
+                                                                            <apex:outputText rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputText>
+                                                                            
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.value)}"  value="{!column.value}" />
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>                                               
+                                                            
+                                                        </apex:outputText>
+
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'TIME',column.sObjectColumnRefrence.Data_Type__c == 'time')}">
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                <tr>
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        <div>
+                                                                            <apex:outputText rendered="{! ISBLANK(column.value)}">
+                                                                                NA
+                                                                            </apex:outputText>
+
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.value)}" value="{!column.value}"></apex:outputText>
+                                                        
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'STRING',column.sObjectColumnRefrence.Data_Type__c == 'string')}">
+
+                                                            <table class="patient name" style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        <div>
+                                                                            <apex:outputText rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputText>
+                                                                            
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.value)}"  value="{!column.value}" />
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <!-- Added by vidish -->
+                                                        <apex:outputText rendered="{!and(or(column.sObjectColumnRefrence.Data_Type__c == 'REFERENCE',column.sObjectColumnRefrence.Data_Type__c == 'reference'),not(column.sObjectColumnRefrence.Form_Data_Type__c == 'Allergy'),not(column.sObjectColumnRefrence.Form_Data_Type__c == 'Vital Sign'),not(column.sObjectColumnRefrence.Form_Data_Type__c == 'Medication_List'),not(column.sObjectColumnRefrence.Form_Data_Type__c == 'Glucose'))}">
+
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                         <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        
+                                                                        <div>
+                                                                            <apex:outputText rendered="{! ISBLANK(column.value)}">
+
+                                                                                NA
+
+                                                                            </apex:outputText>
+
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.value)}" value="{!column.value}" />
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </apex:outputText>
+                                                        <!-- code ended by vidish -->
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'TEXTAREA',column.sObjectColumnRefrence.Data_Type__c == 'textarea')}">
+                                                            
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top;  overflow-wrap: break-word;">
+                                                                        <!--tr fix-->
+                                                                        <div>
+                                                                            <apex:outputPanel rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                            
+                                                                            <apex:outputPanel rendered="{!! ISBLANK(column.value)}">
+                                                                                
+                                                                                <apex:outputText value="{!column.value}"/>
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                        </div> 
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>           
+                                                            
+                                                        </apex:outputText>
+
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'EMAIL',column.sObjectColumnRefrence.Data_Type__c == 'email')}">
+
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                       
+                                                                        <div>
+                                                                            <apex:outputText rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputText>
+                                                                            
+                                                                            <apex:outputText rendered="{!! ISBLANK(column.value)}"  value="{!column.value}" />
+                                                                            <apex:param value="{!column.value}">
+                                                                                
+                                                                            </apex:param>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>
+                                                            
+                                                        </apex:outputText>
+
+                                                    
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'DOUBLE',column.sObjectColumnRefrence.Data_Type__c == 'double')}">
+                                                            
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        
+                                                                        <div>
+                                                                            <apex:outputPanel rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                            
+                                                                            <apex:outputPanel rendered="{!! ISBLANK(column.value)}">
+                                                                                
+                                                                                <apex:outputText value="{!column.value}"/>
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>           
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'PHONE',column.sObjectColumnRefrence.Data_Type__c == 'phone')}">
+
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c + ' '}" />
+
+                                                                    </td>
+
+                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                        
+                                                                        <div>
+                                                                            <apex:outputPanel rendered="{! ISBLANK(column.value)}">
+                                                                                
+                                                                                NA
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                            
+                                                                            <apex:outputPanel rendered="{!! ISBLANK(column.value)}">
+                                                                                
+                                                                                <apex:outputText value="{!column.value}"/>
+                                                                                
+                                                                            </apex:outputPanel>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>           
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Field_Label_Long__c == 'nbsp')}">
+                                                            
+                                                        </apex:outputText>
+                                                         <apex:outputText rendered="{! column.sObjectColumnRefrence.ElixirSuite__Is_Consent__c}">
+
+                                                            <table style="font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                <tr>
+
+                                                                    <td style="vertical-align: top;color:#464646;">
+
+                                                                        <apex:outputText escape="false" value="{!column.ConsentTextOnly}" />
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </apex:outputText>
+
+
+                                                        <apex:outputText rendered="{! and(!item.sObjectRefrence.ElixirSuite__Is_matrix__c, and( or(column.sObjectColumnRefrence.Data_Type__c == 'PICKLIST',column.sObjectColumnRefrence.Data_Type__c == 'picklist'), column.sObjectColumnRefrence.Form_Data_Type__c == 'Radio'))}">
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                <tr class="{!item.sObjectRefrence.Class__c}">
+                                                                    <td style="{! if(item.sObjectRefrence.ElixirSuite__Is_matrix__c,'font-weight: 700; vertical-align: top','font-weight: 700; vertical-align: top')}">
+                                                                        <apex:outputText value="{!column.sObjectColumnRefrence.Field_Label_Long__c}" rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c == 'Radio'}"
+                                                                        />
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="2" style="vertical-align: top">
+
+                                                                        <apex:repeat value="{!column.PicklistValues}" var="pickVal" rendered="{!column.sObjectColumnRefrence.Form_Data_Type__c == 'Radio'}">
+                                                                            <apex:variable var="index" value="{!1}" />
+
+                                                                            <apex:outputPanel rendered="{!column.value == pickVal.value}">
+                                                                                <apex:variable var="index" value="{!index + 1}" />
+                                                                                <span style="{!IF(column.sObjectColumnRefrence.Class__c == 'MultiVertical', 'min-width: 44%; display : block; margin: auto 10px 5px auto; vertical-align:top;', 'min-width: 44%; display : inline-block;  margin: auto 10px 5px auto; vertical-align:top;')}">
+                                                                                    <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                    'radio_button_checked.png')}"
+                                                                                        style="width:16px;" />
+                                                                                    <apex:outputText value="{!pickVal.label}" style="vertical-align: top; margin: auto 10px auto 6.5px" />
+                                                                                </span>
+                                                                            </apex:outputPanel>
+
+                                                                            <!-- <apex:outputPanel rendered="{!index == 1}">
+                                                                                <span style="{!IF(column.sObjectColumnRefrence.Class__c == 'MultiVertical', 'min-width: 44%; display : block; margin: auto 10px 5px auto; vertical-align:top;', 'min-width: 44%; display : inline-block;  margin: auto 10px 5px auto; vertical-align:top;')}">
+                                                                                    <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                    'radio_button_unchecked.png')}"
+                                                                                        style="width:16px;" />
+                                                                                    <apex:outputText value="{!pickVal.label}" style="vertical-align: top; margin: auto 10px auto 6.5px" />
+                                                                                </span>
+                                                                            </apex:outputPanel> -->
+                                                                        </apex:repeat>
+                                                                        
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table> 
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'PICKLIST',column.sObjectColumnRefrence.Data_Type__c == 'picklist')}">
+                                                            
+                                                            <table style="width:100%;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                
+                                                                <tr class="{!item.sObjectRefrence.Class__c}">
+                                                                    
+                                                                    <td colspan="2">               
+                                                                        
+                                                                        <apex:outputText rendered="{! AND(ISBLANK(column.value), column.sObjectColumnRefrence.ElixirSuite__Form_Data_Type__c != 'Radio')}">
+
+                                                                            <table style="margin:-2.5px auto auto -2.5px; width:100%; font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                                <tr>
+
+                                                                                    <td style="overflow-wrap: break-word; font-weight: 700; vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c}" />
+
+                                                                                    </td>
+
+                                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+                                                                                        <p>NA</p>
+                                                                                    </td>
+                                                                                </tr>   
+
+                                                                                
+
+                                                                            </table>
+                                                                            
+                                                                        </apex:outputText>
+                                                                        
+                                                                        <apex:outputText rendered="{! AND(NOT(ISBLANK(column.value)), column.sObjectColumnRefrence.ElixirSuite__Form_Data_Type__c != 'Radio')}">
+
+                                                                            <table style="margin:-2.5px auto auto -2.5px; width:100%; font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+
+                                                                                <tr>
+
+                                                                                    <td style="overflow-wrap: break-word; font-weight: 700;vertical-align: top; {!IF(column.sObjectColumnRefrence.No_Label__c, ' width:0px; padding:0px; ', ' width:50%; padding:1px; ')}">
+
+                                                                                        <apex:outputText rendered="{!NOT(column.sObjectColumnRefrence.No_Label__c)}" value="{!column.sObjectColumnRefrence.Field_Label_Long__c}" />
+
+                                                                                    </td>
+                                                                                    <td style="vertical-align: top; overflow-wrap: break-word;">
+
+                                                                                        <apex:outputText value="{!column.value}" />
+
+                                                                                    </td>
+                                                                                    
+                                                                                </tr>
+                                                                                
+                                                                            </table>
+                                                                            
+                                                                        </apex:outputText>
+                                                                        
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            </table>
+                                                            
+                                                        </apex:outputText>
+                                                        
+                                                        <apex:outputText rendered="{!or(column.sObjectColumnRefrence.Data_Type__c == 'MULTIPICKLIST',column.sObjectColumnRefrence.Data_Type__c == 'multipicklist')}">
+                                                            
+                                                            <table style="font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                                
+                                                                <tr class="{!item.sObjectRefrence.Class__c}">
+
+                                                                    <td style="! if(item.sObjectRefrence.ElixirSuite__Is_matrix__c,'font-weight: 700;vertical-align:top','font-weight: 700;vertical-align:top;')}">
+
+                                                                        <apex:outputText value="{!column.sObjectColumnRefrence.Field_Label_Long__c}" style="font-weight: 700;"
+                                                                        />
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td class="3">
+                                                                        <apex:repeat value="{!column.PicklistValues}" var="pickVal">
+                                                                            <apex:variable var="index" value="{!1}" />
+
+                                                                            <apex:repeat value="{!column.values}" var="val">
+                                                                                <apex:outputPanel rendered="{!val == pickVal.value}">
+                                                                                    <apex:variable var="index" value="{!index + 1}" />
+                                                                                    <span style="{!IF(column.sObjectColumnRefrence.Class__c == 'MultiVertical', 'min-width: 44%; display : block; margin: auto 10px 5px auto; vertical-align:top;', 'min-width: 44%; display : inline-block;  margin: auto 10px 5px auto; vertical-align:top;')}">
+                                                                                        <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                        'checked.png')}"
+                                                                                            style="width: 16px;" /> &nbsp;
+                                                                                        <apex:outputText value="{!pickVal.label}" style="vertical-align: top" />
+                                                                                    </span>
+                                                                                </apex:outputPanel>
+                                                                            </apex:repeat>
+
+                                                                            <apex:outputPanel rendered="{!index == 1}">
+                                                                                <span style="{!IF(column.sObjectColumnRefrence.Class__c == 'MultiVertical', 'min-width: 44%; display : block; margin: auto 10px 5px auto; vertical-align:top;', 'min-width: 44%; display : inline-block;  margin: auto 10px 5px auto; vertical-align:top;')}">
+                                                                                    <apex:image url="{!URLFOR($Resource.IconsForFormsPDF,
+                                                                                                    'unchecked.png')}" style="width: 16px;"
+                                                                                    /> &nbsp;
+                                                                                    <apex:outputText value="{!pickVal.label}" style="vertical-align: top" />
+                                                                                </span>
+                                                                            </apex:outputPanel>
+                                                                        </apex:repeat>
+                                                                        
+                                                                    </td>
+                                                                    
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </apex:outputText>
+
+                                                    </td>
+                                                    
+                                                </apex:repeat>
+                                                
+                                            </tr>
+                                            <!--just_to_create_a_margin-bottom_after_each_row except if section contians matrix-->
+                                            <apex:outputText rendered="{!NOT(item.sObjectRefrence.Is_matrix__c)}">
+                                                <tr style="height:2px; width:100%"></tr>
+                                            </apex:outputText>
+
+                                        </apex:repeat>
+                                        
+                                        <tr>
+
+                                            <td style="vertical-align: top">
+
+                                                <apex:outputText rendered="{!item.sObjectRefrence.Enable_Auto_text__c}">
+                                                    
+                                                    <table style="word-wrap: break-word;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                        
+                                                        <tr>
+
+                                                            <td style="vertical-align: top">
+                                                                <apex:outputText value="{!item.autoText}" escape="false" />
+                                                            </td>
+
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                    
+                                                </apex:outputText>
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                        <!--for macrotext start-->
+                                        
+                                        <tr>
+
+                                            <td style="vertical-align: top">
+
+                                                <apex:outputText rendered="{!item.sObjectRefrence.isFormMacro__c}">
+                                                    
+                                                    <table style="word-wrap: break-word;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                        
+                                                        <tr>
+
+                                                            <td style="vertical-align: top;color:#464646">
+                                                                <apex:outputText value="{!item.macroTemplateText}" escape="false" />
+                                                            </td>
+
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                    
+                                                </apex:outputText>
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                        <!--for macrotext end-->
+                                        <!--for problemNote start-->
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <apex:outputText rendered="{!item.sObjectRefrence.Add_Notes__c}">
+                                                    <table style="word-wrap: break-word;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                <apex:outputText value="{!item.problemNoteTemplateText}" escape="false" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </apex:outputText>
+                                            </td>
+                                        </tr>
+
+                                        <!--for problemNote end-->
+                                        
+                                        <!--for diagnosisNote start-->
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <apex:outputText rendered="{!item.sObjectRefrence.Add_Notes__c}">
+                                                    <table style="word-wrap: break-word;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                <apex:outputText value="{!item.diagnosisNoteTemplateText}" escape="false" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </apex:outputText>
+                                            </td>
+                                        </tr>
+
+                                        <!--for diagnosisNote end-->
+
+                                        <!--for procedureNote start-->
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <apex:outputText rendered="{!item.sObjectRefrence.Add_Notes__c}">
+                                                    <table style="word-wrap: break-word;font-family: 'Lexend Deca', sans-serif;font-size:12px;">
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                <apex:outputText value="{!item.procedureNoteTemplateText}" escape="false" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </apex:outputText>
+                                            </td>   
+                                        </tr>
+
+                                        <!--for procedureNote end-->
+                                        
+                                        
+                                        <!-- PROBLEM DISPLAY -->
+                                          <!--for problemNote start-->
+                                        <apex:outputPanel layout="block" rendered="{!item.sObjectRefrence.Add_Problem__c}">
+                                            
+                           <!--     <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin: 20px auto 0; 
+                                                          font-size: 10px; color: #333;border-top: none; border-left: none;" border="1" cellpadding="3" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No.</th>
+                                                        <th>Problem Name</th>
+                                                        <th>ICD Label</th>
+                                                        <th>ICD Version</th>
+                                                        <th>Snowmed</th>
+                                                        <th>Status</th>
+                                                        <th>Problem Type</th>
+                                                        <th>Date Diagnosed</th>
+                                                        <th>Notes</th>
+                                                        <th>Created Date</th>
+                                                        <th>Created By</th>
+                                                        <th>Modified Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:variable var="index" value="{!1}"/>
+                                                    <apex:repeat value="{!problemLst}" var="problemObj" id="problemTable">
+                                                        
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                {!index}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.problemName}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.icd}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.icdVersion}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.snowmedCTCode}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.status}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.problemType}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.dateDiagonised}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.notes}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.CreatedDate}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.CreatedBy}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!problemObj.modifiedDate}
+                                                            </td>
+                                                        </tr>
+                                                        <apex:variable var="index" value="{!index + 1}" />
+                                                    </apex:repeat>
+                                                    
+                                                </tbody>
+                                            </table>-->
+                                      
+                                      
+                                            <!--apex:outputText rendered="{!NOT(ISNULL(selectedFields) && selectedFields.size > 0)}"-->   
+                                            <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                            <b>Problems</b>
+                                            </h4>
+                                            <apex:outputText rendered="{!(NOT(ISNULL(myObjectRecords)) && myObjectRecords.size > 0)}">
+                                           
+                                                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="S.No" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="Name" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="SNOMED CT Code" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="Problem Type" />
+                                                            </th>
+                                                            <apex:repeat value="{!selectedFields}" var="field" rows="7">
+                                                                <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                    <apex:outputText value="{!$ObjectType.Dataset1__c.fields[field].Label}" />
+                                                                </th>
+                                                            </apex:repeat>
+                                                        </tr>
+                                                        <apex:variable var="index" value="{!1}"/>
+                                                        <apex:repeat value="{!myObjectRecords}" var="record">
+                                                            <tr>
+                                                                <td style="vertical-align: top">
+                                                                    {!index}
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!record.Name}" />
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!record.SNOMED_CT_Code__c}" />
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!record.Problem_Type__c}" />
+                                                                </td>
+                                                               
+                                                                <apex:repeat value="{!selectedFields}" var="field" rows="7">
+                                                                    <td style="vertical-align: top">
+                                                                        <!-- Format Date fields -->
+                                                                        <apex:outputText value="{!IF(field == '', 
+                                                                                        '{0,date,MMMM d, yyyy}', 
+                                                                                        record[field])}">
+                                                                    <apex:param value="{!record[field]}" />
+                                                                    
+                                                                </apex:outputText>
+                                                                    </td>
+                                                                </apex:repeat>
+                                                            </tr>
+                                                            <apex:variable var="index" value="{!index + 1}" />
+                                                        </apex:repeat>
+                                                    </tbody>   
+                                                </table>
+                                            
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!(ISNULL(myObjectRecords) || myObjectRecords.size == 0)}">
+                                                No data to display
+                                            </apex:outputText>
+        <!--/apex:outputText-->
+   
+                                        
+                                
+                                        </apex:outputPanel>
+                                        
+                                        
+                                        <!--PROBLEM END-->
+										
+                                        <!--Diagnosis Start -->
+										
+                                        <apex:outputPanel layout="block"  rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Diagnoses'}">
+                                        
+                                        <!--apex:outputPanel id="diagnosisPanel" rendered="{!NOT(ISNULL(selectedDiagnosisFields))}"-->
+                                            <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                <b>Diagnoses</b>
+                                            </h4>
+                                         <apex:outputText rendered="{!(NOT(ISNULL(diagnosisObjectRecords))&& diagnosisObjectRecords.size > 0)}">
+                                        <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                        <apex:outputText value="S.No" />
+                                                    </th>
+                                                    <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                        <apex:outputText value="Code Label" />
+                                                    </th>
+                                                    <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                        <apex:outputText value=" Code Description" />
+                                                 </th>
+                                                    <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                        <apex:outputText value="ICD Version" />
+                                                    </th>
+                                                    <apex:repeat value="{!selectedDiagnosisFields}" var="field" rows="7">
+                                                        <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                            <apex:outputText value="{!$ObjectType.ICD_Codes__c.fields[field].Label}" />
+                                                        </th>
+                                                    </apex:repeat>
+                                                    <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                        <apex:outputText value="Related Problems" />
+                                                    </th>
+                                                </tr>
+                                                <apex:variable var="index" value="{!1}"/>
+                                                <apex:repeat value="{!diagnosisObjectRecords}" var="record">
+                                                    <tr>
+                                                        <td style="vertical-align: top">
+                                                            {!index}
+                                                        </td>
+                                                        <td style="vertical-align: top">
+                                                            <apex:outputText value="{!record.Name}" />
+                                                        </td>
+                                                        <td style="vertical-align: top">
+                                                            <apex:outputText value="{!record.Code_Description1__c}" />
+                                                        </td>
+                                                        <td style="vertical-align: top">
+                                                            <apex:outputText value="{!record.Version__c}" />
+                                                        </td>
+                                                        <apex:repeat value="{!selectedDiagnosisFields}" var="field" rows="7">
+                                                            <td style="vertical-align: top">
+                                                                <apex:outputText value="{!IF(field == 'ElixirSuite__Date_Diagonised__c', 
+                                                                                        '{0,date,MMMM d, yyyy}', 
+                                                                                        record[field])}">
+                                                                    <apex:param value="{!record[field]}" />
+                                                                    
+                                                                </apex:outputText>
+                                                            </td>
+                                                        </apex:repeat>
+                                                        <td style="vertical-align: top">
+                                                            <apex:outputText value="{!formattedRelatedProblemsMap[record.Id]}" />
+                                                        </td>
+                                                    </tr>
+                                                    <apex:variable var="index" value="{!index + 1}" />
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!(ISNULL(diagnosisObjectRecords) || diagnosisObjectRecords.size == 0)}" style="font-family: 'Lexend Deca', sans-serif;">
+                                                No data to display
+                                            </apex:outputText>
+                                            
+                                    <!--/apex:outputPanel-->
+                                            
+                                         
+                                        </apex:outputPanel>
+										<!--Diagnosis End-->
+                                        
+                                         <!--Medication Start -->
+										
+                                         <apex:outputPanel layout="block" rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Medications List'}">
+                                            <!--apex:outputPanel id="medicationPanel" rendered="{!NOT(ISNULL(selectedMedicationFields) && selectedMedicationFields.size > 0)}"-->
+                                                <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                    <b>Medications</b>
+                                                </h4>
+                                             <apex:outputText rendered="{!(NOT(ISNULL(medicationLstData)) && medicationLstData.size > 0)}">
+                                                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 700px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="S.No" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="Medication Name" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="Strength" />
+                                                            </th>
+                                                            <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                <apex:outputText value="Directions" />
+                                                            </th>
+                                                            <apex:repeat value="{!selectedMedicationFields}" var="field" rows="7">
+                                                                <th style="vertical-align: top;background-color: #f7f7f7;">
+                                                                    <apex:outputText value="{!IF(field == 'strength', 'Strength', $ObjectType.Prescription_Order__c.fields[field].Label)}" />
+                                                                </th>
+                                                            </apex:repeat>
+                                                        </tr>
+                                                        <apex:variable var="index" value="{!1}"/>
+                                                        <apex:repeat value="{!medicationLstData}" var="record">  
+                                                            <tr>
+                                                                <td style="vertical-align: top">
+                                                                    {!index}
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!record.ElixirSuite__Medication__r.Name}" />
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!formattedRelatedFrequencyMap[record.Id]}" />
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <apex:outputText value="{!record.ElixirSuite__Direction__c}" />
+                                                                </td>
+                                                                <apex:repeat value="{!selectedMedicationFields}" var="field" rows="7">
+                                                                    <td style="vertical-align: top">
+                                                                       
+                                                                        <apex:outputText value="{!IF(
+                                                                                                field == 'ElixirSuite__Medication__c', 
+                                                                                                record.ElixirSuite__Medication__r.Name,
+                                                                                                IF(field == 'CreatedById', 
+                                                                                                record.CreatedBy.Name, 
+                                                                                                IF(field == 'strength', 
+                                                                                                formattedRelatedFrequencyMap[record.Id], 
+                                                                                                IF(field == '', 
+                                                                                                '{0,date,MMMM d, yyyy}', 
+                                                                                                record[field]
+                                                                                                )
+                                                                                                )
+                                                                                                )
+                                                                                                )}">
+                                                                            <apex:param value="{!record[field]}" />
+                                                                        </apex:outputText>
+
+                                                                    </td>
+                                                                </apex:repeat>
+                                                            </tr>
+                                                            <apex:variable var="index" value="{!index + 1}" />
+                                                        </apex:repeat>
+                                                    </tbody>
+                                                </table>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!(ISNULL(medicationLstData) || medicationLstData.size == 0)}" style="font-family: 'Lexend Deca', sans-serif;">
+                                            No data to display
+                                        </apex:outputText>
+                                            <!--/apex:outputPanel-->
+                                        </apex:outputPanel>    
+
+										<!--Medication End-->
+                                        
+                                     <!--Inventory DISPLAY-->
+                                        
+                                     <apex:outputPanel layout="block"  rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Inventory Order'}">
+                                            <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                <b>Inventory</b>
+                                            </h4>
+                                     <apex:outputText rendered="{!invFlag==TRUE}">
+                                         <p style="font-family: 'Lexend Deca', sans-serif;">No Inventory found</p>
+                                     </apex:outputText>
+                                     <apex:outputText rendered="{!invFlag==FALSE}">
+                                        <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin: 5px auto 0;font-family: 'Lexend Deca', sans-serif; 
+                                        font-size: 12px; color: #333;border-top: none; border-left: none;" border="1" cellpadding="3" cellspacing="0">
+                                         <thead>
+                                             <tr>
+                                                 
+                                                 <th style="background-color: #f7f7f7;">S.No.</th>
+                                                 <th style="background-color: #f7f7f7;">Inventory Type</th>
+                                                 <th style="background-color: #f7f7f7;">Lot Number</th>
+                                                 <th style="background-color: #f7f7f7;">Units Required</th>
+                                                 <th style="background-color: #f7f7f7;">Total Price</th>
+                                             </tr>
+                                         </thead>
+                                         <tbody>
+                                             <apex:variable var="index" value="{!1}"/>
+                                             <apex:repeat value="{!invRecords}" var="invObj">
+                                                 
+                                                 <tr>
+                                                     <td style="vertical-align: top">
+                                                         {!index}
+                                                     </td>
+                                                     <td style="vertical-align: top">
+                                                         {!invObj.Inventory_Item_Name__c}
+                                                     </td>
+                                                     <td style="vertical-align: top">
+                                                         {!invObj.Lot_Number__c}
+                                                     </td>
+                                                     
+                                                     <td style="vertical-align: top">
+                                                         {!invObj.Units_Procured__c}
+                                                     </td>
+                                                     <td style="vertical-align: top">
+                                                         {!invObj.Total_Price__c}
+                                                     </td>
+
+
+                                                 </tr>
+                                                 <apex:variable var="index" value="{!index + 1}" />
+                                             </apex:repeat>
+                                             
+                                         </tbody>
+                                     </table>
+                                         </apex:outputText>
+                                 </apex:outputPanel>
+                                 <!--End of Inventory DISPLAY-->
+     <!--Prescription DISPLAY-->
+
+    <apex:outputPanel layout="block" rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Prescription Order'}">
+        <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                <b>Prescription Order</b>
+                                            </h4>
+<apex:outputText rendered="{!(NOT(ISNULL(prescriptions)) && prescriptions.size > 0)}">
+        <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin: 5px auto 0; 
+                                                                  font-size: 12px; color: #333; border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;"
+                border="1" cellpadding="3" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Reason</th>
+                        <th>Days</th>
+                        <th>Route</th>
+                        <th>Dosage</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th>Modified Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <apex:repeat value="{!prescriptions}" var="PresObj">
+    
+                        <tr>
+                            <td style="vertical-align: top">
+                                {!PresObj.ElixirSuite__Drug_Name__c}
+                            </td>
+                            <td style="vertical-align: top">
+                                {!PresObj.ElixirSuite__Reason_new__c}
+                            </td>
+                            <td style="vertical-align: top">
+                                {!PresObj.ElixirSuite__Number_of_Times_Days_Weeks__c}
+                            </td>
+                            <td style="vertical-align: top">
+                                {!PresObj.ElixirSuite__Route_New__c}
+                            </td>
+                            <td style="vertical-align: top">
+                                {!PresObj.ElixirSuite__Dosage_Form__c}
+                            </td>
+                            <td style="vertical-align: top">
+                                <!-- 08-Jun-2023, 12:36 pm -->
+                                <apex:outputText value="{0,date,dd'-'MMM'-'yyyy', 'HH:mm aa}">
+                                    <apex:param value="{!PresObj.CreatedDate}"/>
+                                </apex:outputText>
+                                
+                            </td>
+                            <td style="vertical-align: top">
+                                {!PresObj.CreatedBy.Name}
+                            </td>
+                            <td style="vertical-align: top">
+                                <apex:outputText value="{0,date,dd'-'MMM'-'yyyy', 'HH:mm aa}">
+                                    <apex:param value="{!PresObj.LastModifiedDate}"/>
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        
+                    </apex:repeat>
+                </tbody>
+            </table>
+</apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!(ISNULL(prescriptions) || prescriptions.size == 0)}" style="font-family: 'Lexend Deca', sans-serif;">
+                                            No data to display
+                                        </apex:outputText>
+    </apex:outputPanel>
+
+    
+    <!--End of Prescription DISPLAY-->
+    
+    <!-- Lab Order DISPLAY Added by Himanshu-->
+ <apex:outputPanel layout="block" rendered="{!item.sObjectRefrence.Select_Form_Component__c == 'Enable Lab Order'}">
+    <h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                <b>Lab Orders</b>
+                                            </h4>
+<apex:outputText rendered="{!NOT(ISNULL(chcLabOrder)) && chcLabOrder.size > 0}">
+            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin: 5px auto 0; 
+           font-size: 12px; color: #333;border-top: none; border-left: none; font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="background-color: #f7f7f7;">S.No.</th>
+                        <th style="background-color: #f7f7f7;">Lab Order #</th>
+                        <th style="background-color: #f7f7f7;">Lab</th>
+                        <th style="background-color: #f7f7f7;">Type</th>
+                        <th style="background-color: #f7f7f7;">Test Name</th>
+                        <th style="background-color: #f7f7f7;">Status</th>
+                        <th style="background-color: #f7f7f7;">Created Date</th>
+                        <th style="background-color: #f7f7f7;">Last Modified Date</th>    
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:variable var="index" value="{!1}" />
+                    <apex:repeat value="{!chcLabOrder}" var="chc">
+    
+                        <tr>
+                            <td style="vertical-align: top">
+                                {!index}
+                            </td>
+                            <td style="vertical-align: top">{!chc.labOrderNo}</td>
+                            <td style="vertical-align: top">{!chc.labName}</td>
+                            <td style="vertical-align: top">{!chc.labType}</td>
+                            <td style="vertical-align: top">{!chc.testName}</td>
+                            <td style="vertical-align: top">{!chc.status}</td>
+                            <td style="vertical-align: top">{!chc.CreatedDate}</td>
+                            <td style="vertical-align: top">{!chc.lastModified}</td>
+    
+                        </tr>
+                        <apex:variable var="index" value="{!index + 1}" />
+                    </apex:repeat>
+                </tbody>
+            </table>
+</apex:outputText>
+    
+<apex:outputText rendered="{!ISNULL(chcLabOrder) || chcLabOrder.size == 0}">
+                                            No data to display
+                                        </apex:outputText>
+    
+    </apex:outputPanel>
+ 
+
+    <!--End of Lab Order DISPLAY-->
+                                        
+                                        <!--PROCEDURE DISPLAY-->
+                                        
+                                        <apex:outputPanel layout="block"  rendered="{!item.sObjectRefrence.Add_Procedure__c}">
+<h4 style="width: 700px;font-family: 'Lexend Deca', sans-serif;margin:0px;">
+                                                <b>Procedures</b>
+                                            </h4>
+                                            <apex:outputText rendered="{!NOT(ISNULL(procedureLst)) && procedureLst.size > 0}">
+                                            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin: 5px auto 0; 
+                                                          font-size: 12px; color: #333;border-top: none; border-left: none;font-family: 'Lexend Deca', sans-serif;" border="1" cellpadding="3" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        
+                                                        <th style="background-color: #f7f7f7;">S.No.</th>
+                                                        <th style="background-color: #f7f7f7;">Procedure Code</th>
+                                                        <th style="background-color: #f7f7f7;">Procedure Description</th>
+                                                        <th style="background-color: #f7f7f7;">Modifiers</th>
+                                                        <th style="background-color: #f7f7f7;">Diagnosis Codes</th>
+                                                        <th style="background-color: #f7f7f7;">Procedure Start</th>
+                                                        <th style="background-color: #f7f7f7;">Procedure End</th>
+                                                        <th style="background-color: #f7f7f7;">Units/Duration</th>
+                                                        <th style="background-color: #f7f7f7;">Place Of Service</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:variable var="index" value="{!1}"/>
+                                                    <apex:repeat value="{!procedureLst}" var="procedureObj" id="procedureTable">
+                                                        
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                {!index}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.procedure.Name}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.procedure.Code_Description__c}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.modifiersText}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.diagnosisCodes}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.fromDateOfSercvice}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.toDateOfSercvice}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.procedure.Days_Units__c}
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                {!procedureObj.procedure.Place_Of_Service_Picklist__c}
+                                                            </td>
+
+
+                                                        </tr>
+                                                        <apex:variable var="index" value="{!index + 1}" />
+                                                    </apex:repeat>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!ISNULL(procedureLst) || procedureLst.size == 0}">
+                                            No data to display
+                                        </apex:outputText>
+                                        </apex:outputPanel>       
+                                        
+                                        <!--END-->
+                                        
+                                        
+                                        
+                                    </tbody>
+                                    
+                                </table>
+                                
+                            </td>           
+                            
+                        </tr> 
+                        
+                    </apex:repeat> 
+                    
+                    <!-- APPROVAL PROCESS --> 
+                    
+                    <tr>
+
+                        <td style="vertical-align: top">
+
+                            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;  width: 690px; margin-top: 50px; font-size: 12px; color: #333;font-family: 'Lexend Deca', sans-serif;">
+                            
+                                <tbody>
+                            		 <!--Latest signatures--> 
+                                    <tr>
+                                        <td style="vertical-align: top">
+                            
+                                            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family: 'Lexend Deca', sans-serif; font-size:12px;">
+                                                <tbody>
+                                                    
+                                                    <tr>
+                                                        <td>
+                                                        <apex:repeat value="{!approvalList}" var="approvedLevel">
+                                                            
+                                                            <td style="width:180px;display:inline-block;margin:5px 35px 5px 0;">
+                            
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Approved_Signature__c))}">
+                            
+                                                                    <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.Signed_Patient__c))}">
+                                                                        <!-- user -->
+                            
+                                                                        <img class="imgCls" src="{!'/sfc/servlet.shepherd/document/download/'+ approvedLevel.ElixirSuite__Approved_Signature__c}"
+                                                                            width="180" height="100" />
+                            
+                                                                    </apex:outputPanel>
+                            
+                                                                    <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Signed_Patient__c))}">
+                                                                        <!--PATIENT-->
+                            
+                                                                        <!-- WHEN NORMAL SIGN IS ENABLED-->
+                            
+                                                                        <apex:outputPanel rendered="{!approvedLevel.Is_External_Signature__c==false}">
+                            
+                                                                            <img class="imgCls" src="{!'/servlet/servlet.FileDownload?file=' + approvedLevel.ElixirSuite__Approved_Signature__c}" width="180"
+                                                                                height="100" />
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <!-- WHEN EXTERNAL SIGN IS ENABLED-->
+                            
+                                                                        <apex:outputPanel rendered="{!approvedLevel.Is_External_Signature__c==true}">
+                            
+                                                                            <i>
+                                                                                <span style=" font-family:'Times',Times;font-size: 25px;">{!approvedLevel.Approved_Signature__c}</span>
+                                                                            </i>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                    </apex:outputPanel>
+                            
+                                                                    <!--c:ElixirOEM_FormattedDateTime datetimeValue="{!approvedLevel.Date_Of_Approval__c}" datetimeFormat="yyyy-MM-dd h:mm a" /-->
+                                                                    <div style="height:45px;">
+                            
+                                                                        <p style="margin:0px;"> Signed On :
+                                                                            <apex:outputText value="{!approvedLevel.Date_Of_Approval__c} "
+                                                                            />
+                                                                        </p>
+                            
+                                                                        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Signed_Patient__c))}">
+                            
+                                                                            <p style="margin:0px;">
+                            
+                                                                                Signed By : {!approvedLevel.ElixirSuite__Signed_Patient__r.Name} (Patient)
+                                                                                <!--Adding notes here-->
+                                                                                <!-- <br/>
+                                                                                                Notes :   <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"/>
+                                                                                            
+                                                                                            					<apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}"/>  -->
+                            
+                            
+                                                                            </p>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.Signed_Patient__c))}">
+                            
+                                                                            <p style="margin:0px;">
+                                                                                <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.ElixirSuite__User__r.UserRole.Name))}">
+                                                                                    Signed By : {!approvedLevel.ElixirSuite__User__r.Name} ({!approvedLevel.ElixirSuite__User__r.UserRole.Name})
+                                                                                </apex:outputPanel>
+                                                                                <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.ElixirSuite__User__r.UserRole.Name))}">
+                                                                                    Signed By : {!approvedLevel.ElixirSuite__User__r.Name}
+                                                                                </apex:outputPanel>
+                            
+                                                                                <!--Signed By : {!approvedLevel.ElixirSuite__User__r.Name}-->
+                            
+                                                                                <!-- Notes :   <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"/>
+                                                                                            
+                                                                                            				<apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}"/> -->
+                            
+                            
+                                                                            </p>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <p style="margin:0px;">
+                            
+                                                                            Notes :
+                                                                            <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"
+                                                                            />
+                            
+                                                                            <apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}" />
+                            
+                                                                        </p>
+                                                                    </div>
+                            
+                                                                </apex:outputPanel>
+                            
+                                                                <!--SHOWING CUSTOM LABEL STARTS-->
+                            
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '1')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[0] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[0]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '2')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[1] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[1]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '3')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[2] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[2]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '4')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[3] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[3]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '5')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[4] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[4]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '6')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[5] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[5]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '7')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[6] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[6]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '8')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[7] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[7]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '9')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[8] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[8]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '10')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[9] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[9]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                            
+                                                                <!--SHOWING CUSTOM LABEL ENDS-->
+                            
+                            
+                            
+                                                            </td>
+                                                        </apex:repeat>
+                                                    </td>
+                
+                                                    </tr>
+                                                </tbody>
+                            
+                            
+                                            </table>
+                            
+                                        </td>
+                            
+                                    </tr>
+                                    
+                                    <!--Previous signatures when care episode reopen--> 
+                                    <tr>
+                                        <td style="vertical-align: top">
+                            
+                                            <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family: 'Lexend Deca', sans-serif;">
+                                                <tbody>
+                                                    
+                                                    <tr>
+                                                        <td>
+                                                        <apex:repeat value="{!previousApprovalList}" var="previousApprovedLevel">
+                                                            <tr>
+                                                                <td>
+                                                                    <apex:repeat value="{!previousApprovedLevel}" var="approvedLevel">
+                                                                <td style="width:180px;display:inline-block;margin:5px 35px 5px 0;">
+                            
+                            									
+                                                                <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Approved_Signature__c))}">
+                            
+                                                                    <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.Signed_Patient__c))}">
+                                                                        <!-- user -->
+                            
+                                                                        <img class="imgCls" src="{!'/sfc/servlet.shepherd/document/download/'+ approvedLevel.ElixirSuite__Approved_Signature__c}"
+                                                                            width="180" height="100" />
+                            
+                                                                    </apex:outputPanel>
+                            
+                                                                    <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Signed_Patient__c))}">
+                                                                        <!--PATIENT-->
+                            
+                                                                        <!-- WHEN NORMAL SIGN IS ENABLED-->
+                            
+                                                                        <apex:outputPanel rendered="{!approvedLevel.Is_External_Signature__c==false}">
+                            
+                                                                            <img class="imgCls" src="{!'/servlet/servlet.FileDownload?file=' + approvedLevel.ElixirSuite__Approved_Signature__c}" width="180"
+                                                                                height="100" />
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <!-- WHEN EXTERNAL SIGN IS ENABLED-->
+                            
+                                                                        <apex:outputPanel rendered="{!approvedLevel.Is_External_Signature__c==true}">
+                            
+                                                                            <i>
+                                                                                <span style=" font-family:'Times',Times;font-size: 25px;">{!approvedLevel.Approved_Signature__c}</span>
+                                                                            </i>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                    </apex:outputPanel>
+                            
+                                                                    <!--c:ElixirOEM_FormattedDateTime datetimeValue="{!approvedLevel.Date_Of_Approval__c}" datetimeFormat="yyyy-MM-dd h:mm a" /-->
+                                                                    <div style="height:100px;">
+                            
+                                                                        <p style="margin:0px;"> Signed On :
+                                                                            <apex:outputText value="{!approvedLevel.Date_Of_Approval__c} "
+                                                                            />
+                                                                        </p>
+                            
+                                                                        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.Signed_Patient__c))}">
+                            
+                                                                            <p style="margin:0px;">
+                            
+                                                                                Signed By : {!approvedLevel.ElixirSuite__Signed_Patient__r.Name} (Patient)
+                                                                                <!--Adding notes here-->
+                                                                                <!-- <br/>
+                                                                                                Notes :   <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"/>
+                                                                                            
+                                                                                            					<apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}"/>  -->
+                            
+                            
+                                                                            </p>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.Signed_Patient__c))}">
+                            
+                                                                            <p style="margin:0px;">
+                                                                                <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(approvedLevel.ElixirSuite__User__r.UserRole.Name))}">
+                                                                                    Signed By : {!approvedLevel.ElixirSuite__User__r.Name} ({!approvedLevel.ElixirSuite__User__r.UserRole.Name})
+                                                                                </apex:outputPanel>
+                                                                                <apex:outputPanel layout="block" rendered="{!(ISNULL(approvedLevel.ElixirSuite__User__r.UserRole.Name))}">
+                                                                                    Signed By : {!approvedLevel.ElixirSuite__User__r.Name}
+                                                                                </apex:outputPanel>
+                            
+                                                                                <!--Signed By : {!approvedLevel.ElixirSuite__User__r.Name}-->
+                            
+                                                                                <!-- Notes :   <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"/>
+                                                                                            
+                                                                                            				<apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}"/> -->
+                            
+                            
+                                                                            </p>
+                            
+                                                                        </apex:outputPanel>
+                            
+                                                                        <p style="margin:0px;">
+                            
+                                                                            Notes :
+                                                                            <apex:outputText value="{!approvedLevel.Comment__c}" rendered="{!NOT(ISNULL(approvedLevel.Comment__c))}"
+                                                                            />
+                            
+                                                                            <apex:outputText value="--" rendered="{!(ISNULL(approvedLevel.Comment__c))}" />
+                            
+                                                                        </p>
+                                                                    </div>
+                            
+                                                                </apex:outputPanel>
+                            
+                                                                <!--SHOWING CUSTOM LABEL STARTS-->
+                            
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '1')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[0] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[0]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '2')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[1] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[1]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '3')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[2] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[2]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '4')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[3] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[3]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '5')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[4] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[4]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '6')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[5] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[5]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '7')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[6] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[6]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '8')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[7] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[7]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '9')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[8] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[8]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                                                                <apex:outputPanel layout="block" rendered="{!(approvedLevel.Approval_Level__c== '10')}">
+                                                                    <apex:outputPanel layout="block" rendered="{!(customLabelList[9] != 'None')}">
+                                                                        ____________________________
+                                                                        <div class="slds-text-heading_medium">
+                                                                            <b> {!customLabelList[9]} </b>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </apex:outputPanel>
+                            
+                            
+                                                                <!--SHOWING CUSTOM LABEL ENDS-->
+                            
+                            
+                            
+                                                            </td>  
+                                                                </apex:repeat>
+
+
+                                                                </td>
+                                                            </tr>                                                            
+                                                        </apex:repeat>
+                                                    </td>
+                
+                                                    </tr>
+                                                </tbody>
+                            
+                            
+                                            </table>
+                            
+                                        </td>
+                            
+                                    </tr>
+                            
+                                </tbody>
+                            
+                            </table>
+                            
+                        </td>
+                        
+                    </tr>
+                    
+                    <!-- END -->
+                    
+                </tbody>
+                
+            </table>
+            
+            
+            
+        </body>
+        
+        
+        
+    </apex:form>
+    
+</apex:page>

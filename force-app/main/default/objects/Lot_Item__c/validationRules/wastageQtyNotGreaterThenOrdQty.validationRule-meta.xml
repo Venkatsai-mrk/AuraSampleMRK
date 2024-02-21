@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wastageQtyNotGreaterThenOrdQty</fullName>
+    <active>true</active>
+    <errorConditionFormula>Wastage_Quantity__c &gt;  Ordered_Quantity__c</errorConditionFormula>
+    <errorMessage>Wastage Quantity cannot be greater than Ordered Quantity</errorMessage>
+</ValidationRule>

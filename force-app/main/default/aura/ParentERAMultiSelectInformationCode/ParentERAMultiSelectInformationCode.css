@@ -1,0 +1,18 @@
+.THIS.slds-picklist.slds-dropdown-trigger {
+    width: 100%;
+}
+.THIS button.slds-button.slds-button--neutral.slds-picklist__label {
+    width: 100% !important;
+    padding-left: 5px;
+    padding-right: 0;
+}
+.THIS button.slds-button.slds-button--neutral.slds-picklist__label span.slds-truncate {
+    width: 100%;
+    font-size:12px;
+}
+.THIS button.slds-button.slds-button--neutral.slds-picklist__label svg.slds-icon.slds-icon-text-default.slds-icon_small {
+    left: 100%;
+}
+.THIS span.slds-pill__label {
+    font-size: 12px;
+}

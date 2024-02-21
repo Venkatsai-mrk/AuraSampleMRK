@@ -1,0 +1,66 @@
+.THIS   .slds-modal__container{ max-width: 100% !important; width:90% !important; }
+.THIS .slds-truncate {
+    background-color:#f3f3f3; /*Changes By pratiksha*/
+    color:#333;
+    padding:5px;
+    
+}
+.THIS .pl5{
+    padding-left: 0px !important;
+}
+.THIS .pr5{
+    padding-right: 0px !important;
+}
+.THIS .bg-white{
+    background-color: #fff !important;
+}
+
+.THIS .paddingForColumn .slds-form-element__control.slds-grow {
+    padding-left: 0 !important;
+}
+
+.THIS .paddingForColumn .slds-combobox_container.paddingwidth {
+    max-width: 180px;
+}
+
+/*.THIS.tableAlignment {
+    padding: 0 24px 0 27px;
+}*/
+.THIS .small-placeholder-text::placeholder {
+    font-size: 10px;
+}
+.THIS.tableAlignment .slds-table tbody td {
+    padding:5px;
+}
+.THIS.tableAlignment .slds-table tbody td:first-child {
+    padding-left: 5px;
+    text-align: center;
+} 
+.THIS.tableAlignment .slds-table tbody td:last-child {
+    padding-right: 8px;
+}
+.THIS .substain {
+    min-height: 32px;
+    line-height: 29px;
+}
+.THIS.tableAlignment .slds-table tbody td .slds-form-element {
+    margin: 0 !important;
+    padding-left: 0;
+    padding-right: 0;
+}
+.THIS .allergy_table .slds-form-element__control.slds-grow {
+    padding-left: 0 !important;
+}
+.THIS .allergy_table td .substain.slds-form-element .slds-form-element__label {
+    display: none !important;
+}
+.THIS .substain .slds-input {
+    font-size: 10px;
+    padding-left: 5px;
+    padding-right: 20px;
+}
+.THIS .substain .slds-textarea {
+    font-size: 10px;
+    padding: 5px;
+    line-height: 12px;
+}

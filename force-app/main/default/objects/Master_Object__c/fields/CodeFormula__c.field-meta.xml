@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CodeFormula__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( RecordType.Name == &apos;Adjustment Codes&apos;,TEXT( Adjustment_Group_Code__c)+TEXT( ElixirSuite_Adjustment_Reason_Code__c ), IF( RecordType.Name == &apos;Supplemental Remark Codes&apos;, TEXT( Supplemental_Group_Code__c )+TEXT( Adjustment_Group_Code__c)+TEXT( ElixirSuite_Adjustment_Reason_Code__c ), null))</formula>
+    <label>CodeFormula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

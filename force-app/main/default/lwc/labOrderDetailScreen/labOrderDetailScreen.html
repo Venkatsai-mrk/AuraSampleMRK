@@ -1,0 +1,173 @@
+<!--
+Name : labOrderDetailScreen
+Author : Sachin Tiwari
+Description : LWC component to show details of lab order 
+Created Date : 06-DEC-2021-->
+<template>
+  {activeTab}
+    <!--<div class="slds-no-print">-->
+    <div class="tabset noprint">
+     
+      <lightning-tabset active-tab-value={activetabdetail}>
+        
+        
+        <!--Tab for result-->
+        <lightning-tab label="Test Results" value="2">
+
+          <lightning-layout multiple-rows>
+
+            <lightning-layout-item size="12" padding="around-small" class="slds-no-print">
+              <div class="lab-o_details-form">
+              <div class ="labels">
+                Doctor's Note
+              </div>
+              <!--Text area for doctor's note -->
+              <lightning-textarea name="Doctor's Note" title="Doctor's Note" class="normalFont"
+                variant="label-hidden" value={doctorNote} onchange={handleNoteChange}></lightning-textarea>
+              <template if:true={isNewButtonVisible}>
+                <!--Button to save the doctor notes-->
+              <lightning-button name="Save" label="Save" class="slds-float_right saveButton"
+                 variant="brand" onclick={handleSave}></lightning-button>
+                  </template>
+              </div>
+            </lightning-layout-item>
+            
+            <lightning-layout-item size="12" padding="around-small" >
+              <div class="lab-o_details-form">
+              <div class ="labels noprint">
+                Report  
+                
+              </div>
+              <div class="slds-box print" >
+                
+                  
+                <c-lab-order-result-table rid={rid} collectiontime={collectionTime} havedata={havedata} testdatalength={dataLength} onhavechange={haveChange}></c-lab-order-result-table>
+                  
+  
+                </div>
+                <div class="slds-box print" if:true={dataLength} >
+                  
+                  <lightning-datatable
+                          key-field="Id"
+                          data={TestTextData}
+                          columns={notesColumn}
+                          hide-checkbox-column="true"
+                          >
+                      </lightning-datatable>
+                    
+                    
+                    </div>
+            </div>
+            </lightning-layout-item>
+          
+
+            <lightning-layout-item size="12" padding="around-small">
+              <div class="lab-o_details-form">
+                <!--Button to take back to the Lab order list-->
+              <lightning-button name="Close" variant="brand" label="Close" class="slds-float_right normalFont" 
+              onclick={handleClose}></lightning-button>
+              <template if:true={havedata}>
+             <lightning-button name="Print" label="Print" variant="brand"  class="slds-float_right saveButton" 
+                onclick={generatePdf}></lightning-button>
+              </template>
+              </div>
+            </lightning-layout-item>
+
+          </lightning-layout>
+
+        </lightning-tab>
+        <!--tab for lab order details -->
+        <lightning-tab label="Order Details"  class="slds-no-print" value="1" >
+
+          
+            
+          <lightning-layout multiple-rows>
+            <div class="lab-o_details-form">
+                <lightning-layout-item size="8">
+                  <lightning-combobox label="Lab" title="Lab" variant="label-inline" options={labOptions} value={lab}
+                    read-only="true"></lightning-combobox>
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="8">
+                  <template if:true={isNewButtonVisible}>
+                  <lightning-combobox label="Ordering Physician" title="Ordering Physician" variant="label-inline"
+                    options={orderingPhysicianOptions} value={physician} read-only="true"></lightning-combobox>
+                    </template>
+                    <template if:false={isNewButtonVisible}>
+                      <div>
+                         <lightning-input
+                              label="Ordering Physician"
+                              title="Lab"
+                              read-only="true"
+                              variant="label-inline"
+                              value={orderingPhysicianValue}
+                          ></lightning-input>
+                      </div>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="8">
+                  <lightning-combobox label="Facility" title="Facility" variant="label-inline" options={facilityOptions}
+                    value={facility} read-only="true"></lightning-combobox>
+                </lightning-layout-item>
+            <lightning-layout-item size="8">
+              <template if:false={isPSC}>
+              <lightning-input type="datetime" class="normalFont" variant="label-inline"
+                 label="Collection Date/Time:" value={collectionTime} read-only="true">
+              </lightning-input></template>
+              <template if:true={isPSC}>
+                <lightning-input type="datetime" class="normalFont" variant="label-inline"
+                   label="Expected Date/Time:" value={expectedTime} read-only="true">
+                </lightning-input></template>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+
+            <div class="smallFont"> Tests:</div>
+            <lightning-datatable
+            key-field="Id"
+            data={test}
+            columns={columns}
+            hide-checkbox-column="true"
+            >
+        </lightning-datatable>
+              
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" >
+            <template if:true={icd.length}>
+           <div class="smallFont"> ICDs:</div>
+           <lightning-datatable
+           key-field="Id"
+           data={icd}
+           columns={columnsIcd}
+           hide-checkbox-column="true"
+           >
+       </lightning-datatable>
+              
+            </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+              <!--Button to take back to the Lab order list-->
+              <template if:true={isNewButtonVisible}>
+              <lightning-button 
+                variant="brand" label="View / Download Specimen labels"  onclick={handleRequisitionPdf}
+                class="slds-float_left detailLightningButton"></lightning-button>
+              <lightning-button
+                variant="brand" label="Print / Download labels"  onclick={handleRequisitionLabel}
+                class="slds-float_left detailLightningButton"></lightning-button>
+              </template>
+              <lightning-button
+                variant="brand" label="Close" onkeypress={key_Code_Checker} onclick={handleClose}
+                class="slds-float_right detailLightningButton"></lightning-button>
+            </lightning-layout-item>
+          </div>
+          </lightning-layout>
+
+        
+      
+      </lightning-tab>
+      </lightning-tabset>
+
+    </div>
+  
+  
+
+</template>

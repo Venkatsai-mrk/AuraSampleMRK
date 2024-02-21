@@ -1,0 +1,86 @@
+<aura:component controller="AppointmentsForPortal" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="isExpanded" type="Boolean" default="false"/>
+    <aura:attribute name="currentFilter" type="String" default="Upcoming Appointments"/>
+    <aura:attribute name="filterOptions" type="List" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="data" type="List" />
+    <aura:attribute name="cancelAppointment" type="Boolean" default="false" />
+    <aura:attribute name="selectedAppointmentId" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="visitSummaryAvailableMap" type="Object" default="{}" />
+    <aura:attribute name="visitNoteAvailableMap" type="Object" default="{}" />
+    <aura:attribute name="selectedCareEpisodeId" type="String[]" default="[]"/>
+    <aura:attribute name="isEnableAppointment" type="Boolean" />
+    <lightning:navigation aura:id="navigationService" />
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:attribute name="currentUserTimezone" type="String" />
+    <aura:attribute name="enablePayNow" type="Boolean" />
+    <aura:attribute name="parentAppointmentColumns" type="List" />
+    <aura:attribute name="appointmentColumnsLst" type="List" />
+    <aura:attribute name="appointmentdataTypeToApi" type="List" />
+    <aura:handler event="c:AppointmentColumnRefreshEvent" action="{!c.handleAppointmentColumnRefreshEvent}"/>
+    <div class="divFirst">
+        <div class="divSecond">
+            <div class="slds-p-around_medium lgc-bg list_view_and_table_container">
+                <lightning:tile label="" title="" class="list_view_container lightningTile">
+                    
+                    <lightning:icon slot="media" icon-name="standard:orders" size="Large" class="icon_custom_class"></lightning:icon>
+                    <h3 style="float: left; font-size: 18px;font-weight: 600;">Appointments And Visits</h3>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-combobox_container slds-float_left slds-size_small combobox_container">
+                                <div class="{!dropdownTriggerClass}" aria-expanded="false" aria-haspopup="listbox" role="combobox" style="font-size:18px">
+                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none" onclick="{!c.handleFilterClickExtend}">
+                                        <span class="current_filter">{!v.currentFilter}
+                                            <lightning:icon class="slds-button__icon slds-icon-utility-down slds-icon_container forceIcon"
+                                                            data-data-rendering-service-uid="232" data-aura-rendered-by="371:0" data-aura-class="forceIcon" iconName="utility:down" size="x-small">
+                                            </lightning:icon>
+                                        </span>
+                                    </div>
+                                    <aura:if isTrue="{!v.isExpanded}">
+                                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                <aura:iteration items="{!v.filterOptions}" var="option">
+                                                    <li role="presentation" class="slds-listbox__item">
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" 
+                                                             data-filter="{!option.value}" onclick="{!c.handleFilterChangeButton}">
+                                                            <span class="slds-media__figure slds-listbox__option-icon" data-filter="{!option.value}"></span>
+                                                            <span class="slds-media__body" data-filter="{!option.value}">
+                                                                <span class="slds-truncate" data-filter="{!option.value}">{!option.label}</span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </aura:iteration>  
+                                            </ul>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                                
+                            </div>
+<aura:if isTrue="{!v.isEnableAppointment}">
+                            <button class="new slds-button slds-button_neutral" onclick="{!c.handleNewAppointment}">New Appointment</button>
+                                    </aura:if>
+<div class="slds-clearfix"></div>
+                           
+                        </div>
+                    </div>
+                </lightning:tile>
+                
+            </div>
+        </div>
+        <lightning:datatable
+        keyField="id"
+        data="{! v.data }"
+        columns="{! v.columns }"
+        onrowaction="{! c.handleRowAction }"
+        hideCheckboxColumn="true"
+        />
+    </div>
+    <!--aura:if isTrue="{!v.showDetails}">
+    <c:AppointmentDetailsPage showDetails="{!v.showDetails}" appointment="{!v.selectedAppointmentId}" />
+    </aura:if-->
+     
+    <aura:if isTrue="{!v.cancelAppointment}">
+        <c:PromptForCancelAppointment cancelAppointment="{!v.cancelAppointment}" selectedAppointmentId="{!v.selectedAppointmentId}"/>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Urine_Analysis</fullName>
+    <active>true</active>
+    <label>Urine Analysis</label>
+    <picklistValues>
+        <picklist>Analysis_Result__c</picklist>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Available_Test__c</picklist>
+        <values>
+            <fullName>-5%2F5Q- BY FISH-TC ONLY - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA869-0%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13Q14%2E3 BY FISH-TC ONLY - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA878-1%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>14-3-3 ETA Protein - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BB677-6%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>14-DRUG EIA SCREEN WITH REFLEX CONFIRMATION OF POSITIVES - %28ALERE TOXICOLOGY SERVICES%29 - %28Urine%29 %5B1232%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15q Del Characterization%2C FISH - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BB796-4%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>17P13 BY FISH-TC ONLY - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA874-0%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1P%2F19Q%2CD%281%3B19%29DELETION BY FISH - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA311-3%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1Q21 BY FISH-TC ONLY - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA876-5%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2%2C3-dinor 11B-Prostaglandin F2a%2C U - %28BIOREFERENCE LABORATORIES%29 - %28Urine%29 %5BA983-9%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20Q12 BY FISH-TC ONLY - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BA871-6%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3-Alpha Androstanediol-G - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5B1613-9%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4K PSA Total %2B Free Reflex %26gt%3B3%2E0 to 4Kscore - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BK135-4%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4K PSA rflx %26gt%3B3%2E0 - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BJ264-3%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4K Prostate Score %28Serum%29 - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5BJ148-8%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5-Flucytosine%2C S - %28BIOREFERENCE LABORATORIES%29 - %28Other%29 %5B6180-4%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DRUG SCREEN 12 - %28BIOREFERENCE LABORATORIES%29 - %28Urine%29 %5BF362-9%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DRUG SCREEN 12 W%2FALCOHOL - %28BIOREFERENCE LABORATORIES%29 - %28Urine%29 %5BH790-9%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EXPANDED 18-DRUG EIA SCREEN %2B ALCOHOL WITH REFLEX CONFIRMATION OF POSITIVES - %28ALERE TOXICOLOGY SERVICES%29 - %28Urine%29 %5B1203%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FTL POC - %28POC Performed at Facility%29 - %28Other%29 %5BFTLPOC%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Female Admission Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Female Alcohol Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iron Deficiency Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lakeworth POC - %28POC Performed at Facility%29 - %28Other%29 %5BLakeworthPOC%5D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male Admission Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male Alcohol Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thyroid Panel - %28Custom Profile%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Frequency__c</picklist>
+        <values>
+            <fullName>Confirm positive analyzer results</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every 2 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every 2 weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every 3 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every 5 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every 7 Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Every Day</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On return from pass or outing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Once</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Once a month</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>When attending IOP%2FOP group</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ordered_Via__c</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fax</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone%2C read back and verified</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Previously prescribed medication approved by doctor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verbal%2C read back and verified</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sample_Type__c</picklist>
+        <values>
+            <fullName>Laboratory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Physical</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Final Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Results Received</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

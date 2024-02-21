@@ -1,0 +1,59 @@
+.THIS .e-employer {
+    position: relative;
+    z-index: auto;
+}
+.THIS .e-employer .slds-form-element__label {
+    display: none;
+}
+.THIS .e-employer .slds-icon_container {
+  /*  position: absolute;*/
+    z-index: 1;
+    right: 0px;
+    top: 1px;
+}
+.THIS .newCls{
+    position:relative;
+}
+.THIS .slds-listbox .slds-listbox_vertical
+{
+    background : white;
+}
+.THIS .e-employer button.slds-input__icon.slds-input__icon_right.slds-button.slds-button_icon.iconheight {
+  /*  position: absolute;*/
+    right: 0;
+    top: 5px;
+}
+.THIS .e-employer .slds-icon_container .slds-search {
+    margin-top: 5px;
+   /* margin-right: -2px;*/
+}
+.THIS .e-employer .slds-icon_container .slds-close {
+   /* margin-top: -3px;*/
+    margin-right: 2px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 {
+    padding: 0;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item {
+    border-bottom: 1px dotted #ccc;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item:last-child {
+    border-bottom: none;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item h3 {
+    font-weight: 600;
+    color: #493266;
+    font-size: 14px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item i {
+    font-weight: 500;
+    color: #000;
+    font-size: 12px;
+}
+.THIS .e-employer .slds-col.slds-size--12-of-12 .problem_role .slds-listbox__item i span {
+    color: #493266;
+}
+.THIS .pr.slds-dropdown.slds-dropdown_length-with-icon-7.slds-dropdown_fluid {
+    /*top: 30px;
+    left: 112px;*/
+}

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Glucose</fullName>
+    <active>true</active>
+    <label>Glucose</label>
+    <picklistValues>
+        <picklist>Allergy_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Drug Allergy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food Allergy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Skin Allergy</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Frequency__c</picklist>
+        <values>
+            <fullName>After Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Lunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Lunch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intervention__c</picklist>
+        <values>
+            <fullName>Check in 1 hour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check in 2 hour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medicated as ordered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Physician called</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pain__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Severity__c</picklist>
+        <values>
+            <fullName>Fatal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mild</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moderate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Severe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source__c</picklist>
+        <values>
+            <fullName>ASSESSMENT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECORD DETAIL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_check__c</picklist>
+        <values>
+            <fullName>After Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Brunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Lunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Brunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Lunch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

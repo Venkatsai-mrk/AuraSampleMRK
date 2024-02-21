@@ -1,0 +1,282 @@
+.THIS .payBut{
+    width:150px ;
+}
+.THIS .payBut1{
+    width:90px ;
+}
+.THIS .marLeft{
+    margin-left: 35px;
+}
+.THIS .patient-ac {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 0px #666;
+}
+.THIS .patient-ac-1 {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 5px;
+  /*  width: 1077px;*/
+}
+.THIS .patient-ac-2 {
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.THIS .patient-ac button.slds-button.slds-button_neutral {
+    background-color: #178cb9;
+    color: #fff;
+    border-radius: 6px;
+   
+}
+.THIS .patient-ac button.slds-button.slds-button_neutral.new-but{
+   background-color: rgb(231 231 230) !important;
+}
+.THIS .claim-btn .slds-radio {
+    float: left;
+    margin-right: 15px;
+}
+.THIS .o_financ .slds-border_bottom {
+    border-bottom: 1px solid #999;
+}
+.THIS .o_financ h3 {
+    font-size: 22px;
+    color: #000;
+    font-weight: 700;
+}
+.THIS .btn {
+   border-radius: 5px;
+   color: white;
+   background-color: #493266;
+ padding: 0px 10px 0px 10px; 
+}
+
+.THIS .o_financ p {
+    font-weight: 600;
+}
+.THIS .o_financ p b {
+    font-size: 15px;
+}
+.THIS .button.slds-button.slds-button_neutral.payBut{
+}
+.THIS .back-col{
+background-color: red;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.THIS .back-col-na{
+background-color: #64c664;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.THIS .grpId{
+    margin-top: 2px;
+}
+.THIS .grpId2{
+    margin-top: 2px;
+}
+.THIS .butClass{
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;
+    background-color: #0176D3;
+    width: 200px;
+    height: 35px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px; 
+}
+.THIS .butClass1{
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;
+    background-color: #0176D3;
+    width: 200px;
+    height: 35px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+   
+}
+.THIS .butClass2{
+   box-shadow: 1px 1px 5px 0px #666675;
+   border-radius: 5px;
+    color: white;
+    background-color: #0176D3;
+    width: 200px;
+    height: 35px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+}
+.THIS .ledgerCls{
+   
+}
+.THIS .newCls{
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;
+    background-color: grey;
+    width: 100%;
+    font-weight: 600;
+    border: none;
+    margin-top: 20px;
+}
+.THIS .newCls1{
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    width: 100%;
+    border: none;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.THIS .rowCls{
+    color:#493266;
+    padding: 15px;
+}
+.THIS .purple-color {
+    color:black;
+}
+.THIS .verify-btn {
+    box-shadow: 1px 1px 5px 0px #666675;
+    border-radius: 5px;
+    color: white;    
+    background-color: #95C12C;    
+    width: 60%;    
+    height: 30px;    
+    border: none;
+}
+.THIS .pay-block {
+    width: 100%;
+}
+.THIS .pay-block .slds-grid {
+    display: flex;
+}
+.THIS .pay-block .slds-grid .slds-size_6-of-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+@media (max-width:1200px) {
+    .THIS .main-grid .slds-size_3-of-12:first-child{
+        width : 35%;
+    } 
+    .THIS .main-grid .slds-col.slds-size_9-of-12.ledgerCls  {
+        width: 65%;
+    } 
+    .THIS .claim-btn .slds-radio {
+        margin-right: 0px;
+        width: 50%;
+    }
+    .THIS .butClass2, .THIS .butClass, .THIS .butClass1 {
+        width: 160px;
+        font-size: 13px;
+    }
+    .THIS .pay-block .slds-grid {
+        display: block;
+    }
+    .THIS .pay-block .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .newCls1 {
+        margin-top: 5px;
+    }
+}
+
+@media (max-width:992px) {
+    .THIS .main-grid .slds-size_3-of-12:first-child{
+        width : 35%;
+    } 
+    .THIS .main-grid .slds-col.slds-size_9-of-12.ledgerCls  {
+        width: 65%;
+    } 
+    .THIS .claim-btn .slds-radio {
+        margin-right: 0px;
+        width: 50%;
+    }
+    .THIS .butClass2, .THIS .butClass, .THIS .butClass1 {
+        width: 160px;
+        font-size: 13px;
+    }
+    .THIS .pay-block .slds-grid {
+        display: block;
+    }
+    .THIS .pay-block .slds-grid .slds-size_6-of-12 {
+        width: 100%;
+    }
+    .THIS .newCls1 {
+        margin-top: 5px;
+    }
+}
+@media (max-width:767px) {
+ 	.THIS .main-grid {
+        display: block;
+    }   
+    .THIS .main-grid .slds-size_3-of-12:first-child{
+        width : 100%;
+    } 
+    .THIS .main-grid .slds-col.slds-size_9-of-12.ledgerCls  {
+        width: 100%;
+    } 
+    .THIS .claim-btn .slds-radio {
+        margin-right: 0px;
+        width: 50%;
+    }
+    .THIS .butClass2, .THIS .butClass, .THIS .butClass1 {
+        width: 160px;
+        font-size: 13px;
+    }
+    .THIS .pay-block .slds-grid {
+        display: flex;
+    }
+    .THIS .pay-block .slds-grid .slds-size_6-of-12 {
+        width: 50%;
+    }
+    .THIS .newCls1 {
+        margin-top: 20px;
+    }
+}
+@media (max-width:576px) {
+ 	.THIS .main-grid, .THIS .pay_btn-grid {
+        display: block;
+    }   
+    .THIS .main-grid .slds-size_3-of-12:first-child{
+        width : 100%;
+    } 
+    .THIS .main-grid .slds-col.slds-size_9-of-12.ledgerCls  {
+        width: 100%;
+    }
+    .THIS .pay_btn-grid .slds-size_4-of-12 {
+        width: 100%;
+        margin: 7px 0;
+    } 
+    .THIS .claim-btn .slds-radio {
+        margin-right: 0px;
+        width: 50%;
+    }
+}
+/* changes */
+.THIS .changefontweight{
+    font-weight:bold;font-size:18px;
+}
+.THIS .changeitalicmargin{
+    font-style: italic; font-size: 12px;margin-top: 4px;
+}
+.THIS .changecolor{
+    color:#95C12C;
+}
+.THIS .changebackcolor{
+    background-color: #3394c3;color: white;
+}
+.THIS .changepadding{
+    padding-right:10px;
+}

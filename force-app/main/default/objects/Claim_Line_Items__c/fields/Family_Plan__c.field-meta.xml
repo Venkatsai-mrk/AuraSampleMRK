@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Family_Plan__c</fullName>
+    <description>Specifies if the claim is part of a family plan.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>When there is a requirement to report this is a Family Planning service, enter Y for “YES” in area of the field</inlineHelpText>
+    <label>Family Plan</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

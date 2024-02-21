@@ -1,0 +1,105 @@
+<aura:component controller="TreatmentHistory" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <ltng:require styles="{!$Resource.LightningPopup}" />
+    <aura:attribute name="customers" type="List" />  
+    <aura:attribute name="TreatList" type="Treatment_History__c[]"/> 
+    <aura:attribute name="LOC" type="String[]"/> 
+    <aura:attribute name="Ehr" type="Boolean" default="false"/>
+    <aura:attribute name="Billing" type="Boolean" default="false"/>
+    <aura:attribute name="ContactCentr" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.ContactCentr}">
+        <div class="slds-page-header">
+            <h1 class="slds-page-header__title">Treatment History</h1>
+        </div>
+        <table class="slds-table slds-table_bordered"> 
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <div class="slds-truncate " title="Date">Date</div>
+                    </th>
+                    
+                    <th scope="col">
+                        <div class="slds-truncate " title="Facility">Facility</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Level of Care">Level of Care</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Length of Stay">Length of Stay</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate " title="Outcome">Outcome</div>
+                    </th>
+                    
+                    <th scope="col">
+                        <div class="slds-truncate"></div>
+                    </th>
+                    
+                </tr>
+            </thead>   
+            <tbody> 
+                
+                <aura:iteration items="{!v.TreatList}" var="SahInstance" indexVar="rowIndex">
+                    <br></br>
+                    <tr class="slds-text-title_caps">
+                        
+                        
+                        
+                        <td class="SelectClass">
+                            <lightning:input type="date" label="" placeholder="" value = "{!SahInstance.ElixirSuite__Date__c}"/>
+                        </td>
+                        <td class="SelectClass">
+                            <lightning:input  label="" placeholder="" value = "{!SahInstance.ElixirSuite__Facility__c}"/>
+                        </td>
+                        <td class="SelectClass Method">
+                            <lightning:select  name="select"  value="{!SahInstance.ElixirSuite__Level_of_Care__c}">
+                                <option value="{!co}">None</option>
+                                <aura:iteration items="{!v.LOC}" var="co">
+                                    <option value="{!co}">{!co}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        
+                        <td class="SelectClass">
+                            <lightning:input  label="" placeholder="" value = "{!SahInstance.ElixirSuite__Length_Of_Stay__c}"/>
+                        </td>
+                        
+                        <td class="SelectClass">
+                            <lightning:input  label="" placeholder="" value = "{!SahInstance.ElixirSuite__Outcome_Relapsed_when__c}"/>
+                        </td>
+                        
+                        
+                        <td>
+                            <aura:if isTrue="{!rowIndex == 0}">
+                                <aura:if isTrue="{!lessthanorequal(v.TreatList.length,10)}">
+                                    <a onclick="{!c.addNewRow}">
+                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                        <span class="slds-assistive-text">Add Icon</span>
+                                    </a>
+                                    <aura:set attribute="else">
+                                        <lightning:buttonIcon size='large' iconName="utility:add" variant="bare"  alternativeText="Add" disabled='true'  />  
+                                    </aura:set>
+                                </aura:if>   
+                                
+                                <aura:set attribute="else">
+                                    <a onclick="{!c.removeDeletedRow}" data-value="{!rowIndex}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>
+                                </aura:set> 
+                            </aura:if>
+                        </td> 
+                    </tr>
+                    
+                    
+                </aura:iteration>
+            </tbody>
+        </table>
+        <br/>
+        
+        <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Relationship_With_Insured__c</fullName>
+    <description>The relationship of the patient to the insured individual, such as Self, Spouse, Child, Employee, Other Adult, Unknown, Daughter etc.</description>
+    <externalId>false</externalId>
+    <label>Patient Relationship With Insured</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Self</fullName>
+                <default>false</default>
+                <label>Self</label>
+            </value>
+            <value>
+                <fullName>Spouse</fullName>
+                <default>false</default>
+                <label>Spouse</label>
+            </value>
+            <value>
+                <fullName>Child</fullName>
+                <default>false</default>
+                <label>Child</label>
+            </value>
+            <value>
+                <fullName>Employee</fullName>
+                <default>false</default>
+                <label>Employee</label>
+            </value>
+            <value>
+                <fullName>Other Adult</fullName>
+                <default>false</default>
+                <label>Other Adult</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>Daughter</fullName>
+                <default>false</default>
+                <label>Daughter</label>
+            </value>
+            <value>
+                <fullName>Employer</fullName>
+                <default>false</default>
+                <label>Employer</label>
+            </value>
+            <value>
+                <fullName>Father</fullName>
+                <default>false</default>
+                <label>Father</label>
+            </value>
+            <value>
+                <fullName>Husband</fullName>
+                <default>false</default>
+                <label>Husband</label>
+            </value>
+            <value>
+                <fullName>Mother</fullName>
+                <default>false</default>
+                <label>Mother</label>
+            </value>
+            <value>
+                <fullName>Son</fullName>
+                <default>false</default>
+                <label>Son</label>
+            </value>
+            <value>
+                <fullName>Wife</fullName>
+                <default>false</default>
+                <label>Wife</label>
+            </value>
+            <value>
+                <fullName>Grandparent</fullName>
+                <default>false</default>
+                <label>Grandparent</label>
+            </value>
+            <value>
+                <fullName>Grandchild</fullName>
+                <default>false</default>
+                <label>Grandchild</label>
+            </value>
+            <value>
+                <fullName>Nephew</fullName>
+                <default>false</default>
+                <label>Nephew</label>
+            </value>
+            <value>
+                <fullName>niece</fullName>
+                <default>false</default>
+                <label>niece</label>
+            </value>
+            <value>
+                <fullName>Foster Child</fullName>
+                <default>false</default>
+                <label>Foster Child</label>
+            </value>
+            <value>
+                <fullName>Ward</fullName>
+                <default>false</default>
+                <label>Ward</label>
+            </value>
+            <value>
+                <fullName>Stepson or Stepdaughter</fullName>
+                <default>false</default>
+                <label>Stepson or Stepdaughter</label>
+            </value>
+            <value>
+                <fullName>Handicapped Dependent</fullName>
+                <default>false</default>
+                <label>Handicapped Dependent</label>
+            </value>
+            <value>
+                <fullName>Sponsored Dependent</fullName>
+                <default>false</default>
+                <label>Sponsored Dependent</label>
+            </value>
+            <value>
+                <fullName>Dependent of Minor Dependent</fullName>
+                <default>false</default>
+                <label>Dependent of Minor Dependent</label>
+            </value>
+            <value>
+                <fullName>Significant Other</fullName>
+                <default>false</default>
+                <label>Significant Other</label>
+            </value>
+            <value>
+                <fullName>Emancipated minor</fullName>
+                <default>false</default>
+                <label>Emancipated minor</label>
+            </value>
+            <value>
+                <fullName>Organ Donor</fullName>
+                <default>false</default>
+                <label>Organ Donor</label>
+            </value>
+            <value>
+                <fullName>Cadaver Donor</fullName>
+                <default>false</default>
+                <label>Cadaver Donor</label>
+            </value>
+            <value>
+                <fullName>Injured Plaintiff</fullName>
+                <default>false</default>
+                <label>Injured Plaintiff</label>
+            </value>
+            <value>
+                <fullName>Life Partner</fullName>
+                <default>false</default>
+                <label>Life Partner</label>
+            </value>
+            <value>
+                <fullName>Dependent</fullName>
+                <default>false</default>
+                <label>Dependent</label>
+            </value>
+            <value>
+                <fullName>Other Relationship</fullName>
+                <default>false</default>
+                <label>Other Relationship</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

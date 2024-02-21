@@ -1,0 +1,37 @@
+<aura:component controller="ElixirOEM_NewReferralHelper"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="referralRecord" type="Referral__c"/> 
+    <aura:attribute name="patientDiagnosisLst" type="List"/>
+    <aura:attribute name="patientDiagnosisLstLength" type="Integer" default="0"/>
+    <aura:attribute name="patientProcedureLstLength" type="Integer" default="0"/>
+    <aura:attribute name="fileListSize" type="Integer" default="0" />
+    <aura:attribute name="patientProcedureLst" type="List"/> 
+    <aura:attribute name="accountName" type="String"/>
+    <aura:attribute name="userName" type="String"/>
+    <aura:attribute name="patientInfo" type="Account"/> 
+    <aura:attribute name="contactName" type="String"/>
+     <aura:attribute name="locationName" type="String"/>
+    <aura:attribute name="chartSummaryOptions" type="List" default="[]"/>   
+    <aura:attribute name="patientVOBDetails" type="VOB__c"/>  
+    <aura:attribute name="files" type="ContentDocument[]"/> 
+    <aura:attribute name="isOpen" type="Boolean"/> 
+    <aura:attribute name="accountId" type="String" default="0015Y00003Ptan2QAB"/>
+    <aura:handler name="ElixirOEM_ReferralToggle" event="c:ElixirOEM_ReferralToggle" action="{!c.pageOpenDecision}"/>
+    
+    <aura:attribute name="backPage1" type="Boolean" default="false"/> <!-- Nikhil -->
+    
+    <div aura:id="pageOne" class="slds-show">
+        <c:ElixirOEM_NewReferral locationName = "{!v.locationName}" userName = "{!v.userName}" contactName = "{!v.contactName}" accountName = "{!v.accountName}" isOpen="{!v.isOpen}" accountId = "{!v.accountId}" referralRecord = "{!v.referralRecord}" patientDiagnosisLst = "{!v.patientDiagnosisLst}"
+                                 patientProcedureLst = "{!v.patientProcedureLst}" chartSummaryOptions="{!v.chartSummaryOptions}" backPage2="{!v.backPage1}"/>
+    </div>
+    <div aura:id="pageTwo" class="slds-hide">
+        <c:ElixirOEM_ReferralInformation accountId = "{!v.accountId}" isOpen = "{!v.isOpen}" referralRecord = "{!v.referralRecord}" patientDiagnosisLst = "{!v.patientDiagnosisLst}"
+                                         patientVOBDetails = "{!v.patientVOBDetails}" patientProcedureLst = "{!v.patientProcedureLst}" chartSummaryOptions="{!v.chartSummaryOptions}" files="{!v.files}"
+                                         patientInfo = "{!v.patientInfo}" backPage2="{!v.backPage1}"/>
+    </div>
+    <div aura:id="pageThree" class="slds-hide">
+        <c:ElixirOEM_ReferralPreview locationName = "{!v.locationName}" contactName = "{!v.contactName}" userName = "{!v.userName}" accountName = "{!v.accountName}" isOpen = "{!v.isOpen}" referralRecord = "{!v.referralRecord}" patientDiagnosisLst = "{!v.patientDiagnosisLst}"
+                                     patientProcedureLst = "{!v.patientProcedureLst}" chartSummaryOptions="{!v.chartSummaryOptions}" files="{!v.files}"
+                                     patientVOBDetails = "{!v.patientVOBDetails}" patientInfo = "{!v.patientInfo}" backPage2="{!v.backPage1}" fileListSize="{!v.fileListSize}"/>
+    </div>
+</aura:component>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>if(PRIORVALUE( room_to_create__c )!= TEXT(room_to_create__c),true,false)</errorConditionFormula>
+    <errorMessage>You cannot enter these values again. If you want to add more rooms you can do it manually from the related lists.</errorMessage>
+</ValidationRule>

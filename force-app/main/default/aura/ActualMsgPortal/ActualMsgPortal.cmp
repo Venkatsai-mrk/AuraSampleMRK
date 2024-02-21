@@ -1,0 +1,102 @@
+<aura:component controller="ActualMsgCmpController" implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="message" type="Object" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="isShowAttach" type="Boolean" default="false" />
+    <aura:attribute name="isShowAttachButton" type="Boolean" default="false" />
+    <aura:attribute name="replyMsg" type="Boolean" default="false"/>
+    <aura:attribute name="showModalDeletePrompt" type="Boolean" default="false" />
+    <aura:attribute name="showModalArchivePrompt" type="Boolean" default="false" />
+    <aura:attribute name="showModalBookmarkPrompt" type="Boolean" default="false" />
+    <aura:attribute name="archiveButton" type="Boolean"/> 
+    <aura:attribute name="portalMessage" type="Boolean" default="false"/>
+    <aura:attribute name="unArchiveButton" type="Boolean"/>
+    <aura:attribute name="bookMarkButton" type="Boolean" default="false" />
+    <aura:attribute name="removeBookMarkButton" type="Boolean" default="false" />
+    <aura:attribute name="patientId" type="String"/>
+    <aura:attribute name="fileList" type="String[]"/>
+    <aura:attribute name="messageRecordId" type="String" default="false"/>
+    <aura:attribute name="isFromNewMessages" type="Boolean" default="false" />
+    <aura:attribute name="diableDeleteFromPortal" type="Boolean" default="false"/>
+     <aura:attribute name="disableArchiveFromPortal" type="Boolean" default="true"/>
+     <aura:attribute name="disableBookmarkFromPortal" type="Boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+    <div class = "bgclor">
+        <h1 class="slds-page-header__title">        
+            <div class="demo-only">
+                <div class="slds-text-color_inverse textAlign">View Message</div>
+            </div>
+        </h1>
+    </div>
+    <div class="slds-box">
+        
+        <lightning:icon iconName='utility:chevronleft' onclick="{!c.goBack}" alternativeText='Return to list view' size='small' title='Return to list view'></lightning:icon>
+        <a onclick="{!c.goBack}">Return to list view</a>
+        
+        <div class="slds-float_right slds-p-bottom_large">
+            <aura:if isTrue="{!v.portalMessage}">
+            <lightning:button variant="brand-outline" name="Reply" label="Reply" title="Reply" onclick="{! c.navToReplyBoxCmp }" />
+             </aura:if>
+            <aura:if isTrue="{!v.diableDeleteFromPortal}">
+            <lightning:button variant="brand-outline" name="Delete" label="Delete" title="Delete" onclick="{! c.delMsg }" />
+            </aura:if>
+			<aura:if isTrue="{!v.disableArchiveFromPortal}">
+            <aura:if isTrue="{!v.archiveButton}">
+                <lightning:button variant="brand-outline" name="Archive" label="Archive" title="Archive" onclick="{! c.archiveMsg }" />
+                </aura:if>
+                </aura:if>
+            
+                <aura:if isTrue="{!v.unArchiveButton}">
+                    <lightning:button variant="brand-outline" name="UnArchive" label="UnArchive" title="UnArchive" onclick="{! c.archiveMsg }"/>
+                </aura:if>
+				
+            	<aura:if isTrue="{!v.disableBookmarkFromPortal}">
+                <aura:if isTrue="{!v.bookMarkButton}">
+                    <lightning:button variant="brand-outline" name="Bookmark" label="Bookmark" title="Bookmark" onclick="{! c.bookmarkMsg }" />
+                   </aura:if>
+                    </aura:if>
+                
+                   <aura:if isTrue="{!v.removeBookMarkButton}">
+                    <lightning:button variant="brand-outline" name="RemoveBookmark" label="Remove Bookmark" title="Remove Bookmark" onclick="{! c.bookmarkMsg }" />
+                   </aura:if>
+        </div>
+        <br/><br/>
+        <div>
+            <div class="slds-p-left_medium slds-p-right_medium slds-col slds-size_9-of-12">
+                <div class="slds-text-title_caps">Subject</div><br/>
+                <h1>
+                    <lightning:formattedText  value="{!v.message.ElixirSuite__Subject__c}"></lightning:formattedText>
+                </h1>
+            </div>
+        </div><br/>
+        
+        <div class="slds-p-left_medium slds-p-right_medium">
+            <div class="slds-text-title_caps"> Message Details </div>
+        </div><br/>
+        
+        <div class="slds-p-left_medium slds-p-right_medium message-details">
+            
+            <lightning:formattedRichText value="{!v.message.ElixirSuite__Message_Details_lookup__r[0].ElixirSuite__Message_Body__c}"></lightning:formattedRichText>
+            
+        </div>
+<div class="slds-grid slds-wrap">
+    <aura:iteration items="{!v.fileList}" var="section" indexVar="idx">
+        <div class="slds-col slds-size_1-of-3">
+            <b><lightning:fileCard fileId="{!section}" description=""/></b>
+        </div>
+    </aura:iteration>
+</div>
+    </div>
+    <aura:if isTrue="{!v.replyMsg}">
+        <c:ReplyBoxCmp message="{!v.message}" patientId="{!v.patientId}" showModal="{!v.replyMsg}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalDeletePrompt}">
+        <c:promptForPortal showModal="{!v.showModalDeletePrompt}" showModalDeletePrompt="{!v.showModalDeletePrompt}" recordId="{!v.recordId}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalArchivePrompt}">
+        <c:promptForPortal showModal="{!v.showModalArchivePrompt}" showModalArchivePrompt="{!v.showModalArchivePrompt}" recordId="{!v.recordId}" archivePrompt="{!v.archiveButton}" unArchivePrompt="{!v.unArchiveButton}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showModalBookmarkPrompt}">
+        <c:promptForPortal showModal="{!v.showModalBookmarkPrompt}" showModalBookmarkPrompt="{!v.showModalBookmarkPrompt}" recordId="{!v.recordId}" bookMarkPrompt="{!v.bookMarkButton}" removeBookMarkPrompt="{!v.removeBookMarkButton}"/>
+    </aura:if>
+</aura:component>

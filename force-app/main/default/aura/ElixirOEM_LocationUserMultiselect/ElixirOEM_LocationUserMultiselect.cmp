@@ -1,0 +1,109 @@
+<aura:component controller="ElixirOEM_MultiselectForApprovalHelper">
+    <!-- Attributes that can be set while component calling-->
+    <aura:attribute name="mapOfSetUpKey_MarkupAttibute" type="String"/>
+    <aura:attribute name="dropDownSelectedValueToName" type="List"/>
+    <aura:attribute name="options" type="string" default="" required="true" />
+    <aura:attribute name="value" type="String" default="" description="Selected value in single Select" />
+    <aura:attribute name="values" type="List"   default="" description="Selected value in Multi Select" />
+    <aura:attribute name="label" type="string" default="" description="Label will be displayed above input Box" />
+    <aura:attribute name="minChar" type="Integer" default="1" description="Minimum character to type for search" />
+    <aura:attribute name="disabled" type="Boolean" default="false" description="Disable the combobox" />
+    <aura:attribute name="isSetUpKeySelected" type="Boolean" default="false" />
+    <aura:attribute name="dropDownOptionsForLocation" type="List"/> 
+    <aura:attribute name="toDelRecords" type="List"/> 
+    <aura:attribute name="enableSaveButton" type="Boolean"/>
+    <aura:attribute name="multiSelect" type="Boolean" default="false" description="Switch between single and multiSelect" />
+    <aura:attribute name="setupKeySelected" type="String"/>
+    <!-- Internal Use Attributes -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="searchString"   type="string"  default="" description="String to search"/>
+    <aura:attribute name="message"   type="String" access="private" default="" />
+    
+    <!-- Component Markup -->
+    <div>
+        <aura:if isTrue="{!!empty(v.label)}">
+            <label class="slds-form-element__label">{!v.label}</label>
+        </aura:if>
+        <div class="slds-combobox_container">
+            
+            <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
+                 aria-expanded="false" aria-haspopup="listbox" role="listbox" aura:id="resultsDiv" >
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <lightning:input disabled="{!v.disabled}" aura:id="inputLookup" placeholder="Select an Option" 
+                                     onblur="{!c.blurEvent}" onclick="{!c.showOptions}" onkeyup="{!c.filterOptions}" 
+                                     value="{!v.searchString}" autoComplete="off" variant="label-hidden" id="combobox-id-1" />
+                    <lightning:icon class="slds-input__icon" iconName="utility:down" size="x-small" alternativeText="search"/>
+                </div>
+                <!-- Dropdown List -->
+                <div id="listbox-id-1" class="ms-dropdown-items" role="listbox" >
+                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown_fluid ms-dropdown customCss" role="presentation">
+                        
+                        <aura:if isTrue="{!empty(v.message)}" >
+                            <!-- To display Drop down List -->
+                            
+                            <aura:iteration items="{!v.options}" var="option" >
+                                <aura:if isTrue="{!option.disabled}"> 
+                                    <li  class="{!'slds-listbox__item ms-list-item disabledItem' + if(option.isVisible,'',' slds-hide')}">
+                                        <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{!option.label}</span>
+                                    </li>              
+                                    <aura:set attribute="else"> 
+                                        <li id="{!option.value}" class="{!'slds-listbox__item eachItem' + if(option.isVisible,'',' slds-hide')}" onmousedown="{!c.selectItem}">
+                                            <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                <span class="slds-media__figure">
+                                                    <lightning:icon class="{!if(option.selected,'','slds-hide')}" iconName="utility:check" size="x-small" alternativeText="icon" />
+                                                </span>
+                                                <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{!option.label}</span>
+                                            </div>
+                                        </li>     
+                                        <!--  <li role="presentation" id="{!option.value}" class="{!'slds-listbox__item ms-list-item '+ if(option.isVisible ? '' : 'slds-hide')}" onmousedown="{!c.selectItem}" >
+                                    <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                        <span class="slds-media__figure">
+                                            <lightning:icon class="{!if(option.selected,'','slds-hide')}" iconName="utility:check" size="x-small" alternativeText="icon" />
+                                        </span>
+                                        <span class="slds-media__body">
+                                            <span class="slds-truncate" title="{!option.label}">{!option.label}</span>
+                                        </span>
+                                    </div>
+                                </li>  -->                                     
+                                    </aura:set>
+                                </aura:if>
+                            </aura:iteration>
+                            <!-- To display Error Message -->
+                            <aura:set attribute="else">
+                                <li class="slds-listbox__item">
+                                    <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{!v.message}</span>
+                                </li>
+                            </aura:set>
+                        </aura:if>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.disabled}">
+            
+            <aura:iteration items="{!v.options}" var="option">
+                
+                <aura:if isTrue="{!option.selected}">
+                    
+                    <div class="disabledPill">
+                        <lightning:pill class="slds-m-around_xx-small" name="{!option.value}" label="{!option.label}"/> 
+                    </div>
+                    
+                </aura:if>
+            </aura:iteration>
+            <aura:set attribute="else">
+                
+                <aura:iteration items="{!v.options}" var="option">
+                    <aura:if isTrue="{!option.selected}">
+                        <div class="disabledPill">
+                            <lightning:pill class="slds-m-around_xx-small" name="{!option.value}" label="{!option.label}" onremove="{!c.removePill}"/>
+                        </div>
+                    </aura:if>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>
+        
+    </div>
+</aura:component>

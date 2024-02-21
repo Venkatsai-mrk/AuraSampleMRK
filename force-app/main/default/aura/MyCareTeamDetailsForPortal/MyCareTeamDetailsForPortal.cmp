@@ -1,0 +1,59 @@
+<aura:component controller="MyCareTeamDetailsForPortal" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="teamMembers" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="openComposeMessage" type="Boolean" default="false" />
+    <aura:attribute name="composeMsgFromCareTeam" type="Boolean" default="false" />
+    <aura:attribute name="careTeamDetails" type="Object" default=""/>
+    <aura:attribute name="pracId" type="String"/>
+<aura:attribute name="isEnableAppointment" type="Boolean" />
+    <lightning:navigation aura:id="navigationService" />
+    <div class="care-main_box">
+        <div class="care-head">
+            <div class=" slds-text-heading_small">My Care Team</div>
+        </div>
+        <aura:if isTrue="{!empty(v.teamMembers)}">
+            <div class="slds-p-around_large slds-text-align_center">You haven't seen anyone yet.</div>
+        <aura:set attribute="else">
+            <div class="care_team-box">
+                <aura:iteration items="{!v.teamMembers}" var="member">
+                    <div>
+                        <div class="slds-box slds-box_xx-small ">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <div>
+                                        <h2 class="slds-truncate">{!member.label}</h2>
+                                    </div>
+                                    <div>
+                                        <p class="slds-truncate">{!member.teamMemberRole}</p>
+                                    </div>
+                                    <div>
+                                        <p class="slds-truncate">{!member.specialtity}</p>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-text-align_right">
+                                    <div class="slds-grid slds-gutters ">
+                                        <div class="slds-col">
+<aura:if isTrue="{!v.isEnableAppointment}">
+                                            <lightning:button iconName="utility:event" name="{!member}" onclick="{!c.scheduleAppontmentWithCareTeamMember}"/>
+                                        </aura:if>
+                                            <lightning:button iconName="utility:email" name="{!member}" onclick="{!c.composeMessageToCareTeamMember}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+            </div>
+        </aura:set>
+        </aura:if>
+    </div>
+    <aura:if isTrue="{!v.openComposeMessage}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container" >
+                <c:ComposeMsgPortalCmp composeMsgFromCareTeam="{!v.composeMsgFromCareTeam}" careTeamDetails="{!v.careTeamDetails}" openComposeMessage="{!v.openComposeMessage}"/>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

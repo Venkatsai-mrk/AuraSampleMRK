@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="allergyList" type="List" description="Data of the newly added allergy"/>
+</aura:event>

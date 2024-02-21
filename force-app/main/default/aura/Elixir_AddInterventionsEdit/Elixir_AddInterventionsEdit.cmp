@@ -1,0 +1,55 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global"  >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name="optionsInt" type="List"/>
+    <aura:attribute name="allOptionsInt" type="List"/>
+    <aura:attribute name="IntsList" type="List"/>   
+    <aura:attribute name= "masterInts" type="Object"/> 
+    <aura:attribute name= "IntFirstCallBack" type="Boolean"/> 
+    <aura:attribute name="mapOfInts" type="Object"/>
+    <aura:attribute name="selectedValuesInt" type="List"/>
+    <aura:attribute name= "openModalAllIntms" type="Boolean" />
+    <aura:attribute name="termInt" type="String" />
+    <aura:attribute name="allIntsList" type="Object"/>   
+    <aura:attribute name="existingIntsObj" type="Object"/> 
+    <aura:attribute name= "customInt" type="Boolean"/> 
+    <aura:attribute name= "carePlan" type="Boolean" default="false"/> 
+    <aura:registerEvent name="cmpEvent" type="c:AddProblemsModalHide"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="IntrvntionEvent" type="c:IntrvntionEvent"/>
+    <aura:attribute name= "carePlanIntervention" type="Boolean" default="false"/>
+    <aura:registerEvent name="ObjectiveIntervEvents" type="c:ObjectiveIntervEvents" />
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open sectioncss ag-template">
+        <div class="add-problem_modal">
+            <div class="slds-modal__container ">
+                <header class="slds-modal__header headercls">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModalAllProblems }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close backgroundBlurr"/>
+                    <h5><b>Add Interventions from Template</b></h5>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+                    <div class="add_problem-temp">
+                        <!--   <lightning:input type="search" value="{!v.term}" class="duallist-search_box" placeholder="Search Intervention" onchange="{!c.search}"/>-->
+                        <lightning:dualListbox name="Objective"                         
+                                               sourceLabel="Available"
+                                               selectedLabel="Selected"
+                                               fieldLevelHelp="Select Intervention"
+                                               options="{!v.optionsInt}"
+                                               onchange="{! c.handleChange }"/>
+                    </div>                    
+                </div>
+                
+                <footer>
+                    <lightning:button label="Cancel" title="Neutral action" variant="Neutral" onclick="{! c.closeModalAllProblems }"/>
+                    <lightning:button label="Add" title="Neutral action" variant="Brand" onclick="{! c.save }"/>
+                </footer>
+            </div>
+        </div>
+    </section>   
+    <div class="{!'slds-backdrop ' + ((v.customInt) ? 'slds-backdrop_open' : 'slds-backdrop_close')}"></div>
+    
+    
+</aura:component>

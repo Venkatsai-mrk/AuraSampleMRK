@@ -1,0 +1,39 @@
+.THIS .lab-order_heading {
+    color: black;
+    font-size: 18px;
+    padding: 15px 15px 0 15px;
+}
+
+.THIS .design {
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
+    right: 0;
+    top: 20px;
+    padding: 10px;
+    width: 298px;
+    box-shadow: 0px 0px 6px 0px #ccc;
+}
+
+.THIS .divFirst {
+    height: 100%;
+    
+}
+
+.THIS .divSecond {
+    width: 100%;
+    background-color: rgb(243, 242, 242);
+    height: 100%;
+    color: black;
+}
+
+.THIS .lightningTile {
+    font-size: 12px;
+}
+
+.THIS .new{
+    float : right;
+    font-size: 12px;
+}
+
+.THIS .combobox_container{
+}

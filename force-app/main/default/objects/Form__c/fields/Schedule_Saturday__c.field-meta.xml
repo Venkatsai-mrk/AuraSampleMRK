@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Schedule_Saturday__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Schedule Saturday</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Family Program Saturday Afternoon Session at 12:30PM</fullName>
+                <default>false</default>
+                <label>Family Program Saturday Afternoon Session at 12:30PM</label>
+            </value>
+            <value>
+                <fullName>Family Program Saturday Lunch at 12:00PM</fullName>
+                <default>false</default>
+                <label>Family Program Saturday Lunch at 12:00PM</label>
+            </value>
+            <value>
+                <fullName>Family Program Saturday Morning Session at 09:00AM</fullName>
+                <default>false</default>
+                <label>Family Program Saturday Morning Session at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>In-House 12 Step Meeting at 07:00PM</fullName>
+                <default>false</default>
+                <label>In-House 12 Step Meeting at 07:00PM</label>
+            </value>
+            <value>
+                <fullName>Lunch at 12:00PM</fullName>
+                <default>false</default>
+                <label>Lunch at 12:00PM</label>
+            </value>
+            <value>
+                <fullName>LWD: Mic Check at 10:00AM</fullName>
+                <default>false</default>
+                <label>LWD: Mic Check at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LWD: Psychoeducation at 01:30PM</fullName>
+                <default>false</default>
+                <label>LWD: Psychoeducation at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Mic Check A at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Mic Check A at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Mic Check B at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Mic Check B at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Mic Check C at 10:00AM</fullName>
+                <default>false</default>
+                <label>LW: Mic Check C at 10:00AM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group A at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group A at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group B at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group B at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Primary Group C at 01:30PM</fullName>
+                <default>false</default>
+                <label>LW: Primary Group C at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education A at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education A at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psychoeducation A at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Psychoeducation A at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW Psychoeducation B at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW Psychoeducation B at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education B at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education B at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education C at 03:00PM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education C at 03:00PM</label>
+            </value>
+            <value>
+                <fullName>LW: Psycho-education: C at 11:30AM</fullName>
+                <default>false</default>
+                <label>LW: Psycho-education: C at 11:30AM</label>
+            </value>
+            <value>
+                <fullName>Morning Check - In: 1 at 10:30AM</fullName>
+                <default>false</default>
+                <label>Morning Check - In: 1 at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Primary Process A at 10:30AM</fullName>
+                <default>false</default>
+                <label>Primary Process A at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Primary Process B at 10:30AM</fullName>
+                <default>false</default>
+                <label>Primary Process B at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Primary Process C at 10:30AM</fullName>
+                <default>false</default>
+                <label>Primary Process C at 10:30AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Community at 12:20PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Community at 12:20PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Community Late Afternoon at 01:20PM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Community Late Afternoon at 01:20PM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Mic Check A at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Mic Check A at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Mic Check B at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Mic Check B at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psychoeducation: Mic Check C at 09:00AM</fullName>
+                <default>false</default>
+                <label>Psychoeducation: Mic Check C at 09:00AM</label>
+            </value>
+            <value>
+                <fullName>Psycho-education: Team-building: 1 at 01:30PM</fullName>
+                <default>false</default>
+                <label>Psycho-education: Team-building: 1 at 01:30PM</label>
+            </value>
+            <value>
+                <fullName>Yoga at 09:00AM</fullName>
+                <default>false</default>
+                <label>Yoga at 09:00AM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

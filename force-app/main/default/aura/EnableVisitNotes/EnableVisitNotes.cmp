@@ -1,0 +1,19 @@
+<aura:component controller="EnableVisitNotesController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="visitNotes" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="visitNotesValue" type="Boolean" />
+     <div class="slds-modal__content slds-p-around_medium fixedHeight" id="modal-content-id-1">
+        <aura:if isTrue="{!v.visitNotes}" > 
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-align_absolute-center slds-hyphenate "><b>Visit Notes Settings</b></h2><br/>
+            
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning:input type="checkbox" label="Enable Visit Notes" variant="label-inline" checked="{!v.visitNotesValue}" onchange="{!c.handleCheckbox}" />
+                    
+                </div>
+              </div>
+            
+        </aura:if> 
+        
+    </div>
+</aura:component>

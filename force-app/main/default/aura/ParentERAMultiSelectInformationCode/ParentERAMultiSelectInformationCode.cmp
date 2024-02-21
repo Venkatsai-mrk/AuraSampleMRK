@@ -1,0 +1,76 @@
+<aura:component >
+
+    <aura:attribute name="MultipleoptnId" type="List" default="[]"/>
+
+    <aura:attribute name="options_" type="String[]" />
+
+    <aura:attribute name="selectedItems" type="String[]" />
+
+    <aura:attribute name="infoText" type="String"/>
+
+    <aura:attribute name="width" type="String" default="245px;" />
+
+    <aura:attribute name="dropdownLength" type="Integer" default="4" />
+
+   
+
+    <aura:method name="reInit" action="{!c.myAction}" description="Allows the lookup to be reinitalized">
+
+    </aura:method>
+   
+     <aura:attribute name="lstSelectedRecords" type="list" />
+    <aura:attribute name="listOfSearchRecords" type="List" />
+     <aura:attribute name="disabled" type="Boolean" default="false" />  
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="objectAPIName" type="string" default=""/>
+    <aura:attribute name="IconName" type="string" default=""/>
+    <aura:attribute name="label" type="string" default=""/>
+     <aura:attribute name="eraId" type="string" default=""/>
+    <aura:attribute name="isUpdate" type="Boolean"/>
+
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+
+    <aura:attribute name="dropdownOver" type="Boolean" default="false" />
+
+    <div aura:id="main-div" class=" slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click ">
+
+        <button class="slds-button slds-button--neutral slds-picklist__label" style="{!'width:' + v.width }" aria-haspopup="true" onclick="{!c.handleClick}" onmouseleave="{!c.handleMouseOutButton}" disabled = "{!v.disabled}">
+
+            <span class="slds-truncate" title="{!v.infoText}">{!v.infoText}</span>
+
+            <lightning:icon iconName="utility:down" size="small" class="slds-icon" />
+
+        </button>
+
+        <div class="slds-dropdown slds-dropdown--left" onmouseenter="{!c.handleMouseEnter}" onmouseleave="{!c.handleMouseLeave}">
+
+            <ul class="{!'slds-dropdown__list slds-dropdown--length-' + v.dropdownLength}" role="menu">
+
+                <aura:iteration items="{!v.options_}" var="option">
+
+                    <li class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}" role="presentation" onclick="{!c.handleSelection}" data-value="{!option.Name}" data-selected="{!option.selected}">
+
+                        <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0">
+
+                            <span class="slds-truncate">
+                                {!option.Name}
+
+                            </span>
+
+                        </a>
+
+                    </li>
+
+                </aura:iteration>
+
+            </ul>
+        </div>
+
+    </div>
+    <aura:iteration items="{!v.MultipleoptnId}" var="sr" indexVar="index">
+        <lightning:pill aura:id="{!index}" class="slds-m-around_xx-small" name="{!sr.Name}" label="{!sr.Name}" onremove="{! c.clear }" >          
+        </lightning:pill>
+    </aura:iteration>
+</aura:component>

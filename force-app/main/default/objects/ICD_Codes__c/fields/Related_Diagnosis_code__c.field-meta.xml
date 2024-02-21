@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_Diagnosis_code__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This field is used to associate the diagnosis with the UA sample details.</description>
+    <externalId>false</externalId>
+    <label>Related Diagnosis code</label>
+    <referenceTo>UA_Sample_Details__c</referenceTo>
+    <relationshipLabel>Diagnosis Codes</relationshipLabel>
+    <relationshipName>Diagnosis_Code</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

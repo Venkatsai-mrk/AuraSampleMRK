@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TABSub_Tab_Label__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub Tab Label</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ElixirSuite__Admission_Forms__c</fullName>
+                <default>false</default>
+                <label>Admission Forms</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Billing_Summary__c</fullName>
+                <default>false</default>
+                <label>Billing Summary</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Capture_Signature__c</fullName>
+                <default>false</default>
+                <label>Capture Signature</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Care_Episode__c</fullName>
+                <default>false</default>
+                <label>Care Episode</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Care_Plan__c</fullName>
+                <default>false</default>
+                <label>Care Plan</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__CHC_Prescription_Order__c</fullName>
+                <default>false</default>
+                <label>CHC Prescription Order</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Claims__c</fullName>
+                <default>false</default>
+                <label>Claims</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Clinical_Forms__c</fullName>
+                <default>false</default>
+                <label>Clinical Forms</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__CostOfCare__c</fullName>
+                <default>false</default>
+                <label>CostOfCare</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Discharge_Form__c</fullName>
+                <default>false</default>
+                <label>Discharge Form</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__First_Visit_Notes__c</fullName>
+                <default>false</default>
+                <label>First Visit Notes</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Generate_Verification_Code__c</fullName>
+                <default>false</default>
+                <label>Generate Verification Code</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Integrated_Lab_Order__c</fullName>
+                <default>false</default>
+                <label>Lab Orders</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Lab_Orders__c</fullName>
+                <default>false</default>
+                <label>Manual Lab Orders</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Master_Problem_List__c</fullName>
+                <default>false</default>
+                <label>Master Problem List</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__MedicalCoding__c</fullName>
+                <default>false</default>
+                <label>MedicalCoding</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Medical_Examination__c</fullName>
+                <default>false</default>
+                <label>Medical Examination</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__MOR_MAR__c</fullName>
+                <default>false</default>
+                <label>MOR/MAR</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__NewCrop_Prescription_Order__c</fullName>
+                <default>false</default>
+                <label>NewCrop Prescription Order</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Notes_Forms__c</fullName>
+                <default>false</default>
+                <label>Notes Forms</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Nursing_Forms__c</fullName>
+                <default>false</default>
+                <label>Nursing Forms</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__PatientStatement__c</fullName>
+                <default>false</default>
+                <label>PatientStatement</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Payment__c</fullName>
+                <default>false</default>
+                <label>Payment</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__PaymentSchedule__c</fullName>
+                <default>false</default>
+                <label>PaymentSchedule</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Prescriptions__c</fullName>
+                <default>false</default>
+                <label>Prescriptions</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Procedure__c</fullName>
+                <default>false</default>
+                <label>Procedure</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Progress_Notes__c</fullName>
+                <default>false</default>
+                <label>Progress Notes</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Review_Forms__c</fullName>
+                <default>false</default>
+                <label>Review Forms</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Send_Data_For_Claims__c</fullName>
+                <default>false</default>
+                <label>Send Data For Claims</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Timeline__c</fullName>
+                <default>false</default>
+                <label>Timeline</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Transportation__c</fullName>
+                <default>false</default>
+                <label>Transportation</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Immunization__c</fullName>
+                <default>false</default>
+                <label>Immunization</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Referral__c</fullName>
+                <default>false</default>
+                <label>Referral</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Problems__c</fullName>
+                <default>false</default>
+                <label>Problems</label>
+            </value>
+            <value>
+                <fullName>ElixirSuite__Diagnosis__c</fullName>
+                <default>false</default>
+                <label>Diagnosis</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_client_currently_taking_medications__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is used to inquire whether the patient is currently taking any medications.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>*Inform client not to bring medication of just a couple day&apos;s worth*</inlineHelpText>
+    <label>Is client currently taking medications</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

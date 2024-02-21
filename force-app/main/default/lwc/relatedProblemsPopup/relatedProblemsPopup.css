@@ -1,0 +1,11 @@
+.custom-modal-width {
+        max-width: 100%!important;
+    width: 49%!important;
+    padding-left: 2%;
+    padding-right: 2%;
+    /* height: 209px; */
+    padding-top: 143px;
+}
+.marginclass{
+    margin-right: 10px;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Homeless_Sober_Living_Parents__c</fullName>
+    <description>This field is used to describe the patient&apos;s living situation, such as being homeless, residing in a sober-living environment, or with parents.</description>
+    <externalId>false</externalId>
+    <label>Homeless,Sober-Living,Parents</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,71 @@
+<aura:component controller="PatientChartController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="companySetting" type="Map" default="{}" />
+    <aura:attribute name="categorySetting" type="Map" default="{}" />
+    <aura:attribute name="recId" type="Id" access="public"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isOpen1" type="boolean" default="false"/>
+    <aura:attribute name="mydata" type="Object"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="cmpName" type="string" default=""/>
+    <aura:attribute name="selectedRowId" type="Id" access="public"/>
+    <aura:attribute name="lstOfCustomSetting" type="List"/>
+    <aura:attribute name="lstOfCategory" type="List"/>
+    <aura:attribute name="lstOfCategoryvalues" type="List"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="probList" type="boolean" default="true"/>
+    <aura:attribute name="careEpisodesSelected" type="List"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:attribute name="body" type="object"/>
+
+    <div class="slds-modal__header">
+        <h1 class="slds-modal__title slds-hyphenate">Select Chart Elements</h1>
+    </div>
+    
+    <div class="slds-p-around_medium content-patient-chart">
+        <div class=" stylecolumn slds-grid slds-wrap">
+            <div class="slds-size_4-of-12">
+                <lightning:input type="checkbox" label="Demographic Information" name="input2" checked="true"
+                    disabled="true"/>
+            </div>
+
+            <div class="slds-size_4-of-12">
+                <lightning:input type="checkbox" label="Visit Info/Care Episode details" name="input3"
+                    checked="true" disabled="true"/>
+            </div>
+
+            <div class="slds-size_4-of-12">
+                <lightning:input type="checkbox" label="Care Team details" name="input4" checked="true"
+                    disabled="true"/>   
+            </div>
+
+            <aura:iteration items="{!v.lstOfCustomSetting}" var="item" indexvar="idx">
+                <div class="slds-size_4-of-12">
+                    <lightning:input type="checkbox" label="{!item.label}" checked="{!item.valueForCB}" name="idx" />
+                </div>
+            </aura:iteration>
+        </div>
+        
+        <div class="slds-m-top_x-small"><b> SELECT FORM CATEGORIES FOR CHART</b></div>
+        <div class=" stylecolumn slds-grid slds-wrap">
+        
+            <aura:iteration items="{!v.lstOfCategoryvalues}" var="item1">
+                <div class="slds-size_4-of-12">
+                    <lightning:input type="checkbox" label="{!item1.label}" checked="{!item1.valueForCAT}" name="idx" />
+                </div>
+            </aura:iteration>
+        
+        </div>
+        <aura:if isTrue="{!! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    </div>
+
+    <div class="slds-modal__footer">
+        <center>
+            <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+            <ui:button label="Generate Chart" press="{!c.handleGoToURL}" />
+        </center>
+    </div>
+
+    {!v.body}
+</aura:component>

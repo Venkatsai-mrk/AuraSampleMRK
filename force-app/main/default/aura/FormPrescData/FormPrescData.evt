@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="jsonList" type="String[]"/> 
+    <aura:attribute name="selectedUser" type="String"/> 
+    <aura:attribute name="selectedVia" type="String"/> 
+    
+
+</aura:event>

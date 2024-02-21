@@ -1,0 +1,366 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="LabOrderController">
+    <aura:attribute name="ShowEditable" type="Boolean" default="false"/>
+    <aura:attribute name="recordValue" type="String"/>
+    <aura:attribute name="contentDocId" type="String"/>
+    <aura:attribute name="Response" type="Object"/>
+    <aura:attribute name="todayString" type="DateTime"/>
+    <aura:attribute name="endString" type="DateTime"/>
+    <aura:attribute name="sendData" type="object"/>
+    <aura:attribute name="viewflag" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="OrderedTests" type="Boolean" default="false" />
+    <aura:attribute name="showCBGroup" type="Boolean" default="false" />
+    <aura:attribute name="today" type="Date" default="" />
+    <aura:attribute name="ProcReqToSave" type="UA_Sample_Details__c" />
+    <aura:attribute name="CustomMetadataValues" type="List" />
+    <aura:attribute name="showConfirmDialog" type="boolean" default="false"/>
+    <aura:attribute name="AcctIden" type="String" />
+     <aura:attribute name="AvailableTestValue" type="String" />
+    <aura:attribute name="NecessityDescription" type="String" />
+    <aura:attribute name="openModal" type="boolean" default="false" />
+    <aura:attribute name="MedicalValue" type="String" />
+    <aura:attribute name="isOpen" type="Boolean" />
+    <aura:handler name="RecordIdForLabOrder" event="c:RecordIdForLabOrder" action="{!c.handleEventForLabOrderAcct}" />
+    <aura:attribute name="AllUsers" type="List" />
+    <aura:attribute name="OrderViaValues" type="List" />
+     <aura:attribute name="NameSpaceOrgWide" type="String"/>
+    <aura:attribute name="AvailableFrequencies" type="String[]" />
+    <aura:attribute name="isEnabledEditButton" type="Boolean" />
+    <aura:attribute name="IsSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="showSign" type="Boolean" default="true"/>
+    <aura:attribute name="verifyOtp" type="Boolean" default="false"/>
+    <aura:attribute name="signstatus" type="Boolean" default="true"/>
+    <aura:attribute name= "passcode" type="String" />
+    <aura:attribute name="attachId1" type="Id"/>
+    <aura:attribute name="url" type="Id"/>
+    <aura:attribute name="signee1" type="String"/>
+    <aura:attribute name="signComment1" type="String"/>
+    <aura:attribute name="dateTodayForForm1" type="String"/>
+    <aura:attribute name="nameSpace" type="String"/>
+    <aura:handler name="OTPMatchCmpEvent" event="c:EventOnOTPMatching" action="{!c.parentComponentEvent}"/>
+    <aura:registerEvent name="appEvent" type="c:Elixir_RefreshViewsGenericAppEvt"/>    
+    <aura:attribute name="AvailableTest" type="List" default=""  />
+    
+    <aura:attribute name="options" type="List"  default="[
+    {'label': 'Ross', 'value': 'option1', hasValue : true},
+    {'label': 'Rachel', 'value': 'option2',hasValue : true},
+    ]" />
+     <aura:attribute name="checkOptions" type="Object" />
+    <aura:attribute name="value" type="List" default="option1" />
+    
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+    <aura:if isTrue="{!v.isOpen}">
+        <div class="h-auto">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container hideDiv" aura:id="ParentDiv">
+                    
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                        
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Lab Order</h2>
+                        
+                    </header>
+                   
+                
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                 <aura:if isTrue="{!v.IsSpinner}">
+               <lightning:spinner variant="brand"  size="large" />
+              </aura:if>
+                        <div class="widthForAll">
+                            <aura:if isTrue="{!v.isEnabledEditButton}">
+                              <div class="slds-text-align_right">
+                                     <div class="slds-grid slds-gutters">                                
+                                <div class="slds-size_12-of-12  slds-m-bottom_small">
+                                    <aura:if isTrue="{!v.signstatus}">
+                                 <lightning:button  variant="brand" label="Edit" title="Edit"  onclick="{!c.handleEditRecord }" class=""/>
+                                    </aura:if>
+                                    </div>
+                                  </div>
+                                </div>
+                            </aura:if>
+                            <div class="slds-grid slds-gutters LabTests ForPatientCard ForPatientCard1">
+                                <div class="slds-col slds-size_12-of-12 slds-p-around_none">
+                                    
+                                    <c:PatientCard_MAR recordId="{!v.AcctIden}"></c:PatientCard_MAR>
+                                    <!-- FOR PATIENT INFORMATION -->
+                                    
+                                </div>
+                            </div>
+                            <br/>
+                            
+                            <div class="slds-grid slds-gutters LabTests">
+                                
+                                <div class="slds-col slds-size_10-of-12">
+                                
+                                    <lightning:select name="" label="Available Tests" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Medical_Test__c}"  disabled="{!v.viewflag}">
+                                       
+                                        <aura:iteration items="{!v.AvailableTest}" var="item">
+                                            <option value="{!item}" selected="{!item == v.ProcReqToSave.UASampleDetails.ElixirSuite__Medical_Test__c}">
+                                                {!item}
+                                            </option>
+                                        </aura:iteration>
+                                        
+                                    </lightning:select>
+                                </div>
+                                
+                            </div>
+                           
+                            <br/>
+                            
+                            <div class="LabTests slds-gutters">
+                                <div class="slds-grid ">
+                                    <div class="slds-col slds-size_12-of-12">
+                                        <h1 class="HeadingCls"> ORDERED TESTS : </h1>
+                                    </div>
+                                </div>
+                                <div class="slds-grid">
+                                    
+                                    <div class="slds-col slds-size_5-of-12">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <span>
+                                                    <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                                    <lightning:input type="text"  label="Medical Test" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Medical_Test__c}" disabled="true"  />
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <span>
+                                                    <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                                    <lightning:input type="date"  label="Start Date" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Start_Date__c}" disabled="{!v.viewflag}" />
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_7-of-12">
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-12">
+                                                <span>
+                                                    <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                                    
+                                                    
+                                                    <lightning:select name="" label="Frequency"  value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Frequency__c}" disabled="{!v.viewflag}">
+                                                        
+                                                        <aura:iteration items="{!v.AvailableFrequencies}" var="item">
+                                                            <option value="{!item}" selected="{!item == v.ProcReqToSave.UASampleDetails.ElixirSuite__Frequency__c}">
+                                                                {!item}
+                                                            </option>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12">
+                                                <span>
+                                                    <label class="slds-form-element__label slds-no-flex">On Admission</label>
+                                                    <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                                    <lightning:input type="checkbox"  label="" aura:id="OnAdmissionCheckBox" onchange="{!c.handleCheck}"  disabled="{!v.viewflag}" checked="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__On_Admission__c}"/>
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12">
+                                                <span>
+                                                    <!--lightning:inputField fieldName="HealthCloudGA__MedicationName__c" /-->
+                                                    <lightning:input aura:id="field"
+                                                                     type="text"  label="Fax" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Fax__c}" disabled="{!v.viewflag}" 
+                                                                     />
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            
+                            <div class="slds-grid slds-gutters defaultBackground">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <h1 class="HeadingCls"> STATEMENT OF MEDICAL NECESSITY </h1>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters defaultBackgroundForNewCheckBox">
+                              
+                                      <div class="slds-col slds-size_12-of-12 medical_necessity">
+                                    <aura:iteration items="{!v.checkOptions}" var="saloma"  indexVar="idx">
+                                        <lightning:input name="{!idx}" type="checkbox" label="{!saloma.label}" onchange="{!c.handleCheckboxChange}" checked="{!saloma.hasValue}"  disabled="{!v.viewflag}"  />
+                                    </aura:iteration>
+                                    </div>
+                                    <!--<div class="slds-col slds-size_12-of-12">
+                                        <lightning:checkboxGroup 
+                                        options="{! v.options }" 
+                                        value="{! v.value }" 
+                                        onchange="{! c.handleCheckboxChange }" 
+                                        disabled="{!v.viewflag}"
+                                       /> 
+                                        
+                                    </div>-->
+
+                              
+                            </div>
+                            <div class="slds-grid slds-gutters defaultBackground">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <lightning:textarea class="TextHight" name="input2" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Necessity_Details__c}"   disabled="{!v.viewflag}" />
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters defaultBackground">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning:select name="" label="Ordered By" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Order_By__c}" required="true" messageWhenValueMissing="Choose one!" disabled="{!v.viewflag}">
+                                        
+                                        <aura:iteration items="{!v.AllUsers}" var="u">
+                                            
+                                            <option value="{!u.Id}" selected="{!u.Id == v.ProcReqToSave.UASampleDetails.ElixirSuite__Order_By__c}">
+                                                
+                                                {!u.Name}
+                                            </option>
+                                        </aura:iteration>
+                                        
+                                    </lightning:select>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning:select name="" label="Ordered Via" aura:id="field" value="{!v.ProcReqToSave.UASampleDetails.ElixirSuite__Ordered_Via__c}" required="true" messageWhenValueMissing="Choose one!" disabled="{!v.viewflag}">
+                                        
+                                        <aura:iteration items="{!v.OrderViaValues}" var="val">
+                                            <option value="{!val}" selected="{!val == v.ProcReqToSave.UASampleDetails.ElixirSuite__Ordered_Via__c}">
+                                                {!val}
+                                            </option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    
+                                </div>
+                            </div>
+                            <br />
+                            <!-- <aura:if isTrue="{!v.showSign}">
+                                                            
+                                                        <img src="{!$Resource.SignAndApprove}" onclick="{!c.showVerifyOtp}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.verifyOtp}">
+                                                        <c:ElixirHc_LabOrderSignOff isActive="{!v.verifyOtp}" showSign="{!v.showSign}" patId = "{!v.AcctIden}" recId = "{!v.recordValue}" pwCode="{!v.passcode}"/>
+                                                    </aura:if>
+                                                         <aura:if isTrue="{!v.attachId1 != null}">    
+                                                                <img class="imgCls" src="{!v.attachId1}" width="180" height="100"/>
+                                                                <p class="slds-m-top_small slds-p-left_medium"><span>Signed On : </span> {!v.dateTodayForForm1} </p>  
+                                                                <p class="slds-p-left_medium"><span>Signed By : </span> {!v.signee1} </p>  
+                                                                <p class="slds-p-left_medium">
+                                                                    <span>Notes : </span> 
+                                                                    <b>{!v.signComment1} </b></p>
+                                                            </aura:if> -->
+                            <!--<img class="imgCls" src="{!v.attachId1}" width="180" height="100"/>
+                                                    
+                                                    {!v.dateTodayForForm1}    {!v.signComment1}-->
+                            <div class="slds-grid slds-gutters">
+                                <c:Elixir_OrderApproval approvalType="Lab Order" labOrderApprovalInNewMode="false" labOrderId="{!v.recordValue}">
+                            </c:Elixir_OrderApproval>
+                            </div>                        
+                            
+                            
+                        </div>
+                        
+                    </div>
+                    <!--<footer class="slds-modal__footer buttonRound">           
+                
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_4-of-12">  
+                                 
+                                <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeModel }" />
+                                <aura:if isTrue="{!!v.viewflag}">
+                                    <lightning:button variant="brand" label="Update" title="Update" onclick="{! c.saveAfterEdit }" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.viewflag}">
+                                    <lightning:button variant="brand" label="Export As PDF" title="Export As PDF" onclick="{!c.downloadWithVF}" />
+                                </aura:if>
+                                 <aura:if isTrue="{!v.viewflag}">
+                                    <lightning:button variant="brand" label="Print Labels" title="Print Labels" onclick="{! c.downloaBarcode }" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.viewflag}">
+                                    <aura:if isTrue="{!v.signstatus}">
+                                    <lightning:button variant="brand" label="Save" title="Save" onclick="{! c.SaveSign }" />
+                                    </aura:if>
+                                </aura:if>
+                                  
+                            </div>
+                            <aura:if isTrue="{!!v.viewflag}">
+                            <div class="slds-col slds-size_8-of-12 datetime_class">    
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">   
+                                        <lightning:input type="datetime" aura:id="procedure-start_time" name="input3" label="Start Time" required="true" value="{!v.todayString}" onchange="{!c.procedureValidity}"/>  
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12">   
+                                        <lightning:input type="datetime" aura:id="procedure-end_time" name="input3" label="End Time" required="true" value="{!v.endString}" onchange="{!c.procedureValidity}"/> 
+                                    </div>        
+                                </div>
+                            </div>
+                        </aura:if>
+                        </div>
+                    </footer>-->
+                    <footer class="slds-modal__footer buttonRound">
+    <div class="slds-grid slds-gutters buttonMargin">
+        <!-- Start Time and End Time on the left side -->
+        <aura:if isTrue="{!!v.viewflag}">
+            <div class="slds-col slds-size_8-of-12 datetime_class">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input type="datetime" aura:id="procedure-start_time" name="input3" label="Start Time" required="true" value="{!v.todayString}" onchange="{!c.procedureValidity}" />
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input type="datetime" aura:id="procedure-end_time" name="input3" label="End Time" required="true" value="{!v.endString}" onchange="{!c.procedureValidity}" />
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+
+        <!-- Update and Cancel buttons on the right side -->
+        <div class="slds-col slds-size_4-of-12 slds-align_absolute-right">
+            <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.closeModel}" />
+
+            <aura:if isTrue="{!!v.viewflag}">
+                <lightning:button variant="brand" label="Update" title="Update" onclick="{!c.saveAfterEdit}" />
+            </aura:if>
+
+            <aura:if isTrue="{!v.viewflag}">
+                <lightning:button variant="brand" label="Export As PDF" title="Export As PDF" onclick="{!c.downloadWithVF}" />
+            </aura:if>
+
+            <aura:if isTrue="{!v.viewflag}">
+                <lightning:button variant="brand" label="Print Labels" title="Print Labels" onclick="{!c.downloaBarcode}" />
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirmDialog}">
+                        
+                        <div role="dialog" class="slds-modal slds-fade-in-open ">
+                            <div class="modal-innerdiv">
+                                
+                                <div class="slds-modal__content slds-p-around--medium min-height20">
+                                    <center><b>Procedure End Date-Time missing. Do you want to default it to the current date-time?</b></center>
+                                </div>
+                                
+                                <footer class="slds-modal__footer">
+                                    <lightning:button name='No' label='No' onclick='{!c.handleConfirmDialogNo}'/>
+                                    <lightning:button variant="brand" name='Yes' label='Yes' onclick='{!c.handleConfirmDialogYes}'/>
+                                </footer>
+                                
+                            </div>
+                        </div>
+                        <div class="slds-backdrop slds-backdrop--open"></div>            
+                    </aura:if>
+
+            <!--<aura:if isTrue="{!v.viewflag}">
+                <aura:if isTrue="{!v.signstatus}">
+                    <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.SaveSign}" />
+                </aura:if>
+            </aura:if>-->
+        </div>
+    </div>
+</footer>
+
+                </div>
+            </section>
+        </div>
+    </aura:if>
+    
+    
+</aura:component>

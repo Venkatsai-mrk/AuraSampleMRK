@@ -1,0 +1,212 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="RefundController">
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default=""/>
+    
+    <aura:attribute name="selTabId" type="String" default="tab1" />
+    <aura:attribute name="refundItems" type="Object" default=""/>
+    <aura:attribute name="openIssueRefund" type="boolean" default="false"/>
+    <aura:attribute name="dateSearchParams" type="String" default=""/> 
+    <aura:attribute name="refundDateSearchParams" type="String" default=""/> 
+    <aura:attribute name="isSearchDisabled" type="boolean" default="false"/>
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="selectedStatusValue" type="String" default="Requested"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="picklistOptions" type="List"/>
+    <!--aura:attribute name="refundItems" type="List"/-->
+    <aura:attribute name="modeOfPaymentOptions" type="List"/>
+    <aura:attribute name="selectedRows" type="List"/>
+    <aura:attribute name="payInfoList" type="List"/>
+    <aura:attribute name="selectedRefundRows" type="List"/>
+    <aura:attribute name="statusOptions" type="List"/>
+    <aura:attribute name="isProcessButtonDisabled" type="boolean" default="true"/>
+    <aura:attribute name="sendPatientStatements" type="boolean" default="false"/>
+    <aura:attribute name="RefundList" type="List" />
+    <aura:attribute name="sortByHeader" type="String" />
+    <aura:attribute name="sortByDirection" type="String" />
+    <aura:attribute name="OEMdisableCreateRefund" type="boolean" default="true"/>
+    <aura:handler name="init" value="{! this }" action="{! c.myAction }"/>
+    <aura:handler name="changehandlerEvent" event="c:changehandlerEvent" action="{!c.myAction}"/>
+    <aura:registerEvent name="RefreshViewEvent" type="c:RefreshViewEvent"/>
+    <aura:handler event="c:RefreshViewEvent" action="{!c.myAction}"/>
+    <aura:method name="processRefunds" action="{!c.processRefunds}" access="PUBLIC"/>
+    <aura:method name="processRefundRequest" action="{!c.processRefundReq}" access="PUBLIC"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <lightning:navigation aura:id="navService"/>
+    <aura:if isTrue="{!v.openIssueRefund}">
+        <c:IssueRefund aura:id="issueRefund" FinalPlist="{!v.RefundList}" isModalOpen="{!v.openIssueRefund}" selectedRow="{!v.selectedRefundRows}" tabId="{!v.selTabId}" DisableCreateRefund="{!v.OEMdisableCreateRefund}"/>
+        <aura:set attribute="else">
+            <div class="parentCSS">
+                <lightning:tabset selectedTabId="{!v.selTabId}" onselect="{! c.myAction }" variant="scoped">
+                    
+                    <lightning:tab label="Create Refund Request" id="tab1" >
+                        <aura:if isTrue="{!v.selTabId == 'tab1'}">
+                            <div>
+                                <div class= "heading">Use the search options below to narrow your results</div>
+                                <div class="slds-grid slds-gutters dos-box">
+                                    <div class="slds-col slds-size_1-of-12 slds-p-top_x-small">DOS From :</div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                                        <lightning:input type="date" value="{!v.dateSearchParams.From}" onchange="{!c.onDOSChange}"/>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+                                    <div class="slds-col slds-size_1-of-12 slds-p-top_x-small">DOS To :</div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                                        <lightning:input type="date" value="{!v.dateSearchParams.To}" onchange="{!c.onDOSChange}"/>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-12 slds-text-align_right slds-m-top_small">
+                                        <lightning:button variant="brand" disabled = "{!v.isSearchDisabled}"   onclick="{!c.searchApply}" >Apply</lightning:button>
+                                        <lightning:button variant="neutral" disabled = ""   onclick="{!c.myAction}" >Clear Filters</lightning:button>
+                                        <!--lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.handleRefresh}" aura:id ="refreshing" class="btncss"/--> 
+                                    </div>
+                                </div>
+                                <div>
+                                    <aura:if isTrue="{!v.PatientId != ''}"> <!--Sagili LX3-5525-->
+                                        <br/>
+                                        <div class= "heading">Select a Procedure to Issue a Refund</div>
+                                        <lightning:datatable
+                                                             keyField="id"
+                                                             columns="{!v.columns}"
+                                                             data="{!v.data}"
+                                                             onrowaction="{!c.handleRowAction}"
+                                                             minColumnWidth="100"
+                                                             hideCheckboxColumn="true"
+                                                             class="byProcTableCss"
+                                                             sortedBy="{!v.sortBy}"
+                                                             sortedDirection="{!v.sortDirection}"
+                                                             onsort="{!c.handleSort}">
+                                            				
+                                        </lightning:datatable>
+                                    </aura:if>
+                                </div>
+                            </div>  
+                        </aura:if>
+                    </lightning:tab>
+                    <lightning:tab label="Process Refund" id="tab2" >
+                        <aura:if isTrue="{!v.selTabId == 'tab2'}">
+                            <div>
+                                <div class= "heading">Use the search options below to narrow your results</div>
+                                <div class="slds-grid slds-gutters dos-box marLef">
+                                    <div class="slds-p-top_medium">From Date:</div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                                        <lightning:input type="date" value="{!v.refundDateSearchParams.From}" onchange="{!c.onDateChange}" />
+                                    </div>
+                                    <!--div class="slds-col slds-size_1-of-12 slds-p-top_xx-small"></div-->
+                                    <div class="slds-p-top_medium">To Date:</div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                                        <lightning:input type="date" value="{!v.refundDateSearchParams.To}" onchange="{!c.onDateChange}"/>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 slds-m-top_xx-small"></div>
+                                    <div class="slds-p-top_medium">Status :</div>
+                                    <div class="slds-col slds-size_2-of-12 slds-m-top_xx-small">
+                                        <lightning:select name="Status1" label ="Status" value="{!v.selectedStatusValue}" >
+                                            <aura:iteration items="{!v.picklistOptions}" var="item" >
+                                                <option value="{!item.label}" text="{!item.value}" />  
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 slds-m-top_x-small slds-text-align_right">
+                                        <lightning:button variant="brand" disabled = "{!v.isSearchDisabled}"   onclick="{!c.refundSearchApply}" >Apply</lightning:button>
+                                        <lightning:button variant="neutral" disabled = ""   onclick="{!c.myAction}" >Clear Filters</lightning:button>
+                                        <!--lightning:buttonicon iconName="utility:refresh" size="medium" variant ="neutral" onclick="{!c.handleRefresh}" aura:id ="refreshing" class="btncss"/--> 
+                                    </div>
+                                </div><br/>
+                                <div class= "heading">Select a Refund to process</div><br/>
+                                <div class="slds-scrollable_y slds-col slds-table_cell-buffer MaxHeight ">
+                                    <table class="table era_table">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th class="th"></th>
+                                                <th class="th">Refund ID</th>
+                                                <th class="th">Date Created</th>
+                                                <th class="th">Refund Amount</th>
+                                                <th class="th">Refund Issued Date</th>
+                                                <th class="th">Mode of Payment</th>
+                                                <th class="th">Status</th>
+                                                <th class="th">Credit/Cheque Reference Number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody">
+                                            <aura:iteration items="{!v.refundItems}" var="refund" indexVar="index">
+                                                <tr>
+                                                    <td class="td"><lightning:input type="checkbox" checked = "{!refund.selected}" onchange="{!c.handleSelect}" name="{!index}" disabled = "{!refund.ElixirSuite__Status__c == 'Issued' || refund.checkbox}" /></td>
+                                                    <td class="td">{!refund.Name}</td>
+                                                    <td class="td">{!refund.ElixirSuite__Date_Created__c}</td>
+                                                    <td class="td"><lightning:formattedNumber value="{!refund.ElixirSuite__Refund_Amount__c}" style="currency" currencyCode="USD" /></td>
+                                                    <aura:if isTrue="{!not(empty(refund.ElixirSuite__Date_Issued__c))}">
+                                                        <td class="td">{!refund.ElixirSuite__Date_Issued__c}</td>
+                                                        <aura:set attribute="else">
+                                                            <td class="td">-</td>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!OR(refund.ElixirSuite__Status__c == 'Issued',refund.ElixirSuite__Status__c == 'Denied')}">
+                                                        <td class="td slds-p-right_medium">
+                                                            <lightning:select value="{!refund.ElixirSuite__Mode_of_Payment__c}" disabled="true">
+                                                                <aura:iteration items="{!refund.Modeofpayment}" var="option">
+                                                                    <option value="{!option.value}">{!option.label}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </td>
+                                                        <td class="td slds-p-right_medium">
+                                                            <lightning:select value="{!refund.ElixirSuite__Status__c}" disabled="true">
+                                                                <aura:iteration items="{!v.statusOptions}" var="option">
+                                                                    <option value="{!option.value}">{!option.label}</option>
+                                                                </aura:iteration>
+                                                            </lightning:select>
+                                                        </td>
+                                                        <td class="td">
+                                                            <lightning:input type="number" value="{!refund.ElixirSuite__Credit_Check_Reference_field__c}" class="slds-m-bottom_medium" disabled="true"/>
+                                                        </td>
+                                                        <aura:set attribute="else">
+                                                            <td class="td">
+                                                                <lightning:select value="{!refund.ElixirSuite__Mode_of_Payment__c}" onchange="{!c.handleModeOfPayment}">
+                                                                    <aura:iteration items="{!refund.Modeofpayment}" var="option" >
+                                                                        <option value="{!option.value}">{!option.label}</option>
+                                                                    </aura:iteration>
+                                                                </lightning:select>
+                                                            </td>
+                                                            <td class="td">
+                                                                <lightning:select value="{!refund.ElixirSuite__Status__c}">
+                                                                    <aura:iteration items="{!v.statusOptions}" var="option">
+                                                                        <aura:if isTrue="{!option.disabled}">
+                                                                            <option disabled="true">{!option.label}</option>
+                                                                            <aura:set attribute="else">
+                                                                                <option value="{!option.value}">{!option.label}</option>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:iteration>
+                                                                </lightning:select>
+                                                            </td > 
+                                                            <td class="td">
+                                                                <lightning:input type="text" value="{!refund.ElixirSuite__Credit_Check_Reference_field__c}" class="slds-m-bottom_medium"/>
+                                                            </td>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> 
+                        </aura:if>
+                    </lightning:tab>
+                    
+                </lightning:tabset>
+            </div>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.loaded }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <!--aura:if isTrue="{!v.selTabId == 'tab2'}">
+        <div class="slds-align_absolute-center slds-p-top_large">
+            <lightning:button variant="brand" label="Process Refunds" disabled="{!v.isProcessButtonDisabled}" onclick="{!c.processRefunds}" class="process-button"/>
+            <div class="slds-p-top_medium slds-p-left_large">
+                <lightning:input type="checkbox" label="Send Patient Statements" checked="{!v.sendPatientStatements}" class="send-statements-checkbox" />
+            </div>
+        </div>
+    </aura:if-->
+</aura:component>

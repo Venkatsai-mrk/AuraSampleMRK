@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lot_Item__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Linking to Lot Item for given patient</description>
+    <externalId>false</externalId>
+    <label>Lot Item</label>
+    <referenceTo>Lot_Item__c</referenceTo>
+    <relationshipLabel>Inventory</relationshipLabel>
+    <relationshipName>Inventory</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

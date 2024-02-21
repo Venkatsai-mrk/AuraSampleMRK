@@ -1,0 +1,2 @@
+<apex:page lightningStylesheets="true" standardController="Claim__c" extensions="ManualReconciliationVFController" action="{!redirectToLCForClaim}">
+</apex:page>

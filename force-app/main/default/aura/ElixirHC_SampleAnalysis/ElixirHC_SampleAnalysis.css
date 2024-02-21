@@ -1,0 +1,232 @@
+.THIS .hideDiv .slds-p-around_medium{
+    height:80%;
+}
+.THIS .hideDiv .buttonRound{
+    height:50px;
+}
+.THIS .hideDiv .physical_sample label{
+    display:none;
+}
+.THIS .hideDiv .patient_card{
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-left: 10px;
+    background: rgba(242,243,243,1);
+}
+.THIS .head{
+    padding-top: 3px;
+    margin-bottom: 15px;
+    height: 33px;
+    font-size: 17px;
+    background: rgba(243,242,242,1);
+}
+.THIS .head h2{
+    text-align: left;
+    margin: 2px 0 5px 25px;
+}
+.THIS .head lightning-primitive-icon{
+    margin-left : 2px;
+}
+.THIS .physical_sample_row .slds-gutters{
+    margin-top:10px;
+}
+.THIS .sample_column{
+    text-align:left;
+}
+.THIS .sample_column legend{
+    display:none !important;
+}
+.THIS .physical_sample_row lightning-datepicker{
+    width: 50%;
+}
+.THIS .physical_sample_row lightning-timepicker{
+    width: 50%;
+}
+.THIS .physical_sample_row textarea{
+    height:70px;
+}
+.THIS .buttonRound{
+    padding-left:40px;
+    text-align:center;
+}
+.THIS .hideDiv .physical_sample .slds-has-error .slds-form-element__help {
+    display:none;
+}
+.THIS .hideDiv .physical_sample span{
+    color:red;
+}
+.THIS .bold_row{
+    font-weight:bold;
+}
+.THIS .right_side{
+    padding: 25px 0 0 25px;
+}
+.THIS .helpBox p{
+    font-weight:1000;
+    font-style:italic;
+}
+.THIS .subheadings{
+    font-weight:1000;
+    text-align:center;
+}
+.THIS .specimenheading{
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 45px 10px 0px;
+    
+}
+.THIS .checkbox_show label{
+    display:block !important;
+}
+.THIS .checkbox_show span{
+    color:black !important;
+}
+.THIS .slds-checkbox .slds-checkbox__label .slds-form-element__label{
+    display:inline-block;
+}
+.THIS .halfwidth{
+    width:50%;
+}
+.THIS .slds-modal__container{ 
+    max-width: 100% !important; 
+    width:80% !important; 
+}
+.THIS .bg-transparent {
+    background-color: rgba(0,0,0,0.5);
+}
+.THIS .parentCSS {
+    text-align:center;margin-top:14px;
+}
+.THIS .parentCSS_level2 {
+    cursor:pointer;
+}
+.THIS .parentCSS_level3 {
+    margin:5px 0 0 10px;
+}
+.THIS .parentCSS_level4 {
+    cursor:pointer;
+}
+.THIS .parentCSS {
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level1 {
+    margin-top:35px;
+}
+.THIS .child_level2 {
+    margin-top:1px;
+}
+.THIS .child_level3 {
+    margin-top: 18px;
+}
+.THIS .child_level4 {
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level5 {
+    cursor:pointer; 
+}
+.THIS .child_level6 {
+    cursor:pointer;
+}
+.THIS .child_level7{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level8{
+    margin-left:0;margin-top:10px;
+}
+.THIS .child_level9{
+    background: #d1c8f5;margin: 10px 0 10px 0;padding: 4px 0 4px 6px;  
+    
+}
+.THIS .child_level10{
+    margin: 10px 0 10px 0;padding: 4px 0 4px 14px;    
+}
+.THIS .child_level11{
+    text-align:left;
+}
+.THIS .child_level12{
+    text-align:left;
+}
+.THIS .child_level13{
+    margin: 10px 0 10px 0;padding: 4px 0 4px 14px;
+}
+.THIS .child_level14{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level15{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level16{
+    text-align:center;margin-top:54px;
+}
+.THIS .child_level17{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level18{
+    margin-top:1px;
+}
+.THIS .child_level19{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level20{
+    cursor:pointer;
+}
+.THIS .child_level21{
+    margin:5px 0 0 10px;
+}
+.THIS .child_level22{
+    cursor:pointer;
+}
+.THIS .child_level23{
+    margin-top:35px;
+}
+.THIS .child_level24{
+    margin-top: 18px;
+}
+.THIS .child_level25{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level26{
+    cursor:pointer;
+}
+.THIS .child_level27{
+    cursor:pointer;
+}
+.THIS .child_level28{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level29{
+    margin-top:10px;
+}
+.THIS .child_level30{
+    background: #d1c8f5;margin: 10px 0 10px 0;padding: 4px 0 4px 6px;
+}
+.THIS .child_level31{
+    background: #d1c8f5;margin: 10px 0 10px 0;padding: 4px 0 4px 14px;
+}
+.THIS .child_level32{
+    background: #d1c8f5;margin: 10px 0 10px 0;padding: 4px 0 4px 14px;
+}
+.THIS .child_level33{
+    background: #d1c8f5;margin: 10px 0 10px 0;padding: 4px 0 4px 14px;
+}
+.THIS .child_level34{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level35{
+    text-align:center;margin-top:14px;
+}
+.THIS .child_level36{
+    text-align:center;margin-top:14px;
+}
+.THIS .footerCSS {
+    margin-top:1px;
+}
+.THIS .dateTimeCSS{
+    margin-top:1px;
+}
+.THIS .leftOverCSS{
+    margin:5px 0 0 10px;
+}
+.THIS .marginCSS {
+    margin:5px 0 0 10px;
+}

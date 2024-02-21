@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="FirstVisitNotesController">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler value="{!this}" name="init" action="{!c.myAction}"/>
+    <aura:attribute name="recordVal" type="String"/>
+    <aura:attribute name="orgWideValidNamespace" type="String" /> 
+    <c:SliderForTimeline recordVal="{!v.recordVal}" orgWideValidNamespace="{!v.orgWideValidNamespace}"/>
+</aura:component>

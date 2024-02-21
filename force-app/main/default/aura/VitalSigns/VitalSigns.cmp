@@ -1,0 +1,195 @@
+<aura:component controller="vitalSignsController" implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.doAction}" value="{!this}"/>
+    <aura:attribute name="AccountId" type="String"/>
+    <aura:attribute name="SaveRoute" type="String"/>
+    <aura:registerEvent name="VitalSignsData" type="c:VitalSignsData"/>
+    <aura:attribute name="openVitalSign" type="Boolean" default="false"/>
+    <aura:attribute name="showExistingRecords" type="Boolean" default="true"/>
+    <aura:attribute name="observationList" type="List"/>
+    <aura:attribute name="bloodPressSys" type="List"/>
+    <aura:attribute name="bloodPressDiaSys" type="List"/>
+    <aura:attribute name="addVital" type="Boolean" default="false"/> 
+    <aura:attribute name="disableSubmit" type="Boolean" default="true"/>
+    <aura:attribute name="disableAddVital" type="Boolean" default="false"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="currentDate" type="Date"/> 
+    <aura:attribute name="CurrentUserDetails" type="User"/>
+    <aura:attribute name="editVitalSign" type="Boolean" default="false"/>
+    <aura:attribute name="abc" type="Integer" default="-1"/>
+    <aura:registerEvent name="hideAllergysection" type="c:hideAllergySection"/>
+    <aura:attribute name="ExternalcmpData" type="Object" />
+    <!-- AURA METHOD-->
+    <aura:method name="vitalMethod" action="{!c.saveVitalsAftereventFrom}"
+                 description="Sample method with parameters">  
+        <aura:attribute name="formID" type="String" default="parameter 1"/> 
+        <aura:attribute name="patientID" type="String" /> 
+    </aura:method>
+    <!--END-->
+    <aura:attribute name="newVitalSign" type="Medical_Examination__c" default="{ 
+                                                                               'sobjectType': 'Medical_Examination__c',                                                                         
+                                                                               'BloodPressureSystolic': '' ,
+                                                                               'BloodPressureDiasystolic': '',
+                                                                               'Temperature': '',
+                                                                               'Pulse': '',    
+                                                                               'Respiration' : '',
+                                                                               'OxygenSaturation' : ''
+                                                                                            }" />
+    <aura:attribute name="newVitalSignCopyToSaveOfForm" type="Medical_Examination__c" default="{ 
+                                                                                               'sobjectType': 'Medical_Examination__c',                                                                         
+                                                                                               'BloodPressureSystolic': '' ,
+                                                                                               'BloodPressureDiasystolic': '',
+                                                                                               'Temperature': '',
+                                                                                               'Pulse': '',    
+                                                                                               'Respiration' : '',
+                                                                                               'OxygenSaturation' : ''
+                                                                                                            }" />
+    <aura:if isTrue="{!v.openVitalSign}">
+        <div aura:id="exampleModal" role="dialog" tabindex="-1" aria-hidden="false" aria-labelledby="modal-heading-01"  aria-modal="true" aria-describedby="modal-content-id-1"  class="slds-modal slds-fade-in-open" >
+            <div class="slds-modal__container modalCOntainer">
+                
+                
+                
+                <header class="slds-modal__header">
+                    
+                    <button class="slds-button slds-button-icon-inverse slds-modal__close" onclick="{!c.closeVitalSigns}">
+                        <lightning:icon iconName="utility:close" size="medium" variant="bare"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="  slds-text-heading_medium slds-hyphenate"><div class="slds-size-2-of-3">Vital Signs</div>     </h2>   
+                    <aura:if isTrue="{!v.showExistingRecords}">
+                        <div class="slds-grid slds-gutters d-flex">
+                            <div class="slds-size_10-of-12"></div>
+                                <Lightning:button label="Add Vital Sign" disabled="{!v.disableAddVital}" onclick="{!c.addVitalSign}"/>       
+                                <!--Lightning:button label="Vital Sign History" onclick="{!c.historyVitalSign}"/-->       
+                            
+                        </div>
+                    </aura:if>
+                    
+                </header>
+                <div  class="slds-modal__content slds-p-around_mediumh h-400" id="modal-content-id-1">
+                    <div class="slds-box1">
+                        <table class="vitalTable vitalTable1" > 
+                        <div class="slds-grid slds-gutters slds-m-bottom_medium slds-m-left_small">
+                            
+                            <div class="slds-size_3-of-12 alicebg">
+                                <table class="vitalTable vitalTable1" >
+                                    <th class=" rowHeight alicebg"><b><u>Vital Signs</u></b></th>
+                                    <tbody class="">
+                                        <td class = "rowHeight rowHeight-250">
+                                            <tr class="rowHeight rowHeight-189"><th class="slds-truncate" >Blood Pressure Systolic</th></tr>
+                                            <tr class="rowHeight rowHeight-199"><th class="slds-truncate">Blood Pressure Diasystolic</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate">Temperature</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate">Pulse</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate">Respiration</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate">Oxygen Saturation</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate">Vital Administered By</th></tr>
+                                            <tr class="rowHeight"  ><th class="slds-truncate"></th></tr>
+                                        </td></tbody>
+                                </table></div>
+                            
+                            <div class="slds-size_9-of-12">
+                                <div class="scroll-table" >
+                                    <table class="vitalTable" >
+                                        <thead>
+                                            <aura:if isTrue="{!v.addVital}">
+                                                <th class=" rowHeight slds-p-left_medium"><b><u>New Vital</u></b></th>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!v.showExistingRecords}">   
+                                                <aura:iteration items="{!v.observationList}" var="rec">
+                                                    
+                                                    
+                                                    <th class=" rowHeight slds-p-left_medium">
+                                                        
+                                                        <lightning:formattedDateTime aura:id="dt"
+                                                                                     value="{!rec.CreatedDate}"
+                                                                                     month="short"
+                                                                                     day="numeric"
+                                                                                     year="numeric"
+                                                                                     hour="2-digit"
+                                                                                     minute="2-digit"
+                                                                                     hour12="true"
+                                                                                     timeZone="{!$Locale.timezone}"
+                                                                                     />   
+                                                        
+                                                    </th>
+                                                </aura:iteration>
+                                            </aura:if>
+                                        </thead>
+                                        
+                                        <tbody class="">
+                                            <aura:if isTrue="{!v.addVital}">
+                                                <td class="rowHeight">
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput1" value="{!v.newVitalSign.BloodPressureSystolic}" /></td></tr>
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput2" value="{!v.newVitalSign.BloodPressureDiasystolic}" /></td></tr>
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput3" value="{!v.newVitalSign.Temperature}" /></td></tr>
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput4" value="{!v.newVitalSign.Pulse}" /></td></tr>
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput5" value="{!v.newVitalSign.Respiration}" /></td></tr>
+                                                    <tr class=""><td><ui:inputText aura:id="thisInput6" value="{!v.newVitalSign.OxygenSaturation}" /></td></tr>
+                                                    <tr class="">{!v.CurrentUserDetails.Name}</tr>
+                                                </td>
+
+                                            </aura:if>
+                                            
+                                            
+                                            <aura:if isTrue="{!v.showExistingRecords}">
+                                                <aura:iteration items="{!v.observationList}" var="rec" indexVar="idx">
+                                                    <td class=" rowHeight ">
+                                                        <tr class="">
+                                                            <td>{!rec.ElixirSuite__Blood_Pressure_Systolic__c} mm Hg</td></tr>
+                                                        <tr class=""><td>{!rec.ElixirSuite__Blood_Pressure_Diasystolic__c} mm Hg</td></tr>
+                                                        <tr class=""><td>{!rec.ElixirSuite__Temperature__c} F*</td></tr>
+                                                        <tr class=""><td>{!rec.ElixirSuite__Pulse__c} BPM</td></tr>
+                                                        <tr class=""><td>{!rec.ElixirSuite__Respiration__c} Breaths/min </td></tr>
+                                                        <tr class=""><td>{!rec.ElixirSuite__Oxygen_Saturation__c} (%)</td></tr>
+                                                        <tr class=""><td>{!rec.CreatedBy.Name}</td></tr>
+                                                        <a onclick="{!c.removeRow}"  id="{!rec.Id}">
+                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="xx-small" alternativeText="icon"/>
+                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                        </a>
+                                                        <!--  <a onclick="{!c.editRow}"  id="{!idx}">
+                                                        <lightning:icon variant="edit" iconName="utility:edit" class="slds-icon slds-icon_small" size="xx-small" alternativeText="icon"/>
+                                                        <span class="slds-assistive-text">Edit Icon</span>
+                                                    </a>-->
+                                                        <!--   <aura:if isTrue="{!and(v.editVitalSign== true, idx == v.vitalRowId)}"> 
+                                                    <tr class="rowHeight"><td>{!idx} , {!v.abc}, {!v.editVitalSign} {!and(v.editVitalSign, v.abc == idx)}</td></tr>-->
+                                                        <aura:if isTrue="{!and(v.editVitalSign, idx == v.abc)}">
+                                                            <td class=" rowHeight ">
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput1" value="{!rec.ElixirSuite__Blood_Pressure_Systolic__c}" /></td></tr>
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput2" value="{!rec.ElixirSuite__Blood_Pressure_Diasystolic__c}" /></td></tr>
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput3" value="{!rec.ElixirSuite__Temperature__c}" /></td></tr>
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput4" value="{!rec.ElixirSuite__Pulse__c}" /></td></tr>
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput5" value="{!rec.ElixirSuite__Respiration__c}" /></td></tr>
+                                                                <tr class=""><td><ui:inputText aura:id="thisInput6" value="{!rec.ElixirSuite__Oxygen_Saturation__c}" /></td></tr>
+                                                                <tr class="">{!v.CurrentUserDetails.Name}</tr>
+                                                            </td>
+                                                        </aura:if>
+                                                    </td>
+                                                </aura:iteration>
+                                            </aura:if>
+                                            
+                                        </tbody>
+                                        
+                                        
+                                    </table></div></div>
+                                
+                           </div>
+                        </table>  
+                    </div>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <div class="button" align ="right">
+                        <lightning:button variant ="neutral" label ="Cancel" onclick = "{!c.closeVitalSigns}"/>                                
+                        <lightning:button variant="brand" disabled = "{!v.disableSubmit}" label="Submit" type="submit" onclick = "{!c.saveVitalSign}" />
+                        
+                    </div>
+                </footer>
+                
+                
+            </div></div>
+        <div class="slds-backdrop"></div>
+        
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level_of_Care__c</fullName>
+    <description>Indicates the level of care provided during the treatment, selected from predefined options.</description>
+    <externalId>false</externalId>
+    <label>Level of Care</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Detox</fullName>
+                <default>false</default>
+                <label>Detox</label>
+            </value>
+            <value>
+                <fullName>Residential</fullName>
+                <default>false</default>
+                <label>Residential</label>
+            </value>
+            <value>
+                <fullName>IOP</fullName>
+                <default>false</default>
+                <label>IOP</label>
+            </value>
+            <value>
+                <fullName>Day-Night/PHP</fullName>
+                <default>false</default>
+                <label>Day-Night/PHP</label>
+            </value>
+            <value>
+                <fullName>OP</fullName>
+                <default>false</default>
+                <label>OP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_Pay_Now__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To enable the Pay Now button in the custom appointment detail page</description>
+    <externalId>false</externalId>
+    <label>Enable Pay Now</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

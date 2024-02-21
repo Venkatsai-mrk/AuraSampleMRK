@@ -1,0 +1,131 @@
+<aura:component controller="CreateClaim" implements="lightning:availableForFlowScreens,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,lightning:actionOverride,lightning:hasPageReference,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/> 
+    <!--<aura:handler name="FiringSelectedId" event="c:FiringSelectedId" action="{!c.parentComponentEvent}"/>-->
+    <aura:handler name="cmpEvent1" event="c:LookUpEvent" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="ProblemRefreshEvt" event="c:ProblemRefreshEvt" action="{!c.refreshEvent}"/>
+    <aura:attribute name="PatientId" type="String" default=""/>
+    <aura:attribute name="isOpen" type="Boolean" default="true"/>
+    <aura:attribute name="headerLabel" type="String" default=""/>
+    <aura:attribute name="claimLabel" type="String" default=""/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="selectedRows" type="list" />
+    <aura:attribute name="selectedVOBList" type="list" />
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="sortedBy" type="String" />
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="VobList" type="list[]" />
+    <aura:attribute name = "isCMS1500" type = "Boolean" default = "False"/>
+    <aura:attribute name = "isUB04" type = "Boolean" default = "False"/>
+    <aura:attribute name = "heading" type = "String"/>
+    <aura:attribute name = "subheading" type = "String"/>
+    <aura:attribute name="displayTable" type="Boolean" default="false"/>
+    
+   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+   <div class="slds-modal__container">
+   <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick="{!c.closePopUp}">
+                &#10005; <span class="slds-assistive-text">Cancel and close</span>
+   </button>     
+   <div class="slds-modal__header headerCSS changeBackColorpurp" >
+    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Select Patient and Insurance Information</b></h2>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium parentCSS" id="modal-content-id-1">
+        
+        <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_2-of-12 slds-m-top_x-large">
+            <label><b>Patient </b></label>
+        </div>
+        
+        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+             <c:lookupComponent 
+              objectName="Account" 
+              fieldName="Name"
+              />
+        </div>
+        </div>   
+        
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-12 slds-m-top_x-large">
+                <label><b>Type of Claim</b></label>
+            </div>
+            <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                <lightning:select value="{!v.headerLabel}" required="true" onchange="{!c.claimTypeChange}">
+                    
+                    <option value="Primary" label="Bill Primary Insurance"/>  
+                    <option value="Workers Comp" label="Workers Comp"/>
+                    <option value="Auto-accident" label="Auto-accident"/>  
+                    <option value="Durable Medical Equipment" label="Durable Medical Equipment"/>
+                </lightning:select>
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-12 slds-m-top_x-large">
+                <label><b>Claim</b></label>
+            </div>
+            <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                <lightning:select value="{!v.claimLabel}" required="true" onchange="{!c.claimFormChange}">
+                    
+                    <option value="CMS-1500 Form" label="CMS-1500 Form"/>  
+                    <option value="UB-04 Form" label="UB-04 Form"/>
+                    
+                </lightning:select>
+            </div>
+        </div>
+            
+            <br></br>
+             <div class="slds-is-relative">
+                            <aura:if isTrue="{!v.displayTable == true}">
+                             <p><b>Insurance: </b></p>
+                                <br></br>
+                            <div class="slds-grid slds-gutters" >
+                               
+                                    <div class="{! empty(v.VobList) ? 'removeheightClass' : 'addheightClass' }">
+                                        <lightning:datatable aura:id="partnerTable" data="{! v.VobList }"
+                                                             columns="{! v.mycolumns }"
+                                                             keyField="Id"
+                                                             defaultSortDirection="{!v.defaultSortDirection}"
+                                                             sortedDirection="{!v.sortDirection}"
+                                                             sortedBy="{!v.sortedBy}"
+                                                             onsort="{!c.handleSort}"
+                                                             maxRowSelection ="1"
+                                                             selectedRows="{!v.selectedRows }" 
+                                                             onrowselection="{!c.rowSelectionHandle }"/>
+                                        
+                                    </div>
+                                
+                            </div>
+                                </aura:if>
+                            <div class="slds-grid slds-gutters slds-is-absolute NoDataClass">
+                                <aura:if isTrue="{!and(equals(v.VobList.length,0),(v.displayTable == true))}">
+                                    <div class="slds-col slds-size_12-of-12 slds-m-top_small">
+                                        
+                                        <p class="slds-text-align_center">No Data To Display</p>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+        
+        
+    </div>
+        <div class="slds-modal__footer changeBackColorWhite" >
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick="{!c.closePopUp}">Cancel</button>
+                <button class="slds-button slds-button_brand" aria-label="Save" onclick="{!c.proceedNext}">Next</button>
+        </div>
+     </div>
+     </section>
+     <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+       <aura:if isTrue="{!v.isCMS1500}">
+           
+        <c:CMS1500ClaimForm isActive="{!v.isCMS1500}" selectedVOBList="{!v.selectedVOBList}"
+                            recordTypeId = "{!v.recordTypeId}" heading = "{!v.claimLabel}" 
+                            patId = "{!v.PatientId}"  isCMS1500 = "{!v.isCMS1500}"/>               
+       </aura:if>
+    
+      <aura:if isTrue="{!v.isUB04}">
+        
+         <c:UB04ClaimForm isActive="{!v.isUB04}" selectedVOBList="{!v.selectedVOBList}" recordTypeId = "{!v.recordTypeId}" heading = "{!v.claimLabel}" patId = "{!v.PatientId}" />               
+      </aura:if>
+   
+    
+</aura:component>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discount_Amount_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>Discount_Amount__c  &lt; 0 ||  Discount_Amount__c   &gt;  List_Price__c</errorConditionFormula>
+    <errorDisplayField>Discount_Amount__c</errorDisplayField>
+    <errorMessage>Discount amount should not be less than zero and should not be greater than list price</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<apex:page controller="NC_RxAdminController" action="{!getRecordId}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="true" applyBodyTag="true" docType="html-5.0">
+   
+        <form id="Rxform" action="{!endpoint}" method="post" target="_self" charset="UTF-8" enctype="application/x-www-form-urlencoded">
+            <fieldset>
+                <textarea id="RxInput" name="RxInput" rows="33" cols="79" style="display:none">
+                    {!subscriptionXML}
+                </textarea>            
+                <!--  <input type="submit" value="GO" /> -->
+            </fieldset>
+            
+        </form>
+        <apex:includeScript value="{!$Resource.openNewCrop}"/>
+    <!--script>
+        window.onload = ()=>{document.getElementById('Rxform').submit();}
+    </script-->
+    
+</apex:page>

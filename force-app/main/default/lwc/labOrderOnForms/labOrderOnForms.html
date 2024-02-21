@@ -1,0 +1,24 @@
+<template>
+    <div class="setMaxHeight">
+        <div>
+            <template if:true={hasData}>
+                <lightning-datatable
+                    key-field="id"
+                    data={allLabOrders}
+                    columns={columns}
+                    default-sort-direction={defaultSortDirection}
+                    sorted-direction={sortDirection}
+                    sorted-by={sortedBy}
+                    onsort={onHandleSort}
+                    onrowaction={onRowAction}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+<template if:false={hasData}>
+                <center>No data to display
+
+                </center>
+            </template>
+        </div>
+    </div>
+</template>

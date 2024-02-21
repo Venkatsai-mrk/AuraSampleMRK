@@ -1,0 +1,170 @@
+<template>
+
+    <!--added by Anmol-->
+        <template if:true={isShowModal}>
+            <div class="parentCSS slds-is-relative">
+            <div class="childCSS">
+                <div class="slds-box bgclor">
+                    <h1 class="slds-page-header__title">
+                        
+                        <div class="demo-only">
+                            <div class="slds-text-color_inverse slds-text-align--center">{header}</div>
+                          </div>
+    </h1>
+                </div>
+               
+           
+    
+               <!-- modal body start -->
+               
+    
+               <div class="slds-box bgcolorMargin">
+        
+            <div class="slds-float_right slds-p-bottom_small">
+                <h1 class="slds-page-header__title">Add Row
+                    <lightning-button-icon icon-name="utility:add"  size="large" variant="bare" alternative-text="Add" onclick={addRow}> </lightning-button-icon>
+                </h1>
+            </div>
+            <div class="container-fluid">  
+                    
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer add-inventory_table" > 
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate">S. No</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" >{invTypHeader}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" >{invItemHeader}</div>
+                            </th>
+                            <template if:true={lotRequired}>
+                            <th scope="col">
+                                <div class="slds-truncate" >Lot Name</div>
+                            </th>
+                        </template>
+                            <th scope="col">
+                                <div class="slds-truncate" >Units Available</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" >Units Required</div>
+                            </th>
+                            <!--th scope="col">
+                                <div class="slds-truncate" >Total Price</div>
+                            </th-->
+                        </tr>
+                    </thead>   
+                    <tbody>     
+                        
+                        <template for:each={itemList} for:item="item"  for:index="index">
+                            <tr key={item.key}> 
+                                <td>{item.key}</td>           
+                                                                            
+                                <td>
+                                    <div class = "overflow">
+                                    <lightning-layout horizontal-align="spread">
+                                       
+                                    <lightning-combobox data-index={index}
+                                    name="Type"
+                                    variant="label-hidden"
+                                    value={item.Type}
+                                    placeholder={invTypHeader}
+                                    options={options1}
+                                    onchange={handleChange} ></lightning-combobox> 
+                                 
+                                </lightning-layout>     
+                            </div>                   
+                                </td>
+                                <td>
+                                    <div class = "overflow">
+                                    <lightning-layout horizontal-align="spread">
+                                       
+                                    <lightning-combobox data-index={index}
+                                    name={item.key}   
+                                    value={item.Name}
+                                    placeholder={invItemHeader}
+                                    options={item.inventaryOptions}
+                                    onchange={handleNameChange}
+                                    variant="label-hidden"
+                                    ></lightning-combobox> 
+                                 
+                                </lightning-layout>     
+                            </div>                   
+                                </td>
+                                <template if:true={lotRequired}>
+                                <td>
+                                    <div class = "overflow">
+                                    <lightning-layout horizontal-align="spread">
+                                        
+                                    <lightning-combobox data-index={index}
+                                    name={item.key}
+                                    
+                                    value={item.Lot}
+                                    placeholder="Lot Name"
+                                    variant="label-hidden"
+                                    options={item.inventoryLotOptions}
+                                    onchange={handlebathChange} ></lightning-combobox>  
+                                
+                                </lightning-layout>   
+                            </div>           
+                                </td>
+                            </template>
+                                <td>
+                                    <!--lightning-formatted-text value={available} ></lightning-formatted-text-->
+                                    <lightning-formatted-number data-index={index} value={item.Avail}></lightning-formatted-number>
+                                    <!--lightning-output-field data-id={item.id} label="Units Available" value={available}></lightning-output-field-->
+                                </td>
+    
+                                <td>
+                                    <lightning-input data-index={index} variant="label-hidden" value={item.req} onchange={handleReqChange}></lightning-input>
+                                </td>
+
+                                <!--td>
+                                    <lightning-formatted-number data-index={index} value={item.totalPrice}></lightning-formatted-number>
+                                </td-->
+                                
+                                <td>
+                                    <div>
+                                    <lightning-button-icon icon-name="utility:delete"
+                                                                              data-id={item.id}   
+                                                                              data-index={index}    
+                                                                              alternative-text="Delete"     
+                                                                              class="slds-m-left_xx-small"
+                                                                              onclick={removeRow} 
+                                                                              title="Delete"></lightning-button-icon>
+                                                                            </div>
+                                </td>
+                            </tr>
+                        </template>
+                         
+                    </tbody>
+                </table>
+            
+            </div>
+        
+    </div>
+</div>
+
+
+</div>
+
+<div class="group-footer slds-size_1-of-1 slds-is-absolute">
+
+    <lightning-button name="Cancel" label="Cancel" class="cancelbutton" onclick={hideModalBox} ></lightning-button>
+    
+    <template if:true={addcheck}>
+        <!--div class="slds-align_absolute-center slds-p-top_small"-->                
+            <lightning-button name="Add" class="slds-m-right_small" label="Add" onclick={addRecord} ></lightning-button>
+        <!--/div-->
+    </template>
+
+</div>
+
+    </template>
+    
+    
+    
+    
+    
+    </template>

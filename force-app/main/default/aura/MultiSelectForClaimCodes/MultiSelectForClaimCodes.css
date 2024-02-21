@@ -1,0 +1,265 @@
+.THIS .define_box {
+    background-color: #f1f2f3;
+    padding: 15px 15px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 0;
+}
+.THIS .define_box lightning-icon.slds-icon_container_circle.slds-icon-action-approval.slds-icon_container,
+.THIS .define_box lightning-icon.slds-icon_container_circle.slds-icon-action-close.slds-icon_container {
+    padding: 0;
+}
+.THIS .define_box .slds-icon {
+    height: 18px;
+    width: 18px;
+    padding: 0px;
+    margin-top: 0px;
+}
+.THIS .define_box p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.THIS button.btncss{
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: #f3f2f2;
+    border: none;
+    
+}
+.THIS.accordian_header {
+    float:left;
+    width: 100%;
+}
+.THIS.accordian_header:last-child:after {
+    display: none;
+} 
+.THIS.accordian_header .slds-page-header {
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 70px;
+    padding-bottom: 0;
+}
+.THIS.accordian_header .chevron_btn {
+    width: 25px;
+    height: 25px;
+    border: none;
+    text-align: right;
+    background-color: transparent;
+    color: #706e6b;
+    float: left;
+}
+.THIS.accordian_header .chevron_btn:focus {
+    box-shadow: none;
+}
+.THIS.accordian_header .chevron_btn .slds-button__icon {
+    height: 22px;
+    width: 22px;
+}
+.THIS.accordian_header .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #c2403b;
+    fill: #fff;
+    padding: 5px;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}
+.THIS.accordian_header h3 {
+    font-size: 18px;
+    color: #c2403b;
+    line-height: 15px;
+    margin-bottom: 7px;
+}
+.THIS.accordian_header p {
+    font-size: 12px;
+    color: #333;
+}
+.THIS .right-side_bar button.btncss {
+    font-size: 12px;
+    color: #333;
+    min-height: 14px;
+    height: 14px;
+    line-height: 0px;
+    padding: 0;
+    margin-bottom: 0;
+}
+.THIS .right-side_bar button.btncss:focus {
+    box-shadow: none;
+    border: none;
+}
+.THIS .right-side_bar .slds-form-element__label {
+    display: none;
+}
+.THIS .right-side_bar .slds-input {
+    width: 110px;
+    text-align: right;
+    padding: 0 12px 0 0;
+    min-height: 14px;
+    height: 14px;
+    font-size: 12px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-right: 15px;
+}
+.THIS .right-side_bar .slds-input__icon.slds-input__icon_right {
+    left: 0px;
+    top: 4px;
+    fill:#ccc;
+}
+.THIS .right-side_bar svg.slds-button__icon.slds-button__icon_left {
+    fill: #666;
+}
+.THIS .accordian_open {
+    background-color: #f1f2f3;
+    width: calc(100% - 50px);
+    float: right;
+    padding-right: 24px;
+    margin-top: 0px;
+}
+.THIS .accordian_open .btncss {
+    border: 1px solid #4bc076;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+    transition: all 500ms;
+    background-color: #4bc076;
+    margin-bottom: 4px;
+    margin-right: 38px;
+}
+.THIS .accordian_open .right-side_bar1 .btncss {
+    margin-right: 0;
+}
+.THIS .accordian_open .btncss:hover {
+    color: #4bc076;
+    background-color: #fff;
+}
+.THIS .accordian_open .slds-button__icon {
+    width: 20px;
+    height: 20px;
+}
+.THIS .accordian_open .slds-page-header {
+    background-color: #f8fcf9;
+    margin: 0;
+    padding-right: 45px;
+}
+.THIS .accordian_open .right-side_bar1 .slds-button__icon {
+    height: 15px;
+    width: 15px;
+}
+.THIS.accordian_header .accordian_open .slds-icon-utility-puzzle.slds-icon_container .slds-icon {
+    background-color: #4bc076;
+}
+.THIS.accordian_header .accordian_open h3 {
+    color: #4bc076;
+}
+.THIS .first-inner-dl {
+    height: 20px;
+    width: 2px;
+    float: left;
+    margin-left: 75px;
+    background-color: #4bc076;
+}
+.THIS.accordian_header .first-inner-dl:last-child {
+    display: none;
+}
+
+.THIS.slds-show {
+    transition: all 1000ms;
+}
+.THIS.slds-hide {
+    transition: all 500ms;
+}
+.THIS .editStyle textarea{
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.THIS .approval {
+    background-color: #00864f;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.THIS .approval svg.slds-icon.slds-icon-text-default {
+    fill: #fff;
+}
+.THIS .add-l1 {
+    background-color: #ff8d27;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.THIS .add-l1 svg.slds-icon.slds-icon-text-default {
+    fill: #fff;
+}
+.THIS .utility_approval {
+    z-index: 1;
+    top: -0px;
+    right: 0px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    background-color: #fff;
+}
+.THIS .utility_approval button.slds-button.slds-button_icon.slds-button_icon-bare:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.THIS .disabledPill .slds-pill__remove {
+    display: none !important;
+}
+.THIS {
+}
+
+.THIS .ms-filter-input{
+    margin: 0px 5%;
+    width: 50%;
+    height: 30px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: thin;
+    border-color: darkgray;
+    padding: 2px 5px;
+}
+
+.THIS .ms-input{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    display: inline-block;
+    padding: 0 1rem 0 .75rem;
+    line-height: 1.875rem;
+    min-height: calc(1.875rem + (1px * 2));
+}
+
+.THIS .ms-refresh-icon{
+}
+
+.THIS .ms-clear-icon{
+}
+
+.THIS .ms-dropdown{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.THIS .customCss{
+    border: 0.5px solid rgb(217, 219, 221);
+    height: auto;
+    max-height:130px;
+    overflow-y: scroll;
+}
+.THIS .slds-textarea {
+    height: 178px;
+    margin-top:2%;
+}
+.THIS .slds-pill__remove {
+    display: none !important;
+}

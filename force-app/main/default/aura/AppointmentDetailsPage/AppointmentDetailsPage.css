@@ -1,0 +1,37 @@
+.THIS .slds-button_brand {
+    float: right;
+    margin-top: 1rem;
+}
+
+.THIS .slds-col {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 10px 7rem;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+.THIS .slds-text-title_bold {
+    font-family: Salesforce Sans, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.THIS .slds-m-bottom_medium {
+    margin-bottom: 1.5rem;
+    font-family: Salesforce Sans, Arial, sans-serif;
+}
+
+.THIS .slds-float_left {
+    float: left;
+    margin-right: 1rem;
+}
+
+
+.THIS .slds-button_neutral {
+    margin-top: 1rem;
+}
+
+.THIS .salesforce-font {
+    font-family: Salesforce Sans, Arial, sans-serif;
+}

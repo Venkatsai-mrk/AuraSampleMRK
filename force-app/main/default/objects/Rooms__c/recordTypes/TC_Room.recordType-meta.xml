@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TC_Room</fullName>
+    <active>true</active>
+    <label>TC Room</label>
+    <picklistValues>
+        <picklist>Gener__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Specific</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Room_Type__c</picklist>
+        <values>
+            <fullName>ADA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Close to Elevator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Door side of Room</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>King Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lower Level</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off-Set Queens</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Queen Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular Balcony Door</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi-Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sliding Balcony Door</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walk-Out Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Window side of Room</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rooms_Type__c</picklist>
+        <values>
+            <fullName>ADA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Close to Elevator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Door side of Room</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>King Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lower Level</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off-Set Queens</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Queen Bed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular Balcony Door</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi-Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sliding Balcony Door</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walk-Out Balcony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Window side of Room</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

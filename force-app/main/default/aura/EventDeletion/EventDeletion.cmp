@@ -1,0 +1,21 @@
+<aura:component controller="AppointmentScheduleCtrl"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickActionWithoutHeader"
+    access="global">
+
+    <aura:attribute name="TechTrackId" type="String" default="" />
+    <aura:attribute name="recordId" type="String" />
+    <div class="slds-modal__container">
+        <header class="slds-modal__header slds-is-absolute"> Delete Event</header>
+        <!--div><b> Deleting all following events removes this event and any events remaining in the series</b></div-->
+        <div class="slds-modal__content"><b class="bold slds-is-absolute">Are you sure you want to delete ?</b></div>
+
+
+
+    </div>
+    <footer class="slds-modal__footer slds-is-absolute">
+        <lightning:button label="Delete Event" name="delete" onclick="{!c.deleteAllEventSeries}" />
+        <lightning:button label="Delete Event Series" variant="brand" name="deleteSeries"
+            onclick="{!c.deleteAllEventSeries}" />
+        <lightning:button label="Cancel" name="cancel" onclick="{!c.cancel}" />
+    </footer>
+</aura:component>

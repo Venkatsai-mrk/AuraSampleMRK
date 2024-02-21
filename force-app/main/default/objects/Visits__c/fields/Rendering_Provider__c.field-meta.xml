@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rendering_Provider__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to practitioner contacts, helps in creating reports.</description>
+    <externalId>false</externalId>
+    <label>Rendering Provider</label>
+    <lookupFilter>
+        <active>false</active>
+        <filterItems>
+            <field>Contact.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Practitioner</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Visits (Rendering Provider)</relationshipLabel>
+    <relationshipName>Visits4</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

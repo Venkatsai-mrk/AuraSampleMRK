@@ -1,0 +1,116 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_CarePlanController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "goal" type="Object"/> 
+    <aura:attribute name="goalId" type="String" />    
+    <aura:attribute name="goalIdx" type="Integer"/>
+    <aura:attribute name="tasksList" type="Object"/>
+    <aura:attribute name="goalsList" type="Object"/>
+    <aura:attribute name="allTasksList" type="Object"/>
+    <aura:attribute name= "HierarchyLevel" type="CarePlan_Hierarchy__c"/>
+    <aura:attribute name="customTask" type="Boolean" default="false"/>
+    <aura:attribute name="customTask2" type="Boolean" default="false"/>
+    <aura:attribute name="readyObservation" type="Boolean" default="false"/>
+    <aura:attribute name= "goalFirstCallBack" type="Boolean"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="editableBoxVal" type="Boolean"/>
+    <aura:handler name="test" event="c:testEvent" action="{!c.setTaskValue}"/>
+    <aura:registerEvent name="goalTest" type="c:goalEvent" />
+    <aura:attribute name = "dueDateGoal" type="Date"/> 
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name= "decisionTree" type="String"/>
+    
+    
+    
+    <div class="slds-show accordian_header" aura:id="goalId" >
+        <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+            <lightning:button class="slds-show chevron_btn" aura:id="goalSection" iconName="utility:chevronright" onclick="{!c.goalSection}"/>
+            <lightning:button class="slds-hide chevron_btn" aura:id="goalSection" iconName="utility:chevrondown" onclick="{!c.goalSection}"/>
+        </aura:if>
+        <div class="slds-page-header pointer">
+            
+            <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon  iconName="action:goal"/> 
+                </div>
+                <div class="slds-float--right ">
+                    
+                    
+                    
+                </div>
+                <div class="slds-m-left--large">
+                    <h3>
+                          {!v.customSetting.ElixirSuite__Second_Level__c}&nbsp;{!v.goalIdx+1}
+                        <div class="slds-float--right right-side_bar right-side_bar1">
+                            <div class="slds-float_left">
+                                <lightning:input type="Date" placeholder="Due Date" onchange="{!c.dueDate}" value="{!v.goal.endDate}"/>
+                            </div>
+                            <div class="slds-float_left">
+                                <lightning:button label="Remove" iconName="utility:delete" class="btncss" title="Neutral action" onclick="{!c.removeSection }"/>
+                            </div>
+                        </div>
+                    </h3>
+                    
+                    <aura:if isTrue="{!v.editableBoxVal}">
+                        <lightning:textarea value="{!v.goal.ElixirSuite__Description__c}" class="editStyle" onblur="{!c.outsideFocus}"/>
+                        <aura:set attribute="else">
+                            <ui:outputTextArea value="{!v.goal.ElixirSuite__Description__c}"></ui:outputTextArea>
+                            <aura:if isTrue="{!(v.goal.ElixirSuite__Description__c == 'Undefined' || v.goal.ElixirSuite__Description__c == null ||  v.goal.ElixirSuite__Description__c == '')}">   
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:edit" class="spaceEdit" alternativeText="Edit Description" title="edit" size="x-small" onclick="{!c.editableBox}" />
+                                </aura:set>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </section>
+        </div>
+        <div class="slds-hide slds-p-around--medium third_accordian" aura:id="goalSection">
+            <div class="slds-float--right ">
+                <aura:if  isTrue="{!v.decisionTree.openBinaryTree}">
+                    <lightning:button label="{!'Add '+ v.customSetting.ElixirSuite__Fifth_Level__c}" iconName="utility:food_and_drink" class="btncss" title="Neutral action" onclick="{!c.addTask2 }"/>
+                </aura:if>
+                <lightning:button label="{!'Add '+ v.customSetting.ElixirSuite__Fourth_Level__c}" iconName="utility:food_and_drink" class="btncss" title="Neutral action" onclick="{!c.addTasks }"/>
+            </div> 
+            
+            <aura:if  isTrue="{!v.decisionTree.hasLevelHeirarchy}" >
+                <!-- IF OBJECTIVE IS RELATED TO GOAL AND INTERVENTION ARE RELATED TO OBJECTIVE -->
+                <aura:if  isTrue="{!v.decisionTree.openLinearTree}">
+                    <aura:iteration items="{!v.goal.listOfTask }" var="taskRec" indexVar="taskIdx">
+                        
+                        <c:Elixir_CarePlanObjectives customSetting="{!v.customSetting}" showInterventions = "true" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" HierarchyLevel="{!v.HierarchyLevel}"/>                           
+                        <div class="third-accordian_bl"></div>
+                        
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <!-- IF BOTH OBJECTIVE AND INTERVENTION ARE RELATED TO GOAL -->
+                        <aura:iteration items="{!v.goal.listOfTask }" var="taskRec" indexVar="taskIdx">
+                            
+                            <c:Elixir_CarePlanObjectives  customSetting="{!v.customSetting}" showInterventions = "false" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.tasksList}" HierarchyLevel="{!v.HierarchyLevel}"/>                           
+                            <div class="third-accordian_bl"></div>
+                            
+                        </aura:iteration>
+                        
+                        <aura:iteration items="{!v.goal.listOfIntervention }" var="taskRec" indexVar="taskIdx">
+                            
+                            <c:Elixir_CarePlanInterventions customSetting="{!v.customSetting}" taskId1="{!taskRec.Id}" taskIdx1="{!taskIdx}" task1="{!taskRec}" tasksList1="{!v.tasksList}" />                           
+                            <div class="third-accordian_bl"></div>
+                            
+                        </aura:iteration>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            
+            
+            
+            
+            
+        </div>
+        <aura:if isTrue="{!v.customTask}">
+            <c:Elixir_newAddObjectives allTasksList="{!v.allTasksList}" existingTasksObj1="{!v.tasksList}" existingTasksObj="{!v.goal}" customTask="{!v.customTask}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.customTask2}">
+            <c:Elixir_NewAddIntervention allTasksList="{!v.allTasksList}" existingTasksObj1="{!v.tasksList}" existingTasksObj="{!v.goal}" customTask="{!v.customTask2}"/>
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pt_had_similar_condition_AA__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field Indicates whether the patient has had a similar medical condition in the past.</description>
+    <externalId>false</externalId>
+    <label>Patient ever had same/similar condition?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

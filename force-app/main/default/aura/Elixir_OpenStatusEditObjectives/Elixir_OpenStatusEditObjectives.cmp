@@ -1,0 +1,91 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="Elixir_openStatusEditApexController" >
+    <aura:attribute name= "recordVal" type="String"/>
+    <aura:attribute name= "task" type="Object"/> 
+    <aura:attribute name="taskId" type="String" />    
+    <aura:attribute name="taskIdx" type="Integer"/>
+    <aura:attribute name= "nameSpace" type="String"/>
+    <aura:attribute name="InterventionsList" type="Object"/>
+    <aura:attribute name="tasksList" type="Object"/>
+    <aura:attribute name="allTasksList1" type="Object"/>
+    <aura:attribute name="customTask2" type="Boolean" default="false"/>
+    <aura:attribute name= "customSetting" type="String"/>
+    <aura:attribute name= "taskFirstCallBack" type="Boolean"/> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="editableBoxVal" type="Boolean"/>
+    <aura:attribute name="showInterventions" type="Boolean"/>
+    <aura:attribute name="allIntsList" type="Object"/>
+    <aura:attribute name="customInt" type="Boolean" default="false"/>
+    <aura:attribute name="checkVar" type="Boolean" default="false"/>
+    <aura:registerEvent name="test" type="c:testEvent" />
+    
+    
+    <div class="slds-show accordian_header" aura:id="taskId" >
+        <aura:if isTrue="{!v.showInterventions}">
+            <lightning:button class="slds-show chevron_btn btns" aura:id="taskSection" iconName="utility:chevronright" onclick="{!c.taskSection}"/>
+            <lightning:button class="slds-hide chevron_btn btns" aura:id="taskSection" iconName="utility:chevrondown" onclick="{!c.taskSection}"/>
+        </aura:if>
+        <div class="slds-page-header c-point">
+            
+            <section class="slds-clearfix">
+                <div class="slds-float--left ">
+                    <lightning:icon  iconName="utility:food_and_drink"/> 
+                </div>
+                
+                <div class="slds-m-left--large">
+                    <h3>
+                        {!v.customSetting.ElixirSuite__Fourth_Level__c}&nbsp;{!v.taskIdx+1}
+                        <div class="slds-float--right right-side_bar right-side_bar1">
+                            <div class="slds-float_left">
+                                <lightning:input type="Date" placeholder="Due Date" value="{!v.task.ElixirSuite__Due_Date__c}" onchange="{!c.dueDate}" />
+                            </div>
+                            <div class="slds-float_left">
+                                <lightning:button label="Remove" iconName="utility:delete" class="btncss" title="Neutral action" onclick="{!c.removeSection }"/>
+                            </div>
+                        </div>
+                    </h3>
+                    
+                    
+                    <aura:if isTrue="{!v.editableBoxVal}">
+                        <lightning:textarea value="{!v.task.ElixirSuite__Description__c}" class="editStyle" onblur="{!c.outsideFocus1}"/>
+                        
+                        <aura:set attribute="else">
+                            <div class="slds-m-bottom_medium">
+                                <ui:outputTextArea value="{!v.task.ElixirSuite__Description__c}" ></ui:outputTextArea>	
+                                <aura:if isTrue="{!(v.task.ElixirSuite__Description__c == 'Undefined' || v.task.ElixirSuite__Description__c == null ||  v.task.ElixirSuite__Description__c == '')}">   	
+                                    <aura:set attribute="else">	
+                                        <lightning:icon iconName="utility:edit" class="spaceEdit" alternativeText="Edit Description" title="edit" size="x-small" onclick="{!c.editableBox}" />	
+                                    </aura:set>	
+                                </aura:if>	
+                            </div>
+                        </aura:set>	
+                        
+                    </aura:if>
+                </div>
+            </section>
+        </div>
+        
+        <div class="slds-hide slds-p-around--medium third_accordian" aura:id="taskSection">
+            <aura:if isTrue="{!v.showInterventions}">
+                <div class="slds-float--right ">
+                    <lightning:button label="{!'Add '+ v.customSetting.ElixirSuite__Fifth_Level__c}" iconName="utility:food_and_drink" class="btncss" title="Neutral action" onclick="{!c.addTasks }"/>
+                </div> 
+            </aura:if>
+            <aura:if isTrue="{!v.showInterventions}">
+                <aura:iteration items="{!v.task.listOfIntervention }" var="taskRec" indexVar="taskIdx">
+                    <aura:if isTrue = "{! not(taskRec.Action == 'DELETE')}">
+                        <c:Elixir_openStatusEditTasks customSetting = "{!v.customSetting}" taskId="{!taskRec.Id}" taskIdx="{!taskIdx}" task="{!taskRec}" tasksList="{!v.task}" nameSpace="{!v.nameSpace}"/>
+                        <div class="third-accordian_bl"></div>
+                    </aura:if>
+                </aura:iteration>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{!v.customInt}">
+            <!--c:Elixir_AddInterventions allIntsList="{!v.allIntsList}" existingIntsObj="{!v.InterventionsList}" customInt="{!v.customInt}"/-->
+        </aura:if>
+        <aura:if isTrue="{!v.customTask2}">
+            <c:Elixir_NewAddIntervention route = "edit" allTasksList="{!v.allIntsList}" existingTasksObj1="{!v.task}" existingTasksObj="{!v.task}" customTask="{!v.customTask2}"/>
+        </aura:if>
+    </div>
+    
+</aura:component>
